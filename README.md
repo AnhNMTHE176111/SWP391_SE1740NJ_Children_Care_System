@@ -27,3 +27,4 @@ I. Code Rules
             System.out.println("<name_function>: " + e.getMessage());
             return //your_failure_value;
         }
+8. Trong css, đặt tên class, id phải rõ ràng, ghi rõ chức năng của nó, tránh nhầm lẫn với ae khác, ko đc đặt tên chung như title, container,... phải ghi cụ thể nó có chức vụ gì
