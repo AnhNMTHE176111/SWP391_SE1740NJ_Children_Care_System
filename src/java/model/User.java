@@ -20,14 +20,15 @@ public class User {
             createAt,
             updateAt,
             deleteAt,
-            phone;
+            phone,
+            profileImage;
     private int userId;
     private double amount;
 
     public User() {
     }
 
-    public User(String status, String firstName, String lastName, String email, String password, String address, String dob, String createAt, String updateAt, String deleteAt, String phone, int userId, double amount) {
+    public User(String status, String firstName, String lastName, String email, String password, String address, String dob, String createAt, String updateAt, String deleteAt, String phone, String profileImage, int userId, double amount) {
         this.status = status;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -39,8 +40,17 @@ public class User {
         this.updateAt = updateAt;
         this.deleteAt = deleteAt;
         this.phone = phone;
+        this.profileImage = profileImage;
         this.userId = userId;
         this.amount = amount;
+    }
+
+    public String getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
     }
 
     public String getStatus() {

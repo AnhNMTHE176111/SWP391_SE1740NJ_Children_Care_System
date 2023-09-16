@@ -3,9 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/SEASON%205/SWP391/PROJECT/SWP391_SE1740NJ_Children_Care_System/web/index.html</file>
-            <file>file:/D:/SEASON%205/SWP391/PROJECT/SWP391_SE1740NJ_Children_Care_System/web/WEB-INF/web.xml</file>
-            <file>file:/D:/SEASON%205/SWP391/PROJECT/SWP391_SE1740NJ_Children_Care_System/web/index.jsp</file>
+            <file>file:/D:/FPT_Curriculum/Fall2023/SWP391/Project/SWP391_SE1740NJ_Children_Care_System/web/WEB-INF/web.xml</file>
+            <file>file:/D:/FPT_Curriculum/Fall2023/SWP391/Project/SWP391_SE1740NJ_Children_Care_System/web/note.txt</file>
+            <file>file:/D:/FPT_Curriculum/Fall2023/SWP391/Project/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DBContext.java</file>
+            <file>file:/D:/FPT_Curriculum/Fall2023/SWP391/Project/SWP391_SE1740NJ_Children_Care_System/web/index.jsp</file>
+            <file>file:/D:/FPT_Curriculum/Fall2023/SWP391/Project/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAOUser.java</file>
+            <file>file:/D:/FPT_Curriculum/Fall2023/SWP391/Project/SWP391_SE1740NJ_Children_Care_System/src/java/model/User.java</file>
         </group>
     </open-files>
 </project-private>
