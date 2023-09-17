@@ -15,8 +15,8 @@ import model.User;
  *
  * @author dmx
  */
-public class DAOUser extends DBContext{
-    
+public class DAOUser extends DBContext {
+
     // copy line 21 -> 31 to every DAO - Object
     PreparedStatement pstm;
     Connection cnn;
@@ -29,7 +29,7 @@ public class DAOUser extends DBContext{
     public void connect() {
         cnn = super.connection;
     }
-    
+
     public User getUserById(String id) {
         try {
             String strSQL = "select * from User where userId = ?";
@@ -54,5 +54,9 @@ public class DAOUser extends DBContext{
             System.out.println("getUserById: " + e.getMessage());
             return null;
         }
+    }
+
+    public User getUser(String email, String password) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

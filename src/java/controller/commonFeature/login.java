@@ -5,12 +5,15 @@
 
 package controller.commonFeature;
 
+import DAO.DAOUser;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import model.User;
 
 /**
  *
@@ -66,7 +69,25 @@ public class login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        DAOUser udao = new DAOUser();
+        User u = udao.getUser(email, password);
+        //create session
+        HttpSession session = request.getSession();
+        if (u != null) {
+            //login successfull
+            //create session
+            session.setAttribute("user", u);
+            //send direct with no parameter
+            response.sendRedirect("home");
+        } else {
+            //login fail
+            String mess = "Wrong username or password!";
+            request.setAttribute("mess", mess);
+            //send direct with parameter
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+        }
     }
 
     /** 
