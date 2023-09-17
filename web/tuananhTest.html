@@ -9,6 +9,7 @@
 </head>
 
 <body>
+    <button onclick="showPopup()">Show popup</button>
     <div class="popup change-profile-container">
         <form action="" method="post">
             <h1>Edit User</h1>
@@ -21,7 +22,35 @@
             </div>
 
             <div class="profile-field">
-                
+                <div class="item-field first-name-field">
+                    <label for="firstName">First name</label>
+                    <input type="text" name="firstName" id="firstName">
+                </div>
+                <div class="item-field last-name-field">
+                    <label for="lastName">Last name</label>
+                    <input type="text" name="lastName" id="lastName">
+                </div>
+                <div class="item-field email-field">
+                    <label for="email">Email</label>
+                    <input type="text" name="email" id="email">
+                </div>
+                <div class="item-field phone-field">
+                    <label for="phone">Phone</label>
+                    <input type="text" name="phone" id="phone">
+                </div>
+                <div class="item-field address-field">
+                    <label for="address">Address</label>
+                    <input type="text" name="address" id="address">
+                </div>
+                <div class="item-field dob-field">
+                    <label for="dob">Date of birth</label>
+                    <input type="text" name="dob" id="dob">
+                </div>
+            </div>
+
+            <div class="btn-container">
+                <button type="submit">Upate</button>
+                <button >Cancel</button>
             </div>
         </form>
     </div>
