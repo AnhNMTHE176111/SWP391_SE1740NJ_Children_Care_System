@@ -1,0 +1,139 @@
+body {}
+
+.popup {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.change-profile-container {
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 20vw;
+    min-width: fit-content;
+
+    max-height: fit-content;
+    min-height: 70vh;
+
+    padding: 30px;
+    z-index: 999;
+    background-color: #fff;
+}
+
+.change-profile-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.change-profile-container form h1 {
+    color: #17A2B8;
+}
+
+
+/* ====== Image profile ===== */
+.profile-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.profile-image label {
+    padding: 10px 20px;
+    background-color: #24bcd3;
+    color: #fff;
+    border-radius: 5px;
+    transition: 0.2s ease-in-out;
+}
+
+.profile-image label:hover {
+    cursor: pointer;
+    background-color: #00394f;
+}
+
+#profile-user-input {
+    display: none;
+}
+
+#image-user {
+    width: 120px;
+    height: 120px;
+    border-radius: 100px;
+    image-rendering: optimizeQuality;
+    object-fit: cover;
+}
+
+/* ==== Field ====== */
+.profile-field {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    width: 90%;
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.item-field {
+    flex-basis: 10px;
+}
+
+.profile-field div {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-field div label {
+    font-weight: bolder;
+}
+
+.profile-field div input {
+    padding: 10px 20px;
+    font-size: 19px;
+    border-radius: 5px;
+    border: 1px solid rgb(161, 161, 161);
+}
+
+/* ==== button ===== */
+.btn-container {
+    display: flex;
+    justify-content: left;
+    gap: 20px;
+}
+
+#update-btn {
+    padding: 15px 35px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 0px;
+    transition: 0.2s ease;
+    background: #17A2B8;
+    border-color: #00394f;
+    border-radius: 30px;
+    color: #fff;
+}
+
+#update-btn:hover {
+    cursor: pointer;
+    Background-color: #24bcd3;
+    Border-color: #00141c;
+    Transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+#cancel-btn {
+    padding: 15px 35px;
+    font-size: 18px;
+    background-color: #fff;
+    border-radius: 30px;
+    border: 0px;
+    transition: 0.2s ease;
+    color: #17A2B8;
+}
+
+#cancel-btn:hover {
+    cursor: pointer;
+    background-color: #e2e2e2;
+}
