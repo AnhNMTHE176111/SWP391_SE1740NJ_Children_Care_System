@@ -29,27 +29,27 @@
 
                     <div class="profile-field">
                         <div class="item-field first-name-field">
-                            <label for="firstName">First name</label>
+                            <label for="firstName">First name (*)</label>
                             <input type="text" name="firstName" id="firstName" required>
                         </div>
                         <div class="item-field last-name-field">
-                            <label for="lastName">Last name</label>
+                            <label for="lastName">Last name (*)</label>
                             <input type="text" name="lastName" id="lastName" required>
                         </div>
                         <div class="item-field email-field">
-                            <label for="email">Email</label>
+                            <label for="email">Email (*)</label>
                             <input type="text" name="email" id="email" required>
                         </div>
                         <div class="item-field phone-field">
-                            <label for="phone">Phone</label>
+                            <label for="phone">Phone ( Optional )</label>
                             <input type="text" name="phone" id="phone">
                         </div>
                         <div class="item-field address-field">
-                            <label for="address">Address</label>
+                            <label for="address">Address ( Optional )</label>
                             <input type="text" name="address" id="address">
                         </div>
                         <div class="item-field dob-field">
-                            <label for="dob">Date of birth</label>
+                            <label for="dob">Date of birth (*)</label>
                             <input type="date" name="dob" id="dob" required>
                         </div>
                     </div>
