@@ -10,50 +10,49 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <link href="css/login_resigter.css" rel="stylesheet" />
+        <link href="css/login.css" rel="stylesheet" />
     </head>
-    <body style="background: linear-gradient(100deg, #17a2b8 -26.63%, #fff 100%)">
+    <body style="background: linear-gradient(100deg, #17a2b8 -10.63%, #fff 100%)">
         <% String mess="";
         if (request.getAttribute("mess") != null){
                 mess= request.getAttribute("mess").toString();
             }
         %>
-        <div class="login-body">
-            <img src="./img/children_PNG17969.png" alt="" style="width: 40%" />
-            <div class="login">
-                <div class="login-header">
+        <div class="login_body">
+            <img src="./image/register_login/children_PNG17969.png" alt="" style="width: 40%;" />
+            <div class="login_container">
+                <div class="login_headling">
                     <h1>Welcome to Children Care System!</h1>
-                    <h3>Track your health with SportsCo.</h3>
+                    <h3>Track your health with us.</h3>
                 </div>
-                <form class="login-form">
-                    <div class="login-form_ele">
+                <form class="login_form" action="login" method="post">
+                    <div class="login_form_div">
                         <label>Email</label><br />
-                        <input class="input" type="text" name="email" required/>
+                        <input class="input" type="email" name="email" placeholder="Input your Email" required/>
                     </div>
-                    <div class="login-form_ele">
+                    <div class="login_form_div">
                         <label>Password</label><br />
-                        <input class="input" type="password" name="password" required/>
+                        <input class="input" type="password" name="password" placeholder="Input your Password" required/>
                     </div>
-                    <div class="login-form_ele">
+                    <div class="login_form_div">
                         <input type="checkbox" />
                         <label>Remember me</label>
-                        <a href="#" style="margin-left: 45px;">Forgot password?</a><!-- comment -->
-                        <p class="error-mess"><%=mess%></p>
-                        <p class="ss-mess">${requestScope.mess1}</p>
+                        <a href="resetPassword.jsp" style="margin-left: 45px;">Forgot password?</a>
+                        <p class="login_error"><%=mess%></p>
                     </div>
                     <div>
-                        <button class="btn-1" type="submit">Sign In</button><br />
-                        <button class="btn-2">
-                            <img src="img/google.png" alt="" style="width: 5%" />
+                        <button class="login_btn-1" type="submit">Sign In</button><br />
+                        <button class="login_btn-2">
+                            <img src="image/register_login/google.png" alt="" style="width: 5%" />
                             <a href="https://accounts.google.com/InteractiveLogin" style="padding-left: 2px; color:#fff; text-decoration: none;"
                                >Or continue with Google</a
                             ></button
                         ><br />
                     </div>
                 </form>
-                <div class="login-footer">
-                    <label>New to SportsCo</label>
-                    <a style="margin-left: 10px;" href="https://www.google.com/">Create an account</a>
+                <div class="login_footer">
+                    <label>Do not have an account?</label>
+                    <a style="margin-left: 10px;" href="registerAccount.jsp">Create an account</a>
                 </div>
             </div>
         </div>
