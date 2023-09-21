@@ -135,5 +135,9 @@ public class User {
     public void setAmount(double amount) {
         this.amount = amount;
     }
-
+    @Override
+    public String toString(){
+        return "UserGoogleDto{" + "status=" + status + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", password=" + password + ", address=" + address + ", phone=" + phone +
+                ", dob=" + dob + ", avatar=" + avatar + ", userId=" + userId + ", roleId=" + roleId + ", amount=" + amount +'}';
+    }
 }
