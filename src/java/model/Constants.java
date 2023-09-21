@@ -15,7 +15,7 @@ public class Constants {
 
 	public static String GOOGLE_CLIENT_SECRET = "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";
 
-	public static String GOOGLE_REDIRECT_URI = "http://localhost:9999/SWP391_SE1740NJ_Children_Care_System/login";
+	public static String GOOGLE_REDIRECT_URI = "http://localhost:9999/SWP391_SE1740NJ_Children_Care_System/index.jsp";
 
 	public static String GOOGLE_LINK_GET_TOKEN = "https://accounts.google.com/o/oauth2/token";
 

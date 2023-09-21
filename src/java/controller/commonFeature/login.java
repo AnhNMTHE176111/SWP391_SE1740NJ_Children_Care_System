@@ -70,29 +70,27 @@ public class login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //Lay email nguoi dung tu client thong qua request
+
         HttpSession session = request.getSession();
         String email = request.getParameter("email");
-        //Lay pass nguoi dung tu client thong qua request
+
         String password = request.getParameter("password");
         String code = request.getParameter("code");
         if (code == null) {
             DAOUser userDao = new DAOUser();
-            //Ket qua kiem tra duoc luu vao bien user
+
             User user = userDao.getUserByEmailAndPassword(email, password);
             if (user.getEmail() != null) {
-                //dang nhap thanh cong
-                //lu thong tin dang nhap vao phien vua tao
+
                 session.setAttribute("name", user.getFirstName());
                 //chuyen huong den trang home
                 response.sendRedirect("index.jsp");
             } else {
-                //dang nhap that bai
-                //Khai bao bien thong bao loi
+
                 String mess = "Wrong email or password!";
-                //gan gia tri thuoc tinh "mess" thong qua bien messs
+
                 request.setAttribute("mess", mess);
-                //send direct with parameter
+
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             }
         } else {
@@ -101,23 +99,12 @@ public class login extends HttpServlet {
             User googleUser = getUserInfo(accessToken);
             if (googleUser.getEmail() != null) {
                 session.setAttribute("name", googleUser.getEmail());
-
-                // Redirect to the home page
-                response.sendRedirect("index.jsp");
-            } else {
-                //dang nhap that bai
-                //Khai bao bien thong bao loi
-                String mess = "Wrong email or password!";
-                //gan gia tri thuoc tinh "mess" thong qua bien messs
-                request.setAttribute("mess", mess);
-                //send direct with parameter
-                request.getRequestDispatcher("login.jsp").forward(request, response);
             }
         }
     }
 
     public static String getToken(String code) throws ClientProtocolException, IOException {
-        // call api to get token
+
         String response = Request.Post(Constants.GOOGLE_LINK_GET_TOKEN)
                 .bodyForm(Form.form().add("client_id", Constants.GOOGLE_CLIENT_ID)
                         .add("client_secret", Constants.GOOGLE_CLIENT_SECRET)
