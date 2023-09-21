@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controller.commonFeature;
 
 import DAO.DAOUser;
@@ -20,34 +19,37 @@ import model.User;
  * @author dmx
  */
 public class login extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet login</title>");  
+            out.println("<title>Servlet login</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet login at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet login at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -55,12 +57,13 @@ public class login extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
-    } 
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -68,30 +71,42 @@ public class login extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
+        //Lay email nguoi dung tu client thong qua request
         String email = request.getParameter("email");
+        
+        //Lay pass nguoi dung tu client thong qua request
         String password = request.getParameter("password");
-        DAOUser udao = new DAOUser();
-        User u = udao.getUser(email, password);
-        //create session
+        
+        //Khoi tao doi tuong UserDAO
+        //Goi phuong thuc getUser de kiem tra tai khoan
+        DAOUser userDao = new DAOUser();
+        //Ket qua kiem tra duoc luu vao bien user
+        User user = userDao.getUserByEmailAndPassword(email, password);
+        //Tao phien Session de luu thong tin dang nhap
         HttpSession session = request.getSession();
-        if (u != null) {
-            //login successfull
-            //create session
-            session.setAttribute("user", u);
-            //send direct with no parameter
-            response.sendRedirect("home");
+        
+        //neu user khac null
+        if (user.getEmail() != null) {
+            //dang nhap thanh cong
+            //lu thong tin dang nhap vao phien vua tao
+            session.setAttribute("name", user.getFirstName());
+            //chuyen huong den trang home
+            response.sendRedirect("index.jsp");
         } else {
-            //login fail
-            String mess = "Wrong username or password!";
+            //dang nhap that bai
+            //Khai bao bien thong bao loi
+            String mess = "Wrong email or password!";
+            //gan gia tri thuoc tinh "mess" thong qua bien messs
             request.setAttribute("mess", mess);
             //send direct with parameter
             request.getRequestDispatcher("login.jsp").forward(request, response);
         }
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override
