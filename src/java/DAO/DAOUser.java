@@ -79,13 +79,14 @@ public class DAOUser extends DBContext {
                 user.setRoleId(Integer.parseInt(rs.getString(11)));
                 // some code to finish
             }
+            System.out.println("user.email " + user.getEmail() + " login to system");
 
             return user;
         } catch (SQLException e) {
-            System.out.println("SQL getUserByEmail: " + e.getMessage());
+            System.out.println("SQL getUserByEmailAndPassword: " + e.getMessage());
             return null;
         } catch (Exception e) {
-            System.out.println("getUserByEmail: " + e.getMessage());
+            System.out.println("getUserByEmailAndPassword: " + e.getMessage());
             return null;
         }
     }
