@@ -4,10 +4,25 @@
  */
 package DAO;
 
+import dal.DBContext;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 /**
  *
  * @author dmx
  */
-public class DAOBooking {
-    
+public class DAOBooking extends DBContext{
+    PreparedStatement pstm;
+    Connection cnn;
+    ResultSet rs;
+
+    public DAOBooking() {
+        connect();
+    }
+
+    public void connect() {
+        cnn = super.connection;
+    }
 }
