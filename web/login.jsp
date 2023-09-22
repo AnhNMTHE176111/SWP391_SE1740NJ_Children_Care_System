@@ -44,7 +44,7 @@
                         <button class="login_btn-1" type="submit">Sign In</button><br />
                         <button class="login_btn-2">
                             <img src="image/register_login/google.png" alt="" style="width: 5%" />
-                            <a href="https://accounts.google.com/InteractiveLogin" style="padding-left: 2px; color:#fff; text-decoration: none;"
+                            <a href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:9999/SWP391_SE1740NJ_Children_Care_System/index.jsp&response_type=code&client_id=735170124292-pime0tfh1hos9ffg380454ugslgq0te8.apps.googleusercontent.com&approval_prompt=force" style="padding-left: 2px; color:#fff; text-decoration: none;"
                                >Or continue with Google</a
                             ></button
                         ><br />

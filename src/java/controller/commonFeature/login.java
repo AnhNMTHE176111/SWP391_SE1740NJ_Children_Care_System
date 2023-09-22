@@ -5,6 +5,8 @@
 package controller.commonFeature;
 
 import DAO.DAOUser;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,7 +14,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import model.Constants;
 import model.User;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.fluent.Form;
+import org.apache.http.client.fluent.Request;
 
 /**
  *
@@ -31,19 +37,11 @@ public class login extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet login</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet login at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        System.out.println(request.getParameter("code"));
+        String code = request.getParameter("code");
+        String accessToken = getToken(code);
+        User user = getUserInfo(accessToken);
+        System.out.println(user);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -72,36 +70,59 @@ public class login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //Lay email nguoi dung tu client thong qua request
-        String email = request.getParameter("email");
-        
-        //Lay pass nguoi dung tu client thong qua request
-        String password = request.getParameter("password");
-        
-        //Khoi tao doi tuong UserDAO
-        //Goi phuong thuc getUser de kiem tra tai khoan
-        DAOUser userDao = new DAOUser();
-        //Ket qua kiem tra duoc luu vao bien user
-        User user = userDao.getUserByEmailAndPassword(email, password);
-        //Tao phien Session de luu thong tin dang nhap
+
         HttpSession session = request.getSession();
-        
-        //neu user khac null
-        if (user.getEmail() != null) {
-            //dang nhap thanh cong
-            //lu thong tin dang nhap vao phien vua tao
-            session.setAttribute("name", user.getFirstName());
-            //chuyen huong den trang home
-            response.sendRedirect("index.jsp");
+        String email = request.getParameter("email");
+
+        String password = request.getParameter("password");
+        String code = request.getParameter("code");
+        if (code == null) {
+            DAOUser userDao = new DAOUser();
+
+            User user = userDao.getUserByEmailAndPassword(email, password);
+            if (user.getEmail() != null) {
+
+                session.setAttribute("name", user.getFirstName());
+                //chuyen huong den trang home
+                response.sendRedirect("index.jsp");
+            } else {
+
+                String mess = "Wrong email or password!";
+
+                request.setAttribute("mess", mess);
+
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+            }
         } else {
-            //dang nhap that bai
-            //Khai bao bien thong bao loi
-            String mess = "Wrong email or password!";
-            //gan gia tri thuoc tinh "mess" thong qua bien messs
-            request.setAttribute("mess", mess);
-            //send direct with parameter
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+            String accessToken = getToken(code);
+            DAOUser userDao = new DAOUser();
+            User googleUser = getUserInfo(accessToken);
+            if (googleUser.getEmail() != null) {
+                session.setAttribute("name", googleUser.getEmail());
+            }
         }
+    }
+
+    public static String getToken(String code) throws ClientProtocolException, IOException {
+
+        String response = Request.Post(Constants.GOOGLE_LINK_GET_TOKEN)
+                .bodyForm(Form.form().add("client_id", Constants.GOOGLE_CLIENT_ID)
+                        .add("client_secret", Constants.GOOGLE_CLIENT_SECRET)
+                        .add("redirect_uri", Constants.GOOGLE_REDIRECT_URI).add("code", code)
+                        .add("grant_type", Constants.GOOGLE_GRANT_TYPE).build())
+                .execute().returnContent().asString();
+
+        JsonObject jobj = new Gson().fromJson(response, JsonObject.class);
+        String accessToken = jobj.get("access_token").toString().replaceAll("\"", "");
+        return accessToken;
+    }
+
+    public static User getUserInfo(final String accessToken) throws ClientProtocolException, IOException {
+        String link = Constants.GOOGLE_LINK_GET_USER_INFO + accessToken;
+        String response = Request.Get(link).execute().returnContent().asString();
+
+        User googlePojo = new Gson().fromJson(response, User.class);
+        return googlePojo;
     }
 
     /**
