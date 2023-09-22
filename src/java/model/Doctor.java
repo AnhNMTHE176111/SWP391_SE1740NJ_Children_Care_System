@@ -13,6 +13,34 @@ public class Doctor {
     private double rating;
     private String Description, Position;
 
+    //String riêng dùng trong màn hình services của HongNT
+    private String lastname,firstname;
+    //Constructor riêng dùng trong màn hình services của HongNT
+
+    public Doctor(int doctorId, String lastname, String firstname) {
+        this.doctorId = doctorId;
+        this.lastname = lastname;
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+    //getter setter dùng trong  màn hình services của HongNT
+    
+    
     public Doctor() {
     }
 
