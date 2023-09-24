@@ -136,5 +136,20 @@ public class DAOUser extends DBContext {
             System.out.println("addNewAccountByEmail: " + e.getMessage());
         }
     }
+    
+    public void updatePasswordByEmail(User user) {
+        try {
+            String strSQL = "update Users set password = ? where email = ?";
+            pstm = cnn.prepareStatement(strSQL);
+            pstm.setString(1, user.getPassword());
+            pstm.setString(2, user.getEmail());
+            rs = pstm.executeQuery();
+
+        } catch (SQLException e) {
+            System.out.println("SQL updatePasswordByEmail: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("updatePasswordByEmail: " + e.getMessage());
+        }
+    }
 
 }

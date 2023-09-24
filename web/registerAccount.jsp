@@ -24,7 +24,7 @@
             }
         %>
         <div class="register_body">
-            <img src="./image/register_login/purepng.com-childrenchildrenkidshuman-childchildhappy-kidsklds-1421526966161n4kvn.png" alt="" style="width: 70%" />
+            <img src="./image/register_login/purepng.com-childrenchildrenkidshuman-childchildhappy-kidsklds-1421526966161n4kvn.png" alt="" style="width: 80%" />
             <div class="register_container">
                 <div class="register_headling">
                     <h1>Create an account</h1>
