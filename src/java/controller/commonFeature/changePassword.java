@@ -83,7 +83,7 @@ public class changePassword extends HttpServlet {
 
         if (!repassword.equals(newpassword)) {
             String mess = "Re-entered password is incorrect!";
-            request.setAttribute("mess", mess);
+            request.setAttribute("mess1", mess);
             //send direct with parameter
             request.getRequestDispatcher("changePassword.jsp").forward(request, response);
         }
@@ -94,7 +94,7 @@ public class changePassword extends HttpServlet {
             request.getRequestDispatcher("login.jsp").forward(request, response);
         } else {
             String mess = "Wrong currently password";
-            request.setAttribute("mess", mess);
+            request.setAttribute("mess1", mess);
             request.getRequestDispatcher("changePassword.jsp").forward(request, response);
         }
     }

@@ -13,9 +13,9 @@
         <link href="css/login.css" rel="stylesheet" />
     </head>
     <body style="background: linear-gradient(100deg, #fff -10%, #17a2b8 100%)">
-        <% String mess="";
-        if (request.getAttribute("mess") != null){
-                mess= request.getAttribute("mess").toString();
+        <% String mess1="";
+        if (request.getAttribute("mess1") != null){
+                mess1= request.getAttribute("mess1").toString();
             }
         %>
         <div class="login_body">
