@@ -4,7 +4,7 @@
  */
 package DAO;
 
-import dal.DBContext;
+import DAO.DBContext;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

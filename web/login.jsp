@@ -25,7 +25,7 @@
                     <h1>Welcome to Children Care System!</h1>
                     <h3>Track your health with SportsCo.</h3>
                 </div>
-                <form class="login-form">
+                <form class="login-form" action="login" method="post">
                     <div class="login-form_ele">
                         <label>Email</label><br />
                         <input class="input" type="text" name="email" required/>
