@@ -20,7 +20,7 @@ body {
   top: 100px;
 }
 .background-img {
-  background-image: url("z4719643435755_019796bfa21ad99d68ec233c6b5ce159.jpg");
+  background-image: url("C:\Users\tbin6\OneDrive\Desktop\Test4fun\booking.jpg");
   width: 100%;
   height: 300px;
 }
@@ -310,4 +310,12 @@ label {
   position: absolute;
   top: 110px;
   left: -25px;
+}
+
+/* Add your CSS styles here */
+
+
+#doctorList {
+    margin-top: 20px;
+    font-weight: bold;
 }

@@ -14,7 +14,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import DAO.DAOBooking;
-import model.Booking;
+import DAO.DAOSlot;
+import DAO.DAODoctor;
 
 
 /**
@@ -62,11 +63,19 @@ public class bookingController extends HttpServlet {
  protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
     ArrayList dateList = new ArrayList<>();
+    ArrayList slotList = new ArrayList<>();
+    ArrayList specialtyList = new ArrayList<>();
+    DAOSlot slot = new DAOSlot();
     DAOBooking daoBooking = new DAOBooking();
-
+     DAODoctor doctorBooking = new DAODoctor();
+    
+    specialtyList = doctorBooking.getListSpecialty();
+    slotList = slot.getListSlot();
     dateList = daoBooking.getListDate();
     
+    request.setAttribute("specialtyList", specialtyList);
     request.setAttribute("dateList", dateList);
+    request.setAttribute("slotList", slotList);
     request.getRequestDispatcher("Booking.jsp").forward(request, response);
 }
 

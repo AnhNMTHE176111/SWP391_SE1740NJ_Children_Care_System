@@ -70,5 +70,28 @@ daysList.forEach(function (el) {
 });
 
 
+// Add your JavaScript code here
+
+function showDoctors(selectedSpecialty) {
+    var doctorListDiv = document.getElementById("doctorList");
+    doctorListDiv.innerHTML = "";
+
+    for (var i = 0; i < doctorList.length; i++) {
+        if (doctorList[i].specialtyName === selectedSpecialty) {
+            var doctorName = doctorList[i].doctorName;
+            var doctorOption = document.createElement("div");
+            doctorOption.textContent = doctorName;
+            doctorListDiv.appendChild(doctorOption);
+        }
+    }
+}
+
+// Sample data (replace with data from your database)
+var doctorList = [
+    { doctorId: 1, specialtyName: "Cơ xương khớp", doctorName: "Bác sĩ A" },
+    { doctorId: 2, specialtyName: "Đa khoa", doctorName: "Bác sĩ B" },
+    { doctorId: 3, specialtyName: "Chuyên khoa 2", doctorName: "Bác sĩ C" },
+    { doctorId: 4, specialtyName: "Chuyên khoa 2", doctorName: "Bác sĩ D" }
+];
 
 
