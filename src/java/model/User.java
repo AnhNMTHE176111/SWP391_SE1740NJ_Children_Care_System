@@ -9,48 +9,35 @@ package model;
  * @author dmx
  */
 public class User {
-    private String 
-            status,
+
+    private String status,
             firstName,
             lastName,
             email,
             password,
             address,
+            phone, 
             dob,
-            createAt,
-            updateAt,
-            deleteAt,
-            phone,
-            profileImage;
-    private int userId;
+            avatar;
+    private int userId, roleId;
     private double amount;
 
     public User() {
     }
 
-    public User(String status, String firstName, String lastName, String email, String password, String address, String dob, String createAt, String updateAt, String deleteAt, String phone, String profileImage, int userId, double amount) {
+    public User(String status, String firstName, String lastName, String email, String password, String address, String phone, String dob, String avatar, int userId, int roleId, double amount) {
         this.status = status;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.address = address;
-        this.dob = dob;
-        this.createAt = createAt;
-        this.updateAt = updateAt;
-        this.deleteAt = deleteAt;
         this.phone = phone;
-        this.profileImage = profileImage;
+        this.dob = dob;
+        this.avatar = avatar;
         this.userId = userId;
+        this.roleId = roleId;
         this.amount = amount;
-    }
-
-    public String getProfileImage() {
-        return profileImage;
-    }
-
-    public void setProfileImage(String profileImage) {
-        this.profileImage = profileImage;
     }
 
     public String getStatus() {
@@ -59,10 +46,6 @@ public class User {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-    
-    public String getFullName() {
-        return firstName + " " + lastName;
     }
 
     public String getFirstName() {
@@ -105,6 +88,14 @@ public class User {
         this.address = address;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public String getDob() {
         return dob;
     }
@@ -113,36 +104,12 @@ public class User {
         this.dob = dob;
     }
 
-    public String getCreateAt() {
-        return createAt;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setCreateAt(String createAt) {
-        this.createAt = createAt;
-    }
-
-    public String getUpdateAt() {
-        return updateAt;
-    }
-
-    public void setUpdateAt(String updateAt) {
-        this.updateAt = updateAt;
-    }
-
-    public String getDeleteAt() {
-        return deleteAt;
-    }
-
-    public void setDeleteAt(String deleteAt) {
-        this.deleteAt = deleteAt;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public int getUserId() {
@@ -153,6 +120,14 @@ public class User {
         this.userId = userId;
     }
 
+    public int getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
+    }
+
     public double getAmount() {
         return amount;
     }
@@ -160,6 +135,9 @@ public class User {
     public void setAmount(double amount) {
         this.amount = amount;
     }
-    
-            
+    @Override
+    public String toString(){
+        return "UserGoogleDto{" + "status=" + status + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", password=" + password + ", address=" + address + ", phone=" + phone +
+                ", dob=" + dob + ", avatar=" + avatar + ", userId=" + userId + ", roleId=" + roleId + ", amount=" + amount +'}';
+    }
 }
