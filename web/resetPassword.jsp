@@ -20,10 +20,10 @@
                     <h1>Forgot Password ?</h1>
                     <h3>Let us help you recover your password.</h3>
                 </div>
-                <form class="login_form" action="send" method="post">
+                <form class="login_form">
                     <div class="login_form_div">
                         <label>Input your email to reset password</label><br/>
-                       <input class="input" type="email" name="to"/>
+                        <input class="input" type="email"/>
                     </div>
                     <div>
                         <button class="login_btn-1" type="submit">Send Email</button><br/>
