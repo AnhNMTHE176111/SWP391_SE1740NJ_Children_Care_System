@@ -70,8 +70,6 @@ daysList.forEach(function (el) {
 });
 
 
-// Add your JavaScript code here
-
 function showDoctors(selectedSpecialty) {
     var doctorListDiv = document.getElementById("doctorList");
     doctorListDiv.innerHTML = "";
@@ -86,7 +84,6 @@ function showDoctors(selectedSpecialty) {
     }
 }
 
-// Sample data (replace with data from your database)
 var doctorList = [
     { doctorId: 1, specialtyName: "Cơ xương khớp", doctorName: "Bác sĩ A" },
     { doctorId: 2, specialtyName: "Đa khoa", doctorName: "Bác sĩ B" },
