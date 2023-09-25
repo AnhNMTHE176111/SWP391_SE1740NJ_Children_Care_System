@@ -40,6 +40,16 @@ public class User {
         this.amount = amount;
     }
 
+    public User(String firstName, String lastName, String email, String password, String address, String phone, String dob) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.address = address;
+        this.phone = phone;
+        this.dob = dob;
+    }
+
     public String getStatus() {
         return status;
     }
