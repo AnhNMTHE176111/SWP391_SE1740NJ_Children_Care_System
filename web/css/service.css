@@ -1,27 +1,93 @@
 body {
-  font-family: Arial;
-  margin: 0;
-  padding: 0;
-}
-.serviceFE {
-  padding:50px;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    margin: 0;
 }
 
-.serviceFE ul {
-  list-style: none;
-  padding: 0;
+.filter {
+    display: flex;
+    align-items: center;
 }
 
-a {
-  color: blue; /* Change the color to your desired color */
-  text-decoration: none; /* Remove the underline on the links */
+.filter h4 {
+    margin-right: 10px;
 }
 
-a:hover {
-  color: red; /* Change the color when the link is hovered */
+.filter select {
+    margin-right: 10px;
+}
+/* Custom select style */
+.filter {
+    position: relative;
+    display: inline-block;
 }
 
+.filter select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    cursor: pointer;
+    outline: none;
+}
 
-.filter{
-    display:inline-block;
+.filter select:focus {
+    border-color: #3498db;
+}
+
+/* Custom arrow */
+.filter:after {
+    content: '\25BC'; /* Unicode for the down arrow (▼) */
+    font-family: FontAwesome;
+    font-size: 14px;
+    color: #333;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+}
+
+/* Style options */
+.filter select option {
+    padding: 10px;
+}
+/* Custom submit button style */
+.input-submit {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #3498db;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.input-submit:hover {
+    background-color: #2980b9;
+}
+.serviceFE{
+    margin: 50px;
+}
+.serviceFE ul{
+    font-size: 20px;
+    font-family: "Nunito", sans-serif;
+}
+.serviceFE a{
+    margin-left: 100px;
+    margin-bottom: 10px;
+}
+
+.nameServiceList{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.inforDoctor p {
+    color: black;
+    max-width: 300px; 
 }
