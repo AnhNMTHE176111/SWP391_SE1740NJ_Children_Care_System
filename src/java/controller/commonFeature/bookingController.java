@@ -4,21 +4,25 @@
  */
 package controller.commonFeature;
 
+import DAO.DAOBooking;
+
 import java.io.IOException;
 import java.io.PrintWriter;
-
-
-import DAO.DAOService;
 import java.util.ArrayList;
-import model.Doctor;
-import model.Service;
-import model.Specialty;
+import DAO.DAOBooking;
+import DAO.DAOSlot;
+import DAO.DAODoctor;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import javax.jws.WebService;
 
 /**
  *
- * @author Admin
+ * @author tbin6
  */
-public class serviceServlet extends HttpServlet {
+@WebServlet(name = "bookingController", urlPatterns = {"/booking"})
+public class bookingController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,10 +41,10 @@ public class serviceServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet service</title>");
+            out.println("<title>Servlet bookingController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet service at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet bookingController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -55,44 +59,39 @@ public class serviceServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        DAOService d = new DAOService();
-        ArrayList<Service> service = d.getListService();
-        request.setAttribute("service", service);
-        ArrayList<Doctor> doc = d.getListDoctor();
-        request.setAttribute("doc", doc);
-        ArrayList<Specialty> spec = d.getListSpecialty();
-        request.setAttribute("spec", spec);
-        request.getRequestDispatcher("service.jsp").forward(request, response);
-    }
+ protected void doGet(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    ArrayList dateList = new ArrayList<>();
+    ArrayList slotList = new ArrayList<>();
+    ArrayList specialtyList = new ArrayList<>();
+    DAOSlot slot = new DAOSlot();
+    DAOBooking daoBooking = new DAOBooking();
+     DAODoctor doctorBooking = new DAODoctor();
+    
+    specialtyList = doctorBooking.getListSpecialty();
+    slotList = slot.getListSlot();
+    dateList = daoBooking.getListDate();
+    
+    request.setAttribute("specialtyList", specialtyList);
+    request.setAttribute("dateList", dateList);
+    request.setAttribute("slotList", slotList);
+    request.getRequestDispatcher("Booking.jsp").forward(request, response);
+}
 
+
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAOService d = new DAOService();
-        ArrayList<Service> serByDoc = d.getListServiceByDoctor();
-        ArrayList<Service> serBySpec = d.getListServiceBySpecialty();
-        ArrayList<Doctor> doc = d.getListDoctor();
-        ArrayList<Specialty> spec = d.getListSpecialty();
-
-        String id = request.getParameter("id");
-        switch (id) {
-            case "doctor":
-                request.setAttribute("doc", doc);
-                request.setAttribute("service", serByDoc);
-                request.getRequestDispatcher("serviceByDoctor.jsp").forward(request, response);
-                break;
-            case "specialty":
-                request.setAttribute("spec", spec);
-                request.setAttribute("serBySpec", serBySpec);
-                request.getRequestDispatcher("serviceBySpecialty.jsp").forward(request, response);
-                break;
-            default:
-                response.sendRedirect("service");
-                break;
-        }
+        processRequest(request, response);
     }
 
     /**

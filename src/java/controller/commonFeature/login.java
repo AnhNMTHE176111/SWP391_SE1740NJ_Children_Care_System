@@ -9,11 +9,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.io.PrintWriter;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import model.Constants;
 import model.User;
 import org.apache.http.client.ClientProtocolException;
@@ -55,9 +50,15 @@ public class login extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
+<<<<<<< HEAD
+    throws ServletException, IOException {
+        request.getRequestDispatcher("login.jsp").forward(request, response);
+    } 
+=======
             throws ServletException, IOException {
         processRequest(request, response);
     }
+>>>>>>> 4b82ac45f754cb7988434ad7536c97f28d300711
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -72,6 +73,15 @@ public class login extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession session = request.getSession();
+<<<<<<< HEAD
+        if (u != null) {
+            //login successfull
+            //create session
+            session.setAttribute("user", u);
+            System.out.println("Hhaha");
+            //send direct with no parameter
+            response.sendRedirect("/home");
+=======
         String email = request.getParameter("email");
 
         String password = request.getParameter("password");
@@ -84,7 +94,7 @@ public class login extends HttpServlet {
 
                 session.setAttribute("name", user.getFirstName());
                 //chuyen huong den trang home
-                response.sendRedirect("index.jsp");
+                response.sendRedirect("home.jsp");
             } else {
 
                 String mess = "Wrong email or password!";
@@ -93,11 +103,13 @@ public class login extends HttpServlet {
 
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             }
+>>>>>>> 4b82ac45f754cb7988434ad7536c97f28d300711
         } else {
             String accessToken = getToken(code);
             DAOUser userDao = new DAOUser();
             User googleUser = getUserInfo(accessToken);
             if (googleUser.getEmail() != null) {
+                System.out.println("Google email: " + googleUser.getEmail());
                 session.setAttribute("name", googleUser.getEmail());
             }
         }
