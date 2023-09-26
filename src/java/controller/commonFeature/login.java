@@ -7,13 +7,17 @@ package controller.commonFeature;
 import DAO.DAOUser;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import java.io.IOException;
-import java.io.PrintWriter;
 import model.Constants;
 import model.User;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
+import java.io.IOException;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -50,15 +54,9 @@ public class login extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-<<<<<<< HEAD
-    throws ServletException, IOException {
-        request.getRequestDispatcher("login.jsp").forward(request, response);
-    } 
-=======
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.getRequestDispatcher("login.jsp").forward(request, response);
     }
->>>>>>> 4b82ac45f754cb7988434ad7536c97f28d300711
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -71,17 +69,7 @@ public class login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         HttpSession session = request.getSession();
-<<<<<<< HEAD
-        if (u != null) {
-            //login successfull
-            //create session
-            session.setAttribute("user", u);
-            System.out.println("Hhaha");
-            //send direct with no parameter
-            response.sendRedirect("/home");
-=======
         String email = request.getParameter("email");
 
         String password = request.getParameter("password");
@@ -103,7 +91,6 @@ public class login extends HttpServlet {
 
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             }
->>>>>>> 4b82ac45f754cb7988434ad7536c97f28d300711
         } else {
             String accessToken = getToken(code);
             DAOUser userDao = new DAOUser();

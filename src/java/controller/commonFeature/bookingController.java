@@ -8,7 +8,11 @@ import DAO.DAOBooking;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import DAO.DAOBooking;
 import DAO.DAOSlot;
 import DAO.DAODoctor;
@@ -41,7 +45,7 @@ public class bookingController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet bookingController</title>");            
+            out.println("<title>Servlet bookingController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet bookingController at " + request.getContextPath() + "</h1>");
@@ -59,26 +63,21 @@ public class bookingController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
- protected void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-    ArrayList dateList = new ArrayList<>();
-    ArrayList slotList = new ArrayList<>();
-    ArrayList specialtyList = new ArrayList<>();
-    DAOSlot slot = new DAOSlot();
-    DAOBooking daoBooking = new DAOBooking();
-     DAODoctor doctorBooking = new DAODoctor();
-    
-    specialtyList = doctorBooking.getListSpecialty();
-    slotList = slot.getListSlot();
-    dateList = daoBooking.getListDate();
-    
-    request.setAttribute("specialtyList", specialtyList);
-    request.setAttribute("dateList", dateList);
-    request.setAttribute("slotList", slotList);
-    request.getRequestDispatcher("Booking.jsp").forward(request, response);
-}
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        ArrayList slotList = new ArrayList<>();
+        ArrayList specialtyList = new ArrayList<>();
+        DAOSlot slot = new DAOSlot();
+        DAOBooking daoBooking = new DAOBooking();
+        DAODoctor doctorBooking = new DAODoctor();
 
+        specialtyList = doctorBooking.getListSpecialty();
+        slotList = slot.getListSlot();
 
+        request.setAttribute("specialtyList", specialtyList);
+        request.setAttribute("slotList", slotList);
+        request.getRequestDispatcher("Booking.jsp").forward(request, response);
+    }
 
     /**
      * Handles the HTTP <code>POST</code> method.
