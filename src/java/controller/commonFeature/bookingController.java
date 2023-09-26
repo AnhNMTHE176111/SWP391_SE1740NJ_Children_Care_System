@@ -5,18 +5,17 @@
 package controller.commonFeature;
 
 import DAO.DAOBooking;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import DAO.DAOBooking;
 import DAO.DAOSlot;
 import DAO.DAODoctor;
-
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import javax.jws.WebService;
 
 /**
  *

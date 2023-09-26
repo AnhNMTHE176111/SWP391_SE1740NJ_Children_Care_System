@@ -1,0 +1,27 @@
+body {
+  font-family: Arial;
+  margin: 0;
+  padding: 0;
+}
+.serviceFE {
+  padding:50px;
+}
+
+.serviceFE ul {
+  list-style: none;
+  padding: 0;
+}
+
+a {
+  color: blue; /* Change the color to your desired color */
+  text-decoration: none; /* Remove the underline on the links */
+}
+
+a:hover {
+  color: red; /* Change the color when the link is hovered */
+}
+
+
+.filter{
+    display:inline-block;
+}

@@ -4,7 +4,7 @@
  */
 package DAO;
 
-import DAO.DBContext;
+import dal.DBContext;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -39,7 +39,7 @@ public class DAOUser extends DBContext {
 
             User user = new User();
             while (rs.next()) {
-                user.setUserId(1);
+                user.setUserId(Integer.parseInt(rs.getString(1)));
                 // some code to finish
             }
 
@@ -56,7 +56,100 @@ public class DAOUser extends DBContext {
         }
     }
 
-    public User getUser(String email, String password) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public User getUserByEmailAndPassword(String email, String password) {
+        try {
+            String strSQL = "select * from Users where email = ? and password = ?";
+            pstm = cnn.prepareStatement(strSQL);
+            pstm.setString(1, email);
+            pstm.setString(2, password);
+            rs = pstm.executeQuery();
+            
+            User user = new User();
+            while (rs.next()) {
+                user.setUserId(Integer.parseInt(rs.getString(1)));
+                user.setStatus(rs.getString(2));
+                user.setFirstName(rs.getString(3));
+                user.setLastName(rs.getString(4));
+                user.setEmail(rs.getString(5));
+                user.setPassword(rs.getString(6));
+                user.setAddress(rs.getString(7));
+                user.setPhone(rs.getString(8));
+                user.setDob(rs.getString(9));
+                user.setAvatar(rs.getString(10));
+                user.setRoleId(Integer.parseInt(rs.getString(11)));
+                // some code to finish
+            }
+            return user;
+        } catch (SQLException e) {
+            System.out.println("SQL getUserByEmailAndPassword: " + e.getMessage());
+            return null;
+        } catch (Exception e) {
+            System.out.println("getUserByEmailAndPassword: " + e.getMessage());
+            return null;
+        }
     }
+
+    public User checkEmailExist(String newEmail) {
+        try {
+            String strSQL = "select * from Users where email = ?";
+            pstm = cnn.prepareStatement(strSQL);
+            pstm.setString(1, newEmail);
+            rs = pstm.executeQuery();
+            User user = null;
+            while (rs.next()) {
+                user.setFirstName(rs.getString(3));
+                user.setLastName(rs.getString(4));
+                user.setEmail(rs.getString(5));
+                user.setPassword(rs.getString(6));
+                user.setAddress(rs.getString(7));
+                user.setPhone(rs.getString(8));
+                user.setDob(rs.getString(9));
+                user = new User();
+            }
+            return user;
+        } catch (SQLException e) {
+            System.out.println("SQL checkEmailExist: " + e.getMessage());
+            return null;
+        } catch (Exception e) {
+            System.out.println("checkEmailExist: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public void addNewAccountByEmail(User user) {
+        try {
+            String strSQL = "insert into Users (firstName, lastName, email, password, address, phone, dob)"
+                    + " values (?, ?, ?, ?, ?, ?, ?)";
+            pstm = cnn.prepareStatement(strSQL);
+            pstm.setString(1, user.getFirstName());
+            pstm.setString(2, user.getLastName());
+            pstm.setString(3, user.getEmail());
+            pstm.setString(4, user.getPassword());
+            pstm.setString(5, user.getAddress());
+            pstm.setString(6, user.getPhone());
+            pstm.setString(7, user.getDob());
+            rs = pstm.executeQuery();
+ 
+        } catch (SQLException e) {
+            System.out.println("SQL addNewAccountByEmail: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("addNewAccountByEmail: " + e.getMessage());
+        }
+    }
+
+    public void updatePasswordByEmail(User user) {
+         try {
+            String strSQL = "update Users set password = ? where email = ?";
+            pstm = cnn.prepareStatement(strSQL);
+            pstm.setString(1, user.getPassword());
+            pstm.setString(2, user.getEmail());
+            rs = pstm.executeQuery();
+
+        } catch (SQLException e) {
+            System.out.println("SQL updatePasswordByEmail: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("updatePasswordByEmail: " + e.getMessage());
+        }
+    }
+
 }
