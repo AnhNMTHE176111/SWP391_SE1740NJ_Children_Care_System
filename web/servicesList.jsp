@@ -31,6 +31,6 @@
             <p>Thông tin cơ bản: ${doc.getDescription()}</p>
         </ul>
     </body>
-    <jsp:include page="header.jsp"></jsp:include>
+    <jsp:include page="footer.jsp"></jsp:include>
 
 </html>

@@ -25,13 +25,8 @@
                     <h1>Welcome to Children Care System!</h1>
                     <h3>Track your health with us.</h3>
                 </div>
-<<<<<<< HEAD
-                <form class="login-form" action="login" method="post">
-                    <div class="login-form_ele">
-=======
                 <form class="login_form" action="login" method="post">
                     <div class="login_form_div">
->>>>>>> 4b82ac45f754cb7988434ad7536c97f28d300711
                         <label>Email</label><br />
                         <input class="input" type="email" name="email" placeholder="Input your Email" required/>
                     </div>
