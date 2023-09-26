@@ -11,38 +11,44 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>services</title>
         <link href="css/service.css" rel="stylesheet" />
+        <link href="css/home.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0-beta3/css/all.min.css">
 
     </head>
-    <body>  
-        <h2>Our services</h2>
-        <form action="service" method="post">
-            <div class="filter">
-                <h4>Selected by:</h4>
-                <select id="sort"name="id">
-                    <option value="all">All</option>
-                    <option value="doctor">Doctor</option>
-                    <option value="specialty">Specialty</option>
-                </select>    
-                <input type="submit" value="Enter">
-            </div>
-        </form>
+    <jsp:include page="header.jsp"></jsp:include>
 
-        <div class="serviceFE">
-            <h4>Services sort by specialty</h4>
-            <div>
+        <body>  
+            <h2>Our services</h2>
+            <form action="service" method="post">
+                <div class="filter">
+                    <h4>Selected by:</h4>
+                    <select id="sort"name="id">
+                        <option value="all">All</option>
+                        <option value="doctor">Doctor</option>
+                        <option value="specialty">Specialty</option>
+                    </select>    
+                    <input class="input-submit" type="submit" value="Enter">
+                </div>
+            </form>
+
+            <div class="serviceFE">
+                <h4>Services sort by specialty</h4>
+                <div class="docWithService">
                 <c:forEach var="spec" items="${spec}">
                     <ul>
-                        ${spec.getSpecialtyId()}. ${spec.getSpecialtyName()}
+                        <br>${spec.getSpecialtyId()}. ${spec.getSpecialtyName()}
                     </ul>
                     <c:forEach var="serBySpec" items="${serBySpec}">
                         <c:if test="${ spec.getSpecialtyId()==serBySpec.getSpecId()  }">
                             <a href="servicelist?id=${serBySpec.getServiceId()}">
                                 ${serBySpec.getServiceName()}</a><br>    
-                        </c:if>
+                            </c:if>
+                        </c:forEach>
                     </c:forEach>
-                </c:forEach>
             </div>
 
         </div>
     </body>
+    <jsp:include page="header.jsp"></jsp:include>
+
 </html>

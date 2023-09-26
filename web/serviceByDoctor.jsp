@@ -11,8 +11,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>services</title>
         <link href="css/service.css" rel="stylesheet" />
+        <link href="css/home.css" rel="stylesheet" />
 
     </head>
+        <jsp:include page="header.jsp"></jsp:include>
+
     <body>  
         <h2>Our services</h2>
         <form action="service" method="post">
@@ -23,16 +26,16 @@
                     <option value="doctor">Doctor</option>
                     <option value="specialty">Specialty</option>
                 </select>    
-                <input type="submit" value="Enter">
+                <input class="input-submit" type="submit" value="Enter">
             </div>
         </form>
 
         <div class="serviceFE">
             <h4>Services sort by doctor</h4>
-            <div>
+            <div class="docWithService">
                 <c:forEach var="doc" items="${doc}">
                     <ul>
-                        ${doc.getDoctorId()}. ${doc.getLastname()} ${doc.getFirstname()}
+                        <br>${doc.getDoctorId()}. ${doc.getLastname()} ${doc.getFirstname()}
                     </ul>
                         <c:forEach var="service" items="${service}">
                             <c:if test="${doc.getDoctorId() == service.getDoctorId()}">
@@ -44,4 +47,6 @@
             </div>
         </div>
     </body>
+        <jsp:include page="header.jsp"></jsp:include>
+
 </html>

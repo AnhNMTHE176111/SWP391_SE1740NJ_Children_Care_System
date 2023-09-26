@@ -11,31 +11,36 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>services</title>
         <link href="css/service.css" rel="stylesheet" />
+        <link href="css/home.css" rel="stylesheet" />
 
     </head>
-    <body>  
-        <h2>Our services</h2>
-        <form action="service" method="post">
-            <div class="filter">
+    <jsp:include page="header.jsp"></jsp:include>
+        <body>  
+            <h2>Our Services</h2>
+
+            <form action="service" method="post" class="filter">
                 <h4>Selected by:</h4>
                 <select id="sort" name="id">
                     <option value="all">All</option>
                     <option id="doctor" value="doctor">Doctor</option>
                     <option id="specialty" value="specialty">Specialty</option>
                 </select>    
-                <input type="submit" value="Enter">
-            </div>
-        </form>
+                <input class="input-submit" type="submit" value="Enter">
+            </form>
 
-        <div class="serviceFE">
-            <h4>All of our services</h4>
-            <ul>
-                <c:forEach var="item" items="${service}">
-                    <a href="servicelist?id=${item.getServiceId()}">
-                        ${item.getServiceId()}. ${item.getServiceName()}
-                    </a><br>
-                </c:forEach>
-            </ul>
-        </div>
+            <div class="serviceFE">
+                <h4>All of our services</h4>
+                <ul>
+                    <c:forEach var="item" items="${service}">
+                        <li>
+                            <a href="servicelist?id=${item.getServiceId()}">
+                                ${item.getServiceId()}. ${item.getServiceName()}
+                            </a>
+                        </li>
+                    </c:forEach>
+                </ul>
+            </div>
     </body>
+    <jsp:include page="footer.jsp"></jsp:include>
+
 </html>
