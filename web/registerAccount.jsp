@@ -33,35 +33,35 @@
                 <form class="register_form" action="register" method="post">
                     <div class="register_form_div">
                         <label>First name</label><br />
-                        <input class="input" type="text" name="firstname"/>
+                        <input class="input" type="text" name="firstname" required/>
                     </div>
                     <div class="register_form_div">
                         <label>Last name</label><br />
-                        <input class="input" type="text" name="lastname"/>
+                        <input class="input" type="text" name="lastname" required/>
                     </div>
                     <div class="register_form_div">
                         <label>Email</label><br />
-                        <input class="input" type="email" name="email"/>
+                        <input class="input" type="email" name="email" required/>
                     </div>
                     <div class="register_form_div">
                         <label>Password</label><br />
-                        <input class="input" type="password" name="password"/>
+                        <input class="input" type="password" name="password" required/>
                     </div>
                     <div class="register_form_div">
                         <label>Re-Password</label><br />
-                        <input class="input" type="password" name="repassword"/>
+                        <input class="input" type="password" name="repassword" required/>
                     </div>
                     <div class="register_form_div">
                         <label>Address</label><br />
-                        <input class="input" type="text" name="address"/>
+                        <input class="input" type="text" name="address" required/>
                     </div>
                     <div class="register_form_div">
                         <label>Phone</label><br />
-                        <input class="input" type="text" name="phone"/>
+                        <input class="input" type="text" name="phone" required/>
                     </div>
                     <div class="register_form_div">
                         <label>Date of Birth</label><br />
-                        <input class="input" type="date" name="dob"/>
+                        <input class="input" type="date" name="dob" required/>
                     </div>
                     <div class="register_form_div">
                         <p>By signing up I agree to the <a href="#">terms & conditions</a> and<br>

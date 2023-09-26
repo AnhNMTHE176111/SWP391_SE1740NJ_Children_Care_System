@@ -95,7 +95,7 @@ public class DAOUser extends DBContext {
             pstm = cnn.prepareStatement(strSQL);
             pstm.setString(1, newEmail);
             rs = pstm.executeQuery();
-            User user = null;
+            User user = new User();;
             while (rs.next()) {
                 user.setFirstName(rs.getString(3));
                 user.setLastName(rs.getString(4));
@@ -104,7 +104,6 @@ public class DAOUser extends DBContext {
                 user.setAddress(rs.getString(7));
                 user.setPhone(rs.getString(8));
                 user.setDob(rs.getString(9));
-                user = new User();
             }
             return user;
         } catch (SQLException e) {
