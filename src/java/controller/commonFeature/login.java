@@ -94,7 +94,7 @@ public class login extends HttpServlet {
 
                 session.setAttribute("name", user.getFirstName());
                 //chuyen huong den trang home
-                response.sendRedirect("index.jsp");
+                response.sendRedirect("home.jsp");
             } else {
 
                 String mess = "Wrong email or password!";
@@ -109,6 +109,7 @@ public class login extends HttpServlet {
             DAOUser userDao = new DAOUser();
             User googleUser = getUserInfo(accessToken);
             if (googleUser.getEmail() != null) {
+                System.out.println("Google email: " + googleUser.getEmail());
                 session.setAttribute("name", googleUser.getEmail());
             }
         }
