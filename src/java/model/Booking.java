@@ -9,58 +9,50 @@ package model;
  * @author dmx
  */
 public class Booking {
-    private int customerId, doctorId, medicalInfoId, slotId;
-    private String bookingTime;
+    private String day, slotm, specialty, doctor ;
 
     public Booking() {
     }
 
-    public Booking(int customerId, int doctorId, int medicalInfoId, int slotId, String bookingTime) {
-        this.customerId = customerId;
-        this.doctorId = doctorId;
-        this.medicalInfoId = medicalInfoId;
-        this.slotId = slotId;
-        this.bookingTime = bookingTime;
+    public Booking(String day, String slotm, String specialty, String doctor) {
+        this.day = day;
+        this.slotm = slotm;
+        this.specialty = specialty;
+        this.doctor = doctor;
     }
 
-    public int getCustomerId() {
-        return customerId;
+    public String getDay() {
+        return day;
     }
 
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
+    public void setDay(String day) {
+        this.day = day;
     }
 
-    public int getDoctorId() {
-        return doctorId;
+    public String getSlotm() {
+        return slotm;
     }
 
-    public void setDoctorId(int doctorId) {
-        this.doctorId = doctorId;
+    public void setSlotm(String slotm) {
+        this.slotm = slotm;
     }
 
-    public int getMedicalInfoId() {
-        return medicalInfoId;
+    public String getSpecialty() {
+        return specialty;
     }
 
-    public void setMedicalInfoId(int medicalInfoId) {
-        this.medicalInfoId = medicalInfoId;
+    public void setSpecialty(String specialty) {
+        this.specialty = specialty;
     }
 
-    public int getSlotId() {
-        return slotId;
+    public String getDoctor() {
+        return doctor;
     }
 
-    public void setSlotId(int slotId) {
-        this.slotId = slotId;
+    public void setDoctor(String doctor) {
+        this.doctor = doctor;
     }
 
-    public String getBookingTime() {
-        return bookingTime;
-    }
-
-    public void setBookingTime(String bookingTime) {
-        this.bookingTime = bookingTime;
-    }
     
+   
 }

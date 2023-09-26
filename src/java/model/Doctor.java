@@ -9,9 +9,10 @@ package model;
  * @author dmx
  */
 public class Doctor {
-    private int doctorId, ExperienceYears, SpecialtyId, userId;
+    private int doctorId, ExperienceYears;
     private double rating;
-    private String Description, Position;
+    private String name, specialty, Description, Position;
+
 
     //String riêng dùng trong màn hình services của HongNT
     private String lastname,firstname;
@@ -44,12 +45,13 @@ public class Doctor {
     public Doctor() {
     }
 
-    public Doctor(int doctorId, int ExperienceYears, int SpecialtyId, int userId, double rating, String Description, String Position) {
+
+    public Doctor(int doctorId, int ExperienceYears, double rating, String name, String specialty, String Description, String Position) {
         this.doctorId = doctorId;
         this.ExperienceYears = ExperienceYears;
-        this.SpecialtyId = SpecialtyId;
-        this.userId = userId;
         this.rating = rating;
+        this.name = name;
+        this.specialty = specialty;
         this.Description = Description;
         this.Position = Position;
     }
@@ -70,22 +72,6 @@ public class Doctor {
         this.ExperienceYears = ExperienceYears;
     }
 
-    public int getSpecialtyId() {
-        return SpecialtyId;
-    }
-
-    public void setSpecialtyId(int SpecialtyId) {
-        this.SpecialtyId = SpecialtyId;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
     public double getRating() {
         return rating;
     }
@@ -93,6 +79,24 @@ public class Doctor {
     public void setRating(double rating) {
         this.rating = rating;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSpecialty() {
+        return specialty;
+    }
+
+    public void setSpecialty(String specialty) {
+        this.specialty = specialty;
+    }
+
+
 
     public String getDescription() {
         return Description;
@@ -109,6 +113,11 @@ public class Doctor {
     public void setPosition(String Position) {
         this.Position = Position;
     }
+
     
+
+            
+
+   
     
 }

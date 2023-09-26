@@ -4,18 +4,25 @@
  */
 package controller.commonFeature;
 
-import DAO.DAOUser;
+import DAO.DAOBooking;
+
 import java.io.IOException;
 import java.io.PrintWriter;
-
-import model.User;
+import java.util.ArrayList;
+import DAO.DAOBooking;
+import DAO.DAOSlot;
+import DAO.DAODoctor;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import javax.jws.WebService;
 
 /**
  *
- * @author ASUS
+ * @author tbin6
  */
-@WebServlet(name = "register", urlPatterns = {"/register"})
-public class register extends HttpServlet {
+@WebServlet(name = "bookingController", urlPatterns = {"/booking"})
+public class bookingController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,10 +41,10 @@ public class register extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet register</title>");
+            out.println("<title>Servlet bookingController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet register at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet bookingController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -52,11 +59,26 @@ public class register extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
+ protected void doGet(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    ArrayList dateList = new ArrayList<>();
+    ArrayList slotList = new ArrayList<>();
+    ArrayList specialtyList = new ArrayList<>();
+    DAOSlot slot = new DAOSlot();
+    DAOBooking daoBooking = new DAOBooking();
+     DAODoctor doctorBooking = new DAODoctor();
+    
+    specialtyList = doctorBooking.getListSpecialty();
+    slotList = slot.getListSlot();
+    dateList = daoBooking.getListDate();
+    
+    request.setAttribute("specialtyList", specialtyList);
+    request.setAttribute("dateList", dateList);
+    request.setAttribute("slotList", slotList);
+    request.getRequestDispatcher("Booking.jsp").forward(request, response);
+}
+
+
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -69,48 +91,7 @@ public class register extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String firstName = request.getParameter("firstname");
-        String lastName = request.getParameter("lastname");
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        String rePassword = request.getParameter("repassword");
-        String address = request.getParameter("address");
-        String phone = request.getParameter("phone");
-        String dob = request.getParameter("dob");
-
-        DAOUser userDao = new DAOUser();
-        User u = userDao.checkEmailExist(email);
-
-        boolean valid = true;
-
-        //Trung ten dang nhap
-        if (u != null) {
-            //register fail
-            valid = false;
-            String mess = "This email already exists!";
-            request.setAttribute("mess", mess);
-            //send direct with parameter
-            request.getRequestDispatcher("registerAccount.jsp").forward(request, response);
-        }
-
-        //Mat khau nhap lai sai
-        if (!rePassword.equals(password)) {
-            //register fail
-            valid = false;
-            String mess = "Re-entered password is incorrect!";
-            request.setAttribute("mess", mess);
-            //send direct with parameter
-            request.getRequestDispatcher("registerAccount.jsp").forward(request, response);
-        }
-
-        User user = new User("1", firstName, lastName, email, password, address, phone, dob, "image/profile_user/default.jpg", 1);
-        if (valid == true) {
-            userDao.addNewAccountByEmail(user);
-            String mess = "Your account have been created";
-            request.setAttribute("mess1", mess);
-            //send direct with parameter
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        }
+        processRequest(request, response);
     }
 
     /**
