@@ -20,12 +20,11 @@ public class User {
             dob,
             avatar;
     private int userId, roleId;
-    private double amount;
 
     public User() {
     }
 
-    public User(String status, String firstName, String lastName, String email, String password, String address, String phone, String dob, String avatar, int userId, int roleId, double amount) {
+    public User(String status, String firstName, String lastName, String email, String password, String address, String phone, String dob, String avatar, int roleId) {
         this.status = status;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -35,9 +34,17 @@ public class User {
         this.phone = phone;
         this.dob = dob;
         this.avatar = avatar;
-        this.userId = userId;
         this.roleId = roleId;
-        this.amount = amount;
+    }
+
+    public User(String firstName, String lastName, String email, String password, String address, String phone, String dob) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.address = address;
+        this.phone = phone;
+        this.dob = dob;
     }
 
     public String getStatus() {
@@ -126,18 +133,5 @@ public class User {
 
     public void setRoleId(int roleId) {
         this.roleId = roleId;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-    @Override
-    public String toString(){
-        return "UserGoogleDto{" + "status=" + status + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", password=" + password + ", address=" + address + ", phone=" + phone +
-                ", dob=" + dob + ", avatar=" + avatar + ", userId=" + userId + ", roleId=" + roleId + ", amount=" + amount +'}';
     }
 }
