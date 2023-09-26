@@ -63,7 +63,7 @@ public class DAOUser extends DBContext {
             pstm.setString(1, email);
             pstm.setString(2, password);
             rs = pstm.executeQuery();
-            
+
             User user = new User();
             while (rs.next()) {
                 user.setUserId(Integer.parseInt(rs.getString(1)));
@@ -118,8 +118,8 @@ public class DAOUser extends DBContext {
 
     public void addNewAccountByEmail(User user) {
         try {
-            String strSQL = "insert into Users (firstName, lastName, email, password, address, phone, dob)"
-                    + " values (?, ?, ?, ?, ?, ?, ?)";
+            String strSQL = "insert into Users (firstName, lastName, email, password, address, phone, dob, status, avatar, RoleId)"
+                    + " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             pstm = cnn.prepareStatement(strSQL);
             pstm.setString(1, user.getFirstName());
             pstm.setString(2, user.getLastName());
@@ -128,8 +128,12 @@ public class DAOUser extends DBContext {
             pstm.setString(5, user.getAddress());
             pstm.setString(6, user.getPhone());
             pstm.setString(7, user.getDob());
-            rs = pstm.executeQuery();
- 
+            pstm.setString(8, user.getStatus());
+            pstm.setString(9, user.getAvatar());
+            pstm.setString(10, String.valueOf(user.getRoleId()));
+
+            pstm.execute();
+
         } catch (SQLException e) {
             System.out.println("SQL addNewAccountByEmail: " + e.getMessage());
         } catch (Exception e) {
@@ -138,7 +142,7 @@ public class DAOUser extends DBContext {
     }
 
     public void updatePasswordByEmail(User user) {
-         try {
+        try {
             String strSQL = "update Users set password = ? where email = ?";
             pstm = cnn.prepareStatement(strSQL);
             pstm.setString(1, user.getPassword());
