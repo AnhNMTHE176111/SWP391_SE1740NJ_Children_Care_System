@@ -319,3 +319,13 @@ label {
     margin-top: 20px;
     font-weight: bold;
 }
+.grid-date.selected {
+    background-color: aqua;
+    color: #ffffff; /* Màu chữ khi nút đã chọn */
+}
+
+.date-box.selected {
+    background-color: #007bff; /* Màu nền ngày đã chọn */
+    color: #ffffff; /* Màu chữ khi ngày đã chọn */
+}
+
