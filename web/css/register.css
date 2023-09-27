@@ -99,3 +99,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     font-family: "Nunito", sans-serif;
     font-size: small;
   }
+  
+  .register_form_div input{
+    font-family: "Handlee", cursive;
+  }
+  
+  .register_error {
+      color: red;
+  }
