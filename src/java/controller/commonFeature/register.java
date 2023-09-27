@@ -61,7 +61,7 @@ public class register extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.getRequestDispatcher("registerAccount.jsp").forward(request, response);
     }
 
     /**
@@ -83,40 +83,62 @@ public class register extends HttpServlet {
         String address = request.getParameter("address");
         String phone = request.getParameter("phone");
         String dob = request.getParameter("dob");
-
         DAOUser userDao = new DAOUser();
+        //Check if email exists
         User u = userDao.checkEmailExist(email);
-
         boolean valid = true;
-
-        //Trung ten dang nhap
+        //Use a regular expression to check the firstname and lastname entered
+        if (!firstName.matches("^[A-Z][a-zA-Z ].*$") || !lastName.matches("^[A-Z][a-zA-Z ].*$")) {
+            valid = false;
+            String mess = "First name and last name must start with an uppercase letter and contain only letters.";
+            request.setAttribute("mess", mess);
+            request.getRequestDispatcher("registerAccount.jsp").forward(request, response);
+        }
+        //Check if the user has entered the correct system email format
+        if (!email.endsWith("@gmail.com")) {
+            valid = false;
+            String mess = "Email must include \"@gmail.com\"";
+            request.setAttribute("mess", mess);
+            request.getRequestDispatcher("registerAccount.jsp").forward(request, response);
+        }
+        //Check if email exists
         if (u.getEmail() != null) {
             //register fail
             valid = false;
             String mess = "This email already exists!";
             request.setAttribute("mess", mess);
-            //send direct with parameter
             request.getRequestDispatcher("registerAccount.jsp").forward(request, response);
         }
-
-        //Mat khau nhap lai sai
+        //Use a regular expression to see if the user has set a password with the correct system format
+        if (!password.matches(".*[0-9].*") || !password.matches(".*[A-Z].*")) {
+            valid = false;
+            String mess = "Password must contain at least one digit and one uppercase letter!";
+            request.setAttribute("mess", mess);
+            request.getRequestDispatcher("registerAccount.jsp").forward(request, response);
+        }
+        //Check password length
+        if (password.length() < 8) {
+            valid = false;
+            String mess = "Password must be at least 8 characters!";
+            request.setAttribute("mess", mess);
+            request.getRequestDispatcher("registerAccount.jsp").forward(request, response);
+        }
+        //Check the repassword
         if (!rePassword.equals(password)) {
-            //register fail
             valid = false;
             String mess = "Re-entered password is incorrect!";
             request.setAttribute("mess", mess);
-            //send direct with parameter
             request.getRequestDispatcher("registerAccount.jsp").forward(request, response);
         }
-
+        //Initialize a new user
         User user = new User("1", firstName, lastName, email, password, address, phone, dob, "image/profile_user/default.jpg", 1);
+        //If the above conditions are satisfied
         if (valid == true) {
+            //Add a new user by email
             userDao.addNewAccountByEmail(user);
-            String mess = "Your account have been created";
+            //Notification of successful registration
+            String mess = "Your account have been created!";
             request.setAttribute("mess1", mess);
-            request.setAttribute("currentEmail", user.getEmail());
-            request.setAttribute("currentPassword", user.getPassword());
-            //send direct with parameter
             request.getRequestDispatcher("login.jsp").forward(request, response);
         }
     }

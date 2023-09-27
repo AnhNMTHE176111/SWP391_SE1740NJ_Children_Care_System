@@ -14,23 +14,41 @@
         <link href="css/service.css" rel="stylesheet" />
     </head>
     <jsp:include page="header.jsp"></jsp:include>
+
         <body>
-            <div class="nameServiceList">
+            <div class="page-banner">
+                <img src="image/service/systemCare.jpg" class="w-100">
+            </div>
+            <div class="servicesList" >
                 <ul>    
                     <h2>${serviceList.getServiceId()}. ${serviceList.getServiceName()}</h2>
-                <h4>   ${serviceList.getDescription()}</h4>
+                <h4>${serviceList.getDescription()}</h4>
             </ul>
-        </div>
-        <ul class="inforDoctor">
-            <p>${doc.getPosition()} ${doc.getLastname()} ${doc.getFirstname()}</p>
-            <p>Email: ${doc.getEmail()}</p>
-            <p>Sđt: ${doc.getPhone()}</p>
-            <p>Chuyên Ngành: ${doc.getSpecialtyName()}</p>
-            <p>Đánh Giá: ${doc.getRating()}</p>
-            <p>Năm kinh nghiệm: ${doc.getExperienceYears()}</p>
-            <p>Thông tin cơ bản: ${doc.getDescription()}</p>
-        </ul>
-    </body>
-    <jsp:include page="footer.jsp"></jsp:include>
+            <ul class="doctorInfo">
+                <p>Bác sĩ điều tri: ${doc.getLastname()} ${doc.getFirstname()}</p>
+                <p>Chuyên Ngành: ${doc.getSpecialtyName()}</p>
+                <p>Năm kinh nghiệm: ${doc.getExperienceYears()}</p>
+                <p>Email: ${doc.getEmail()}</p>
+                <p>Sđt: ${doc.getPhone()}</p>
+                <p>Đánh Giá: <span id="rating"> ${doc.getRating()}/5.00</p>
+                <p style="width: 500px;">Thông tin cơ bản: ${doc.getDescription()}</p>
+            </ul>
 
+            <div class="doctorAvatar">
+                <img src="image/service/defaultjpg.jpg" alt="Doctor Avatar" style="height: 300px;width: 300px;">
+            </div>
+        </div>
+        <script>
+            // Get the rating element
+            const ratingElement = document.getElementById('rating');
+
+            // Parse the rating value and format it to display only 2 decimal places
+            const formattedRating = parseFloat(ratingElement.textContent).toFixed(2);
+
+            // Update the content of the rating element with the formatted value
+            ratingElement.textContent = formattedRating;
+        </script>
+    </body>
+
+    <jsp:include page="footer.jsp"></jsp:include>
 </html>
