@@ -108,7 +108,9 @@ public class login extends HttpServlet {
             //Creates a session that stores the user's login session
             session.setAttribute("user", user);
             session.setAttribute("roleId", user.getRoleId());
-            session.setAttribute("name", user.getFirstName());
+            session.setAttribute("name", user.getFirstName() + " " + user.getLastName());
+            
+            System.out.println("roleid: " + user.getRoleId());
 
             if(user.getRoleId() == 1) {
                 response.sendRedirect("home.jsp");
@@ -122,7 +124,7 @@ public class login extends HttpServlet {
             if(user.getRoleId() == 4) {
                 response.sendRedirect("admin");
             }
-            response.sendRedirect("home.jsp");
+            
         } else {
             //Report an error when the user enters an incorrect email or password
             String mess = "Wrong email or password!";

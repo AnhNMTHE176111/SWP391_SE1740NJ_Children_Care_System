@@ -1,11 +1,19 @@
-body {}
+
 
 .popup {
     display: flex;
     justify-content: center;
     align-content: center;
     align-items: center;
-    height: 100vh;
+    height: 90vh;
+    position: fixed;
+    z-index: 999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
 }
 
 .change-profile-container {
@@ -20,6 +28,15 @@ body {}
     padding: 30px;
     z-index: 999;
     background-color: #fff;
+
+    background-color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
 .change-profile-container form {

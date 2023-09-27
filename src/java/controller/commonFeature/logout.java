@@ -5,23 +5,19 @@
 
 package controller.commonFeature;
 
-import DAO.DAOUser;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part;
-import java.io.File;
-import java.nio.file.Files;
-import model.User;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
  * @author dmx
  */
-public class changeProfile extends HttpServlet {
+public class logout extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -38,10 +34,10 @@ public class changeProfile extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet changeProfile</title>");  
+            out.println("<title>Servlet logout</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet changeProfile at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet logout at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,7 +54,10 @@ public class changeProfile extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        session.removeAttribute("user");
+        session.removeAttribute("name");
+        response.sendRedirect("home.jsp");
     } 
 
     /** 
@@ -71,43 +70,8 @@ public class changeProfile extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String fName = request.getParameter("firstName");
-        String lName = request.getParameter("lastName");
-        String email = request.getParameter("email");
-        String phone = request.getParameter("phone");
-        String address = request.getParameter("address");
-        String dob = request.getParameter("dob");
-        System.out.println("dob input: " + dob + fName + lName + email + phone + address);
-        String oldEmail = request.getParameter("oldEmail");
-        
-        DAOUser daoUser = new DAOUser();
-        User user = (User) request.getSession().getAttribute("user");
-               
-//        String uploadDir = "D:\\FPT_Curriculum\\Fall2023\\SWP391\\Project\\SWP391_SE1740NJ_Children_Care_System\\web\\image\\profile_user";
-//        
-//        Part filePart = request.getPart("imageFile");
-//        String fileName = "user" + user.getUserId();
-//        String filePath = uploadDir + File.separator + fileName;
-//        
-//        System.out.println(filePath);
-//        
-//        File file = new File(uploadDir, fileName);
-//        
-//        
-//        System.out.println(filePart.getInputStream());
-//        System.out.println(file.toPath());
-//        
-//        Files.copy(filePart.getInputStream(), file.toPath());
-        
-        daoUser.updateProfile(fName, lName, phone, address, dob, "image/profile_user/default.jpg", email);
-        request.getSession().setAttribute("user", daoUser.getUserByEmailAndPassword(email, user.getPassword()));
-        request.getSession().setAttribute("name", daoUser.getUserByEmailAndPassword(email, user.getPassword()).getFirstName() + " " + daoUser.getUserByEmailAndPassword(email, user.getPassword()).getLastName());
-        
-        response.sendRedirect("home");
-        
+        processRequest(request, response);
     }
-    
-    
 
     /** 
      * Returns a short description of the servlet.

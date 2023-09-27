@@ -78,6 +78,8 @@ public class DAOUser extends DBContext {
                 user.setAvatar(rs.getString(10));
                 user.setRoleId(Integer.parseInt(rs.getString(11)));
                 // some code to finish
+                
+                System.out.println("dob: " + user.getDob());
             }
             return user;
         } catch (SQLException e) {
@@ -152,6 +154,31 @@ public class DAOUser extends DBContext {
             System.out.println("SQL updatePasswordByEmail: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("updatePasswordByEmail: " + e.getMessage());
+        }
+    }
+
+    public void updateProfile(String fName, String lName, String phone, String address, String dob, String avatar, String email) {
+        try {
+            System.out.println(fName + lName + phone);
+            String strSQL = "update Users\n"
+                    + "set firstName = ? , lastName = ? , phone = ? , address = ? , dob = ? , avatar = ?\n"
+                    + "where email = ?";
+            pstm = cnn.prepareStatement(strSQL);
+            pstm.setString(1, fName);
+            pstm.setString(2, lName);
+            pstm.setString(3, phone);
+            pstm.setString(4, address);
+            pstm.setString(5, dob);
+            pstm.setString(6, avatar);
+            pstm.setString(7, email);
+            
+            pstm.execute();
+            System.out.println("Update Successfully");
+
+        } catch (SQLException e) {
+            System.out.println("SQL updateProfile: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("updateProfile: " + e.getMessage());
         }
     }
 
