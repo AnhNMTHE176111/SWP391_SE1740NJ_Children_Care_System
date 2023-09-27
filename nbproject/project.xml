@@ -38,23 +38,10 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-<<<<<<< HEAD
-                    <file>${file.reference.jakarta.servlet.jsp.jstl-2.0.0.jar-2}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library dirs="200">
-                    <file>${file.reference.jakarta.servlet.jsp.jstl-api-2.0.0__1_.jar}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library dirs="200">
-                    <file>${file.reference.sqljdbc42.jar-1}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
+                    <file>${&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD}</file>
                 </library>
                 <library dirs="200">
                     <file>${libs.jakartaee-web-api-9.0.classpath}</file>
-=======
-                    <file>${file.reference.jakarta.servlet.jsp.jstl-2.0.0.jar}</file>
->>>>>>> 87d12d943d1db743852499469aa9b1aa719a2cf7
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
             </web-module-libraries>

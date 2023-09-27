@@ -324,3 +324,8 @@ label {
     color: #ffffff; /* Màu chữ khi nút đã chọn */
 }
 
+.date-box.selected {
+    background-color: #007bff; /* Màu nền ngày đã chọn */
+    color: #ffffff; /* Màu chữ khi ngày đã chọn */
+}
+
