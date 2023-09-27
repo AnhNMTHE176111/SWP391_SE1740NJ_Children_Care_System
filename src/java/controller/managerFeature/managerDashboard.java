@@ -2,26 +2,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.commonFeature;
+package controller.managerFeature;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import DAO.DAOBooking;
-import DAO.DAOSlot;
-import DAO.DAODoctor;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
- * @author tbin6
+ * @author dmx
  */
-@WebServlet(name = "bookingController", urlPatterns = {"/booking"})
-public class bookingController extends HttpServlet {
+public class managerDashboard extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +35,10 @@ public class bookingController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet bookingController</title>");
+            out.println("<title>Servlet managerDashboard</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet bookingController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet managerDashboard at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,20 +53,20 @@ public class bookingController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ArrayList slotList = new ArrayList<>();
-        ArrayList specialtyList = new ArrayList<>();
-        DAOSlot slot = new DAOSlot();
-        DAOBooking daoBooking = new DAOBooking();
-        DAODoctor doctorBooking = new DAODoctor();
-
-        specialtyList = doctorBooking.getListSpecialty();
-        slotList = slot.getListSlot();
-
-        request.setAttribute("specialtyList", specialtyList);
-        request.setAttribute("slotList", slotList);
-        request.getRequestDispatcher("Booking.jsp").forward(request, response);
+        HttpSession session = request.getSession();
+        if (String.valueOf(session.getAttribute("roleId")).equals("null")) {
+            response.sendRedirect("403.jsp");
+        } else {
+            int roleId = Integer.parseInt(String.valueOf(session.getAttribute("roleId")));
+            if (roleId == 3) {
+                request.getRequestDispatcher("managerDashboard.jsp").forward(request, response);
+            } else {
+                response.sendRedirect("403.jsp");
+            }
+        }
     }
 
     /**
