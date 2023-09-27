@@ -1,93 +1,163 @@
 body {
     font-family: Arial, sans-serif;
-    padding: 20px;
     margin: 0;
-}
+    padding: 0;
+    font-size: 16px;
+    line-height: 1.6;
 
-.filter {
-    display: flex;
-    align-items: center;
 }
-
-.filter h4 {
-    margin-right: 10px;
+.page-banner{
+    margin: 10px;
+    padding: 20px;
 }
-
-.filter select {
-    margin-right: 10px;
+.our-service{
+    margin-bottom: 15px;
+    padding-top: 5px;
+    margin-left: 30px;
+    margin-right: 30px;
+    background-color: #def8f8;
 }
-/* Custom select style */
-.filter {
-    position: relative;
-    display: inline-block;
+.filter{
+    text-decoration: none;
+    margin-right:   30px;
+    font-family: "Open Sans", sans-serif; /* Replace with the desired font family */
+    text-align: right;
+    padding-bottom: 10px;
 }
-
-.filter select {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    width: 100%;
+#sort {
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
-    cursor: pointer;
-    outline: none;
+    font-size: 16px;
 }
 
-.filter select:focus {
-    border-color: #3498db;
-}
-
-/* Custom arrow */
-.filter:after {
-    content: '\25BC'; /* Unicode for the down arrow (▼) */
-    font-family: FontAwesome;
-    font-size: 14px;
-    color: #333;
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-}
-
-/* Style options */
-.filter select option {
-    padding: 10px;
-}
-/* Custom submit button style */
 .input-submit {
     padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #3498db;
-    color: #fff;
     font-size: 16px;
+    background-color: #00ccff;
+    color: white;
+    border: none;
     cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
 .input-submit:hover {
-    background-color: #2980b9;
+    background-color: #99ffff;
 }
-.serviceFE{
-    margin: 50px;
+
+.allService {
+    margin: 30px;
+    padding: 20px;
+    background-color: #ccffff;
 }
-.serviceFE ul{
-    font-size: 20px;
-    font-family: "Nunito", sans-serif;
+
+.allService ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
 }
-.serviceFE a{
+
+.allService li {
+    margin-bottom: 10px;
     margin-left: 100px;
+}
+
+.allService li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.allService li a:hover {
+    color: chocolate;
+}
+
+.doctorService{
+    margin: 30px;
+    padding: 20px;
+    background-color: #ccffff;
+}
+.doctorService h4 {
+    font-size: 50px;
     margin-bottom: 10px;
 }
 
-.nameServiceList{
-    padding-top: 10px;
-    padding-bottom: 10px;
+.scrollable-section {
+    max-height: 500px; /* Adjust the maximum height for scrolling */
+    overflow-y: auto;
 }
 
-.inforDoctor p {
-    color: black;
-    max-width: 300px; 
+.doctor {
+    margin-bottom: 20px;
+}
+
+.doctor h5 {
+    font-family: "Open Sans", sans-serif; /* Replace with the desired font family */
+    margin-bottom: 5px;
+}
+
+.services {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.services li {
+    margin-bottom: 10px;
+}
+
+.services li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 5px;
+    margin: 10px;
+    padding-left: 20px; 
+}
+
+.services li a:hover {
+    color: chocolate;
+}
+
+.servicesList{
+    padding: 15px;
+    margin: 30px;
+    background-color: #ccffff;
+     display: flex;
+    justify-content: space-between;
+}
+
+.servicesList h2,h4{
+        font-family: "Arial ", sans-serif; /* Replace with the desired font family */
+}
+
+
+ul.doctorInfo {
+    list-style: none;
+    padding: 0;
+    margin-left: 30px;
+    margin-top: 10px;
+}
+
+ul.doctorInfo p {
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+ul.doctorInfo p:first-child {
+    font-weight: bold;
+}
+
+ul.doctorInfo p:nth-child(odd) {
+    color: #333; /* Change color as needed */
+}
+
+ul.doctorInfo p:nth-child(even) {
+    color: #555; /* Change color as needed */
+}
+.doctorAvatar {
+    display: flex;
+    justify-content: flex-end; /* Align avatar to the right */
+    align-items: center;
 }
