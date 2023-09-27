@@ -12,35 +12,37 @@
         <title>services</title>
         <link href="css/service.css" rel="stylesheet" />
         <link href="css/home.css" rel="stylesheet" />
-
     </head>
     <jsp:include page="header.jsp"></jsp:include>
+
         <body>  
-            <h2>Our Services</h2>
-
-            <form action="service" method="post" class="filter">
-                <h4>Selected by:</h4>
-                <select id="sort" name="id">
-                    <option value="all">All</option>
-                    <option id="doctor" value="doctor">Doctor</option>
-                    <option id="specialty" value="specialty">Specialty</option>
-                </select>    
-                <input class="input-submit" type="submit" value="Enter">
-            </form>
-
-            <div class="serviceFE">
-                <h4>All of our services</h4>
-                <ul>
-                    <c:forEach var="item" items="${service}">
-                        <li>
-                            <a href="servicelist?id=${item.getServiceId()}">
-                                ${item.getServiceId()}. ${item.getServiceName()}
-                            </a>
-                        </li>
-                    </c:forEach>
-                </ul>
+            <div class="page-banner">
+                <img src="image/service/systemCare.jpg" class="w-100">
             </div>
+            <div class="our-service">
+                <h2 style="text-align: center">Our Services</h2>
+                <form action="service" method="post" class="filter">
+                    <h4 >Selected by</h4>
+                    <select id="sort" name="id" >
+                        <option value="all">All</option>
+                        <option id="doctor" value="doctor">Doctor</option>
+                        <option id="specialty" value="specialty">Specialty</option>
+                    </select>    
+                    <input class="input-submit"type="submit" value="Enter">
+                </form>
+            </div>
+
+            <div class="allService">
+                <ul>
+                <c:forEach var="item" items="${service}">
+                    <li>
+                        <a href="servicelist?id=${item.getServiceId()}">
+                            ${item.getServiceName()}
+                        </a>
+                    </li>
+                </c:forEach>
+            </ul>
+        </div>
     </body>
     <jsp:include page="footer.jsp"></jsp:include>
-
 </html>

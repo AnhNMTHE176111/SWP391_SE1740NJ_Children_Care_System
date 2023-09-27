@@ -67,10 +67,10 @@ public class serviceServlet extends HttpServlet {
         DAOService d = new DAOService();
         ArrayList<Service> service = d.getListService();
         request.setAttribute("service", service);
-        ArrayList<Doctor> doc = d.getListDoctor();
-        request.setAttribute("doc", doc);
-        ArrayList<Specialty> spec = d.getListSpecialty();
-        request.setAttribute("spec", spec);
+//        ArrayList<Doctor> doc = d.getListDoctor();
+//        request.setAttribute("doc", doc);
+//        ArrayList<Specialty> spec = d.getListSpecialty();
+//        request.setAttribute("spec", spec);
         request.getRequestDispatcher("service.jsp").forward(request, response);
     }
 
