@@ -79,10 +79,23 @@ public class login extends HttpServlet {
 
             User user = userDao.getUserByEmailAndPassword(email, password);
             if (user.getEmail() != null) {
-
+                session.setAttribute("user", user);
+                session.setAttribute("roleId", user.getRoleId());
                 session.setAttribute("name", user.getFirstName());
-                //chuyen huong den trang home
-                response.sendRedirect("home.jsp");
+                
+                if(user.getRoleId() == 1) {
+                    response.sendRedirect("home.jsp");
+                }
+                if(user.getRoleId() == 2) {
+                    response.sendRedirect("staff");
+                }
+                if(user.getRoleId() == 3) {
+                    response.sendRedirect("manage");
+                }
+                if(user.getRoleId() == 4) {
+                    response.sendRedirect("admin");
+                }
+                
             } else {
 
                 String mess = "Wrong email or password!";

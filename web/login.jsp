@@ -28,11 +28,11 @@
                 <form class="login_form" action="login" method="post">
                     <div class="login_form_div">
                         <label>Email</label><br />
-                        <input class="input" type="email" name="email" placeholder="Input your Email" required/>
+                        <input class="input" type="email" name="email" placeholder="Input your Email" value="${currentEmail}" required/>
                     </div>
                     <div class="login_form_div">
                         <label>Password</label><br />
-                        <input class="input" type="password" name="password" placeholder="Input your Password" required/>
+                        <input class="input" type="password" name="password" placeholder="Input your Password" value="${currentPassword}" required/>
                     </div>
                     <div class="login_form_div">
                         <input type="checkbox" />

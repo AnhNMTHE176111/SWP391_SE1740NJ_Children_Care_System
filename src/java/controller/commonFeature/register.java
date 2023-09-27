@@ -112,9 +112,10 @@ public class register extends HttpServlet {
         User user = new User("1", firstName, lastName, email, password, address, phone, dob, "image/profile_user/default.jpg", 1);
         if (valid == true) {
             userDao.addNewAccountByEmail(user);
-            System.out.println("Valid");
             String mess = "Your account have been created";
             request.setAttribute("mess1", mess);
+            request.setAttribute("currentEmail", user.getEmail());
+            request.setAttribute("currentPassword", user.getPassword());
             //send direct with parameter
             request.getRequestDispatcher("login.jsp").forward(request, response);
         }
