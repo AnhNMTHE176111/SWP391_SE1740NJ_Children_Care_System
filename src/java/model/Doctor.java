@@ -9,17 +9,24 @@ package model;
  * @author dmx
  */
 public class Doctor {
-    private int doctorId, ExperienceYears;
+
+    private int doctorId, ExperienceYears, specialtyId;
     private double rating;
-    private String Description, Position,email,phone,specialtyName;
+    private String Description, Position, email, phone, specialtyName;
     private String name, specialty;
 
 //code riêng dùng trong màn hình services của HongNT
-    private String lastname,firstname;
+    private String lastname, firstname;
+
     public Doctor(int doctorId, String lastname, String firstname) {
         this.doctorId = doctorId;
         this.lastname = lastname;
         this.firstname = firstname;
+    }
+
+    public Doctor(String name, int specialtyId) {
+        this.name = name;
+        this.specialtyId = specialtyId;
     }
 
     public Doctor(int ExperienceYears, double rating, String Description, String Position, String firstname, String lastname, String email, String phone, String specialtyName) {
@@ -34,8 +41,6 @@ public class Doctor {
         this.firstname = firstname;
     }
 
-    
-    
     public String getLastname() {
         return lastname;
     }
@@ -51,7 +56,6 @@ public class Doctor {
     public void setFirstname(String firstname) {
         this.firstname = firstname;
     }
-    
 
     public String getEmail() {
         return email;
@@ -80,7 +84,6 @@ public class Doctor {
 
     public Doctor() {
     }
-
 
     public Doctor(int doctorId, int ExperienceYears, double rating, String name, String specialty, String Description, String Position) {
         this.doctorId = doctorId;
@@ -128,11 +131,17 @@ public class Doctor {
         return specialty;
     }
 
+    public int getSpecialtyId() {
+        return specialtyId;
+    }
+
+    public void setSpecialtyId(int specialtyId) {
+        this.specialtyId = specialtyId;
+    }
+
     public void setSpecialty(String specialty) {
         this.specialty = specialty;
     }
-
-
 
     public String getDescription() {
         return Description;
@@ -150,10 +159,4 @@ public class Doctor {
         this.Position = Position;
     }
 
-    
-
-            
-
-   
-    
 }
