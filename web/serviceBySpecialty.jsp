@@ -12,43 +12,47 @@
         <title>services</title>
         <link href="css/service.css" rel="stylesheet" />
         <link href="css/home.css" rel="stylesheet" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0-beta3/css/all.min.css">
 
     </head>
     <jsp:include page="header.jsp"></jsp:include>
 
         <body>  
-            <h2>Our services</h2>
-            <form action="service" method="post">
-                <div class="filter">
-                    <h4>Selected by:</h4>
-                    <select id="sort"name="id">
-                        <option value="all">All</option>
-                        <option value="doctor">Doctor</option>
-                        <option value="specialty">Specialty</option>
-                    </select>    
-                    <input class="input-submit" type="submit" value="Enter">
-                </div>
-            </form>
-
-            <div class="serviceFE">
-                <h4>Services sort by specialty</h4>
-                <div class="docWithService">
-                <c:forEach var="spec" items="${spec}">
-                    <ul>
-                        <br>${spec.getSpecialtyId()}. ${spec.getSpecialtyName()}
-                    </ul>
-                    <c:forEach var="serBySpec" items="${serBySpec}">
-                        <c:if test="${ spec.getSpecialtyId()==serBySpec.getSpecId()  }">
-                            <a href="servicelist?id=${serBySpec.getServiceId()}">
-                                ${serBySpec.getServiceName()}</a><br>    
-                            </c:if>
-                        </c:forEach>
-                    </c:forEach>
+            <div class="page-banner">
+                <img src="image/service/systemCare.jpg" class="w-100">
+            </div>
+            <div class="our-service">
+                <h2 style="text-align: center" >Our Services</h2>
+                <form action="service" method="post" class="filter">
+                    <div >
+                        <h4>Selected by:</h4>
+                        <select id="sort"name="id">
+                            <option value="all">All</option>
+                            <option value="doctor">Doctor</option>
+                            <option value="specialty">Specialty</option>
+                        </select>    
+                        <input class="input-submit" type="submit" value="Enter">
+                    </div>
+                </form>
             </div>
 
-        </div>
-    </body>
+            <div class="doctorService">
+                <div class="scrollable-section">
+                    <c:forEach var="spec" items="${spec}">
+                        <div class="doctor">
+                            <h5>${spec.getSpecialtyId()}. ${spec.getSpecialtyName()}</h5>
+                            <ul class="services">
+                            <c:forEach var="serBySpec" items="${serBySpec}">
+                                <c:if test="${ spec.getSpecialtyId()==serBySpec.getSpecId()  }">
+                                    <li>
+                                        <a href="servicelist?id=${serBySpec.getServiceId()}"> ${serBySpec.getServiceName()}</a>  
+                                    </li>
+                                </c:if>
+                            </c:forEach>
+                            <ul>
+                        </div>
+                    </c:forEach>
+                </div>
+            </div>
+        </body>
     <jsp:include page="footer.jsp"></jsp:include>
-
 </html>
