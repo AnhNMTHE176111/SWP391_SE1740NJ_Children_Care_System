@@ -57,7 +57,7 @@ public class changePassword extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        request.getRequestDispatcher("changePassword.jsp").forward(request, response);
     } 
 
     /** 
@@ -74,23 +74,36 @@ public class changePassword extends HttpServlet {
         String oldpassword = request.getParameter("oldpassword");
         String newpassword = request.getParameter("newpassword");
         String repassword = request.getParameter("repassword");
-        
         DAOUser userDao = new DAOUser();
+        //Get the user's account information
         User user = userDao.getUserByEmailAndPassword(email, oldpassword);
-        
-        if (!repassword.equals(newpassword)) {
-            String mess = "Re-entered password is incorrect!";
+        //Check the repassword
+        if(!oldpassword.equals(user.getPassword())){
+            String mess = "Wrong currently password";
             request.setAttribute("mess", mess);
-            //send direct with parameter
             request.getRequestDispatcher("changePassword.jsp").forward(request, response);
         }
         
-        if(oldpassword.equals(user.getPassword())){
+        //Check if the new password is entered in the correct system format
+        if (!newpassword.matches(".*[0-9].*") || !newpassword.matches(".*[A-Z].*")) {
+            String mess = "Password must contain at least one digit and one uppercase letter!";
+            request.setAttribute("mess", mess);
+            request.getRequestDispatcher("changePassword.jsp").forward(request, response);
+        }
+        //Check the length of the new password
+        if (newpassword.length() < 8) {
+            String mess = "Password must be at least 8 characters!";
+            request.setAttribute("mess", mess);
+            request.getRequestDispatcher("changePassword.jsp").forward(request, response);
+        }
+        //Check to see if the old password matches
+        if (repassword.equals(newpassword)) {
+            //Update new password for users
             user.setPassword(repassword);
             userDao.updatePasswordByEmail(user);
             request.getRequestDispatcher("login.jsp").forward(request, response);
         } else {
-            String mess = "Wrong currently password";
+            String mess = "Re-entered password is incorrect!";
             request.setAttribute("mess", mess);
             request.getRequestDispatcher("changePassword.jsp").forward(request, response);
         }
