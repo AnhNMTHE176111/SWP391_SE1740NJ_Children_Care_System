@@ -40,25 +40,26 @@
                     <a href="Booking.jsp" class="nav-item nav-link">Booking</a>
                 </div>
                 
-<!--                <c:if test="${sessionScope.acc != null}">
+                <c:if test="${sessionScope.name != null}">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Hello ${sessionScope.acc.user}</a>
+                        <a class="nav-link" href="#">Hello ${sessionScope.name}</a>
                     </li>
+                    <image style="height:40px;width:40px;border-radius:50%"  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS75ebrwvgVW5Ks_oLfCbG8Httf3_9g-Ynl_Q&usqp=CAU"></image>
                 </c:if>
 
-                <c:if test="${sessionScope.acc != null}">
+                <c:if test="${sessionScope.name != null}">
                     <li class="nav-item">
                         <a class="nav-link" href="logout">Logout</a>
                     </li>
-                </c:if>-->
+                </c:if>
 
-                <c:if test="${sessionScope.acc == null}">
+                <c:if test="${sessionScope.name == null}">
                     <li class="nav-item">
                         <a href="login.jsp" class="btn btn-primary px-20">Login</a>
                         <a href="registerAccount.jsp" class="btn btn-primary px-20">Signup</a>
                     </li>
-                </c:if> 
-                <image style="height:40px;width:40px;border-radius:50%"  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS75ebrwvgVW5Ks_oLfCbG8Httf3_9g-Ynl_Q&usqp=CAU"></image>
+                </c:if>
+                    
             </div>
         </nav>
     </div>
