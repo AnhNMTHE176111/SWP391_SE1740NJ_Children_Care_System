@@ -20,7 +20,7 @@ body {
   top: 100px;
 }
 .background-img {
-/*  background-image: url("C:\Users\tbin6\OneDrive\Desktop\Test4fun\booking.jpg");*/
+  background-image: url("../image/background_booking/backgr_booking.jpg");
   width: 100%;
   height: 300px;
 }

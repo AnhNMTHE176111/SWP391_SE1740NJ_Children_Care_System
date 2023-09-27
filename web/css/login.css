@@ -94,6 +94,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   text-decoration: none;
 }
 
+.login_form_div input{
+    font-family: "Handlee", cursive;
+}
+
 .login_error {
     color: red;
+}
+
+.login_success {
+    color: green;
 }
