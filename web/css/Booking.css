@@ -1,0 +1,321 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* height: 100vh; */
+}
+
+.container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  width: 800px;
+  height: 600px;
+  position: relative;
+  top: 100px;
+}
+.background-img {
+  background-image: url("C:\Users\tbin6\OneDrive\Desktop\Test4fun\booking.jpg");
+  width: 100%;
+  height: 300px;
+}
+.select-info,
+.register {
+  position: relative;
+  top: 200px;
+}
+
+/* .step {
+    display: none;
+  } */
+
+h3 {
+  margin-top: 0;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  font-weight: bold;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+}
+
+.customer-gender-input {
+  margin-top: 5px;
+}
+
+.customer-gender-input label {
+  margin-right: 10px;
+}
+
+.submit-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 200px;
+  height: 50px;
+  position: relative;
+  top: 250px;
+}
+
+.submit-button:hover {
+  background-color: #1b67b9;
+}
+
+/* Thiết lập kiểu cho các ô slot */
+/* Thiết lập kiểu cho các ô slot */
+/* Thiết lập kiểu cho các hộp chứa ngày */
+.date-box {
+  display: inline-block;
+  margin: 5px;
+}
+
+/* Thiết lập kiểu cho các ô slot */
+
+
+.date-slot {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: center;
+  cursor: pointer;
+  background-color: #4caf50; /* Màu nền mặc định của ô slot */
+  color: white; /* Màu chữ trắng */
+  position: relative;
+  border-radius: 5px;
+  right: 20px;
+  width: 60px;
+}
+.day-select {
+  position: relative;
+  right: 10px;
+}
+.date-slots {
+  display: flex;
+  flex-direction: row;
+}
+
+/* Thiết lập kiểu cho ô slot đã chọn */
+.selected {
+  background-color: #2196f3; /* Màu nền của ô đã chọn */
+}
+.step-num {
+  color: coral;
+}
+.label-box {
+  display: flex;
+  flex-direction: row;
+}
+.option-box {
+  font-size: 15px;
+  background-color: #fff;
+}
+.option-box:hover,
+.option-box:active {
+  background-color: red;
+}
+.form-control {
+  width: 100%;
+  height: 40px;
+  border-radius: 5px;
+  border: 2px solid blue;
+  position: relative;
+  top: 20px;
+}
+.form-control:hover,
+.form-control:active {
+  border-top: 2px solid #007bff;
+  border-left: 2px solid #007bff;
+  border-bottom: 2px solid #2196f3;
+  border-right: 2px solid #2196f3;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.date-select {
+  position: relative;
+  bottom: 250px;
+}
+.date {
+  display: grid;
+  grid-template-columns: repeat(4, 4fr);
+  grid-auto-rows: 1fr;
+  width: 300px;
+  margin-left: 10px;
+  gap: 0;
+  box-sizing: border-box;
+  position: absolute;
+  bottom: 100px;
+  left: -25px;
+}
+.date-hidden {
+  display: none;
+}
+
+.date button:hover,
+.date button:active {
+  color: white;
+  cursor: pointer;
+  opacity: 90%;
+  border: 3px solid #2196f3;
+  border-radius: 5px;
+  background-color: aqua;
+}
+.date button {
+  box-sizing: border-box;
+  background-color: #f2f2f2;
+  width: 80px;
+  height: 40px;
+  border-radius: 5px;
+  text-align: center;
+  padding: 10px;
+  border: none;
+  font-size: 14px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0; /* Không có khoảng cách giữa các cột */
+}
+
+.grid-item {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+.side {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  top: 200px;
+  gap: 200px;
+}
+.date-select {
+  position: relative;
+  bottom: 0px;
+}
+
+.input-size {
+  width: 400px;
+  height: 40px;
+  border-radius: 5px;
+  border: 2px solid blue;
+  position: relative;
+  top: 20px;
+}
+.input-size:hover,
+.input-size:active {
+  border-top: 2px solid #007bff;
+  border-left: 2px solid #007bff;
+  border-bottom: 2px solid #2196f3;
+  border-right: 2px solid #2196f3;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.customer-gender-input {
+  position: relative;
+  top: 25px;
+  left: 20px;
+}
+.side-name {
+  width: 250px;
+}
+.aside {
+  display: flex;
+  flex-direction: row;
+}
+.back-button {
+  background-color: white;
+  color: #1b67b9;
+  border: 2px solid #1b67b9;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 200px;
+  height: 50px;
+  position: relative;
+  top: 250px;
+  font-weight: bold;
+}
+.back-button:hover,
+.back-button:active {
+  border-color: deepskyblue;
+  transition: all 0.2s;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+.input-place {
+  height: 230px;
+  width: 330px;
+  box-sizing: border-box;
+  border: 2px solid #2196f3;
+  border-radius: 5px;
+}
+.form-input {
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+  position: relative;
+  bottom: 40px;
+}
+.input-place:hover,
+.input-place:active {
+  border: 2px solid #1b67b9;
+}
+.button-line {
+  text-align: center;
+  position: relative;
+  bottom: 275px;
+}
+.confirm-content {
+  text-align: center;
+}
+.register-line {
+  position: relative;
+  bottom: 100px;
+}
+.step-line {
+  position: relative;
+  bottom: 80px;
+}
+
+.date {
+  display: grid;
+  grid-template-columns: repeat(4, 4fr);
+  grid-auto-rows: 1fr;
+  width: 300px;
+  margin-left: 10px;
+  gap: 0;
+  box-sizing: border-box;
+  position: absolute;
+  top: 110px;
+  left: -25px;
+}
+
+/* Add your CSS styles here */
+
+
+#doctorList {
+    margin-top: 20px;
+    font-weight: bold;
+}

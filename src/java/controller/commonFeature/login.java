@@ -7,18 +7,17 @@ package controller.commonFeature;
 import DAO.DAOUser;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import java.io.IOException;
-import java.io.PrintWriter;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import model.Constants;
 import model.User;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
+import java.io.IOException;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -56,7 +55,7 @@ public class login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 
     /**
@@ -70,7 +69,6 @@ public class login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         HttpSession session = request.getSession();
         String email = request.getParameter("email");
 
@@ -84,7 +82,7 @@ public class login extends HttpServlet {
 
                 session.setAttribute("name", user.getFirstName());
                 //chuyen huong den trang home
-                response.sendRedirect("index.jsp");
+                response.sendRedirect("home.jsp");
             } else {
 
                 String mess = "Wrong email or password!";
@@ -98,6 +96,7 @@ public class login extends HttpServlet {
             DAOUser userDao = new DAOUser();
             User googleUser = getUserInfo(accessToken);
             if (googleUser.getEmail() != null) {
+                System.out.println("Google email: " + googleUser.getEmail());
                 session.setAttribute("name", googleUser.getEmail());
             }
         }

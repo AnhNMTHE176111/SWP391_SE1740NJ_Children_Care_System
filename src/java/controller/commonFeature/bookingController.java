@@ -4,22 +4,29 @@
  */
 package controller.commonFeature;
 
-import DAO.DAOService;
+import DAO.DAOBooking;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import DAO.DAOBooking;
+import DAO.DAOSlot;
+import DAO.DAODoctor;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
-import model.Doctor;
-import model.Service;
+import javax.jws.WebService;
 
 /**
  *
- * @author Admin
+ * @author tbin6
  */
-public class serviceListServlet extends HttpServlet {
+@WebServlet(name = "bookingController", urlPatterns = {"/booking"})
+public class bookingController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +45,10 @@ public class serviceListServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet serviceListServlet</title>");
+            out.println("<title>Servlet bookingController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet serviceListServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet bookingController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -56,16 +63,20 @@ public class serviceListServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String id = request.getParameter("id");
-        DAOService d = new DAOService();
-        Service serviceList= d.getServiceById(id);
-        Doctor doc = d.getDoctorById(id);
-        request.setAttribute("serviceList", serviceList);
-        request.setAttribute("doc", doc);
-        request.getRequestDispatcher("servicesList.jsp").forward(request, response);
+        ArrayList slotList = new ArrayList<>();
+        ArrayList specialtyList = new ArrayList<>();
+        DAOSlot slot = new DAOSlot();
+        DAOBooking daoBooking = new DAOBooking();
+        DAODoctor doctorBooking = new DAODoctor();
+
+        specialtyList = doctorBooking.getListSpecialty();
+        slotList = slot.getListSlot();
+
+        request.setAttribute("specialtyList", specialtyList);
+        request.setAttribute("slotList", slotList);
+        request.getRequestDispatcher("Booking.jsp").forward(request, response);
     }
 
     /**

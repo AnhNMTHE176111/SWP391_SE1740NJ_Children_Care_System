@@ -4,22 +4,24 @@
  */
 package controller.commonFeature;
 
-import DAO.DAOService;
-import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import model.Doctor;
-import model.Service;
+
+import DAO.DAOUser;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import model.User;
 
 /**
  *
- * @author Admin
+ * @author ASUS
  */
-public class serviceListServlet extends HttpServlet {
+@WebServlet(name = "register", urlPatterns = {"/register"})
+public class register extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +40,10 @@ public class serviceListServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet serviceListServlet</title>");
+            out.println("<title>Servlet register</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet serviceListServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet register at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,13 +61,7 @@ public class serviceListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String id = request.getParameter("id");
-        DAOService d = new DAOService();
-        Service serviceList= d.getServiceById(id);
-        Doctor doc = d.getDoctorById(id);
-        request.setAttribute("serviceList", serviceList);
-        request.setAttribute("doc", doc);
-        request.getRequestDispatcher("servicesList.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -79,7 +75,48 @@ public class serviceListServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String firstName = request.getParameter("firstname");
+        String lastName = request.getParameter("lastname");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        String rePassword = request.getParameter("repassword");
+        String address = request.getParameter("address");
+        String phone = request.getParameter("phone");
+        String dob = request.getParameter("dob");
+
+        DAOUser userDao = new DAOUser();
+        User u = userDao.checkEmailExist(email);
+
+        boolean valid = true;
+
+        //Trung ten dang nhap
+        if (u != null) {
+            //register fail
+            valid = false;
+            String mess = "This email already exists!";
+            request.setAttribute("mess", mess);
+            //send direct with parameter
+            request.getRequestDispatcher("registerAccount.jsp").forward(request, response);
+        }
+
+        //Mat khau nhap lai sai
+        if (!rePassword.equals(password)) {
+            //register fail
+            valid = false;
+            String mess = "Re-entered password is incorrect!";
+            request.setAttribute("mess", mess);
+            //send direct with parameter
+            request.getRequestDispatcher("registerAccount.jsp").forward(request, response);
+        }
+
+        User user = new User("1", firstName, lastName, email, password, address, phone, dob, "image/profile_user/default.jpg", 1);
+        if (valid == true) {
+            userDao.addNewAccountByEmail(user);
+            String mess = "Your account have been created";
+            request.setAttribute("mess1", mess);
+            //send direct with parameter
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+        }
     }
 
     /**

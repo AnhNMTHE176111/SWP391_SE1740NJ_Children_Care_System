@@ -16,7 +16,7 @@
         <button onclick="showPopup()">Show popup</button>
         <div class="popup">
             <div class="change-profile-container" style="display: none;">
-                <form action="" method="post">
+                <form action="changeProfile" method="post">
                     <h1>Profile Info</h1>
                     <div class="profile-image">       
                         <img src="./image/profile_user/default.jpg" alt="profile user" id="image-user">
@@ -39,6 +39,10 @@
                         <div class="item-field email-field">
                             <label for="email">Email (*)</label>
                             <input type="text" name="email" id="email" required>
+                        </div>
+                        <div class="item-field email-field" style="display: none">
+                            <label for="oldEmail">Email (*)</label>
+                            <input type="text" name="oldEmail" id="oldEmail" required>
                         </div>
                         <div class="item-field phone-field">
                             <label for="phone">Phone ( Optional )</label>
