@@ -14,7 +14,7 @@ public class Doctor {
     private double rating;
     private String Description, Position, email, phone, specialtyName;
     private String name, specialty;
-
+    
 //code riêng dùng trong màn hình services của HongNT
     private String lastname, firstname;
 
