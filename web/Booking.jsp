@@ -54,6 +54,7 @@
                                         </option>
                                     </c:forEach>
                                 </select>
+                                    <span class="error-message" id="specialtyError"></span>
                             </div>
                             <div class="form-group label-box">
                                 <select
@@ -76,6 +77,7 @@
                                         </option>
                                     </c:forEach>
                                 </select>
+                                   <span class="error-message" id="doctorError"></span>
                             </div>
 
 
@@ -84,12 +86,12 @@
                         </div>
 
                         <div class="date-select">
-                            
-                             <h4 class="day-select">Chọn ngày khám:</h4>
-                            <div class="date-slots">
+
+                            <h4 class="day-select">Chọn ngày khám:</h4>
+                            <div class="date-slots" id="selectedDate">
                                 <c:forEach var="date" items="${dateList}">
                                     <div class="date-box">
-                                        <div class="date-slot" name="date">${date}</div>
+                                        <div class="date-slot" name="date" ">${date}</div>
                                     </div>
                                 </c:forEach>
                             </div>
@@ -98,7 +100,7 @@
                             <div class="date-hidden">
                                 <div class="date">
                                     <c:forEach var="slot" items="${slotList}">
-                                        <button class="grid-date" name="slot">${slot.startTime}</button>
+                                        <button class="grid-date" name="slot" id="selectedSlot">${slot.startTime}</button>
                                     </c:forEach>
                                 </div>
                             </div>
@@ -142,12 +144,12 @@
                                 <label for="bookingdob"></label>
                                 <input
                                     class="input-size"
-                                    type="text"
+                                    type="date"
                                     placeholder="Ngày sinh (*)"
                                     id="bookingdob"
-                                    readonly="readonly"
                                     />
                             </div>
+
                             <div class="form-group">
                                 <label for="customer-phone"></label>
                                 <input
@@ -182,7 +184,7 @@
                     </div>
                     <div class="button-line">
                         <button class="back-button" onclick="showStep(1)">Quay Lại</button>
-                        <button class="submit-button" onclick="showStep(3)">
+                        <button class="submit-button" onclick="showStep(3)" disable>
                             Tiếp Tục
                         </button>
                     </div>
