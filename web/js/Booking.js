@@ -140,14 +140,13 @@ daysList.forEach(function (el) {
 slotList.forEach(function (slot) {
     slot.addEventListener("click", function () {
         if (slotSelected) {
-
             slot.classList.remove("selected");
             slotSelected = false;
 
             if (selectedDateSlot) {
                 selectedDateSlot.classList.remove("selected");
             }
-
+            daysList.forEach(date => date.classList.remove('no-click'));
 
             selectedSlot = null;
             selectedDateSlot = null;
@@ -167,14 +166,48 @@ slotList.forEach(function (slot) {
             date.classList.remove("selected");
         });
 
-
         if (selectedDateSlot) {
             selectedDateSlot.classList.add("selected");
         }
 
         slotSelected = true;
+        daysList.forEach(date => date.classList.add('no-click'));
     });
 });
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const dateSlotsContainer = document.querySelector('.date-slots');
+    
+    dateSlotsContainer.addEventListener('click', function(e) {
+        if (e.target.classList.contains('date-slot')) {
+            const clickedDateSlot = e.target;
+            const allDateSlots = dateSlotsContainer.querySelectorAll('.date-slot');
+            
+            if (clickedDateSlot.classList.contains('clicked')) {
+                allDateSlots.forEach(slot => {
+                    slot.style.opacity = 1;
+                    slot.classList.remove('no-click');
+                });
+                clickedDateSlot.classList.remove('clicked');
+            } else {
+                allDateSlots.forEach(slot => {
+                    if (slot !== clickedDateSlot) {
+                        slot.style.opacity = 0.5;
+                 
+                        slot.classList.add('no-click');
+                    } else {
+                        slot.style.opacity = 1;
+                        slot.classList.remove('no-click');
+                    }
+                });
+                clickedDateSlot.classList.add('clicked');
+            }
+        }
+    });
+});
+
+
 
 
 

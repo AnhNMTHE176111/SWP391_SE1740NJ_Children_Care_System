@@ -4,51 +4,15 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/controller/commonFeature/bookingController.java</file>
+            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/web/css/Booking.css</file>
             <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAOBooking.java</file>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/model/Doctor.java</file>
             <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/controller/commonFeature/login.java</file>
             <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAODoctor.java</file>
             <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/web/js/Booking.js</file>
             <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/controller/commonFeature/serviceListServlet.java</file>
+            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/web/403.jsp</file>
             <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/controller/commonFeature/serviceServlet.java</file>
-<<<<<<< HEAD
             <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/web/Booking.jsp</file>
-=======
-
-            <file>file:/D:/SEASON%205/SWP391/PROJECT/SWP391_SE1740NJ_Children_Care_System/web/home.jsp</file>
-            <file>file:/D:/SEASON%205/SWP391/PROJECT/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAOService.java</file>
-            <file>file:/D:/SEASON%205/SWP391/PROJECT/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAODoctor.java</file>
-            <file>file:/D:/SEASON%205/SWP391/PROJECT/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAORole.java</file>
-            <file>file:/D:/SEASON%205/SWP391/PROJECT/SWP391_SE1740NJ_Children_Care_System/web/WEB-INF/web.xml</file>
-            <file>file:/D:/SEASON%205/SWP391/PROJECT/SWP391_SE1740NJ_Children_Care_System/src/java/controller/commonFeature/login.java</file>
-            <file>file:/D:/SEASON%205/SWP391/PROJECT/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAOSpecialty.java</file>
-            <file>file:/D:/SEASON%205/SWP391/PROJECT/SWP391_SE1740NJ_Children_Care_System/web/header.jsp</file>
-            <file>file:/D:/SEASON%205/SWP391/PROJECT/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAOBooking.java</file>
-            <file>file:/D:/SEASON%205/SWP391/PROJECT/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAOCustomer.java</file>
-            <file>file:/D:/SEASON%205/SWP391/PROJECT/SWP391_SE1740NJ_Children_Care_System/web/login.jsp</file>
-            <file>file:/D:/SEASON%205/SWP391/PROJECT/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAOSlotDoctor.java</file>
-
-            <file>file:/D:/SWP301/SWP391_SE1740NJ_Children_Care_System/web/css/register.css</file>
-            <file>file:/D:/SWP301/SWP391_SE1740NJ_Children_Care_System/web/css/login.css</file>
-            <file>file:/D:/SWP301/SWP391_SE1740NJ_Children_Care_System/web/login.jsp</file>
-            <file>file:/D:/SWP301/SWP391_SE1740NJ_Children_Care_System/src/java/controller/commonFeature/changeProfile.java</file>
-            <file>file:/D:/SWP301/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAOUser.java</file>
-            <file>file:/D:/SWP301/SWP391_SE1740NJ_Children_Care_System/src/java/dal/DBContext.java</file>
-            <file>file:/D:/SWP301/SWP391_SE1740NJ_Children_Care_System/src/java/controller/commonFeature/login.java</file>
-            <file>file:/D:/SWP301/SWP391_SE1740NJ_Children_Care_System/src/java/controller/commonFeature/changePassword.java</file>
-            <file>file:/D:/SWP301/SWP391_SE1740NJ_Children_Care_System/src/java/controller/commonFeature/serviceListServlet.java</file>
-            <file>file:/D:/SWP301/SWP391_SE1740NJ_Children_Care_System/web/home.jsp</file>
-            <file>file:/D:/SWP301/SWP391_SE1740NJ_Children_Care_System/src/java/controller/commonFeature/register.java</file>
-            <file>file:/D:/SWP301/SWP391_SE1740NJ_Children_Care_System/web/change-profile.jsp</file>
-            <file>file:/D:/SWP301/SWP391_SE1740NJ_Children_Care_System/web/changePassword.jsp</file>
-            <file>file:/D:/SWP301/SWP391_SE1740NJ_Children_Care_System/web/registerAccount.jsp</file>
-            <file>file:/D:/SWP301/SWP391_SE1740NJ_Children_Care_System/src/java/controller/commonFeature/bookingController.java</file>
-            <file>file:/D:/FPT/2023_FALL/SWP391/Project/SWP391_SE1740NJ_Children_Care_System/web/css/home.css</file>
-            <file>file:/D:/FPT/2023_FALL/SWP391/Project/SWP391_SE1740NJ_Children_Care_System/web/serviceByDoctor.jsp</file>
-            <file>file:/D:/FPT/2023_FALL/SWP391/Project/SWP391_SE1740NJ_Children_Care_System/web/css/service.css</file>
-            <file>file:/D:/FPT/2023_FALL/SWP391/Project/SWP391_SE1740NJ_Children_Care_System/web/servicesList.jsp</file>
-
->>>>>>> 053f1b73c5595b4e6cad921656b896b2968feaac
         </group>
     </open-files>
 </project-private>

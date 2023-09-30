@@ -354,3 +354,8 @@ label-box {
 /*.form-group.label-box {
     position: relative;
 }*/
+
+.no-click {
+    pointer-events: none;
+}
+
