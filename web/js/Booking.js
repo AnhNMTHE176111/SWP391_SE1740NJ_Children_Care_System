@@ -218,6 +218,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // CHON CHUYEN KHOA
 function onSpecialtyChange(selectedValue) {
 
+    // Phần xử lý cho doctorOptions
     var doctorOptions = document.querySelectorAll(".doctor-option");
     doctorOptions.forEach(function (option) {
         option.style.display = "none";
@@ -227,7 +228,20 @@ function onSpecialtyChange(selectedValue) {
         option.style.display = "block";
     });
     document.getElementById("selectedDoctor").value = "0";
+
+    // Phần xử lý cập nhật thông tin chuyên khoa
+    var dropdown = document.getElementById('selectedSpecialty');
+    var selectedOption = dropdown.options[dropdown.selectedIndex];
+    var specialtyName = selectedOption.text;
+    document.getElementById('confirm-specialty').textContent = specialtyName;
+
+    // Cập nhật input ẩn để gửi thông tin này khi submit form
+    document.getElementById('hidden-specialty').value = specialtyName;
 }
+
+
+
+
 
 daysList.forEach(function (daysList, index) {
     daysList.addEventListener("click", function () {
@@ -238,4 +252,51 @@ daysList.forEach(function (daysList, index) {
     });
 });
 
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+/////////////////////////////////////////////////
+// CHECK THONG TIN
+function displayConfirmation() {
+    let customerName = document.getElementById('customer-name').value;
+    let gender = document.querySelector('input[name="gender"]:checked').value;
+    gender = (gender === "1") ? "Nam" : "Nữ";
+    let dob = document.getElementById('bookingdob').value;
+    let phone = document.getElementById('customer-phone').value;
+    let email = document.getElementById('customer-email').value;
+    let symptoms = document.getElementById('customer-symptoms').value;
 
+    // Set textContent for display
+    document.getElementById('confirm-name').textContent = customerName;
+    document.getElementById('confirm-gender').textContent = gender;
+    document.getElementById('confirm-dob').textContent = dob;
+    document.getElementById('confirm-phone').textContent = phone;
+    document.getElementById('confirm-email').textContent = email;
+    document.getElementById('confirm-symptoms').textContent = symptoms;
+    
+    // Set value for hidden input fields
+    document.getElementById('hidden-name').value = customerName;
+    document.getElementById('hidden-gender').value = gender;
+    document.getElementById('hidden-dob').value = dob;
+    document.getElementById('hidden-phone').value = phone;
+    document.getElementById('hidden-email').value = email;
+    document.getElementById('hidden-symptoms').value = symptoms;
+}
+
+
+function onDoctorChange(dropdown) {
+    var selectedOption = dropdown.options[dropdown.selectedIndex];
+    var doctorName = selectedOption.text;
+    document.getElementById('confirm-doctor').textContent = doctorName;
+    document.getElementById('hidden-doctor').value = doctorName;
+}
+
+
+function onDateSelect(dateValue) {
+    document.getElementById('confirm-date').textContent = dateValue;
+    document.getElementById('hidden-date').value = dateValue;
+}
+
+function onSlotSelect(slotValue) {
+    document.getElementById('confirm-slot').textContent = slotValue;
+    document.getElementById('hidden-slot').value = slotValue;
+}

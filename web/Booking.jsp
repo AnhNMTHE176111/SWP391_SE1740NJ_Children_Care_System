@@ -54,31 +54,31 @@
                                         </option>
                                     </c:forEach>
                                 </select>
-                                   
+
                             </div>
-                             <span class="error-message" id="specialtyError"></span>
+                            <span class="error-message" id="specialtyError"></span>
                             <div class="form-group label-box">
                                 <select
                                     id="selectedDoctor"
                                     class="form-control select2-hidden-accessible"
-                                    name="selectedDoctor"
+                                    onchange="onDoctorChange(this)"
                                     >
                                     <option class="option-box" value="0">
                                     <ion-icon name="person-outline"></ion-icon>Chọn bác sĩ muốn khám
                                     </option>
                                     <c:forEach var="doctor" items="${doctorList}">
                                         <option
-                                            name ="doctor"
                                             class="option-box doctor-option"
                                             value="${doctor.getSpecialtyId()}"
                                             data-specialty="${doctor.getSpecialtyId()}"
                                             style="display: none"
+
                                             >
                                             ${doctor.getName()}
                                         </option>
                                     </c:forEach>
                                 </select>
-                                   <span class="error-message" id="doctorError"></span>
+                                <span class="error-message" id="doctorError"></span>
                             </div>
 
 
@@ -92,7 +92,7 @@
                             <div class="date-slots" id="selectedDate">
                                 <c:forEach var="date" items="${dateList}">
                                     <div class="date-box">
-                                        <div class="date-slot" name="date" ">${date}</div>
+                                        <div class="date-slot" name="date" onclick="onDateSelect('${date}')">${date}</div>
                                     </div>
                                 </c:forEach>
                             </div>
@@ -101,7 +101,8 @@
                             <div class="date-hidden">
                                 <div class="date">
                                     <c:forEach var="slot" items="${slotList}">
-                                        <button class="grid-date" name="slot" id="selectedSlot">${slot.startTime}</button>
+                                        <button class="grid-date" name="slot" onclick="onSlotSelect('${slot.startTime}')">${slot.startTime}</button>
+
                                     </c:forEach>
                                 </div>
                             </div>
@@ -130,16 +131,20 @@
                                         type="text"
                                         placeholder="Họ và tên (*)"
                                         id="customer-name"
+                                    
                                         />
                                 </div>
                                 <div class="form-group">
                                     <div class="customer-gender-input">
-                                        <input type="radio" id="male" value="1" />
-                                        <label for="male" class="">Nam</label>
-                                        <input type="radio" id="female" value="0" />
-                                        <label for="female" class="">Nữ</label>
+                                        <input type="radio" id="male" name="gender" value="Nam" />
+                                        <label for="male">Nam</label>
+
+                                        <input type="radio" id="female" name="gender" value="Nữ" />
+                                        <label for="female">Nữ</label>
                                     </div>
                                 </div>
+
+
                             </div>
                             <div class="form-group">
                                 <label for="bookingdob"></label>
@@ -148,6 +153,7 @@
                                     type="date"
                                     placeholder="Ngày sinh (*)"
                                     id="bookingdob"
+
                                     />
                             </div>
 
@@ -158,6 +164,7 @@
                                     type="text"
                                     placeholder="Số điện thoại (*)"
                                     id="customer-phone"
+
                                     />
                             </div>
                             <div class="form-group">
@@ -167,6 +174,7 @@
                                     type="text"
                                     placeholder="Để lại email để nhận thông tin lịch hẹn"
                                     id="customer-email"
+
                                     />
                             </div>
                         </div>
@@ -179,15 +187,17 @@
                                     placeholder="Mô tả triệu chứng của bạn và nhu cầu thăm khám (*)"
                                     id="customer-symptoms"
                                     class="input-place"
+
                                     ></textarea>
                             </div>
                         </div>
                     </div>
                     <div class="button-line">
                         <button class="back-button" onclick="showStep(1)">Quay Lại</button>
-                        <button class="submit-button" onclick="showStep(3)" disable>
+                        <button class="submit-button" onclick="displayConfirmation(); showStep(3);" disable>
                             Tiếp Tục
                         </button>
+
                     </div>
                 </div>
             </div>
@@ -199,11 +209,56 @@
                 <h3 style="position: relative; bottom: 100px">
                     <span class="step-num">Bước 3/3</span> - Xác nhận và hoàn tất
                 </h3>
-                <div class="confirm-content">
-                    <h3>Xác nhận và hoàn tất</h3>
-                    <p>Thông tin xác nhận sẽ được hiển thị ở đây.</p>
-                </div>
+                <form action="/booking" method="POST">
+                    <div class="confirm-content">
+                        <h3>Xác nhận và hoàn tất</h3>
+                        <div class="row">
+                            <div class="column">
+                                <p><strong>Chuyên Khoan:</strong> <span id="confirm-specialty"></span>
+                                    <input type="hidden" name="specialty" id="hidden-specialty" value="">
+                                </p>
+                                <p><strong>Ngày Khám:</strong> <span id="confirm-date"></span>
+                                    <input type="hidden" name="selectedDate" id="hidden-date" value="">
+                                </p>
+                                <p><strong>Slot thời gian:</strong> <span id="confirm-slot"></span>
+                                    <input type="hidden" name="selectedSlot" id="hidden-slot" value="">
+                                </p>
+                                <p><strong>Bác sĩ:</strong> <span id="confirm-doctor"></span>
+                                    <input type="hidden" name="doctor" id="hidden-doctor" value="">
+                                </p>
+                            </div>
+
+                            <div class="column">
+                                <p><strong>Họ và tên:</strong> <span id="confirm-name"></span>
+                                    <input type="hidden" name="name" id="hidden-name" value="">
+                                </p>
+                                <p><strong>Giới tính:</strong> <span id="confirm-gender"></span>
+                                    <input type="hidden" name="gender" id="hidden-gender" value="">
+                                </p>
+                                <p><strong>Ngày sinh:</strong> <span id="confirm-dob"></span>
+                                    <input type="hidden" name="dob" id="hidden-dob" value="">
+                                </p>
+                                <p><strong>Số điện thoại:</strong> <span id="confirm-phone"></span>
+                                    <input type="hidden" name="phone" id="hidden-phone" value="">
+                                </p>
+                                <p><strong>Email:</strong> <span id="confirm-email"></span>
+                                    <input type="hidden" name="email" id="hidden-email" value="">
+                                </p>
+                                <p><strong>Trieệu chứng:</strong> <span id="confirm-symptoms"></span>
+                                    <input type="hidden" name="symptoms" id="hidden-symptoms" value="">
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="button-line">
+                        <button class="back-button" onclick="showStep(2)">Quay Lại</button>
+                        <button class="submit-button" type="submit">Xác nhận</button>
+                    </div>
+                </form>
+
             </div>
+
         </div>
 
         <script src="js/Booking.js"></script>

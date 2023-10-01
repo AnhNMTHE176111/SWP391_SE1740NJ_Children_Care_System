@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import javax.jws.WebService;
+
 
 
 /**
@@ -75,6 +75,7 @@ public class bookingController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+       @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ArrayList slotList = new ArrayList<>();
@@ -106,17 +107,38 @@ public class bookingController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
+   @Override
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+request.setCharacterEncoding("UTF-8");
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+    String selectedSpecialty = request.getParameter("specialty");
+    String selectedDoctor = request.getParameter("doctor");
+    String selectedDate = request.getParameter("selectedDate");
+    String selectedSlot = request.getParameter("selectedSlot");
+
+    String name = request.getParameter("name");
+    String gender = request.getParameter("gender");
+    String dob = request.getParameter("dob");
+    System.out.println("hihi");
+    String phone = request.getParameter("phone");
+    String email = request.getParameter("email");
+    String symptoms = request.getParameter("symptoms");
+
+
+    System.out.println("Chuyên khoa: " + selectedSpecialty);
+    System.out.println("Bác sĩ: " + selectedDoctor);
+    System.out.println("Ngày khám: " + selectedDate);
+    System.out.println("Slot thời gian: " + selectedSlot);
+    System.out.println("Họ và tên: " + name);
+    System.out.println("Giới tính: " + gender);
+    System.out.println("Ngày sinh: " + dob);
+    System.out.println("Số điện thoại: " + phone);
+    System.out.println("Email: " + email);
+    System.out.println("Triệu chứng: " + symptoms);
+
+ 
+}
     @Override
     public String getServletInfo() {
         return "Short description";
