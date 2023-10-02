@@ -3,15 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/FPT_Curriculum/Fall2023/SWP391/Project/SWP391_SE1740NJ_Children_Care_System/web/staffDashboard.jsp</file>
-            <file>file:/D:/FPT_Curriculum/Fall2023/SWP391/Project/SWP391_SE1740NJ_Children_Care_System/src/java/controller/managerFeature/managerDashboard.java</file>
-            <file>file:/D:/FPT_Curriculum/Fall2023/SWP391/Project/SWP391_SE1740NJ_Children_Care_System/web/WEB-INF/web.xml</file>
-            <file>file:/D:/FPT_Curriculum/Fall2023/SWP391/Project/SWP391_SE1740NJ_Children_Care_System/src/java/controller/staffFeature/staffDashboard.java</file>
-            <file>file:/D:/FPT_Curriculum/Fall2023/SWP391/Project/SWP391_SE1740NJ_Children_Care_System/web/login.jsp</file>
-            <file>file:/D:/FPT_Curriculum/Fall2023/SWP391/Project/SWP391_SE1740NJ_Children_Care_System/web/managerDashboard.jsp</file>
+            <file>file:/D:/FPT_Curriculum/Fall2023/SWP391/Project/SWP391_SE1740NJ_Children_Care_System/web/header.jsp</file>
+            <file>file:/D:/FPT_Curriculum/Fall2023/SWP391/Project/SWP391_SE1740NJ_Children_Care_System/src/java/controller/commonFeature/changeProfile.java</file>
+            <file>file:/D:/FPT_Curriculum/Fall2023/SWP391/Project/SWP391_SE1740NJ_Children_Care_System/src/java/controller/commonFeature/homeController.java</file>
             <file>file:/D:/FPT_Curriculum/Fall2023/SWP391/Project/SWP391_SE1740NJ_Children_Care_System/src/java/controller/commonFeature/login.java</file>
+            <file>file:/D:/FPT_Curriculum/Fall2023/SWP391/Project/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAOUser.java</file>
+            <file>file:/D:/FPT_Curriculum/Fall2023/SWP391/Project/SWP391_SE1740NJ_Children_Care_System/src/java/controller/commonFeature/logout.java</file>
             <file>file:/D:/FPT_Curriculum/Fall2023/SWP391/Project/SWP391_SE1740NJ_Children_Care_System/web/service.jsp</file>
-            <file>file:/D:/FPT_Curriculum/Fall2023/SWP391/Project/SWP391_SE1740NJ_Children_Care_System/web/adminDashboard.jsp</file>
         </group>
     </open-files>
 </project-private>
