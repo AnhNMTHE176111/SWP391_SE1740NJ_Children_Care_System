@@ -79,7 +79,38 @@ public class DAOUser extends DBContext {
                 user.setRoleId(Integer.parseInt(rs.getString(11)));
                 // some code to finish
                 
-                System.out.println("dob: " + user.getDob());
+            }
+            return user;
+        } catch (SQLException e) {
+            System.out.println("SQL getUserByEmailAndPassword: " + e.getMessage());
+            return null;
+        } catch (Exception e) {
+            System.out.println("getUserByEmailAndPassword: " + e.getMessage());
+            return null;
+        }
+    }
+    public User getUserByEmail(String email) {
+        try {
+            String strSQL = "select * from Users where email = ? ";
+            pstm = cnn.prepareStatement(strSQL);
+            pstm.setString(1, email);
+            rs = pstm.executeQuery();
+
+            User user = new User();
+            while (rs.next()) {
+                user.setUserId(Integer.parseInt(rs.getString(1)));
+                user.setStatus(rs.getString(2));
+                user.setFirstName(rs.getString(3));
+                user.setLastName(rs.getString(4));
+                user.setEmail(rs.getString(5));
+                user.setPassword(rs.getString(6));
+                user.setAddress(rs.getString(7));
+                user.setPhone(rs.getString(8));
+                user.setDob(rs.getString(9));
+                user.setAvatar(rs.getString(10));
+                user.setRoleId(Integer.parseInt(rs.getString(11)));
+                // some code to finish
+                
             }
             return user;
         } catch (SQLException e) {

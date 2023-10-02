@@ -47,12 +47,13 @@
                     <ul class="nav">
                         <c:if test="${sessionScope.name ne null}">
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Hello ${sessionScope.name}</a>
+                                <a class="nav-link" href="#" onclick="showPopup()">Hello ${sessionScope.name}</a>
                             </li>
                             <li class="nav-item">
-                                <image onclick="showPopup()" style="height:40px;width:40px;border-radius:50%"
-                                       src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS75ebrwvgVW5Ks_oLfCbG8Httf3_9g-Ynl_Q&usqp=CAU">
-                                </image>
+                                <img onclick="showPopup()" style="height:40px;width:40px;border-radius:50%; object-fit: cover; cursor: pointer"
+                                     src=./image/profile_user/user${sessionScope.user.getUserId()}.jpg 
+                                     alt="avatar"
+                                     id="idImgAvatar"/>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="logout">Logout</a>

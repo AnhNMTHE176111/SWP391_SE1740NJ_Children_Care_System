@@ -18,7 +18,7 @@
                 <form action="changeProfile" method="post" enctype="multipart/form-data">
                     <h1>Profile Info</h1>
                     <div class="profile-image">       
-                        <img src="./image/profile_user/default.jpg" alt="profile user" id="image-user">
+                        <img src=./image/profile_user/user${sessionScope.user.getUserId()}.jpg alt="avatar" id="image-user">
                         <label for="profile-user-input">
                             Choose Image
                         </label>
