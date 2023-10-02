@@ -6,21 +6,24 @@
 package controller.commonFeature;
 
 import DAO.DAOUser;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
-import java.io.File;
 import java.nio.file.Files;
 import model.User;
 
 /**
  *
  * @author dmx
- */
+ */    
+@MultipartConfig
 public class changeProfile extends HttpServlet {
    
     /** 
@@ -77,27 +80,20 @@ public class changeProfile extends HttpServlet {
         String phone = request.getParameter("phone");
         String address = request.getParameter("address");
         String dob = request.getParameter("dob");
-        System.out.println("dob input: " + dob + fName + lName + email + phone + address);
-        String oldEmail = request.getParameter("oldEmail");
+        Part filePart = request.getPart("imageFile");
         
         DAOUser daoUser = new DAOUser();
         User user = (User) request.getSession().getAttribute("user");
                
-//        String uploadDir = "D:\\FPT_Curriculum\\Fall2023\\SWP391\\Project\\SWP391_SE1740NJ_Children_Care_System\\web\\image\\profile_user";
-//        
-//        Part filePart = request.getPart("imageFile");
-//        String fileName = "user" + user.getUserId();
-//        String filePath = uploadDir + File.separator + fileName;
-//        
-//        System.out.println(filePath);
-//        
-//        File file = new File(uploadDir, fileName);
-//        
-//        
-//        System.out.println(filePart.getInputStream());
-//        System.out.println(file.toPath());
-//        
-//        Files.copy(filePart.getInputStream(), file.toPath());
+        String uploadDir = "D:\\FPT_Curriculum\\Fall2023\\SWP391\\Project\\SWP391_SE1740NJ_Children_Care_System\\web\\image\\profile_user";         
+        
+        String fileName = "user" + user.getUserId() + ".jpg";
+        
+        System.out.println(filePart.getName());
+        
+        File file = new File(uploadDir, fileName);
+        
+        Files.copy(filePart.getInputStream(), file.toPath());
         
         daoUser.updateProfile(fName, lName, phone, address, dob, "image/profile_user/default.jpg", email);
         request.getSession().setAttribute("user", daoUser.getUserByEmailAndPassword(email, user.getPassword()));

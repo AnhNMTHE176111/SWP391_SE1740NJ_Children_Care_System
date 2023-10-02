@@ -159,7 +159,6 @@ public class DAOUser extends DBContext {
 
     public void updateProfile(String fName, String lName, String phone, String address, String dob, String avatar, String email) {
         try {
-            System.out.println(fName + lName + phone);
             String strSQL = "update Users\n"
                     + "set firstName = ? , lastName = ? , phone = ? , address = ? , dob = ? , avatar = ?\n"
                     + "where email = ?";

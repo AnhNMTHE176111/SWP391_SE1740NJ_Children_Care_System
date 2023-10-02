@@ -15,7 +15,7 @@
     <body>
         <div class="popup" style="display: none;">
             <div class="change-profile-container">
-                <form action="changeProfile" method="post" >
+                <form action="changeProfile" method="post" enctype="multipart/form-data">
                     <h1>Profile Info</h1>
                     <div class="profile-image">       
                         <img src="./image/profile_user/default.jpg" alt="profile user" id="image-user">
@@ -24,7 +24,6 @@
                         </label>
                         <input type="file" accept="image/gif, image/jpeg, image/png" 
                                id="profile-user-input"  
-
                                name="imageFile"
                                onchange="previewProfileImage(this)" >
                     </div>
@@ -41,10 +40,6 @@
                         <div class="item-field email-field">
                             <label for="email">Email (View Only)</label>
                             <input type="text" name="email" id="email" value="${sessionScope.user.getEmail()}" required readonly>
-                        </div>
-                        <div class="item-field email-field" style="display: none">
-                            <label for="oldEmail">Email (*)</label>
-                            <input type="text" name="oldEmail" id="oldEmail" value="${sessionScope.user.getEmail()}" required>
                         </div>
                         <div class="item-field phone-field">
                             <label for="phone">Phone</label>
