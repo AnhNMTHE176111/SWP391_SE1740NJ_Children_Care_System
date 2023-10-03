@@ -32,7 +32,7 @@
                     </div>
                     <div class="register_form_div">
                         <label>Email (*)</label><br />
-                        <input class="input" type="text" name="email" placeholder="Enter your email" required/>
+                        <input class="input" type="email" name="email" placeholder="Enter your email" required/>
                     </div>
                     <div class="register_form_div">
                         <label>Password(*)</label><br />
