@@ -86,16 +86,16 @@ public class forgotPassword extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String email = request.getParameter("email");
-        int otpvalue;
+        int verificationCode;
         HttpSession mySession = request.getSession();
         DAOUser userDao = new DAOUser();
         User u = userDao.checkEmailExist(email);
 
         if (u.getEmail() != null) {
-            // sending otp
+            // sending Verification Code
             Random rand = new Random();
-            //Randomly generate 6-digit OTP code
-            otpvalue = rand.nextInt(900000) + 100000;
+            //Randomly generate 6-digit verification code
+            verificationCode = rand.nextInt(900000) + 100000;
             Properties props = new Properties();
             props.put("mail.smtp.host", "smtp.gmail.com");
             props.put("mail.smtp.socketFactory.port", "465");
@@ -113,15 +113,15 @@ public class forgotPassword extends HttpServlet {
                 MimeMessage message = new MimeMessage(session);
                 message.setFrom(new InternetAddress(email));// change accordingly
                 message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
-                message.setSubject("Verification code for recovery password:");
-                message.setText(" " + otpvalue);
+                message.setSubject("Children Care System Verification Code");
+                message.setText("Your verification code is: " + verificationCode);
                 // send message
                 Transport.send(message);
             } catch (MessagingException e) {
                 throw new RuntimeException(e);
             }
             request.getRequestDispatcher("changePassword.jsp").forward(request, response);
-            mySession.setAttribute("otp", otpvalue);
+            mySession.setAttribute("code", verificationCode);
             mySession.setAttribute("email", email);
         }
     }
