@@ -1,4 +1,4 @@
-
+``````````````
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import= "DAO.DAOBooking" %>
@@ -252,7 +252,8 @@
                     </div>
 
                     <div class="button-line">
-                        <button class="back-button" onclick="showStep(2)">Quay Lại</button>
+                        <button class="back-button" type="button" onclick="showStep(2)">Quay Lại</button>
+
                         <button class="submit-button" type="submit">Xác nhận</button>
                     </div>
                 </form>
