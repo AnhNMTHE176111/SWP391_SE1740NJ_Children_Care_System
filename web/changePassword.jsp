@@ -23,15 +23,11 @@
                 <form class="login_form" action="change" method="post">
                     <div class="login_form_div">
                         <label>Email (*)</label><br/>
-                        <input class="input" type="text" name="email" placeholder="Enter your email" required/>
+                        <input class="input" type="text" name="email" placeholder="Enter your email" value="${sessionScope.email}" readonly>
                     </div>
                     <div class="login_form_div">
-                        <label>OTP (*)</label><br/>
-                        <input class="input" type="text" name="otp" placeholder="Enter the otp sent" required/>
-                    </div>
-                    <div class="login_form_div">
-                        <label>Current Password (*)</label><br/>
-                        <input class="input" type="password" name="oldpassword" placeholder="Enter your old password" required/>
+                        <label>Verification Code (*)</label><br/>
+                        <input class="input" type="text" name="code" placeholder="Enter the verification code" required/>
                     </div>
                     <div class="login_form_div">
                         <label>New Password (*)</label><br/>
