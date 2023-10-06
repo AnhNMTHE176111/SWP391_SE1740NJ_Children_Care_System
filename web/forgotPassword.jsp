@@ -23,7 +23,7 @@
                 <form class="login_form" action="forgot" method="post">
                     <div class="login_form_div">
                         <label>Input your email to reset password</label><br/>
-                        <input class="input" type="email" name="email"/>
+                        <input class="input" type="email" name="email" placeholder="Enter your email here" required/>
                     </div>
                     <div>
                         <button class="login_btn-1" type="submit">Send Email</button><br/>

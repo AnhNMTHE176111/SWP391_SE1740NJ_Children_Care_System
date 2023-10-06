@@ -87,7 +87,7 @@ public class forgotPassword extends HttpServlet {
             throws ServletException, IOException {
         String email = request.getParameter("email");
         int verificationCode;
-        HttpSession mySession = request.getSession();
+        HttpSession session = request.getSession();
         DAOUser userDao = new DAOUser();
         User u = userDao.checkEmailExist(email);
 
@@ -102,7 +102,7 @@ public class forgotPassword extends HttpServlet {
             props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
             props.put("mail.smtp.auth", "true");
             props.put("mail.smtp.port", "465");
-            Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+            Session codeSession = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
                 @Override
                 protected PasswordAuthentication getPasswordAuthentication() {
                     return new PasswordAuthentication("childrencaresystemse1740nj@gmail.com", "swjo blyb vziq xpxz");
@@ -110,7 +110,7 @@ public class forgotPassword extends HttpServlet {
             });
             // compose message
             try {
-                MimeMessage message = new MimeMessage(session);
+                MimeMessage message = new MimeMessage(codeSession);
                 message.setFrom(new InternetAddress(email));// change accordingly
                 message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
                 message.setSubject("Children Care System Verification Code");
@@ -121,8 +121,8 @@ public class forgotPassword extends HttpServlet {
                 throw new RuntimeException(e);
             }
             request.getRequestDispatcher("changePassword.jsp").forward(request, response);
-            mySession.setAttribute("code", verificationCode);
-            mySession.setAttribute("email", email);
+            session.setAttribute("code", verificationCode);
+            session.setAttribute("email", email);
         }
     }
 
