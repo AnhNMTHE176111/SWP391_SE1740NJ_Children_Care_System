@@ -20,39 +20,49 @@
             <div class="page-banner">
                 <img src="image/service/systemCare.jpg" class="w-100">
             </div>
-            <div class="our-service">
-                <h2 style="text-align: center">Our Services</h2>
+
+            <div class="container">
+
+                <div class="row justify-content-center">
+                    <div class="col-12">
+                        <div class="section-title text-center mb-4 pb-2">
+                            <h4 class="title mb-4" style="margin-top: 20px; border: none;">Our Services</h4>
+                            <p class="text-muted para-desc mx-auto mb-0">${mess}.</p>
+                    </div>
+                </div>
                 <form action="service" method="post" class="filter">
-                    <div >
-                        <h4>Selected by:</h4>
-                        <select id="sort"name="id">
+                    <div class="filter-row">
+                        <h4 >Selected by</h4>
+                        <select id="sort" name="id" >
                             <option value="all">All</option>
-                            <option value="doctor">Doctor</option>
-                            <option value="specialty">Specialty</option>
+                            <option id="doctor" value="doctor">Doctor</option>
+                            <option id="specialty" value="specialty">Specialty</option>
                         </select>    
-                        <input class="input-submit"  type="submit" value="Enter">
+                        <input class="input-submit"type="submit" value="Enter">
                     </div>
                 </form>
             </div>
+
+
             <div class="doctorService">
                 <div class="scrollable-section">
-                <c:forEach var="doc" items="${doc}">
-                    <div class="doctor">
-                        <h5>${doc.getDoctorId()}. ${doc.getFirstname()} ${doc.getLastname()}</h5>
-                        <ul class="services">
-                            <c:forEach var="service" items="${service}">
-                                <c:if test="${doc.getDoctorId() == service.getDoctorId()}">
-                                    <li>
-                                        <a href="servicelist?id=${service.getServiceId()}">${service.getServiceName()}</a>
-                                    </li>
-                                </c:if>
-                            </c:forEach>
-                        </ul>
-                    </div>
-                </c:forEach>
+                    <c:forEach var="doc" items="${doc}">
+                        <div class="doctor">
+                            <h5>${doc.getDoctorId()}. ${doc.getFirstname()} ${doc.getLastname()}</h5>
+                            <ul class="services">
+                                <c:forEach var="service" items="${service}">
+                                    <c:if test="${doc.getDoctorId() == service.getDoctorId()}">
+                                        <li>
+                                            <a href="servicelist?id=${service.getServiceId()}">${service.getServiceName()}</a>
+                                        </li>
+                                    </c:if>
+                                </c:forEach>
+                            </ul>
+                        </div>
+                    </c:forEach>
+                </div>
             </div>
         </div>
     </body>
     <jsp:include page="footer.jsp"></jsp:include>
-
 </html>

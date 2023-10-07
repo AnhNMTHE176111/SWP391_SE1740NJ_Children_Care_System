@@ -13,9 +13,9 @@
         <title>JSP Page</title>
         <link href="css/register.css" rel="stylesheet" />
     </head>
-    <body style="background: linear-gradient(100deg, #fff 5%, #17a2b8 100%)">
+    <body style="background: linear-gradient(100deg, #17a2b8 5%, #fff 100%)">
         <div class="register_body">
-            <img src="./image/register_login/child-12.png" alt="" style="width: 60%" />
+            <img src="./image/register_login/child-12.png" alt="" style="width: 70%; margin-left: -80px" />
             <div class="register_container">
                 <div class="register_headling">
                     <h1>Create an account</h1>
@@ -32,7 +32,7 @@
                     </div>
                     <div class="register_form_div">
                         <label>Email (*)</label><br />
-                        <input class="input" type="text" name="email" placeholder="Enter your email" required/>
+                        <input class="input" type="email" name="email" placeholder="Enter your email" required/>
                     </div>
                     <div class="register_form_div">
                         <label>Password(*)</label><br />
