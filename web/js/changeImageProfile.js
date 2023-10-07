@@ -13,13 +13,17 @@ function previewProfileImage(input) {
 
 
 function showPopup() {
-    let popupItem = document.getElementsByClassName('popup')[0];
-    document.body.style.overflow = 'hidden';
-    popupItem.style.display = popupItem.style.display === 'block' ? 'none' : 'block';
+    console.log('click');
+     let popupItem = document.getElementsByClassName('popup')[0];
+     console.log('click');
+     document.body.style.overflow = 'hidden';
+     document.getElementById('change-profile-container').style.display = 'block';
+     popupItem.style.display = 'block';
 }
 
 function closePopup() {
     let popupItem = document.getElementsByClassName('popup')[0];
     document.body.style.overflow = 'auto';
-    popupItem.style.display = popupItem.style.display === 'block' ? 'none' : 'block';
+    document.getElementById('change-profile-container').style.display = 'none';
+    popupItem.style.display = 'none';
 }

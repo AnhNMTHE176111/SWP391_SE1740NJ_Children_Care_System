@@ -14,7 +14,7 @@
     </head>
     <body>
         <div class="popup" style="display: none;">
-            <div class="change-profile-container">
+            <div class="change-profile-container" id="change-profile-container" style="display: none;">
                 <form action="changeProfile" method="post" enctype="multipart/form-data">
                     <h1>Profile Info</h1>
                     <div class="profile-image">       

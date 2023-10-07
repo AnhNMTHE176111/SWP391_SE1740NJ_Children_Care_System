@@ -72,7 +72,7 @@
 
 
 
-
+        <script src="./js/changeImageProfile.js"></script>
     </body>
 
 </html>
