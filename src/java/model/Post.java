@@ -9,14 +9,14 @@ package model;
  * @author admin
  */
 public class Post {
-    private int PostId;
+    private String PostId;
     private String title, content, createdAt, Avatar;
-    private int Viewer, Rate;
+    private String Viewer, Rate;
 
     public Post() {
     }
 
-    public Post(int PostId, String title, String content, String createdAt, String Avatar, int Viewer, int Rate) {
+    public Post(String PostId, String title, String content, String createdAt, String Avatar, String Viewer, String Rate) {
         this.PostId = PostId;
         this.title = title;
         this.content = content;
@@ -26,30 +26,12 @@ public class Post {
         this.Rate = Rate;
     }
 
-
-
-    public int getPostId() {
+    public String getPostId() {
         return PostId;
     }
 
-    public void setPostId(int PostId) {
+    public void setPostId(String PostId) {
         this.PostId = PostId;
-    }
-
-    public int getViewer() {
-        return Viewer;
-    }
-
-    public void setViewer(int Viewer) {
-        this.Viewer = Viewer;
-    }
-
-    public int getRate() {
-        return Rate;
-    }
-
-    public void setRate(int Rate) {
-        this.Rate = Rate;
     }
 
     public String getTitle() {
@@ -83,7 +65,27 @@ public class Post {
     public void setAvatar(String Avatar) {
         this.Avatar = Avatar;
     }
-    
-    
+
+    public String getViewer() {
+        return Viewer;
+    }
+
+    public void setViewer(String Viewer) {
+        this.Viewer = Viewer;
+    }
+
+    public String getRate() {
+        return Rate;
+    }
+
+    public void setRate(String Rate) {
+        this.Rate = Rate;
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" + "PostId=" + PostId + ", title=" + title + ", content=" + content + ", createdAt=" + createdAt + ", Avatar=" + Avatar + ", Viewer=" + Viewer + ", Rate=" + Rate + '}';
+    }
+
 }
 
