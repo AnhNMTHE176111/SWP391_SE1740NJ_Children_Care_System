@@ -15,7 +15,7 @@
         <div class="403-container">
             <h1 class="403-title">403 FORBIDDEN</h1>
             <p class="403-detail">You don't have permission to access this page </p>
-            <a href="home.jsp">Back to home page</a>
+            <a href="home">Back to home page</a>
         </div>
     </body>
 </html>

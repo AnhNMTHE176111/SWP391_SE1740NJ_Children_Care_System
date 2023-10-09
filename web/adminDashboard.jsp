@@ -13,6 +13,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+              integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+              crossorigin="anonymous" referrerpolicy="no-referrer" />
         <title>JSP Page</title>
     </head>    
     <jsp:include page="header.jsp"></jsp:include>
@@ -20,7 +23,7 @@
         <c:if test="${sessionScope.roleId ne '4'}">
             <jsp:forward page="403.jsp"/>
         </c:if>
-        <h1>Admin Dashboard ${sessionScope.roleId}</h1>
-    </body>
+        <jsp:include page="admin_Dashboard_ListUser.jsp"></jsp:include>
+        </body>
     <jsp:include page="footer.jsp"></jsp:include>
 </html>

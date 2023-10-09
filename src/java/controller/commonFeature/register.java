@@ -94,13 +94,7 @@ public class register extends HttpServlet {
             request.setAttribute("mess", mess);
             request.getRequestDispatcher("registerAccount.jsp").forward(request, response);
         }
-        //Check if the user has entered the correct system email format
-        if (!email.endsWith("@gmail.com")) {
-            valid = false;
-            String mess = "Email must include \"@gmail.com\"";
-            request.setAttribute("mess", mess);
-            request.getRequestDispatcher("registerAccount.jsp").forward(request, response);
-        }
+        
         //Check if email exists
         if (u.getEmail() != null) {
             //register fail
