@@ -18,12 +18,12 @@
               crossorigin="anonymous" referrerpolicy="no-referrer" />
         <title>JSP Page</title>
     </head>    
-    <jsp:include page="header.jsp"></jsp:include>
+   
         <body>
         <c:if test="${sessionScope.roleId ne '4'}">
             <jsp:forward page="403.jsp"/>
         </c:if>
         <jsp:include page="admin_Dashboard_ListUser.jsp"></jsp:include>
         </body>
-    <jsp:include page="footer.jsp"></jsp:include>
+    
 </html>
