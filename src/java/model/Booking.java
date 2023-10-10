@@ -9,50 +9,55 @@ package model;
  * @author dmx
  */
 public class Booking {
-    private String day, slotm, specialty, doctor ;
+
+    private int stauts, customerId, medicalInfoId, slotDoctorId;
 
     public Booking() {
     }
 
-    public Booking(String day, String slotm, String specialty, String doctor) {
-        this.day = day;
-        this.slotm = slotm;
-        this.specialty = specialty;
-        this.doctor = doctor;
+    public Booking(int stauts, int customerId, int medicalInfoId, int slotDoctorId) {
+        this.stauts = stauts;
+        this.customerId = customerId;
+        this.medicalInfoId = medicalInfoId;
+        this.slotDoctorId = slotDoctorId;
     }
 
-    public String getDay() {
-        return day;
+    public Booking(int status, int customerId, int slotDoctorId) {
+        this.stauts = stauts;
+        this.customerId = customerId;
+        this.slotDoctorId = slotDoctorId;
     }
 
-    public void setDay(String day) {
-        this.day = day;
+    public int getStauts() {
+        return stauts;
     }
 
-    public String getSlotm() {
-        return slotm;
+    public void setStauts(int stauts) {
+        this.stauts = stauts;
     }
 
-    public void setSlotm(String slotm) {
-        this.slotm = slotm;
+    public int getCustomerId() {
+        return customerId;
     }
 
-    public String getSpecialty() {
-        return specialty;
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
     }
 
-    public void setSpecialty(String specialty) {
-        this.specialty = specialty;
+    public int getMedicalInfoId() {
+        return medicalInfoId;
     }
 
-    public String getDoctor() {
-        return doctor;
+    public void setMedicalInfoId(int medicalInfoId) {
+        this.medicalInfoId = medicalInfoId;
     }
 
-    public void setDoctor(String doctor) {
-        this.doctor = doctor;
+    public int getSlotDoctorId() {
+        return slotDoctorId;
     }
 
-    
-   
+    public void setSlotDoctorId(int slotDoctorId) {
+        this.slotDoctorId = slotDoctorId;
+    }
+
 }

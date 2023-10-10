@@ -9,18 +9,28 @@ package model;
  * @author dmx
  */
 public class SlotDoctor {
-    private int slotId, doctorId, status;
+    private int slotDoctorId,slotId, doctorId, status;
     private String description;
 
     public SlotDoctor() {
     }
 
-    public SlotDoctor(int slotId, int doctorId, int status, String description) {
+    public SlotDoctor(int slotId, int doctorId, int status) {
         this.slotId = slotId;
         this.doctorId = doctorId;
         this.status = status;
-        this.description = description;
+
     }
+
+    public int getSlotDoctorId() {
+        return slotDoctorId;
+    }
+
+    public void setSlotDoctorId(int slotDoctorId) {
+        this.slotDoctorId = slotDoctorId;
+    }
+    
+    
 
     public int getSlotId() {
         return slotId;

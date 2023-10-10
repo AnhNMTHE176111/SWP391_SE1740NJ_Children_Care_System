@@ -25,13 +25,13 @@
                     <li>Services List</li>
                     <li>Customers List</li>
                     <li>Feedbacks List</li>
-                    <!-- ... add other items ... -->
+        
                 </ul>
             </div>
 
             <div class="main-content">
                 <h1>Dashboard</h1>
-                <!-- Statistic boxes -->
+
                 <div class="stats">
                     <div class="stat">43<br />Total Students</div>
                     <div class="stat">6<br />Total Teachers</div>
@@ -39,14 +39,13 @@
                     <div class="stat">0<br />Attend Students</div>
                 </div>
 
-                <!-- Chart -->
+
                 <div class="chart-section">
                     <h2>Reservation List</h2>
                     <canvas id="reservationChart"></canvas>
                 </div>
 
 
-                <!-- Ph?n thông tin ng?n v? l?p h?c -->
                 <div class="short-info">
                     <h2>Class Short Information</h2>
                     <table>
@@ -77,15 +76,15 @@
                                 <td>75%</td>
                                 <td>75%</td>
                             </tr>
-                            <!-- ... thêm các hàng khác ... -->
+          
                         </tbody>
                     </table>
                 </div>
 
-                <!-- Ph?n h?p tin nh?n -->
+  
                 <div class="message-box">
                     <h2>Message Box</h2>
-                    <!-- N?i dung c?a h?p tin nh?n -->
+
                 </div>
 
             </div>

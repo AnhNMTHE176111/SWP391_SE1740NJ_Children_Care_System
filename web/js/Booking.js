@@ -235,9 +235,9 @@ function onSpecialtyChange(selectedValue) {
     var specialtyName = selectedOption.text;
     document.getElementById('confirm-specialty').textContent = specialtyName;
 
-    // Cập nhật input ẩn để gửi thông tin này khi submit form
     document.getElementById('hidden-specialty').value = specialtyName;
 }
+
 
 
 
@@ -286,9 +286,15 @@ function displayConfirmation() {
 function onDoctorChange(dropdown) {
     var selectedOption = dropdown.options[dropdown.selectedIndex];
     var doctorName = selectedOption.text;
+    var doctorId = selectedOption.value;
+
+    // Hiển thị tên bác sĩ cho người dùng
     document.getElementById('confirm-doctor').textContent = doctorName;
-    document.getElementById('hidden-doctor').value = doctorName;
+
+    // Lưu giá trị doctorId vào trường ẩn
+    document.getElementById('hidden-doctorId').value = doctorId;
 }
+
 
 
 function onDateSelect(dateValue) {
@@ -296,7 +302,8 @@ function onDateSelect(dateValue) {
     document.getElementById('hidden-date').value = dateValue;
 }
 
-function onSlotSelect(slotValue) {
+function onSlotSelect(slotValue, slotId) {
+     document.getElementById('selectedSlotId').value = slotId;
     document.getElementById('confirm-slot').textContent = slotValue;
     document.getElementById('hidden-slot').value = slotValue;
 }

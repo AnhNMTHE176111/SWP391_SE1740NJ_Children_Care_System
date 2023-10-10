@@ -69,7 +69,7 @@
                                     <c:forEach var="doctor" items="${doctorList}">
                                         <option
                                             class="option-box doctor-option"
-                                            value="${doctor.getSpecialtyId()}"
+                                            value="${doctor.getDoctorId()}"
                                             data-specialty="${doctor.getSpecialtyId()}"
                                             style="display: none"
 
@@ -101,11 +101,13 @@
                             <div class="date-hidden">
                                 <div class="date">
                                     <c:forEach var="slot" items="${slotList}">
-                                        <button class="grid-date" name="slot" onclick="onSlotSelect('${slot.startTime}')">${slot.startTime}</button>
+
+                                        <button class="grid-date" name="slot" value="${slot.slotId}" onclick="onSlotSelect('${slot.startTime}', '${slot.slotId}')">${slot.startTime}</button>
 
                                     </c:forEach>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                     <button class="submit-button submit1">Tiếp Tục</button>
@@ -131,21 +133,22 @@
                                         type="text"
                                         placeholder="Họ và tên (*)"
                                         id="customer-name"
-                                    
+                                        value="${currentUser != null ? currentUser.name : ''}"
                                         />
                                 </div>
                                 <div class="form-group">
                                     <div class="customer-gender-input">
-                                        <input type="radio" id="male" name="gender" value="Nam" />
+                                        <input type="radio" id="male" name="gender" value="Nam" 
+                                               ${currentUser != null && currentUser.gender == 'Nam' ? 'checked' : ''}/>
                                         <label for="male">Nam</label>
 
-                                        <input type="radio" id="female" name="gender" value="Nữ" />
+                                        <input type="radio" id="female" name="gender" value="Nữ" 
+                                               ${currentUser != null && currentUser.gender == 'Nữ' ? 'checked' : ''}/>
                                         <label for="female">Nữ</label>
                                     </div>
                                 </div>
-
-
                             </div>
+
                             <div class="form-group">
                                 <label for="bookingdob"></label>
                                 <input
@@ -153,7 +156,7 @@
                                     type="date"
                                     placeholder="Ngày sinh (*)"
                                     id="bookingdob"
-
+                                    value="${currentUser != null ? currentUser.dob : ''}"
                                     />
                             </div>
 
@@ -163,10 +166,11 @@
                                     class="input-size"
                                     type="text"
                                     placeholder="Số điện thoại (*)"
-                                    id="customer-phone"
-
+                                    id="customer-phone"                                  
+                                    value="${currentUser != null ? currentUser.phone : ''}"
                                     />
                             </div>
+
                             <div class="form-group">
                                 <label for="customer-email"></label>
                                 <input
@@ -174,10 +178,11 @@
                                     type="text"
                                     placeholder="Để lại email để nhận thông tin lịch hẹn"
                                     id="customer-email"
-
+                                    value="${currentUser != null ? currentUser.email : ''}"
                                     />
                             </div>
                         </div>
+
                         <div class="form-group">
                             <div style="position: relative; top: 20px">
                                 <label for="customer-symptoms"></label>
@@ -187,11 +192,11 @@
                                     placeholder="Mô tả triệu chứng của bạn và nhu cầu thăm khám (*)"
                                     id="customer-symptoms"
                                     class="input-place"
-
-                                    ></textarea>
+                                    >${currentUser != null ? currentUser.symptoms : ''}</textarea>
                             </div>
                         </div>
                     </div>
+
                     <div class="button-line">
                         <button class="back-button" onclick="showStep(1)">Quay Lại</button>
                         <button class="submit-button" onclick="displayConfirmation(); showStep(3);" disable>
@@ -214,6 +219,9 @@
                         <h3>Xác nhận và hoàn tất</h3>
                         <div class="row">
                             <div class="column">
+                                <input type="hidden" name="doctorId" id="hidden-doctorId" value="">
+                                <input type="hidden" name="selectedSlotId" id="selectedSlotId" value="">
+
                                 <p><strong>Chuyên Khoan:</strong> <span id="confirm-specialty"></span>
                                     <input type="hidden" name="specialty" id="hidden-specialty" value="">
                                 </p>
@@ -250,7 +258,10 @@
                             </div>
                         </div>
                     </div>
-
+                    <div class="otp-section">
+                        <label for="otp-input">Nhập mã OTP đã gửi đến email của bạn:</label>
+                        <input type="text" id="otp-input" name="otp" placeholder="Mã OTP">
+                    </div>
                     <div class="button-line">
                         <button class="back-button" type="button" onclick="showStep(2)">Quay Lại</button>
 

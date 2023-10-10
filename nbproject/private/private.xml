@@ -3,22 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/web/managerDashboard.jsp</file>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/web/css/Booking.css</file>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAOBooking.java</file>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/web/css/service.css</file>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/web/css/home.css</file>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/controller/commonFeature/serviceListServlet.java</file>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/web/Booking.jsp</file>
             <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/controller/commonFeature/bookingController.java</file>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/controller/commonFeature/login.java</file>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/web/index.html</file>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/web/footer.jsp</file>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/web/css/login.css</file>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAODoctor.java</file>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/web/js/home.js</file>
+            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAOBooking.java</file>
+            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAOSlotDoctor.java</file>
+            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/model/Slot.java</file>
+            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/model/Doctor.java</file>
+            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/model/User.java</file>
+            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAOSlot.java</file>
+            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAOCustomer.java</file>
             <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/web/js/Booking.js</file>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/web/css/register.css</file>
         </group>
     </open-files>
 </project-private>

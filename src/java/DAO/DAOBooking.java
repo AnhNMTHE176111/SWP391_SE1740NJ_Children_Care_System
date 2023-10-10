@@ -8,6 +8,7 @@ import dal.DBContext;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import model.Booking;
 
@@ -25,26 +26,28 @@ public class DAOBooking extends DBContext {
         cnn = super.connection;
     }
 
-    public ArrayList<Booking> getListDate() {
-        ArrayList<Booking> data = new ArrayList<Booking>();
+    public int addBooking(int status, int customerId, int slotDoctorId) {
+        int generatedId = -1;
         try {
-            String strSQL = "SELECT Days.DayDate, Slots.StartTime\n"
-                    + "FROM Days\n"
-                    + "join SlotDoctor on SlotDoctor.DayId = Days.DayId\n"
-                    + "join Slots on SlotDoctor.SlotId = Slots.SlotId\n"
-                    + "where SlotDoctor.DoctorId = 1";
-            pstm = cnn.prepareStatement(strSQL);
-            rs = pstm.executeQuery();
-            while (rs.next()) {
-                String day = rs.getString(1);
-                String slot = rs.getString(2);
+            String strSQL = "insert into Booking(BookingStatus, CustomerID, slotDoctorId) values(?,?,?); SELECT SCOPE_IDENTITY();";
 
-                Booking booking = new Booking(day, slot, "", "");
-                data.add(booking);
+            pstm = cnn.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
+
+            pstm.setInt(1, status);
+            pstm.setInt(2, customerId);
+            pstm.setInt(3, slotDoctorId);
+
+            if (pstm.executeUpdate() > 0) {
+                try (ResultSet generatedKeys = pstm.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        generatedId = generatedKeys.getInt(1);
+                    }
+                }
             }
         } catch (Exception e) {
-            System.out.println("getListCustomers: " + e.getMessage());
+            e.printStackTrace();
         }
-        return data;
+        return generatedId;
     }
+
 }

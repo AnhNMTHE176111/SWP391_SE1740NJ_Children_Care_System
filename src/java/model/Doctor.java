@@ -24,9 +24,10 @@ public class Doctor {
         this.firstname = firstname;
     }
 
-    public Doctor(String name, int specialtyId) {
+    public Doctor(String name, int specialtyId, int doctorId) {
         this.name = name;
         this.specialtyId = specialtyId;
+        this.doctorId = doctorId;
     }
 
     public Doctor(int ExperienceYears, double rating, String Description, String Position, String firstname, String lastname, String email, String phone, String specialtyName) {

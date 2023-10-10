@@ -34,7 +34,7 @@ public class DAODoctor extends DBContext {
         ArrayList<Doctor> data = new ArrayList<Doctor>();
 
         try {
-            String strSQL = "SELECT Users.firstName + ' ' + Users.lastName AS username, Specialty.SpecialtyId \n"
+            String strSQL = "SELECT Users.firstName + ' ' + Users.lastName AS username, Specialty.SpecialtyId, DoctorId \n"
                     + "FROM Doctors\n"
                     + "JOIN Specialty ON Specialty.SpecialtyId = Doctors.SpecialtyId \n"
                     + "JOIN Users ON Users.userId = Doctors.userId\n"
@@ -44,8 +44,8 @@ public class DAODoctor extends DBContext {
             while (rs.next()) {
                 String name = rs.getString(1);
                 int id = Integer.parseInt(rs.getString(2));
-          
-                Doctor doctor = new Doctor(name, id);
+                int doctorId = rs.getInt(3);
+                Doctor doctor = new Doctor(name, id, doctorId);
                 data.add(doctor);
             }
         } catch (Exception e) {

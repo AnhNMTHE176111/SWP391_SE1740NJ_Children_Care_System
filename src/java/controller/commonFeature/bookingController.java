@@ -9,9 +9,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import DAO.DAOUser;
 import DAO.DAOBooking;
+import DAO.DAOCustomer;
 import DAO.DAOSlot;
 import DAO.DAODoctor;
+import DAO.DAOSlotDoctor;
 import DAO.DAOSpecialty;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,8 +23,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-
+import model.Doctor;
+import model.Slot;
+import model.Specialty;
+import model.User;
 
 /**
  *
@@ -30,13 +35,11 @@ import java.util.List;
 @WebServlet(name = "bookingController", urlPatterns = {"/booking"})
 public class bookingController extends HttpServlet {
 
-    
-       private List<String> getDateList() {
+    private List<String> getDateList() {
         List<String> dateList = new ArrayList<>();
 
         Date currentDate = new Date();
 
-  
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(currentDate);
         dateList.add(new SimpleDateFormat("dd/MM").format(currentDate));
@@ -46,13 +49,14 @@ public class bookingController extends HttpServlet {
             Date nextDate = calendar.getTime();
             dateList.add(new SimpleDateFormat("dd/MM").format(nextDate));
         }
-        
+
         return dateList;
     }
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -75,22 +79,33 @@ public class bookingController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-       @Override
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ArrayList slotList = new ArrayList<>();
-        ArrayList specialtyList = new ArrayList<>();
-        ArrayList doctorList = new ArrayList<>();
-        
+
+//Infomation from session
+        String userId = (String) request.getSession().getAttribute("userId");
+        User currentUser = null;
+
+        if (userId != null && !userId.isEmpty()) {
+            DAOUser userDao = new DAOUser();
+            currentUser = userDao.getUserById(userId);
+        }
+
+        request.setAttribute("currentUser", currentUser);
+
+//Information from db
         DAOSlot slot = new DAOSlot();
         DAOSpecialty specialty = new DAOSpecialty();
         DAODoctor doctor = new DAODoctor();
-        
-        List<String> dateList = getDateList();    
-        doctorList = doctor.getListDoctorBySpecialty();
-        specialtyList = specialty.getListSpecialty();
-        slotList = slot.getListSlot();
 
+        List<String> dateList = getDateList();
+        List<Doctor> doctorList = doctor.getListDoctorBySpecialty();
+        List<Specialty> specialtyList = specialty.getListSpecialty();
+        List<Slot> slotList = slot.getListSlot();
+        
+        
+        request.setAttribute("currentUser", currentUser);
         request.setAttribute("slotList", slotList);
         request.setAttribute("specialtyList", specialtyList);
         request.setAttribute("doctorList", doctorList);
@@ -107,38 +122,55 @@ public class bookingController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-   @Override
-protected void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-request.setCharacterEncoding("UTF-8");
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
 
-    String selectedSpecialty = request.getParameter("specialty");
-    String selectedDoctor = request.getParameter("doctor");
-    String selectedDate = request.getParameter("selectedDate");
-    String selectedSlot = request.getParameter("selectedSlot");
+        DAOCustomer customer = new DAOCustomer();
+        DAOUser user = new DAOUser();
+        DAOSlotDoctor slotDoctor = new DAOSlotDoctor();
+        DAOBooking booking = new DAOBooking();
+//Data from jsp
+        String slotId = request.getParameter("selectedSlotId");
+        String doctorId = request.getParameter("doctorId");
 
-    String name = request.getParameter("name");
-    String gender = request.getParameter("gender");
-    String dob = request.getParameter("dob");
-    System.out.println("hihi");
-    String phone = request.getParameter("phone");
-    String email = request.getParameter("email");
-    String symptoms = request.getParameter("symptoms");
+        String selectedSpecialty = request.getParameter("specialty");
+        String selectedDoctor = request.getParameter("doctor");
+        String selectedDate = request.getParameter("selectedDate");
+        String selectedSlot = request.getParameter("selectedSlot");
 
+//About Doctor Backend
+        int slotIdInt = Integer.parseInt(slotId);
+        int doctorIdInt = Integer.parseInt(doctorId);
+        int slotDoctorId = slotDoctor.addSlotDoctor(slotIdInt, doctorIdInt, 1);
 
-    System.out.println("Chuyên khoa: " + selectedSpecialty);
-    System.out.println("Bác sĩ: " + selectedDoctor);
-    System.out.println("Ngày khám: " + selectedDate);
-    System.out.println("Slot thời gian: " + selectedSlot);
-    System.out.println("Họ và tên: " + name);
-    System.out.println("Giới tính: " + gender);
-    System.out.println("Ngày sinh: " + dob);
-    System.out.println("Số điện thoại: " + phone);
-    System.out.println("Email: " + email);
-    System.out.println("Triệu chứng: " + symptoms);
+//About Customer Backend
+        String name = request.getParameter("name");
+        String gender = request.getParameter("gender");
+        String dob = request.getParameter("dob");
+        String phone = request.getParameter("phone");
+        String email = request.getParameter("email");
+        String symptoms = request.getParameter("symptoms");
 
- 
-}
+        String[] parts = name.split("\\s+");
+        String firstName = parts[0];
+
+        String lastName = "";
+        for (int i = 1; i < parts.length; i++) {
+            lastName += parts[i] + " ";
+        }
+        lastName = lastName.trim();
+
+        int roleId = 1;
+        int addedUserId = user.addGuess(firstName, lastName, gender, email, phone, dob, roleId);
+        int customerId = customer.addCustomer(addedUserId);
+
+//Booking infomation      
+        int bookingId = booking.addBooking(0, customerId, slotDoctorId);
+
+    }
+
     @Override
     public String getServletInfo() {
         return "Short description";
