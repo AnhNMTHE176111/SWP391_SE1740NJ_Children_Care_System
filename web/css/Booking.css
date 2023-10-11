@@ -8,14 +8,25 @@ body {
   align-items: center;
   /* height: 100vh; */
 }
-
+.container{
+  
+}
+.error-message{
+    position: relative;
+    width : 100px;
+    display: flex;
+    transform: translate-y(-29px);
+    /*height: 20px;*/
+    padding-top: 30px;
+}
 .container {
   background-color: #fff;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   width: 800px;
-  height: 600px;
+  height:1000px;
+ 
   position: relative;
   top: 100px;
 }
@@ -261,8 +272,8 @@ label-box {
   transition: all 0.2s;
 }
 .form-group {
-    display: flex;
-    flex-direction: row;
+   
+   
     align-items: center;
 }
 .input-place {
@@ -273,8 +284,6 @@ label-box {
   border-radius: 5px;
 }
 .form-input {
-  display: flex;
-  flex-direction: row;
   gap: 50px;
   position: relative;
   bottom: 40px;
@@ -379,7 +388,6 @@ label-box {
 }
 
 .form-input {
-    display: flex; 
     justify-content: space-between; 
     flex-wrap: wrap; 
 }
@@ -388,6 +396,7 @@ label-box {
 .form-input .form-group {
     width: auto; 
     box-sizing: border-box; 
+    display: grid;
 }
 
 .input-size,
@@ -494,5 +503,16 @@ label-box {
 .column:not(:last-child) {
     margin-right: 20px;
 }
+
+.grid-date.booked {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.disabled-slot:hover {
+    background-color: darkgrey !important; 
+    cursor: not-allowed !important; 
+}
+
 
 

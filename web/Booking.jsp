@@ -1,4 +1,3 @@
-``````````````
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import= "DAO.DAOBooking" %>
@@ -22,6 +21,14 @@
         <title>Đặt Lịch Hẹn</title>
     </head>
     <body>
+        <div id="bookedSlotsData" style="display: none;"
+             data-booked-slots='[
+             <c:forEach var="slot" items="${availeSlot}" varStatus="loop">
+                 {"DoctorId": ${slot.getDoctorId()}, "SlotId": ${slot.getSlotId()}, "Day": "${slot.getDay()}"}
+                 <c:if test="${not loop.last}">,</c:if>
+             </c:forEach>
+             ]'>
+        </div>
         <div class="container">
             <div class="background-img">
                 <div id="step1" class="step">
@@ -54,9 +61,9 @@
                                         </option>
                                     </c:forEach>
                                 </select>
-
+<span class="error-message" id="specialtyError"></span>
                             </div>
-                            <span class="error-message" id="specialtyError"></span>
+                            
                             <div class="form-group label-box">
                                 <select
                                     id="selectedDoctor"

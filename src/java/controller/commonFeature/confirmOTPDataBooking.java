@@ -73,53 +73,53 @@ public class confirmOTPDataBooking extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String userOtp = request.getParameter("otp");
-        String validOtp = (String) request.getSession().getAttribute("otp");
-
-        if (userOtp.equals(validOtp)) {
-            Map<String, String[]> userData = (Map<String, String[]>) request.getSession().getAttribute("userData");
-            
-            // Xử lý dữ liệu từ userData và lưu vào DB
-            DAOCustomer customer = new DAOCustomer();
-            DAOUser user = new DAOUser();
-            DAOSlotDoctor slotDoctor = new DAOSlotDoctor();
-            DAOBooking booking = new DAOBooking();
-
-            String slotId = userData.get("selectedSlotId")[0];
-            String doctorId = userData.get("doctorId")[0];
-            String name = userData.get("name")[0];
-            String gender = userData.get("gender")[0];
-            String dob = userData.get("dob")[0];
-            String phone = userData.get("phone")[0];
-            String email = userData.get("email")[0];
-            String symptoms = userData.get("symptoms")[0];
-            
-            int slotIdInt = Integer.parseInt(slotId);
-            int doctorIdInt = Integer.parseInt(doctorId);
-            int slotDoctorId = slotDoctor.addSlotDoctor(slotIdInt, doctorIdInt, 1);
-
-            String[] parts = name.split("\\s+");
-            String firstName = parts[0];
-            String lastName = "";
-            for (int i = 1; i < parts.length; i++) {
-                lastName += parts[i] + " ";
-            }
-            lastName = lastName.trim();
-
-            int roleId = 1;
-            int addedUserId = user.addGuess(firstName, lastName, gender, email, phone, dob, roleId);
-            int customerId = customer.addCustomer(addedUserId);
-            
-            int bookingId = booking.addBooking(0, customerId, slotDoctorId);
-
-            request.getSession().removeAttribute("userData");
-            request.getSession().removeAttribute("otp");
-
-            response.sendRedirect("/success.jsp");
-        } else {
-            request.setAttribute("error", "Mã OTP không chính xác. Vui lòng thử lại.");
-            request.getRequestDispatcher("/confirm-otp.jsp").forward(request, response);
-        }
+//        String userOtp = request.getParameter("otp");
+//        String validOtp = (String) request.getSession().getAttribute("otp");
+//
+//        if (userOtp.equals(validOtp)) {
+//            Map<String, String[]> userData = (Map<String, String[]>) request.getSession().getAttribute("userData");
+//            
+//            // Xử lý dữ liệu từ userData và lưu vào DB
+//            DAOCustomer customer = new DAOCustomer();
+//            DAOUser user = new DAOUser();
+//            DAOSlotDoctor slotDoctor = new DAOSlotDoctor();
+//            DAOBooking booking = new DAOBooking();
+//
+//            String slotId = userData.get("selectedSlotId")[0];
+//            String doctorId = userData.get("doctorId")[0];
+//            String name = userData.get("name")[0];
+//            String gender = userData.get("gender")[0];
+//            String dob = userData.get("dob")[0];
+//            String phone = userData.get("phone")[0];
+//            String email = userData.get("email")[0];
+//            String symptoms = userData.get("symptoms")[0];
+//            
+//            int slotIdInt = Integer.parseInt(slotId);
+//            int doctorIdInt = Integer.parseInt(doctorId);
+//            int slotDoctorId = slotDoctor.addSlotDoctor(slotIdInt, doctorIdInt, 1, );
+//
+//            String[] parts = name.split("\\s+");
+//            String firstName = parts[0];
+//            String lastName = "";
+//            for (int i = 1; i < parts.length; i++) {
+//                lastName += parts[i] + " ";
+//            }
+//            lastName = lastName.trim();
+//
+//            int roleId = 1;
+//            int addedUserId = user.addGuess(firstName, lastName, gender, email, phone, dob, roleId);
+//            int customerId = customer.addCustomer(addedUserId);
+//            
+//            int bookingId = booking.addBooking(0, customerId, slotDoctorId);
+//
+//            request.getSession().removeAttribute("userData");
+//            request.getSession().removeAttribute("otp");
+//
+//            response.sendRedirect("/success.jsp");
+//        } else {
+//            request.setAttribute("error", "Mã OTP không chính xác. Vui lòng thử lại.");
+//            request.getRequestDispatcher("/confirm-otp.jsp").forward(request, response);
+//        }
     }
     @Override
     public String getServletInfo() {

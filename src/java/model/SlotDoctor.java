@@ -4,22 +4,34 @@
  */
 package model;
 
+import java.util.Date;
+
 /**
  *
  * @author dmx
  */
 public class SlotDoctor {
-    private int slotDoctorId,slotId, doctorId, status;
+
+    private int slotDoctorId, slotId, doctorId, status;
     private String description;
+    private Date day;
 
     public SlotDoctor() {
     }
 
-    public SlotDoctor(int slotId, int doctorId, int status) {
-        this.slotId = slotId;
+    public SlotDoctor(int doctorId, int slotId, Date day) {
         this.doctorId = doctorId;
-        this.status = status;
+        this.slotId = slotId;
+        this.day = day;
 
+    }
+
+    public Date getDay() {
+        return day;
+    }
+
+    public void setDay(Date day) {
+        this.day = day;
     }
 
     public int getSlotDoctorId() {
@@ -29,8 +41,6 @@ public class SlotDoctor {
     public void setSlotDoctorId(int slotDoctorId) {
         this.slotDoctorId = slotDoctorId;
     }
-    
-    
 
     public int getSlotId() {
         return slotId;
@@ -63,5 +73,5 @@ public class SlotDoctor {
     public void setDescription(String description) {
         this.description = description;
     }
-    
+
 }

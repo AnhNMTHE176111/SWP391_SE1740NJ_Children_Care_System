@@ -18,6 +18,7 @@ import DAO.DAOSlotDoctor;
 import DAO.DAOSpecialty;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,6 +26,7 @@ import java.util.Date;
 import java.util.List;
 import model.Doctor;
 import model.Slot;
+import model.SlotDoctor;
 import model.Specialty;
 import model.User;
 
@@ -98,14 +100,16 @@ public class bookingController extends HttpServlet {
         DAOSlot slot = new DAOSlot();
         DAOSpecialty specialty = new DAOSpecialty();
         DAODoctor doctor = new DAODoctor();
+        DAOSlotDoctor slotDoctor = new DAOSlotDoctor();
 
+        List<SlotDoctor> availeSlot = slotDoctor.displayBookedSlotList();
         List<String> dateList = getDateList();
         List<Doctor> doctorList = doctor.getListDoctorBySpecialty();
         List<Specialty> specialtyList = specialty.getListSpecialty();
         List<Slot> slotList = slot.getListSlot();
-        
-        
+
         request.setAttribute("currentUser", currentUser);
+        request.setAttribute("availeSlot", availeSlot);
         request.setAttribute("slotList", slotList);
         request.setAttribute("specialtyList", specialtyList);
         request.setAttribute("doctorList", doctorList);
@@ -143,8 +147,30 @@ public class bookingController extends HttpServlet {
 //About Doctor Backend
         int slotIdInt = Integer.parseInt(slotId);
         int doctorIdInt = Integer.parseInt(doctorId);
-        int slotDoctorId = slotDoctor.addSlotDoctor(slotIdInt, doctorIdInt, 1);
 
+        String formattedDate = null;
+        try {
+            SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM");
+            SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+            Date parsedDate = inputFormat.parse(selectedDate);
+
+            Calendar currentCalendar = Calendar.getInstance();
+            int currentYear = currentCalendar.get(Calendar.YEAR);
+
+            Calendar parsedCalendar = Calendar.getInstance();
+            parsedCalendar.setTime(parsedDate);
+            parsedCalendar.set(Calendar.YEAR, currentYear);
+
+            formattedDate = outputFormat.format(parsedCalendar.getTime());
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+         
+        }
+        int slotDoctorId = slotDoctor.addSlotDoctor(doctorIdInt, slotIdInt, 1, formattedDate);
+        
+        
 //About Customer Backend
         String name = request.getParameter("name");
         String gender = request.getParameter("gender");
