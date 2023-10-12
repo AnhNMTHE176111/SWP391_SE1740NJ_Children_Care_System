@@ -45,7 +45,7 @@
                     </div>
 
                     <ul class="nav">
-                        <c:if test="${sessionScope.name ne null}">
+                        <c:if test="${sessionScope.name ne null }">
                             <li class="nav-item">
                                 <a class="nav-link" href="#" onclick="showPopup()">${sessionScope.name}</a>
                             </li>
