@@ -47,7 +47,7 @@
                     <ul class="nav">
                         <c:if test="${sessionScope.name ne null}">
                             <li class="nav-item">
-                                <a class="nav-link" href="#" onclick="showPopup()">Hello ${sessionScope.name}</a>
+                                <a class="nav-link" href="#" onclick="showPopup()">${sessionScope.name}</a>
                             </li>
                             <li class="nav-item">
                                 <img onclick="showPopup()" style="height:40px;width:40px;border-radius:50%; object-fit: cover; cursor: pointer"
