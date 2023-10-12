@@ -18,12 +18,27 @@
               crossorigin="anonymous" referrerpolicy="no-referrer" />
         <title>JSP Page</title>
     </head>    
-   
-        <body>
+    <body>
         <c:if test="${sessionScope.roleId ne '4'}">
             <jsp:forward page="403.jsp"/>
         </c:if>
-        <jsp:include page="admin_Dashboard_ListUser.jsp"></jsp:include>
-        </body>
-    
+        <div class="dashboard-container">
+            <div class="side-navbar-container">
+                <h3>Admin Dashboard</h3>
+                <ul>
+                    <li onclick="changeLocation('/home')"> <i class="fa-solid fa-house"></i> Home</a></li>
+                    <li onclick="changeLocation('/admin')"> <i class="fa-solid fa-chart-simple"></i> Analytics</a></li>
+                    <li onclick="changeLocation('/admin-manage-user')"> <i class="fa-solid fa-users"></i> User Manager</a></li>
+                    <li onclick="changeLocation('/admin-manage-setting')"> <i class="fa-solid fa-gear"></i> Setting</a></li>
+                </ul>
+            </div>
+            <jsp:include page="admin_Dashboard_ListUser.jsp"></jsp:include>
+        </div>
+        <script src="./js/filter_Popup.js"></script>
+        <script>
+            function changeLocation(url) {
+                window.location.href = url;
+            }
+        </script>
+    </body>
 </html>

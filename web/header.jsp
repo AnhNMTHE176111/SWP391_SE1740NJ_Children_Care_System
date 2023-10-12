@@ -13,19 +13,19 @@
     <body>
         <jsp:include page="change-profile.jsp"></jsp:include>
 
-            <!-- Navbar Start -->
-            <div class="container-fluid position-relative shadow" style="position: fixed; top: 0;">
-                <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0 px-lg-5">
-                    <a href="" class="navbar-brand font-weight-bold text-secondary" style="font-size: 50px;">
-                        <!--                <i class="flaticon-043-teddy-bear"></i>-->
-                        <span class="text-primary">ChildCare</span>
-                    </a>
-                    <!--            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                                <span class="navbar-toggler-icon"></span>
-                            </button>-->
+        <!-- Navbar Start -->
+        <div class="container-fluid position-relative shadow">
+            <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0 px-lg-5">
+                <a href="" class="navbar-brand font-weight-bold text-secondary" style="font-size: 50px;">
+                    <!--                <i class="flaticon-043-teddy-bear"></i>-->
+                    <span class="text-primary">ChildCare</span>
+                </a>
+                <!--            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>-->
 
-                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                        <div class="navbar-nav font-weight-bold mx-auto py-0">
+                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                    <div class="navbar-nav font-weight-bold mx-auto py-0">
                         <c:if test="${sessionScope.roleId eq 4}">
                             <a href="admin" class="nav-item nav-link">Admin Dashboard</a>
                         </c:if>
@@ -47,7 +47,7 @@
                     <ul class="nav">
                         <c:if test="${sessionScope.name ne null}">
                             <li class="nav-item">
-                                <a class="nav-link" href="#" onclick="showPopup()">Hello ${sessionScope.name}</a>
+                                <a class="nav-link" href="#" onclick="showPopup()">${sessionScope.name}</a>
                             </li>
                             <li class="nav-item">
                                 <img onclick="showPopup()" style="height:40px;width:40px;border-radius:50%; object-fit: cover; cursor: pointer"
