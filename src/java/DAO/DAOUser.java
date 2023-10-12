@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import model.User;
 
 /**
@@ -70,15 +71,17 @@ public class DAOUser extends DBContext {
                 user.setStatus(rs.getString(2));
                 user.setFirstName(rs.getString(3));
                 user.setLastName(rs.getString(4));
-                user.setEmail(rs.getString(5));
-                user.setPassword(rs.getString(6));
-                user.setAddress(rs.getString(7));
-                user.setPhone(rs.getString(8));
-                user.setDob(rs.getString(9));
-                user.setAvatar(rs.getString(10));
-                user.setRoleId(Integer.parseInt(rs.getString(11)));
-                // some code to finish
+                user.setGender(rs.getString(5));
+                user.setEmail(rs.getString(6));
+                user.setPassword(rs.getString(7));
+                user.setAddress(rs.getString(8));
+                user.setPhone(rs.getString(9));
+                user.setDob(rs.getString(10));
+                user.setAvatar(rs.getString(11));
+                user.setRoleId(Integer.parseInt(rs.getString(12)));
+                user.setCreatedAt(rs.getString(13));
                 
+                // some code to finish
             }
             return user;
         } catch (SQLException e) {
@@ -89,6 +92,7 @@ public class DAOUser extends DBContext {
             return null;
         }
     }
+
     public User getUserByEmail(String email) {
         try {
             String strSQL = "select * from Users where email = ? ";
@@ -102,15 +106,17 @@ public class DAOUser extends DBContext {
                 user.setStatus(rs.getString(2));
                 user.setFirstName(rs.getString(3));
                 user.setLastName(rs.getString(4));
-                user.setEmail(rs.getString(5));
-                user.setPassword(rs.getString(6));
-                user.setAddress(rs.getString(7));
-                user.setPhone(rs.getString(8));
-                user.setDob(rs.getString(9));
-                user.setAvatar(rs.getString(10));
-                user.setRoleId(Integer.parseInt(rs.getString(11)));
+                user.setGender(rs.getString(5));
+                user.setEmail(rs.getString(6));
+                user.setPassword(rs.getString(7));
+                user.setAddress(rs.getString(8));
+                user.setPhone(rs.getString(9));
+                user.setDob(rs.getString(10));
+                user.setAvatar(rs.getString(11));
+                user.setRoleId(Integer.parseInt(rs.getString(12)));
+                user.setCreatedAt(rs.getString(13));
                 // some code to finish
-                
+
             }
             return user;
         } catch (SQLException e) {
@@ -130,13 +136,19 @@ public class DAOUser extends DBContext {
             rs = pstm.executeQuery();
             User user = new User();;
             while (rs.next()) {
+                user.setUserId(Integer.parseInt(rs.getString(1)));
+                user.setStatus(rs.getString(2));
                 user.setFirstName(rs.getString(3));
                 user.setLastName(rs.getString(4));
-                user.setEmail(rs.getString(5));
-                user.setPassword(rs.getString(6));
-                user.setAddress(rs.getString(7));
-                user.setPhone(rs.getString(8));
-                user.setDob(rs.getString(9));
+                user.setGender(rs.getString(5));
+                user.setEmail(rs.getString(6));
+                user.setPassword(rs.getString(7));
+                user.setAddress(rs.getString(8));
+                user.setPhone(rs.getString(9));
+                user.setDob(rs.getString(10));
+                user.setAvatar(rs.getString(11));
+                user.setRoleId(Integer.parseInt(rs.getString(12)));
+                user.setCreatedAt(rs.getString(13));
             }
             return user;
         } catch (SQLException e) {
@@ -150,8 +162,8 @@ public class DAOUser extends DBContext {
 
     public void addNewAccountByEmail(User user) {
         try {
-            String strSQL = "insert into Users (firstName, lastName, email, password, address, phone, dob, status, avatar, RoleId)"
-                    + " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String strSQL = "insert into Users (firstName, lastName, email, password, address, phone, dob, status, avatar, RoleId, createdAt)"
+                    + " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, GETDATE())";
             pstm = cnn.prepareStatement(strSQL);
             pstm.setString(1, user.getFirstName());
             pstm.setString(2, user.getLastName());
@@ -201,7 +213,7 @@ public class DAOUser extends DBContext {
             pstm.setString(5, dob);
             pstm.setString(6, avatar);
             pstm.setString(7, email);
-            
+
             pstm.execute();
             System.out.println("Update Successfully");
 
@@ -212,14 +224,17 @@ public class DAOUser extends DBContext {
         }
     }
 
+
     public void addNewAccountByGoogle(User user) {
         try {
-            String strSQL = "insert into Users (status, email, avatar, RoleId, createdAt) values (?, ?, ?, ?, GETDATE())";
+            String strSQL = "insert into Users (status, firstName, lastName, email, avatar, RoleId, createdAt) values (?, ?, ?, ?, ?, ?, GETDATE())";
             pstm = cnn.prepareStatement(strSQL);
             pstm.setString(1, user.getStatus());
-            pstm.setString(2, user.getEmail());
-            pstm.setString(3, user.getAvatar());
-            pstm.setString(4, String.valueOf(user.getRoleId()));
+            pstm.setString(2, user.getFirstName());
+            pstm.setString(3, user.getLastName());
+            pstm.setString(4, user.getEmail());
+            pstm.setString(5, user.getAvatar());
+            pstm.setString(6, String.valueOf(user.getRoleId()));
 
             pstm.execute();
 
@@ -229,6 +244,55 @@ public class DAOUser extends DBContext {
             System.out.println("addNewAccountByGoogle: " + e.getMessage());
         }
     }
+
+    public ArrayList<User> getListUser() {
+        ArrayList<User> list = new ArrayList<>();
+        try {
+            String strSQL = "select * from Users";
+            pstm = cnn.prepareStatement(strSQL);
+            rs = pstm.executeQuery();
+            while (rs.next()) {
+                User user = new User();
+                user.setUserId(Integer.parseInt(rs.getString(1)));
+                user.setStatus(rs.getString(2));
+                user.setFirstName(rs.getString(3));
+                user.setLastName(rs.getString(4));
+                user.setGender(rs.getString(5));
+                user.setEmail(rs.getString(6));
+                user.setPassword(rs.getString(7));
+                user.setAddress(rs.getString(8));
+                user.setPhone(rs.getString(9));
+                user.setDob(rs.getString(10));
+                user.setAvatar(rs.getString(11));
+                user.setRoleId(Integer.parseInt(rs.getString(12)));
+                user.setCreatedAt(rs.getString(13));
+
+                // some code to finish
+                list.add(user);
+            }
+            return list;
+        } catch (SQLException e) {
+            System.out.println("SQL getListUser: " + e.getMessage());
+            return null;
+        } catch (Exception e) {
+            System.out.println("getListUser: " + e.getMessage());
+            return null;
+        }
+    }
+    
+    public ArrayList<User> getListUserByName(String username) {
+        DAOUser daoUser = new DAOUser();
+        ArrayList<User> listUserRaw = daoUser.getListUser();
+        ArrayList<User> listUser = new ArrayList<>();
+        for (User user : listUserRaw) {
+            String name = user.getLastName() + " " + user.getFirstName();
+            if(name.toLowerCase().contains(username.toLowerCase().trim())) {
+                listUser.add(user);
+            }
+        }
+        return listUser;
+    }
+    
 
 }
 //include jsp//

@@ -2,24 +2,41 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.adminFeature;
+package controller.commonFeature;
 
-import DAO.DAOUser;
+import DAO.DAOPost;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
-import model.User;
+import java.util.List;
+import model.Post;
 
 /**
  *
- * @author dmx
+ * @author admin
  */
-public class adminDashboard extends HttpServlet {
+public class postController extends HttpServlet {
+
+    public static void main(String[] args) {
+        DAO.DAOPost Postdao = new DAOPost();
+        List<Post> listP = Postdao.getListPost();
+
+        if (listP != null && !listP.isEmpty()) {
+            // listP has data
+            for (Post post : listP) {
+                System.out.println(post); // In thông tin của mỗi bài đăng
+            }
+        } else {
+            // listP is empty or null
+            System.out.println("listP is empty or null");
+            // You may want to handle this case differently, e.g., show an error message.
+        }
+
+    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,19 +49,6 @@ public class adminDashboard extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet adminDashboard</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet adminDashboard at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -59,23 +63,19 @@ public class adminDashboard extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        System.out.println("roleid: " + String.valueOf(session.getAttribute("roleId")));
-        if (String.valueOf(session.getAttribute("roleId")).equals("null")) {
-            response.sendRedirect("403.jsp");
-        } else {
-            int roleId = Integer.parseInt(String.valueOf(session.getAttribute("roleId")));
-            if (roleId == 4) {
-//                DAOUser daoUser = new DAOUser();
-//                ArrayList<User> listUser = daoUser.getListUser();
-//
-//                request.setAttribute("listUser", listUser);
-                request.getRequestDispatcher("adminDashboard.jsp").forward(request, response);
-            } else {
-                response.sendRedirect("403.jsp");
-            }
+        DAOPost Postdao = new DAOPost();
+        ArrayList<String> listIntro = new ArrayList<>();
+        
+        ArrayList<Post> listP = Postdao.getListPost();
+        for (Post post : listP) {
+            String intro = post.getContent().substring(0, 150) + "...";
+            listIntro.add(intro);
         }
-
+        
+        
+        request.setAttribute("listP", listP);
+        request.setAttribute("listIntro", listIntro);
+        request.getRequestDispatcher("blog.jsp").forward(request, response);
     }
 
     /**
@@ -89,7 +89,15 @@ public class adminDashboard extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+
+        DAOPost Postdao = new DAOPost();
+        String postID = request.getParameter("postid"); // cid la ten dat trong jsp
+
+        ArrayList<Post> listP = Postdao.getListPost();
+
+        request.setAttribute("listP", listP);
+        request.getRequestDispatcher("blog.jsp").forward(request, response);
     }
 
     /**

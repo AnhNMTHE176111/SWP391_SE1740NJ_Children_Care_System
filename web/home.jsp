@@ -15,10 +15,8 @@
 
     <body>
         <jsp:include page="header.jsp"></jsp:include>
+
         <jsp:include page="bannerHome.jsp"></jsp:include>
-
-
-
 
         <!-- Registration Start -->
         <div class="container-fluid py-5">

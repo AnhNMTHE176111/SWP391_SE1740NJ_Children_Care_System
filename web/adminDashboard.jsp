@@ -13,14 +13,32 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+              integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+              crossorigin="anonymous" referrerpolicy="no-referrer" />
         <title>JSP Page</title>
     </head>    
-    <jsp:include page="header.jsp"></jsp:include>
-        <body>
+    <body>
         <c:if test="${sessionScope.roleId ne '4'}">
             <jsp:forward page="403.jsp"/>
         </c:if>
-        <h1>Admin Dashboard ${sessionScope.roleId}</h1>
+        <div class="dashboard-container">
+            <div class="side-navbar-container">
+                <h3>Admin Dashboard</h3>
+                <ul>
+                    <li onclick="changeLocation('/home')"> <i class="fa-solid fa-house"></i> Home</a></li>
+                    <li onclick="changeLocation('/admin')"> <i class="fa-solid fa-chart-simple"></i> Analytics</a></li>
+                    <li onclick="changeLocation('/admin-manage-user')"> <i class="fa-solid fa-users"></i> User Manager</a></li>
+                    <li onclick="changeLocation('/admin-manage-setting')"> <i class="fa-solid fa-gear"></i> Setting</a></li>
+                </ul>
+            </div>
+            <jsp:include page="admin_Dashboard_ListUser.jsp"></jsp:include>
+        </div>
+        <script src="./js/filter_Popup.js"></script>
+        <script>
+            function changeLocation(url) {
+                window.location.href = url;
+            }
+        </script>
     </body>
-    <jsp:include page="footer.jsp"></jsp:include>
 </html>
