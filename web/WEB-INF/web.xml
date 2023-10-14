@@ -37,6 +37,14 @@
         <servlet-class>controller.commonFeature.homeController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>adminManageUser</servlet-name>
+        <servlet-class>controller.adminFeature.adminManageUser</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>addNewUser</servlet-name>
+        <servlet-class>controller.adminFeature.addNewUser</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>postController</servlet-name>
         <servlet-class>controller.commonFeature.postController</servlet-class>
     </servlet>
@@ -84,6 +92,14 @@
         <servlet-name>homeController</servlet-name>
         <url-pattern>/home</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>adminManageUser</servlet-name>
+        <url-pattern>/admin-manage-user</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addNewUser</servlet-name>
+        <url-pattern>/add-new-user</url-pattern>
+     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>postController</servlet-name>
         <url-pattern>/blog</url-pattern>
