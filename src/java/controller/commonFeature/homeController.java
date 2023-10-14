@@ -54,8 +54,7 @@ public class homeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        
+        HttpSession session = request.getSession();     
         request.getRequestDispatcher("home.jsp").forward(request, response);
     } 
 
@@ -68,7 +67,7 @@ public class homeController extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+    throws ServletException, IOException {  
         processRequest(request, response);
     }
 

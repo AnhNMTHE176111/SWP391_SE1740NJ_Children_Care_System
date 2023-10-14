@@ -34,7 +34,7 @@
                     <div class="login_form_div">
                         <input type="checkbox" name="remember" value="ON" value="${(cookie.cRemember!=null?'checked':'')}"/>
                         <label>Remember me</label>
-                        <a href="resetPassword.jsp" style="margin-left: 45px;">Forgot password?</a>
+                        <a href="forgotPassword.jsp" style="margin-left: 60px;">Forgot password?</a>
                         <p class="login_error">${requestScope.mess}</p>
                         <p class="login_success">${requestScope.mess1}</p>
                     </div>

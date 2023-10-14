@@ -5,29 +5,33 @@
 package controller.commonFeature;
 
 import DAO.DAOUser;
-import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.Properties;
+import java.util.Random;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import jakarta.servlet.http.Part;
-import java.nio.file.Files;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.PrintWriter;
 import model.User;
 
 /**
  *
- * @author dmx
+ * @author letie
  */
-@MultipartConfig
-public class changeProfile extends HttpServlet {
-
-    protected String PATH = System.getProperty("user.dir") + "\\web\\image\\profile_user";
+@WebServlet(name = "forgotPassword", urlPatterns = {"/forgot"})
+public class forgotPassword extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,10 +50,10 @@ public class changeProfile extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet changeProfile</title>");
+            out.println("<title>Servlet forgotPassword</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet changeProfile at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet forgotPassword at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -67,7 +71,7 @@ public class changeProfile extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect("home");
+        processRequest(request, response);
     }
 
     /**
@@ -81,41 +85,45 @@ public class changeProfile extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String fName = request.getParameter("firstName");
-        String lName = request.getParameter("lastName");
         String email = request.getParameter("email");
-        String phone = request.getParameter("phone");
-        String address = request.getParameter("address");
-        String dob = request.getParameter("dob");
-        Part filePart = request.getPart("imageFile");
+        int verificationCode;
+        HttpSession session = request.getSession();
+        DAOUser userDao = new DAOUser();
+        User u = userDao.checkEmailExist(email);
 
-        DAOUser daoUser = new DAOUser();
-        User user = (User) request.getSession().getAttribute("user");
-
-        // get path
-        String uploadDir = getServletContext().getRealPath("").split("build")[0] + "web\\image\\profile_user";;
-
-        // push file
-        String fileName = "user" + user.getUserId() + ".jpg";
-        File file = new File(uploadDir, fileName);
-        if (file.exists()) {
-            file.delete();
+        if (u.getEmail() != null) {
+            // sending Verification Code
+            Random rand = new Random();
+            //Randomly generate 6-digit verification code
+            verificationCode = rand.nextInt(900000) + 100000;
+            Properties props = new Properties();
+            props.put("mail.smtp.host", "smtp.gmail.com");
+            props.put("mail.smtp.socketFactory.port", "465");
+            props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.port", "465");
+            Session codeSession = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication("childrencaresystemse1740nj@gmail.com", "swjo blyb vziq xpxz");
+                }
+            });
+            // compose message
+            try {
+                MimeMessage message = new MimeMessage(codeSession);
+                message.setFrom(new InternetAddress(email));// change accordingly
+                message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
+                message.setSubject("Children Care System Verification Code");
+                message.setText("Your verification code is: " + verificationCode);
+                // send message
+                Transport.send(message);
+            } catch (MessagingException e) {
+                throw new RuntimeException(e);
+            }
+            request.getRequestDispatcher("changePassword.jsp").forward(request, response);
+            session.setAttribute("code", verificationCode);
+            session.setAttribute("email", email);
         }
-
-        Files.copy(filePart.getInputStream(), file.toPath());
-
-        daoUser.updateProfile(fName, lName, phone, address, dob, "image/profile_user/" + fileName, email);
-        request.getSession().setAttribute("user", daoUser.getUserByEmailAndPassword(email, user.getPassword()));
-        request.getSession().setAttribute("name", daoUser.getUserByEmailAndPassword(email, user.getPassword()).getFirstName() + " " + daoUser.getUserByEmailAndPassword(email, user.getPassword()).getLastName());
-
-        try {
-            Thread.sleep(1800);
-            response.sendRedirect("home");
-        } catch (InterruptedException ex) {
-            Logger.getLogger(changeProfile.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
     }
 
     /**
@@ -127,4 +135,5 @@ public class changeProfile extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }
