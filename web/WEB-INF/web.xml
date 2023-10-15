@@ -45,6 +45,22 @@
         <servlet-class>controller.adminFeature.addNewUser</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>filterUser</servlet-name>
+        <servlet-class>controller.adminFeature.filterUser</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>userProfile</servlet-name>
+        <servlet-class>controller.adminFeature.userProfile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>adminDeleteUser</servlet-name>
+        <servlet-class>controller.adminFeature.adminDeleteUser</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>adminViewProfileUser</servlet-name>
+        <servlet-class>controller.adminFeature.adminViewProfileUser</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>postController</servlet-name>
         <servlet-class>controller.commonFeature.postController</servlet-class>
     </servlet>
@@ -103,6 +119,22 @@
     <servlet-mapping>
         <servlet-name>postController</servlet-name>
         <url-pattern>/blog</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>filterUser</servlet-name>
+        <url-pattern>/filter-user</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>userProfile</servlet-name>
+        <url-pattern>/user-profile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>adminDeleteUser</servlet-name>
+        <url-pattern>/delete-user</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>adminViewProfileUser</servlet-name>
+        <url-pattern>/admin-view-profile-user</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>postDetailController</servlet-name>
