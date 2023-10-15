@@ -5,6 +5,7 @@
 
 body {
     overflow: scroll;
+    overflow-x: hidden;
 }
 
 .dashboard-container {
@@ -46,6 +47,11 @@ body {
     gap: 15px;
     font-size: 20px;
     cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.side-navbar-container ul li:hover {
+    background-color: #4633ad;
 }
 
 .side-navbar-container ul li:active {
@@ -68,7 +74,8 @@ body {
 }
 
 .user-list-container table {
-    width: 80%;
+    width: 90%;
+    min-width: fit-content;
     font-size: 18px;
     box-shadow: 0px 0px 15px 0px #c7c7c7;
     border-radius: 10px;
@@ -246,6 +253,32 @@ td {
     border: 1px solid #fff;
     cursor: pointer;
     transition: 0.2s ease;
+}
+
+.add-user-btn-container {
+    margin-top: 10px;
+    width: 80%;
+    display: flex;
+    justify-content: space-around;
+    gap: 15px;
+}
+
+.add-user-btn-container div button {
+    padding: 10px 40px;
+    border-radius: 10px;
+    font-size: 16px;
+    border: 1px solid #fff;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+#add-user-btn {
+    color: white;
+    background-color: #342e55;
+}
+
+#add-user-btn:hover {
+    background-color: #4633ad;
 }
 
 #cancel-filter-btn ,#cancel-btn {

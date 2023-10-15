@@ -12,14 +12,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
 import model.User;
 
 /**
  *
  * @author dmx
  */
-public class adminDashboard extends HttpServlet {
+public class userProfile extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +37,10 @@ public class adminDashboard extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet adminDashboard</title>");
+            out.println("<title>Servlet userProfile</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet adminDashboard at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet userProfile at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,17 +59,13 @@ public class adminDashboard extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        if (String.valueOf(session.getAttribute("roleId")).equals("null")) {
+        if (String.valueOf(session.getAttribute("roleId")).equals("null") || Integer.parseInt(String.valueOf(session.getAttribute("roleId"))) != 4) {
             response.sendRedirect("403.jsp");
-        } else {
-            int roleId = Integer.parseInt(String.valueOf(session.getAttribute("roleId")));
-            if (roleId == 4) {
-                request.getRequestDispatcher("adminDashboard.jsp").forward(request, response);
-            } else {
-                response.sendRedirect("403.jsp");
-            }
         }
-
+        String userId = request.getParameter("userId");
+        User user = (new DAOUser()).getUserById(userId);
+        request.setAttribute("userViewing", user);
+        request.getRequestDispatcher("admin_Dashboard_ViewProfileUser.jsp").forward(request, response);
     }
 
     /**
@@ -84,7 +79,7 @@ public class adminDashboard extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
     }
 
     /**

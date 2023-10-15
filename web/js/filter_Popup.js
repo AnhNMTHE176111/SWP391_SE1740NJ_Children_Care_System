@@ -3,13 +3,6 @@ document.getElementById('btn-show-filter').addEventListener('click', (e) => {
     showPopup(e);
     document.getElementById('filter-container').style.display = 'flex';
 })
-document.getElementById('addNewUser').addEventListener('click', (e) => {
-    showPopup(e);
-    document.getElementById('add-newuser-container').style.display = 'flex';
-})
-document.getElementById('cancel-btn').addEventListener('click', (e) => {
-    closePopup(e);
-})
 document.getElementById('cancel-filter-btn').addEventListener('click', (e) => {
     closePopup(e);
 })

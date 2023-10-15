@@ -32,7 +32,7 @@
                     <li onclick="changeLocation('/admin-manage-user')"> <i class="fa-solid fa-users"></i> User Manager</a></li>
                     <li onclick="changeLocation('/admin-manage-setting')"> <i class="fa-solid fa-gear"></i> Setting</a></li>
                 </ul>
-            </div>
+            </div> 
             <jsp:include page="admin_Dashboard_ListUser.jsp"></jsp:include>
         </div>
         <script src="./js/filter_Popup.js"></script>
