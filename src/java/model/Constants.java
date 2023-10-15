@@ -12,7 +12,7 @@ package model;
 public class Constants {
 
     public static String GOOGLE_CLIENT_ID = "187601965794-m70hal4il0e70vohnl7qg1ij4vqtl6eq.apps.googleusercontent.com";
-    //public static String GOOGLE_CLIENT_SECRET = null; Mọi người lên lấy code secret trên google cloud nhé
+    public static String GOOGLE_CLIENT_SECRET = "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";
     public static String GOOGLE_REDIRECT_URI = "http://localhost:9999/login-google";
     public static String GOOGLE_LINK_GET_TOKEN = "https://accounts.google.com/o/oauth2/token";
     public static String GOOGLE_LINK_GET_USER_INFO = "https://www.googleapis.com/oauth2/v1/userinfo?access_token=";

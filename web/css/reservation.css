@@ -1,0 +1,85 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Oct 14, 2023, 11:46:40 PM
+    Author     : ASUS
+*/
+
+.table-reservation {
+    background-color: #17a2b8;
+    border-radius: 10px;
+}
+
+.fa-table-columns {
+    border-radius: 10px;
+}
+
+.fa-table-list ul, li{
+    list-style-type: none;
+}
+
+.btn-1 {
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    border: none;
+    color: white;
+    text-align: center;
+}
+
+.paging {
+    display: flex;
+    justify-content: right;
+}
+
+.post-search {
+    display: flex;
+    justify-content: right;
+}
+
+.table-reservation-column p {
+    font-size: large;
+    font-weight: bold;
+    margin: 0;
+}
+
+.item, .table-reservation-header {
+    color: white;
+    font-family: "Nunito", sans-serif;
+}
+
+.row {
+    margin: 20px 0;
+}
+
+.row h2{
+    font-family: "Handlee", cursive;
+    color: #00394F;
+}
+
+.post-search-input {
+    border-radius:15px;
+    width: 20%;
+    border: 1px solid gray;
+    margin-right: 5px;
+
+}
+
+.btn-search {
+    border-radius: 15px;
+    background-color: #17a2b8;
+}
+
+.btn-search i {
+    color: white;
+}
+
+.card {
+    border: none;
+}
+
+.card-img-top {
+    border-radius: 30px;
+}
