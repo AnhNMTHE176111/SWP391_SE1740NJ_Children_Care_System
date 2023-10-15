@@ -99,7 +99,7 @@
     <servlet-mapping>
         <servlet-name>addNewUser</servlet-name>
         <url-pattern>/add-new-user</url-pattern>
-     </servlet-mapping>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>postController</servlet-name>
         <url-pattern>/blog</url-pattern>
@@ -116,6 +116,6 @@
         <session-timeout>30</session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>home.jsp</welcome-file>
+        <welcome-file>myReservation.jsp</welcome-file>
     </welcome-file-list>
 </web-app>
