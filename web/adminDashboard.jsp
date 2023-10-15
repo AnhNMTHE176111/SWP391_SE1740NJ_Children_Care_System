@@ -18,7 +18,6 @@
               crossorigin="anonymous" referrerpolicy="no-referrer" />
         <title>JSP Page</title>
     </head>    
-
     <body>
         <c:if test="${sessionScope.roleId ne '4'}">
             <jsp:forward page="403.jsp"/>
@@ -42,5 +41,4 @@
             }
         </script>
     </body>
-
 </html>
