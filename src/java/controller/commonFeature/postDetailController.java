@@ -18,13 +18,17 @@ import model.Post;
 /**
  *
  * @author admin
+ *
+ *
  */
-public class postController extends HttpServlet {
+public class postDetailController extends HttpServlet {
 
     public static void main(String[] args) {
         DAO.DAOPost Postdao = new DAOPost();
         List<Post> listP = Postdao.getListPost();
-
+        Post p = Postdao.getPostbyID("1");
+        Post viewed = Postdao.getViewed();
+        System.out.println(viewed);
         if (listP != null && !listP.isEmpty()) {
             // listP has data
             for (Post post : listP) {
@@ -49,6 +53,8 @@ public class postController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -64,18 +70,17 @@ public class postController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         DAOPost Postdao = new DAOPost();
-        ArrayList<String> listIntro = new ArrayList<>();
         
+        String id = request.getParameter("postId");
+        Post p = Postdao.getPostbyID(id);
+        Post viewed = Postdao.getViewed();
+
         ArrayList<Post> listP = Postdao.getListPost();
-        for (Post post : listP) {
-            String intro = post.getContent().substring(0, 150) + "...";
-            listIntro.add(intro);
-        }
-        
-        
+
+        request.setAttribute("viewed", viewed);
         request.setAttribute("listP", listP);
-        request.setAttribute("listIntro", listIntro);
-        request.getRequestDispatcher("blog.jsp").forward(request, response);
+        request.setAttribute("postDetail", p);
+        request.getRequestDispatcher("blogdetail.jsp").forward(request, response);
     }
 
     /**
@@ -89,7 +94,6 @@ public class postController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
     }
 
     /**

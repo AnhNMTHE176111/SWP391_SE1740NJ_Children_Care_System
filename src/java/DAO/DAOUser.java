@@ -91,7 +91,7 @@ public class DAOUser extends DBContext {
                 user.setAvatar(rs.getString(11));
                 user.setRoleId(Integer.parseInt(rs.getString(12)));
                 user.setCreatedAt(rs.getString(13));
-
+                
                 // some code to finish
             }
             return user;
@@ -131,10 +131,10 @@ public class DAOUser extends DBContext {
             }
             return user;
         } catch (SQLException e) {
-            System.out.println("SQL getUserByEmailAndPassword: " + e.getMessage());
+            System.out.println("SQL getUserByEmail: " + e.getMessage());
             return null;
         } catch (Exception e) {
-            System.out.println("getUserByEmailAndPassword: " + e.getMessage());
+            System.out.println("getUserByEmail: " + e.getMessage());
             return null;
         }
     }
@@ -232,6 +232,27 @@ public class DAOUser extends DBContext {
             System.out.println("SQL updateProfile: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("updateProfile: " + e.getMessage());
+        }
+    }
+
+
+    public void addNewAccountByGoogle(User user) {
+        try {
+            String strSQL = "insert into Users (status, firstName, lastName, email, avatar, RoleId, createdAt) values (?, ?, ?, ?, ?, ?, GETDATE())";
+            pstm = cnn.prepareStatement(strSQL);
+            pstm.setString(1, user.getStatus());
+            pstm.setString(2, user.getFirstName());
+            pstm.setString(3, user.getLastName());
+            pstm.setString(4, user.getEmail());
+            pstm.setString(5, user.getAvatar());
+            pstm.setString(6, String.valueOf(user.getRoleId()));
+
+            pstm.execute();
+
+        } catch (SQLException e) {
+            System.out.println("SQL addNewAccountByGoogle: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("addNewAccountByGoogle: " + e.getMessage());
         }
     }
 

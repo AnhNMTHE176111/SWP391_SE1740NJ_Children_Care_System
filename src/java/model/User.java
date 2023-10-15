@@ -82,6 +82,15 @@ public class User {
         this.dob = dob;
     }
 
+    public User(String status, String firstName, String lastName, String email, String avatar, int roleId) {
+        this.status = status;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.avatar = avatar;
+        this.roleId = roleId;
+    }
+
     public String getStatus() {
         return status;
     }
