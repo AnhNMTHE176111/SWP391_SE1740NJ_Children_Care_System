@@ -11,15 +11,13 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
 import model.User;
 
 /**
  *
  * @author dmx
  */
-public class adminDashboard extends HttpServlet {
+public class adminViewProfileUser extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +36,10 @@ public class adminDashboard extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet adminDashboard</title>");
+            out.println("<title>Servlet adminViewProfileUser</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet adminDashboard at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet adminViewProfileUser at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,18 +57,7 @@ public class adminDashboard extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        if (String.valueOf(session.getAttribute("roleId")).equals("null")) {
-            response.sendRedirect("403.jsp");
-        } else {
-            int roleId = Integer.parseInt(String.valueOf(session.getAttribute("roleId")));
-            if (roleId == 4) {
-                request.getRequestDispatcher("adminDashboard.jsp").forward(request, response);
-            } else {
-                response.sendRedirect("403.jsp");
-            }
-        }
-
+        processRequest(request, response);
     }
 
     /**
@@ -84,7 +71,36 @@ public class adminDashboard extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String userId = request.getParameter("userId");
+        String firstName = request.getParameter("firstname");
+        String lastName = request.getParameter("lastname");
+        String address = request.getParameter("address");
+        String phone = request.getParameter("phone");
+        String dob = request.getParameter("dob");
+        String roleid = request.getParameter("roleid");
+        String status = request.getParameter("status");
+        String gender = request.getParameter("gender");
+        DAOUser userDao = new DAOUser();
+
+        boolean valid = true;
+        //Use a regular expression to check the firstname and lastname entered
+        if (!firstName.matches("^[A-Z][a-zA-Z ].*$") || !lastName.matches("^[A-Z][a-zA-Z ].*$")) {
+            valid = false;
+            String mess = "First name and last name must start with an uppercase letter and contain only letters.";
+            request.setAttribute("mess", mess);
+            request.getRequestDispatcher("/user-profile?userId=" + userId).forward(request, response);
+        }
+        //If the above conditions are satisfied
+        if (valid == true) {
+            //update profile user
+            userDao.updateProfileByAdmin(firstName, lastName, address, phone, dob, roleid, status, gender, userId);
+            //Notification of successful registration
+            String mess = "Update Profile User Successfully";
+            request.setAttribute("mess1", mess);
+            User user = (new DAOUser()).getUserById(userId);
+            request.setAttribute("userViewing", user);
+            request.getRequestDispatcher("admin_Dashboard_ViewProfileUser.jsp").forward(request, response);
+        }
     }
 
     /**
