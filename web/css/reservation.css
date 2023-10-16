@@ -21,12 +21,20 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 .btn-1 {
+    border: none;
     border-radius: 50%;
     height: 30px;
     width: 30px;
-    border: none;
-    color: white;
+    background-color: #17a2b8;
+    color: #fff;
     text-align: center;
+    margin: 0 2px;
+}
+
+.btn-1:active {
+    background-color: #10707f; /* Màu nền khi ấn */
+    transform: scale(0.95); /* Thay đổi kích thước khi ấn */
+    color: #fff; /* Màu văn bản khi ấn */
 }
 
 .paging {
@@ -82,4 +90,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 .card-img-top {
     border-radius: 30px;
+}
+
+.none_reservation{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }

@@ -29,70 +29,74 @@
         <link href="css/reservation.css" rel="stylesheet"/>
     </head>
     <body>
-        <div class="container-fluid">
+        <jsp:include page="header.jsp"></jsp:include>
+
+        <div class="container-fluid my-reservation-container">
             <div class="row">
                 <div class="col-md-12">
                     <h2>My Reservations</h2>
                 </div>
-                <div class="col-md-12">
-                    <table class="table table-reservation">
-                        <tr class="table-reservation-row">
-                            <th class="table-reservation-header">ID</th>
-                            <th class="table-reservation-header">Your service</th>
-                            <th class="table-reservation-header">Time to check up</th>
-                            <th class="table-reservation-header">Doctor</th>
-                            <th class="table-reservation-header">Status</th>
-                        </tr>
-                        <c:forEach items="${sessionScope.customerReservation}" var="cr">
+                <c:choose>
+                    <c:when test="${requestScope.endP == 0}">
+                            <div class="none_reservation col-md-12">
+                                <img src="image/reservation/dontHaveAnyReservation.png" alt="" style="width: 30%;"/>
+                                <h3 style="color: rgb(255, 157, 0);">Sorry! You don't have any reservations</h3>
+                            </div>
+                    </c:when>
+                    <c:otherwise>
+                        <table class="table table-reservation">
                             <tr class="table-reservation-row">
-                                <td class="table-reservation-column">
-                                    <label class="item">${cr.bookingId}</label>
-                                </td>
-                                <td class="table-reservation-column">
-                                    <p class="item item-name">Reservation created at:</p>
-                                    <ul class="table-reservation-list">
-                                        <li class="item">
-                                            <i class="fa-solid fa-calendar-alt"></i> ${cr.bookingCreateDate}
-                                        </li>
-                                        <li class="item">
-                                            <i class="fa-solid fa-clock"></i> ${cr.bookingCreateTime}
-                                        </li>
-                                    </ul>
-                                </td>
-                                <td class="table-reservation-column">
-                                    <ul class="table-reservation-list">
-                                        <li class="item">
-                                            <i class="fa-solid fa-disease"></i> ${cr.symptomps}
-                                        </li>
-                                        <li class="item">
-                                            <i class="fa-solid fa-calendar-alt"></i> ${cr.bookingDate}
-                                        </li>
-                                        <li class="item">
-                                            <i class="fa-solid fa-clock"></i>${cr.bookingTime}
-                                        </li>
-                                    </ul>
-                                </td>
-                                <td class="table-reservation-column">
-                                    <i style="color: white" class="fa-solid fa-user-doctor"></i
-                                    ><label class="item"> ${cr.doctorName}</label>
-                                </td>
-                                <td class="table-reservation-column">
-                                    <label class="item">${cr.bookingStatus}</label>
-                                </td>
+                                <th class="table-reservation-header">ID</th>
+                                <th class="table-reservation-header">Your service</th>
+                                <th class="table-reservation-header">Time to check up</th>
+                                <th class="table-reservation-header">Doctor</th>
+                                <th class="table-reservation-header">Status</th>
                             </tr>
-                        </c:forEach>
-                    </table>
-                </div>
+                            <c:forEach items="${sessionScope.customerReservation}" var="cr">
+                                <tr class="table-reservation-row">
+                                    <td class="table-reservation-column">
+                                        <label class="item">${cr.bookingId}</label>
+                                    </td>
+                                    <td class="table-reservation-column">
+                                        <p class="item item-name">Reservation created at:</p>
+                                        <ul class="table-reservation-list">
+                                            <li class="item">
+                                                <i class="fa-solid fa-calendar-alt"></i> ${cr.bookingCreateDate}
+                                            </li>
+                                            <li class="item">
+                                                <i class="fa-solid fa-clock"></i> ${cr.bookingCreateTime}
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    <td class="table-reservation-column">
+                                        <ul class="table-reservation-list">
+                                            <li class="item">
+                                                <i class="fa-solid fa-disease"></i> ${cr.symptomps}
+                                            </li>
+                                            <li class="item">
+                                                <i class="fa-solid fa-calendar-alt"></i> ${cr.bookingDate}
+                                            </li>
+                                            <li class="item">
+                                                <i class="fa-solid fa-clock"></i> ${cr.bookingTime}
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    <td class="table-reservation-column">
+                                        <i style="color: white" class="fa-solid fa-user-doctor"></i>
+                                        <label class="item"> ${cr.doctorName}</label>
+                                    </td>
+                                    <td class="table-reservation-column">
+                                        <label class="item">${cr.bookingStatus}</label>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </table>
+                    </c:otherwise>
+                </c:choose>
                 <div class="paging col-md-12">
-                    <button
-                        class="btn-1"
-                        style="background-color: rgb(139, 139, 139); margin-right: 10px"
-                        >
-                        <i class="fa-solid fa-arrow-left"></i>
-                    </button>
-                    <button class="btn-1" style="background-color: #17a2b8">
-                        <i class="fa-solid fa-arrow-right"></i>
-                    </button>
+                    <c:forEach begin="1" end="${endP}" var="i">
+                        <a href="my?pageIndex=${i}"><button class="btn-1">${i}</button></a>
+                        </c:forEach>
                 </div>
             </div>
             <div class="row">
