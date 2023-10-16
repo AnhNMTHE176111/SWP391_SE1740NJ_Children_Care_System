@@ -8,17 +8,40 @@ package model;
  *
  * @author dmx
  */
-public class MedicalInfo {
+public class MedicalInfo extends Feedback{
     private int medicalInfoId, rattingId;
     private String dateOfVisit, dateOfRevisit, symptons, diagnosis, treatmentPlan;
 
     public MedicalInfo() {
     }
 
+    public MedicalInfo(int medicalInfoId, int rattingId, String dateOfVisit, String dateOfRevisit, String symptons, String diagnosis, String treatmentPlan) {
+        this.medicalInfoId = medicalInfoId;
+        this.rattingId = rattingId;
+        this.dateOfVisit = dateOfVisit;
+        this.dateOfRevisit = dateOfRevisit;
+        this.symptons = symptons;
+        this.diagnosis = diagnosis;
+        this.treatmentPlan = treatmentPlan;
+    }
+
+    public MedicalInfo(String dateOfVisit, String dateOfRevisit, String symptons, String diagnosis, String treatmentPlan, int ratingId, int medicalInfoId, Float ratingValue, String comment) {
+        super(ratingId, medicalInfoId, ratingValue, comment);
+        this.dateOfVisit = dateOfVisit;
+        this.dateOfRevisit = dateOfRevisit;
+        this.symptons = symptons;
+        this.diagnosis = diagnosis;
+        this.treatmentPlan = treatmentPlan;
+    }
+
+    
+    
+    @Override
     public int getMedicalInfoId() {
         return medicalInfoId;
     }
 
+    @Override
     public void setMedicalInfoId(int medicalInfoId) {
         this.medicalInfoId = medicalInfoId;
     }
@@ -69,6 +92,11 @@ public class MedicalInfo {
 
     public void setTreatmentPlan(String treatmentPlan) {
         this.treatmentPlan = treatmentPlan;
+    }
+
+    @Override
+    public String toString() {
+        return "MedicalInfo{" + "medicalInfoId=" + medicalInfoId + ", rattingId=" + rattingId + ", dateOfVisit=" + dateOfVisit + ", dateOfRevisit=" + dateOfRevisit + ", symptons=" + symptons + ", diagnosis=" + diagnosis + ", treatmentPlan=" + treatmentPlan + '}';
     }
 
     

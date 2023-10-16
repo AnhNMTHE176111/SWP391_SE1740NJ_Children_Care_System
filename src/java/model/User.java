@@ -24,6 +24,18 @@ public class User {
     public User() {
     }
 
+    public User(String status, String firstName, String lastName, String address, String phone, String dob, String avatar) {
+        this.status = status;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.phone = phone;
+        this.dob = dob;
+        this.avatar = avatar;
+    }
+
+    
+    
     public User(String status, String firstName, String lastName, String email, String password, String address, String phone, String dob, String avatar, int roleId) {
         this.status = status;
         this.firstName = firstName;
@@ -35,16 +47,6 @@ public class User {
         this.dob = dob;
         this.avatar = avatar;
         this.roleId = roleId;
-    }
-
-    public User(String firstName, String lastName, String email, String password, String address, String phone, String dob) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.address = address;
-        this.phone = phone;
-        this.dob = dob;
     }
 
     public String getStatus() {

@@ -70,13 +70,13 @@ public class DAOUser extends DBContext {
                 user.setStatus(rs.getString(2));
                 user.setFirstName(rs.getString(3));
                 user.setLastName(rs.getString(4));
-                user.setEmail(rs.getString(5));
-                user.setPassword(rs.getString(6));
-                user.setAddress(rs.getString(7));
-                user.setPhone(rs.getString(8));
-                user.setDob(rs.getString(9));
-                user.setAvatar(rs.getString(10));
-                user.setRoleId(Integer.parseInt(rs.getString(11)));
+                user.setEmail(rs.getString(6));
+                user.setPassword(rs.getString(7));
+                user.setAddress(rs.getString(8));
+                user.setPhone(rs.getString(9));
+                user.setDob(rs.getString(10));
+                user.setAvatar(rs.getString(11));
+                user.setRoleId(Integer.parseInt(rs.getString(12)));
                 // some code to finish
             }
             return user;
