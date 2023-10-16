@@ -13,6 +13,7 @@
     <body>
         <jsp:include page="change-profile.jsp"></jsp:include>
 
+<<<<<<< HEAD
             <!-- Navbar Start -->
             <div class="container-fluid position-relative shadow">
                 <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0 px-lg-5">
@@ -36,11 +37,43 @@
                                     <a href="blog.html" class="dropdown-item">Blog Grid</a>
                                     <a href="single.html" class="dropdown-item">Blog Detail</a>
                                 </div>
+=======
+        <!-- Navbar Start -->
+        <div class="container-fluid position-relative shadow">
+            <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0 px-lg-5">
+                <a href="" class="navbar-brand font-weight-bold text-secondary" style="font-size: 50px;">
+                    <!--                <i class="flaticon-043-teddy-bear"></i>-->
+                    <span class="text-primary">ChildCare</span>
+                </a>
+                <!--            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>-->
+
+                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                    <div class="navbar-nav font-weight-bold mx-auto py-0">
+                        <c:if test="${sessionScope.roleId eq 4}">
+                            <a href="admin" class="nav-item nav-link">Admin Dashboard</a>
+                        </c:if>
+                        <a href="home" class="nav-item nav-link">Home</a>
+                        <a href="about.html" class="nav-item nav-link">Blogs</a>
+                        <a href="/service" class="nav-item nav-link">Services</a>
+                        <a href="team.html" class="nav-item nav-link">Doctors</a>
+                        <div class="nav-item dropdown">
+                            <a href="/servicelist" class="nav-link dropdown-toggle"
+                               data-toggle="dropdown">Specialist</a>
+                            <div class="dropdown-menu rounded-0 m-0">
+                                <a href="blog.html" class="dropdown-item">Blog Grid</a>
+                                <a href="single.html" class="dropdown-item">Blog Detail</a>
+>>>>>>> f08152e8219f4298beae2eaf2b583e540f0d6c05
                             </div>
                             <a href="booking" class="nav-item nav-link">Booking</a>
                         </div>
 
+<<<<<<< HEAD
                         <ul class="nav">
+=======
+                    <ul class="nav">
+>>>>>>> f08152e8219f4298beae2eaf2b583e540f0d6c05
                         <c:if test="${sessionScope.name ne null}">
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Hello ${sessionScope.name}</a>
