@@ -24,7 +24,7 @@
                         </div>
                         <div class="col-lg-7 text-center text-lg-right">
                             <img
-                                
+                                src="https://www.waldenu.edu/media/5390/seo-2158-bs-african-american-pediatrician-353293868-1200x675"
                                 style="width:110%" alt="">
                         </div>
                     </div>
