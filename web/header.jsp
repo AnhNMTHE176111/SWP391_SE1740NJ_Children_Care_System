@@ -23,58 +23,9 @@
                 <!--            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                             <span class="navbar-toggler-icon"></span>
                         </button>-->
-                        <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                            <div class="navbar-nav font-weight-bold mx-auto py-0">
-                                <a href="/home" class="nav-item nav-link active">Home</a>
-                                <a href="/blog" class="nav-item nav-link">Blogs</a>
-                                <a href="/service" class="nav-item nav-link">Services</a>
-                                <a href="/doctor" class="nav-item nav-link">Doctors</a>
-                                <div class="nav-item dropdown">
-                                    <a href="/servicelist" class="nav-link dropdown-toggle"
-                                        data-toggle="dropdown">Specialist</a>
-                                    <div class="dropdown-menu rounded-0 m-0">
-                                        <a href="blog.html" class="dropdown-item">Blog Grid</a>
-                                        <a href="single.html" class="dropdown-item">Blog Detail</a>
-                                    </div>
-                                </div>
-                                <a href="booking" class="nav-item nav-link">Booking</a>
-                            </div>
-
-                            <ul class="nav">
-                                <c:if test="${sessionScope.name ne null}">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Hello ${sessionScope.name}</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <image onclick="showPopup()" style="height:40px;width:40px;border-radius:50%"
-                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS75ebrwvgVW5Ks_oLfCbG8Httf3_9g-Ynl_Q&usqp=CAU">
-                                        </image>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="logout">Logout</a>
-                                    </li>
-                                </c:if>
-                                <c:if test="${sessionScope.name eq null}">
-                                    <li class="nav-item">
-                                        <a href="login.jsp" class="btn btn-primary px-20">Login</a>
-                                        <a href="registerAccount.jsp" class="btn btn-primary px-20">Signup</a>
-                                    </li>
-                                </c:if>
-                            </ul>
-
-
-
-                        </div>
-                    </nav>
-                </div>
-
-                
-                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                        <div class="navbar-nav font-weight-bold mx-auto py-0">
 
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <div class="navbar-nav font-weight-bold mx-auto py-0">
-
                         <c:if test="${sessionScope.roleId eq 4}">
                             <a href="admin" class="nav-item nav-link">Admin Dashboard</a>
                         </c:if>
@@ -94,7 +45,7 @@
                     </div>
 
                     <ul class="nav">
-                        <c:if test="${sessionScope.name ne null }">
+                        <c:if test="${sessionScope.name ne null}">
                             <li class="nav-item">
                                 <a class="nav-link" href="#" onclick="showPopup()">${sessionScope.name}</a>
                             </li>
