@@ -51,19 +51,22 @@ public class DAOBooking extends DBContext {
     }
 
 
-    public List<Booking> getListCusReservation(int cusId) {
+    public List<Booking> getListCusReservation(int cusId, int pageIndex) {
         ArrayList<Booking> listCustReservation = new ArrayList<Booking>();
         try {
-            String strSQL = "SELECT \n"
-                    + "    b.*,\n"
-                    + "    m.Diagnosis,\n"
-                    + "    CONCAT(u.firstName, ' ', u.lastName) AS fullName \n"
+            String strSQL = "SELECT\n"
+                    + "b.*,\n"
+                    + "m.Diagnosis,\n"
+                    + "CONCAT(u.firstName, ' ', u.lastName) AS fullName\n"
                     + "FROM Booking b\n"
-                    + "JOIN MedicalInfo m ON b.MedicalInfoId = m.MedicalInfoId  \n"
+                    + "JOIN MedicalInfo m ON b.MedicalInfoId = m.MedicalInfoId\n"
                     + "JOIN Doctors d ON b.slotDoctorId = d.DoctorId\n"
                     + "JOIN Users u ON d.userId = u.userId\n"
-                    + "WHERE b.CustomerId = '"+ cusId +"'";
+                    + "WHERE b.CustomerId = '"+cusId+"'\n"
+                    + "ORDER BY b.CustomerId\n"
+                    + "OFFSET ? ROWS FETCH NEXT 2 ROWS ONLY";
             pstm = cnn.prepareStatement(strSQL);
+            pstm.setInt(1, (pageIndex - 1)*2);
             rs = pstm.executeQuery();
             while (rs.next()) {
                 String BookingId = String.valueOf(rs.getInt(1));
@@ -82,5 +85,34 @@ public class DAOBooking extends DBContext {
             System.out.println("getListCusReservation: " + e.getMessage());
         }
         return listCustReservation;
+    }
+
+    public int getTotalCusReservation(int cusId) {
+        try {
+            String strSQL = "SELECT COUNT(*) AS total_rows\n"
+                    + "FROM Booking b\n"
+                    + "JOIN MedicalInfo m ON b.MedicalInfoId = m.MedicalInfoId\n"
+                    + "JOIN Doctors d ON b.slotDoctorId = d.DoctorId\n"
+                    + "JOIN Users u ON d.userId = u.userId\n"
+                    + "WHERE b.CustomerId = '" + cusId +"'";
+            pstm = cnn.prepareStatement(strSQL);
+            rs = pstm.executeQuery();
+            while (rs.next()) {
+               return rs.getInt(1);
+                
+                // some code to finish
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL getUserByEmailAndPassword: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("getUserByEmailAndPassword: " + e.getMessage());
+        }
+        return 0;
+    }
+    
+    public static void main(String[] args) {
+        DAOBooking bookDao = new DAOBooking();
+        int count = bookDao.getTotalCusReservation(1);
+        System.out.println(count);
     }
 }

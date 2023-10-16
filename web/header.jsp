@@ -13,109 +13,42 @@
     <body>
         <jsp:include page="change-profile.jsp"></jsp:include>
 
-        <!-- Navbar Start -->
-        <div class="container-fluid position-relative shadow">
-            <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0 px-lg-5">
-                <a href="" class="navbar-brand font-weight-bold text-secondary" style="font-size: 50px;">
-                    <!--                <i class="flaticon-043-teddy-bear"></i>-->
-                    <span class="text-primary">ChildCare</span>
-                </a>
-                <!--            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>-->
-                        <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                            <div class="navbar-nav font-weight-bold mx-auto py-0">
-                                <a href="/home" class="nav-item nav-link active">Home</a>
-                                <a href="/blog" class="nav-item nav-link">Blogs</a>
-                                <a href="/service" class="nav-item nav-link">Services</a>
-                                <a href="/doctor" class="nav-item nav-link">Doctors</a>
-                                <div class="nav-item dropdown">
-                                    <a href="/servicelist" class="nav-link dropdown-toggle"
-                                        data-toggle="dropdown">Specialist</a>
-                                    <div class="dropdown-menu rounded-0 m-0">
-                                        <a href="blog.html" class="dropdown-item">Blog Grid</a>
-                                        <a href="single.html" class="dropdown-item">Blog Detail</a>
-                                    </div>
-                                </div>
-                                <a href="booking" class="nav-item nav-link">Booking</a>
-                            </div>
-
-                            <ul class="nav">
-                                <c:if test="${sessionScope.name ne null}">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Hello ${sessionScope.name}</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <image onclick="showPopup()" style="height:40px;width:40px;border-radius:50%"
-                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS75ebrwvgVW5Ks_oLfCbG8Httf3_9g-Ynl_Q&usqp=CAU">
-                                        </image>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="logout">Logout</a>
-                                    </li>
-                                </c:if>
-                                <c:if test="${sessionScope.name eq null}">
-                                    <li class="nav-item">
-                                        <a href="login.jsp" class="btn btn-primary px-20">Login</a>
-                                        <a href="registerAccount.jsp" class="btn btn-primary px-20">Signup</a>
-                                    </li>
-                                </c:if>
-                            </ul>
-
-
-
-                        </div>
-                    </nav>
-                </div>
-
-                <!-- Header Start -->
-                <div class="container-fluid bg-primary px-0 px-md-5 mb-5">
-                    <div class="row align-items-center px-3" style="padding: 15px 15px">
-                        <div class="col-lg-5 text-center text-lg-left">
-                            <h4 class="text-white mb-4 mt-5 mt-lg-0">Children's health care center</h4>
-                            <h2 class="display-3 font-weight-bold text-white">Dedication to children's health care</h2>
-                            <p class="text-white mb-4">Support and advice on health, emotions, and life – designed for
-                                kids and approved by doctors.</p>
-                            <a href="" class="btn btn-secondary mt-1 py-3 px-5">Learn More</a>
-                        </div>
-                        <div class="col-lg-7 text-center text-lg-right">
-                            <img
-                                src="https://www.waldenu.edu/media/5390/seo-2158-bs-african-american-pediatrician-353293868-1200x675"
-                                style="width:110%" alt="">
+            <!-- Navbar Start -->
+            <div class="container-fluid position-relative shadow">
+                <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0 px-lg-5">
+                    <a href="" class="navbar-brand font-weight-bold text-secondary" style="font-size: 50px;">
+                        <!--                <i class="flaticon-043-teddy-bear"></i>-->
+                        <span class="text-primary">ChildCare</span>
+                    </a>
+                    <!--            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>-->
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav font-weight-bold mx-auto py-0">
-
-                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                    <div class="navbar-nav font-weight-bold mx-auto py-0">
-
-                        <c:if test="${sessionScope.roleId eq 4}">
-                            <a href="admin" class="nav-item nav-link">Admin Dashboard</a>
-                        </c:if>
-                        <a href="home" class="nav-item nav-link">Home</a>
-                        <a href="about.html" class="nav-item nav-link">Blogs</a>
-                        <a href="/service" class="nav-item nav-link">Services</a>
-                        <a href="team.html" class="nav-item nav-link">Doctors</a>
-                        <div class="nav-item dropdown">
-                            <a href="/servicelist" class="nav-link dropdown-toggle"
-                               data-toggle="dropdown">Specialist</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="blog.html" class="dropdown-item">Blog Grid</a>
-                                <a href="single.html" class="dropdown-item">Blog Detail</a>
+                            <a href="/home" class="nav-item nav-link active">Home</a>
+                            <a href="/blog" class="nav-item nav-link">Blogs</a>
+                            <a href="/service" class="nav-item nav-link">Services</a>
+                            <a href="/doctor" class="nav-item nav-link">Doctors</a>
+                            <div class="nav-item dropdown">
+                                <a href="/servicelist" class="nav-link dropdown-toggle"
+                                   data-toggle="dropdown">Specialist</a>
+                                <div class="dropdown-menu rounded-0 m-0">
+                                    <a href="blog.html" class="dropdown-item">Blog Grid</a>
+                                    <a href="single.html" class="dropdown-item">Blog Detail</a>
+                                </div>
                             </div>
+                            <a href="booking" class="nav-item nav-link">Booking</a>
                         </div>
-                        <a href="booking" class="nav-item nav-link">Booking</a>
-                    </div>
 
-                    <ul class="nav">
-                        <c:if test="${sessionScope.name ne null }">
+                        <ul class="nav">
+                        <c:if test="${sessionScope.name ne null}">
                             <li class="nav-item">
-                                <a class="nav-link" href="#" onclick="showPopup()">${sessionScope.name}</a>
+                                <a class="nav-link" href="#">Hello ${sessionScope.name}</a>
                             </li>
                             <li class="nav-item">
-                                <img onclick="showPopup()" style="height:40px;width:40px;border-radius:50%; object-fit: cover; cursor: pointer"
-                                     src=./image/profile_user/user${sessionScope.user.getUserId()}.jpg 
-                                     alt="avatar"
-                                     id="idImgAvatar"/>
+                                <image onclick="showPopup()" style="height:40px;width:40px;border-radius:50%"
+                                       src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS75ebrwvgVW5Ks_oLfCbG8Httf3_9g-Ynl_Q&usqp=CAU">
+                                </image>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="logout">Logout</a>
@@ -131,8 +64,6 @@
                 </div>
             </nav>
         </div>
-
-
 
         <script src="./js/changeImageProfile.js"></script>
     </body>
