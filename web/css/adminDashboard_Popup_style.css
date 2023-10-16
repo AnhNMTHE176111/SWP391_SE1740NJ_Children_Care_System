@@ -3,15 +3,22 @@
     padding: 0;
 }
 
+body {
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
 .dashboard-container {
     display: flex;
     height: 100vh;
 }
 
 .side-navbar-container {
+    position: fixed;
     box-sizing: border-box;
     padding: 30px 20px;
     height: 100%;
+    overflow-y: auto;
     background-color: #12101d;
     color: #fff;
     
@@ -40,12 +47,21 @@
     gap: 15px;
     font-size: 20px;
     cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.side-navbar-container ul li:hover {
+    background-color: #4633ad;
 }
 
 .side-navbar-container ul li:active {
     background-color: #fff;
-    color: #12101d;
-    
+    color: #12101d;    
+}
+
+.side-navbar-container ul li a {
+    text-decoration: none;
+    color: #fff;
 }
 
 .user-list-container {
@@ -58,7 +74,8 @@
 }
 
 .user-list-container table {
-    width: 80%;
+    width: 90%;
+    min-width: fit-content;
     font-size: 18px;
     box-shadow: 0px 0px 15px 0px #c7c7c7;
     border-radius: 10px;
@@ -182,7 +199,7 @@ td {
     background-color: #fff;
     max-width: 50%;
     min-width: 800px;
-    max-height: 60%;
+    max-height: fit-content;
     min-height: 500px;
     display: flex;
     flex-direction: column;
@@ -238,12 +255,38 @@ td {
     transition: 0.2s ease;
 }
 
-#cancel-btn {
+.add-user-btn-container {
+    margin-top: 10px;
+    width: 80%;
+    display: flex;
+    justify-content: space-around;
+    gap: 15px;
+}
+
+.add-user-btn-container div button {
+    padding: 10px 40px;
+    border-radius: 10px;
+    font-size: 16px;
+    border: 1px solid #fff;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+#add-user-btn {
+    color: white;
+    background-color: #342e55;
+}
+
+#add-user-btn:hover {
+    background-color: #4633ad;
+}
+
+#cancel-filter-btn ,#cancel-btn {
     background-color: #fff;
     border: 1px solid #acabab;
 }
 
-#cancel-btn:hover {
+#cancel-filter-btn:hover, #cancel-btn:hover {
     background-color: #acabab;
 }
 
@@ -275,3 +318,4 @@ td {
     padding-bottom: 20px;
     border-bottom: 1px solid #c7c7c7;
 }
+

@@ -37,6 +37,30 @@
         <servlet-class>controller.commonFeature.homeController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>adminManageUser</servlet-name>
+        <servlet-class>controller.adminFeature.adminManageUser</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>addNewUser</servlet-name>
+        <servlet-class>controller.adminFeature.addNewUser</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>filterUser</servlet-name>
+        <servlet-class>controller.adminFeature.filterUser</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>userProfile</servlet-name>
+        <servlet-class>controller.adminFeature.userProfile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>adminDeleteUser</servlet-name>
+        <servlet-class>controller.adminFeature.adminDeleteUser</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>adminViewProfileUser</servlet-name>
+        <servlet-class>controller.adminFeature.adminViewProfileUser</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>postController</servlet-name>
         <servlet-class>controller.commonFeature.postController</servlet-class>
     </servlet>
@@ -85,8 +109,32 @@
         <url-pattern>/home</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>adminManageUser</servlet-name>
+        <url-pattern>/admin-manage-user</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addNewUser</servlet-name>
+        <url-pattern>/add-new-user</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>postController</servlet-name>
         <url-pattern>/blog</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>filterUser</servlet-name>
+        <url-pattern>/filter-user</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>userProfile</servlet-name>
+        <url-pattern>/user-profile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>adminDeleteUser</servlet-name>
+        <url-pattern>/delete-user</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>adminViewProfileUser</servlet-name>
+        <url-pattern>/admin-view-profile-user</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>postDetailController</servlet-name>
@@ -100,6 +148,6 @@
         <session-timeout>30</session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>home.jsp</welcome-file>
+        <welcome-file>myReservation.jsp</welcome-file>
     </welcome-file-list>
 </web-app>
