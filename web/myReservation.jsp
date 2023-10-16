@@ -29,7 +29,7 @@
         <link href="css/reservation.css" rel="stylesheet"/>
     </head>
     <body>
-        <jsp:include page="header.jsp"></jsp:include>
+
 
         <div class="container-fluid my-reservation-container">
             <div class="row">
