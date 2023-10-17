@@ -119,9 +119,9 @@ public class forgotPassword extends HttpServlet {
             } catch (MessagingException e) {
                 throw new RuntimeException(e);
             }
-            request.getRequestDispatcher("changePassword.jsp").forward(request, response);
             session.setAttribute("code", verificationCode);
             session.setAttribute("email", email);
+            request.getRequestDispatcher("changePassword.jsp").forward(request, response);
         }
     }
 
