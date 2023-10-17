@@ -10,7 +10,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 .table-reservation {
     background-color: #17a2b8;
     border-radius: 10px;
+    margin: 20px 0;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }
+
 
 .fa-table-columns {
     border-radius: 10px;
@@ -28,7 +31,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     background-color: #17a2b8;
     color: #fff;
     text-align: center;
-    margin: 0 2px;
+    margin: 10px 3px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }
 
 .btn-1:active {
@@ -55,8 +59,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 .item, .table-reservation-header {
     color: white;
-    font-family: "Nunito", sans-serif;
+    font-family: "Handlee", cursive;
 }
+
+.table-reservation-header, .table-reservation-column {
+    text-align: center;
+}
+
+.table-reservation-list {
+    padding-left: 0px;
+}
+
 
 .row {
     margin: 20px 0;
@@ -89,7 +102,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 .card-img-top {
-    border-radius: 30px;
+    border-radius: 10px;
 }
 
 .none_reservation{
