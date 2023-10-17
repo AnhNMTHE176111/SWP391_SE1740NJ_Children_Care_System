@@ -13,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import model.User;
 
 /**
@@ -57,7 +58,7 @@ public class changePassword extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        request.getRequestDispatcher("changePassword.jsp").forward(request, response);
     } 
 
     /** 
@@ -71,28 +72,60 @@ public class changePassword extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         String email = request.getParameter("email");
-        String oldpassword = request.getParameter("oldpassword");
+        String codeString = request.getParameter("code");
         String newpassword = request.getParameter("newpassword");
         String repassword = request.getParameter("repassword");
-        
         DAOUser userDao = new DAOUser();
-        User user = userDao.getUserByEmailAndPassword(email, oldpassword);
+        //Get the user's account information
+        User user = userDao.getUserByEmail(email);
+        boolean valid = true;
         
-        if (!repassword.equals(newpassword)) {
-            String mess = "Re-entered password is incorrect!";
-            request.setAttribute("mess", mess);
-            //send direct with parameter
+        if (codeString != null && codeString.matches("\\d+")) {
+            int code = Integer.parseInt(codeString);
+            HttpSession session = request.getSession();
+            int storedCode = (int) session.getAttribute("code");
+
+
+            if (code == storedCode) {
+                valid = true;
+            } else {
+                valid = false;
+                request.setAttribute("mess", "Verification code is incorrect!");
+                request.getRequestDispatcher("changePassword.jsp").forward(request, response);
+            }
+        } else {
+            valid = false;
+            request.setAttribute("mess", "Verification codes can only be numbers!");
             request.getRequestDispatcher("changePassword.jsp").forward(request, response);
         }
         
-        if(oldpassword.equals(user.getPassword())){
+        //Check if the new password is entered in the correct system format
+        if (!newpassword.matches(".*[0-9].*") || !newpassword.matches(".*[A-Z].*")) {
+            valid = false;
+            String mess = "Password must contain at least one digit and one uppercase letter!";
+            request.setAttribute("mess", mess);
+            request.getRequestDispatcher("changePassword.jsp").forward(request, response);
+        }
+        //Check the length of the new password
+        if (newpassword.length() < 8) {
+            valid = false;
+            String mess = "Password must be at least 8 characters!";
+            request.setAttribute("mess", mess);
+            request.getRequestDispatcher("changePassword.jsp").forward(request, response);
+        }
+        //Check to see if the old password matches
+        if (!repassword.equals(newpassword)) {
+            valid = false;
+            String mess = "Re-entered password is incorrect!";
+            request.setAttribute("mess", mess);
+            request.getRequestDispatcher("changePassword.jsp").forward(request, response);
+        }
+        
+        if(valid == true){
+            //Update new password for users
             user.setPassword(repassword);
             userDao.updatePasswordByEmail(user);
             request.getRequestDispatcher("login.jsp").forward(request, response);
-        } else {
-            String mess = "Wrong currently password";
-            request.setAttribute("mess", mess);
-            request.getRequestDispatcher("changePassword.jsp").forward(request, response);
         }
     }
 

@@ -7,17 +7,18 @@ package controller.commonFeature;
 import DAO.DAOUser;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import model.Constants;
 import model.User;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.io.PrintWriter;
 
 /**
  *
@@ -36,11 +37,19 @@ public class login extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println(request.getParameter("code"));
-        String code = request.getParameter("code");
-        String accessToken = getToken(code);
-        User user = getUserInfo(accessToken);
-        System.out.println(user);
+        response.setContentType("text/html;charset=UTF-8");
+        try ( PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet register</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet register at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -71,57 +80,56 @@ public class login extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         String email = request.getParameter("email");
-
         String password = request.getParameter("password");
-        String code = request.getParameter("code");
-        if (code == null) {
-            DAOUser userDao = new DAOUser();
+        String rememberme = request.getParameter("remember");
+        Cookie cookieEmail = new Cookie("cEmail", email);
+        Cookie cookiePass = new Cookie("cPass", password);
+        Cookie cookieRemember = new Cookie("cRemember", rememberme);
+        //Set the cookie storage time on the browser
+        if (rememberme != null) {
+            cookieEmail.setMaxAge(60 * 60 * 24 * 7);//7 days
+            cookiePass.setMaxAge(60 * 60 * 24 * 7);
+            cookieRemember.setMaxAge(60 * 60 * 24 * 7);
 
-            User user = userDao.getUserByEmailAndPassword(email, password);
-            if (user.getEmail() != null) {
-
-                session.setAttribute("name", user.getFirstName());
-                //chuyen huong den trang home
-                response.sendRedirect("home.jsp");
-            } else {
-
-                String mess = "Wrong email or password!";
-
-                request.setAttribute("mess", mess);
-
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-            }
         } else {
-            String accessToken = getToken(code);
-            DAOUser userDao = new DAOUser();
-            User googleUser = getUserInfo(accessToken);
-            if (googleUser.getEmail() != null) {
-                System.out.println("Google email: " + googleUser.getEmail());
-                session.setAttribute("name", googleUser.getEmail());
-            }
+            cookieEmail.setMaxAge(0);
+            cookiePass.setMaxAge(0);
+            cookieRemember.setMaxAge(0);
         }
-    }
+        //Ádd cookies to the response
+        response.addCookie(cookieEmail);
+        response.addCookie(cookiePass);
+        response.addCookie(cookieRemember);
+        DAOUser userDao = new DAOUser();
+        //Check if the user exists by email
+        User user = userDao.getUserByEmailAndPassword(email, password);
+        if (user.getEmail() != null) {
+            //Creates a session that stores the user's login session
+            session.setAttribute("user", user);
+            session.setAttribute("roleId", user.getRoleId());
+            session.setAttribute("name", user.getFirstName() + " " + user.getLastName());
+            
+            System.out.println("roleid: " + user.getRoleId());
 
-    public static String getToken(String code) throws ClientProtocolException, IOException {
-
-        String response = Request.Post(Constants.GOOGLE_LINK_GET_TOKEN)
-                .bodyForm(Form.form().add("client_id", Constants.GOOGLE_CLIENT_ID)
-                        .add("client_secret", Constants.GOOGLE_CLIENT_SECRET)
-                        .add("redirect_uri", Constants.GOOGLE_REDIRECT_URI).add("code", code)
-                        .add("grant_type", Constants.GOOGLE_GRANT_TYPE).build())
-                .execute().returnContent().asString();
-
-        JsonObject jobj = new Gson().fromJson(response, JsonObject.class);
-        String accessToken = jobj.get("access_token").toString().replaceAll("\"", "");
-        return accessToken;
-    }
-
-    public static User getUserInfo(final String accessToken) throws ClientProtocolException, IOException {
-        String link = Constants.GOOGLE_LINK_GET_USER_INFO + accessToken;
-        String response = Request.Get(link).execute().returnContent().asString();
-
-        User googlePojo = new Gson().fromJson(response, User.class);
-        return googlePojo;
+            if(user.getRoleId() == 1) {
+                response.sendRedirect("home.jsp");
+            }
+            if(user.getRoleId() == 2) {
+                response.sendRedirect("staff");
+            }
+            if(user.getRoleId() == 3) {
+                response.sendRedirect("manage");
+            }
+            if(user.getRoleId() == 4) {
+                response.sendRedirect("admin");
+            }
+            
+        } else {
+            //Report an error when the user enters an incorrect email or password
+            String mess = "Wrong email or password!";
+            request.setAttribute("mess", mess);
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+        }
     }
 
     /**

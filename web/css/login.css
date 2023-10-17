@@ -11,32 +11,41 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   flex-direction: column;
   align-items: center;
   margin-top: 150px;
+  
 }
 .login_headling {
-  margin-left: 225px;
+  margin-left: 180px;
 }
 .login_headling h1 {
   font-family: "Handlee", cursive;
+  font-size: 2em;
 }
+
 .login_headling h3 {
   font-family: "Handlee", cursive;
+  font-size: 1.5em;
 }
+
 .login_container label {
   font-family: "Nunito", sans-serif;
+  font-size: 1.2em;
 }
 
 .input {
-  width: 300px;
-  height: 30px;
+  width: 350px;
+  height: 35px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  border: 1px solid;
 }
 .login_form_div {
   margin-bottom: 10px;
 }
 .login_btn-1 {
-  width: 307px;
+  width: 360px;
   height: 40px;
   flex-shrink: 0;
-  border-radius: 10px;
+  border-radius: 20px;
   background: #17a2b8;
   color: #fff;
   text-align: center;
@@ -55,9 +64,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   border-color: #117a8b;
 }
 .login_btn-2 {
-  border-radius: 10px;
+  border-radius: 20px;
   background: #353535;
-  width: 307px;
+  width: 360px;
   height: 40px;
   flex-shrink: 0;
   color: #fff;
@@ -92,8 +101,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   font-weight: 400;
   line-height: normal;
   text-decoration: none;
+  font-size: 1.1em;
+}
+
+.login_form_div input{
+    font-family: "Handlee", cursive;
 }
 
 .login_error {
     color: red;
+}
+
+.login_success {
+    color: green;
 }

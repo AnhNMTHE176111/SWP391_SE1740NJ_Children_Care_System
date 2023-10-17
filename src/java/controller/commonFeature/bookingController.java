@@ -4,10 +4,6 @@
  */
 package controller.commonFeature;
 
-import DAO.DAOBooking;
-
-import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,10 +12,16 @@ import jakarta.servlet.http.HttpServletResponse;
 import DAO.DAOBooking;
 import DAO.DAOSlot;
 import DAO.DAODoctor;
+import DAO.DAOSpecialty;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import javax.jws.WebService;
+
 
 /**
  *
@@ -28,15 +30,25 @@ import javax.jws.WebService;
 @WebServlet(name = "bookingController", urlPatterns = {"/booking"})
 public class bookingController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
+       private List<String> getDateList() {
+        List<String> dateList = new ArrayList<>();
+
+        Date currentDate = new Date();
+
+  
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(currentDate);
+        dateList.add(new SimpleDateFormat("dd/MM").format(currentDate));
+
+        for (int i = 0; i < 2; i++) {
+            calendar.add(Calendar.DATE, 1);
+            Date nextDate = calendar.getTime();
+            dateList.add(new SimpleDateFormat("dd/MM").format(nextDate));
+        }
+        
+        return dateList;
+    }
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -67,15 +79,22 @@ public class bookingController extends HttpServlet {
             throws ServletException, IOException {
         ArrayList slotList = new ArrayList<>();
         ArrayList specialtyList = new ArrayList<>();
+        ArrayList doctorList = new ArrayList<>();
+        
         DAOSlot slot = new DAOSlot();
-        DAOBooking daoBooking = new DAOBooking();
-        DAODoctor doctorBooking = new DAODoctor();
-
-        specialtyList = doctorBooking.getListSpecialty();
+        DAOSpecialty specialty = new DAOSpecialty();
+        DAODoctor doctor = new DAODoctor();
+        
+        List<String> dateList = getDateList();    
+        doctorList = doctor.getListDoctorBySpecialty();
+        specialtyList = specialty.getListSpecialty();
         slotList = slot.getListSlot();
 
-        request.setAttribute("specialtyList", specialtyList);
         request.setAttribute("slotList", slotList);
+        request.setAttribute("specialtyList", specialtyList);
+        request.setAttribute("doctorList", doctorList);
+        request.setAttribute("dateList", dateList);
+
         request.getRequestDispatcher("Booking.jsp").forward(request, response);
     }
 

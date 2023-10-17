@@ -4,10 +4,14 @@
 <%@page import= "DAO.DAOBooking" %>
 <%@page import= "DAO.DAODoctor" %>
 <%@page import= "DAO.DAOSlot" %>
+<%@page import= "DAO.DAOSpecialty" %>
+<%@page import= "model.Specialty" %>
 <%@page import= "model.Booking" %>
 <%@page import= "model.Slot" %>
 <%@page import= "model.Doctor" %>
 <%@page import= "java.util.ArrayList" %>
+<%--<%@page import= "util.SomeClassInUtilPackage" %>--%>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -30,77 +34,71 @@
 
                     <div class="side">
                         <div>
-                            <div class="form-group label-box">
-                                <select
-                                    id="selectedPlaceId"
-                                    class="form-control select2-hidden-accessible"
-                                    >
-                                    <option class="option-box" value="2">Chọn cơ sở khám</option>
-                                    <option class="option-box" value="3">
-                                        BV ĐKQT Vinmec Central Park (Hồ Chí Minh)
-                                    </option>
-                                    <option class="option-box" value="1">
-                                        BV ĐKQT Vinmec Times City (Hà Nội)
-                                    </option>
 
-                                </select>
-                            </div>
                             <div class="form-group label-box">
                                 <select
                                     id="selectedSpecialty"
                                     class="form-control select2-hidden-accessible"
-                                    onchange="showDoctors(this.value)"
+                                    onchange="onSpecialtyChange(this.value)"
                                     >
                                     <option class="option-box" value="0">
                                     <ion-icon name="briefcase-outline"></ion-icon>Chọn chuyên khoa
                                     </option>
                                     <c:forEach var="specialty" items="${specialtyList}">
-                                        <option class="option-box" value="1">
-                                            ${specialty.specialty}
+                                        <option
+                                            class="option-box"
+                                            value="${specialty.getSpecialtyId()}"
+                                            data-specialty="${specialty.getSpecialtyId()}"
+                                            >
+                                            ${specialty.getSpecialtyName()}
+                                        </option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="form-group label-box">
+                                <select
+                                    id="selectedDoctor"
+                                    class="form-control select2-hidden-accessible"
+                                    name="selectedDoctor"
+                                    >
+                                    <option class="option-box" value="0">
+                                    <ion-icon name="person-outline"></ion-icon>Chọn bác sĩ muốn khám
+                                    </option>
+                                    <c:forEach var="doctor" items="${doctorList}">
+                                        <option
+                                            name ="doctor"
+                                            class="option-box doctor-option"
+                                            value="${doctor.getSpecialtyId()}"
+                                            data-specialty="${doctor.getSpecialtyId()}"
+                                            style="display: none"
+                                            >
+                                            ${doctor.getName()}
                                         </option>
                                     </c:forEach>
                                 </select>
                             </div>
 
-                            <!-- Thẻ select bác sĩ -->
-                            <div class="form-group label-box">
-                                <select
-                                    id="selectedDoctor"
-                                    class="form-control select2-hidden-accessible"
-                                    >
-                                    <option class="option-box" value="0">
-                                    <ion-icon name="person-outline"></ion-icon>Chọn bác sĩ muốn khám
-                                    </option>
-                                </select>
-                            </div>
 
-                            <!-- Div để hiển thị danh sách bác sĩ -->
-                            <div id="doctorList"></div>
+
+
                         </div>
 
                         <div class="date-select">
-                            <h4 class="day-select">Chọn ngày khám:</h4>
+                            
+                             <h4 class="day-select">Chọn ngày khám:</h4>
                             <div class="date-slots">
-                                <div class="date-box date1">
-                                    <div class="date-slot">Ngày 1</div>
-                                </div>
-                                <div class="date-box date2">
-                                    <div class="date-slot">Ngày 2</div>
-                                </div>
-                                <div class="date-box date3">
-                                    <div class="date-slot">Ngày 3</div>
-                                </div>
-                                <div class="date-box date4">
-                                    <div class="date-slot">Ngày 4</div>
-                                </div>
-
-                                <!-- Thêm các hộp và ô slot ngày khác nếu cần -->
+                                <c:forEach var="date" items="${dateList}">
+                                    <div class="date-box">
+                                        <div class="date-slot" name="date">${date}</div>
+                                    </div>
+                                </c:forEach>
                             </div>
+
 
                             <div class="date-hidden">
                                 <div class="date">
                                     <c:forEach var="slot" items="${slotList}">
-                                        <button class="grid-date">${slot.startTime}</button>
+                                        <button class="grid-date" name="slot">${slot.startTime}</button>
                                     </c:forEach>
                                 </div>
                             </div>
@@ -110,7 +108,7 @@
                 </div>
             </div>
 
-            <!-- Bước 2: Thông tin khách hàng -->
+
 
             <div id="step2" class="step" style="display: none">
                 <h1 class="register-line">Đăng ký khám</h1>

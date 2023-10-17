@@ -38,18 +38,18 @@ public class DAODoctor extends DBContext {
         cnn = super.connection;
     }
 
-    public ArrayList<Doctor> getListSpecialty() {
+    public ArrayList<Doctor> getListDoctorBySpecialty() {
         ArrayList<Doctor> data = new ArrayList<Doctor>();
 
         try {
-            String strSQL = "select  Users.firstName, Specialty.SpecialtyName from Doctors\n"
-                    + "join Specialty on Specialty.SpecialtyId = Doctors.SpecialtyId \n"
-                    + "join Users on Users.userId = Doctors.userId\n"
-                    + "where Users.RoleId = 2;";
+            String strSQL = "SELECT Users.firstName + ' ' + Users.lastName AS username, Specialty.SpecialtyId \n"
+                    + "FROM Doctors\n"
+                    + "JOIN Specialty ON Specialty.SpecialtyId = Doctors.SpecialtyId \n"
+                    + "JOIN Users ON Users.userId = Doctors.userId\n"
+                    + "WHERE Users.RoleId = 2;";
             pstm = cnn.prepareStatement(strSQL);
             rs = pstm.executeQuery();
             while (rs.next()) {
-
                 String name = rs.getString(1);
                 String specialty = rs.getString(2);
 
@@ -239,5 +239,4 @@ public class DAODoctor extends DBContext {
         }
         return data;
     }
-
 }

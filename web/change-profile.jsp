@@ -13,54 +13,51 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <button onclick="showPopup()">Show popup</button>
-        <div class="popup">
-            <div class="change-profile-container" style="display: none;">
-                <form action="changeProfile" method="post">
+        <div class="popup" style="display: none;">
+            <div class="change-profile-container" id="change-profile-container" style="display: none;">
+                <form action="changeProfile" method="post" enctype="multipart/form-data">
                     <h1>Profile Info</h1>
                     <div class="profile-image">       
-                        <img src="./image/profile_user/default.jpg" alt="profile user" id="image-user">
+                        <img src=./image/profile_user/user${sessionScope.user.getUserId()}.jpg alt="avatar" id="image-user">
                         <label for="profile-user-input">
                             Choose Image
                         </label>
-                        <input type="file" accept="image/gif, image/jpeg, image/png" id="profile-user-input"
-                               onchange="previewProfileImage(this)">
+                        <input type="file" accept="image/gif, image/jpeg, image/png" 
+                               id="profile-user-input"  
+                               name="imageFile"
+                               onchange="previewProfileImage(this)" >
                     </div>
 
                     <div class="profile-field">
                         <div class="item-field first-name-field">
                             <label for="firstName">First name (*)</label>
-                            <input type="text" name="firstName" id="firstName" required>
+                            <input type="text" name="firstName" id="firstName" value="${sessionScope.user.getFirstName()}" required>
                         </div>
                         <div class="item-field last-name-field">
                             <label for="lastName">Last name (*)</label>
-                            <input type="text" name="lastName" id="lastName" required>
+                            <input type="text" name="lastName" id="lastName" value="${sessionScope.user.getLastName()}" required>
                         </div>
                         <div class="item-field email-field">
-                            <label for="email">Email (*)</label>
-                            <input type="text" name="email" id="email" required>
-                        </div>
-                        <div class="item-field email-field" style="display: none">
-                            <label for="oldEmail">Email (*)</label>
-                            <input type="text" name="oldEmail" id="oldEmail" required>
+                            <label for="email">Email (View Only)</label>
+                            <input type="text" name="email" id="email" value="${sessionScope.user.getEmail()}" required readonly>
                         </div>
                         <div class="item-field phone-field">
-                            <label for="phone">Phone ( Optional )</label>
-                            <input type="text" name="phone" id="phone">
+                            <label for="phone">Phone</label>
+                            <input type="text" name="phone" id="phone" value="${sessionScope.user.getPhone()}" required>
                         </div>
                         <div class="item-field address-field">
-                            <label for="address">Address ( Optional )</label>
-                            <input type="text" name="address" id="address">
+                            <label for="address">Address </label>
+                            <input type="text" name="address" id="address" value="${sessionScope.user.getAddress()}" required>
                         </div>
                         <div class="item-field dob-field">
                             <label for="dob">Date of birth (*)</label>
-                            <input type="date" name="dob" id="dob" required>
+                            <input type="date" name="dob" id="dob" value="${sessionScope.user.getDob()}" required>
                         </div>
                     </div>
 
                     <div class="btn-container">
                         <button type="submit" id="update-btn">Update</button>
-                        <button id="cancel-btn" onclick="closePopup()">Cancel</button>
+                        <button type="reset" id="cancel-btn" onclick="closePopup()">Cancel</button>
                     </div>
                 </form>
             </div>
