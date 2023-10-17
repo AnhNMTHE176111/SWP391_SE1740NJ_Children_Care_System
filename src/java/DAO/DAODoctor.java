@@ -13,15 +13,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import model.Doctor;
-<<<<<<< Updated upstream
-=======
 import model.MedicalInfo;
 import model.Service;
 import model.Slot;
 import model.SlotDoctor;
 import model.Specialty;
 import model.User;
->>>>>>> Stashed changes
 
 /**
  *
@@ -54,15 +51,10 @@ public class DAODoctor extends DBContext {
             while (rs.next()) {
 
                 String name = rs.getString(1);
-<<<<<<< Updated upstream
                 String specialty = rs.getString(2);
 
                 Doctor doctor = new Doctor(0, 0, 0, name, specialty, "", "");
-=======
-                int id = Integer.parseInt(rs.getString(2));
 
-                Doctor doctor = new Doctor(name, id);
->>>>>>> Stashed changes
                 data.add(doctor);
             }
         } catch (Exception e) {
@@ -70,8 +62,7 @@ public class DAODoctor extends DBContext {
         }
         return data;
     }
-<<<<<<< Updated upstream
-=======
+
 
     public ArrayList<SlotDoctor> getReservationByDocId(int doctorId) {
         String sql = "SELECT Slots.SlotId, startTime, endTime, DoctorId, status, Description\n"
@@ -249,5 +240,4 @@ public class DAODoctor extends DBContext {
         return data;
     }
 
->>>>>>> Stashed changes
 }
