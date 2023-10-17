@@ -1,12 +1,10 @@
 <%-- 
-    Document   : myReservation
-    Created on : Oct 9, 2023, 1:53:39 PM
+    Document   : reservationInformation
+    Created on : Oct 17, 2023, 10:42:35 PM
     Author     : ASUS
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -26,78 +24,115 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
             />
-        <link href="css/reservation.css" rel="stylesheet"/>
+        <link href="css/reservation.css" rel="stylesheet" />
     </head>
     <body>
-        <jsp:include page="header.jsp"></jsp:include>
-
-        <div class="container-fluid my-reservation-container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h2>My Reservations</h2>
+        <div class="container-fluid">
+            <div class="col-md-12">
+                <div class="row">
+                    <h2>Your Reservation Id:</h2>
                 </div>
-                <c:choose>
-                    <c:when test="${requestScope.endP == 0}">
-                            <div class="none_reservation col-md-12">
-                                <img src="image/reservation/dontHaveAnyReservation.png" alt="" style="width: 30%;"/>
-                                <h3 style="color: rgb(255, 157, 0);">Sorry! You don't have any reservations</h3>
-                            </div>
-                    </c:when>
-                    <c:otherwise>
-                        <table class="table table-reservation">
-                            <tr class="table-reservation-row">
-                                <th class="table-reservation-header">ID</th>
-                                <th class="table-reservation-header">Your service</th>
-                                <th class="table-reservation-header">Time to check up</th>
-                                <th class="table-reservation-header">Doctor</th>
-                                <th class="table-reservation-header">Status</th>
-                            </tr>
-                            <c:forEach items="${sessionScope.customerReservation}" var="cr">
-                                <tr class="table-reservation-row">
-                                    <td class="table-reservation-column">
-                                        <label class="item">${cr.bookingId}</label>
-                                    </td>
-                                    <td class="table-reservation-column">
-                                        <p class="item item-name">Reservation created at:</p>
-                                        <ul class="table-reservation-list">
-                                            <li class="item">
-                                                <i class="fa-solid fa-calendar-alt"></i> ${cr.bookingCreateDate}
-                                            </li>
-                                            <li class="item">
-                                                <i class="fa-solid fa-clock"></i> ${cr.bookingCreateTime}
-                                            </li>
-                                        </ul>
-                                    </td>
-                                    <td class="table-reservation-column">
-                                        <ul class="table-reservation-list">
-                                            <li class="item">
-                                                <i class="fa-solid fa-disease"></i> ${cr.symptomps}
-                                            </li>
-                                            <li class="item">
-                                                <i class="fa-solid fa-calendar-alt"></i> ${cr.bookingDate}
-                                            </li>
-                                            <li class="item">
-                                                <i class="fa-solid fa-clock"></i> ${cr.bookingTime}
-                                            </li>
-                                        </ul>
-                                    </td>
-                                    <td class="table-reservation-column">
-                                        <i style="color: white" class="fa-solid fa-user-doctor"></i>
-                                        <label class="item"> ${cr.doctorName}</label>
-                                    </td>
-                                    <td class="table-reservation-column">
-                                        <label class="item">${cr.bookingStatus}</label>
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                        </table>
-                    </c:otherwise>
-                </c:choose>
-                <div class="paging col-md-12">
-                    <c:forEach begin="1" end="${endP}" var="i">
-                        <a href="my?pageIndex=${i}"><button class="btn-1">${i}</button></a>
-                        </c:forEach>
+            </div>
+            <form>
+                <div class="col-md-12 reservation-info">
+                    <div class="row">
+                        <div class="col-md-3 reservation-info-content">
+                            <label>Full Name</label>
+                            <input type="text" />
+                        </div>
+                        <div class="col-md-3 reservation-info-content">
+                            <label>Gender</label>
+                            <input type="text" />
+                        </div>
+                        <div class="col-md-3 reservation-info-content">
+                            <label>Telephone Number</label>
+                            <input type="text" />
+                        </div>
+                        <div class="col-md-3 reservation-info-content">
+                            <label>Email Address</label>
+                            <input type="text" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 reservation-info-content">
+                            <label>Reservation Date</label>
+                            <input type="text" />
+                        </div>
+                        <div class="col-md-3 reservation-info-content">
+                            <label>Time To Check Up</label>
+                            <input type="text" />
+                        </div>
+                        <div class="col-md-3 reservation-info-content">
+                            <label>Doctor Name</label>
+                            <input type="text" />
+                        </div>
+                        <div class="col-md-3 reservation-info-content">
+                            <label>Status</label>
+                            <input type="text" />
+                        </div>
+                    </div>
+                    <div class="row reservation-button">
+                        <button class="bg-success btn-3" type="submit">
+                            Update The Reservation
+                        </button>
+                        <button class="bg-danger btn-3" type="submit">
+                            Cancel The Reservation
+                        </button>
+                    </div>
                 </div>
+            </form>
+            <div class="col-md-12 list-services">
+                <form class="reserved-services">
+                    <div class="reserved-services-details">
+                        <h2>X-ray service</h2>
+                        <div>
+                            <p>
+                                Chụp X-ray cho cơ xương khớp
+                            </p>
+                        </div>
+                    </div>
+                    <div class="reserved-services-details">
+                        <h4>Doctor</h4>
+                        <p>Doctor Name</p>
+                    </div>
+                    <div class="reserved-services-details">
+                        <h4>Price</h4>
+                        <p>30,000VND</p>
+                    </div>
+                    <div class="reserved-services-details">
+                        <button type="submit" class="btn-reserve">Re-reserve</button>
+                        <button type="submit" class="btn-feedback">Feedback</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-12 list-services">
+                <form class="reserved-services">
+                    <div class="reserved-services-details">
+                        <h2>Dịch vụ x-ray</h2>
+                        <div>
+                            <p>
+                                Chụp X-ray cho cơ xương khớp
+                            </p>
+                        </div>
+                    </div>
+                    <div class="reserved-services-details">
+                        <h4>Doctor</h4>
+                        <p>Doctor Name</p>
+                    </div>
+                    <div class="reserved-services-details">
+                        <h4>Price</h4>
+                        <p>30,000VND</p>
+                    </div>
+                    <div class="reserved-services-details">
+                        <button type="submit" class="btn-reserve">Re-reserve</button>
+                        <button type="submit" class="btn-feedback">Feedback</button>
+                    </div>
+                </form>
+            </div>
+            <div class="paging col-md-12">
+                <a href="#"><button class="btn-1">1</button></a>
+                <a href="#"><button class="btn-1">1</button></a>
+                <a href="#">3</a>
             </div>
             <div class="row">
                 <div class="col-md-2"><h2>Post</h2></div>

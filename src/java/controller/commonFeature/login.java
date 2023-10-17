@@ -5,12 +5,7 @@
 package controller.commonFeature;
 
 import DAO.DAOUser;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import model.User;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.fluent.Form;
-import org.apache.http.client.fluent.Request;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
