@@ -34,8 +34,8 @@
                         <a href="/service" class="nav-item nav-link">Services</a>
                         <a href="team.html" class="nav-item nav-link">Doctors</a>
                         <div class="nav-item dropdown">
-                            <a href="/servicelist" class="nav-link dropdown-toggle"
-                               data-toggle="dropdown">Specialist</a>
+                            <a href="/servicelist" class="nav-link dropdown-toggle" data-toggle="dropdown">Specialist</a>
+
                             <div class="dropdown-menu rounded-0 m-0">
                                 <a href="blog.html" class="dropdown-item">Blog Grid</a>
                                 <a href="single.html" class="dropdown-item">Blog Detail</a>

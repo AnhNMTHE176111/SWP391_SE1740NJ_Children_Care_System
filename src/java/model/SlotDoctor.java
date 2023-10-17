@@ -4,13 +4,24 @@
  */
 package model;
 
+import java.util.Date;
+
 /**
  *
  * @author dmx
  */
-public class SlotDoctor {
+public class SlotDoctor extends Slot{
     private int slotId, doctorId, status;
     private String description;
+    private int day;
+    
+    public SlotDoctor( int slotId, String startTime,String endTime,  int doctorId, int status, String description) {
+        super(slotId, startTime, endTime);
+        this.slotId = slotId;
+        this.doctorId = doctorId;
+        this.status = status;
+        this.description = description;
+    }
 
     public SlotDoctor() {
     }
@@ -52,6 +63,19 @@ public class SlotDoctor {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
+
+    @Override
+    public String toString() {
+        return "SlotDoctor{" + "slotId=" + slotId + ", doctorId=" + doctorId + ", status=" + status + ", description=" + description + ", day=" + day + '}';
     }
     
 }
