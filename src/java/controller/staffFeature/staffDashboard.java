@@ -62,7 +62,7 @@ public class staffDashboard extends HttpServlet {
         } else {
             int roleId = Integer.parseInt(String.valueOf(session.getAttribute("roleId")));
             if (roleId == 2) {
-                request.getRequestDispatcher("staffDashboard.jsp").forward(request, response);
+                response.sendRedirect("reservation");
             } else {
                 response.sendRedirect("403.jsp");
             }

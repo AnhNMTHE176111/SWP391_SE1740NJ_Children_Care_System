@@ -9,23 +9,22 @@ package model;
  * @author dmx
  */
 public class Customer {
-    private int customerId, userId, medicalHistoryId;
+    private int id, userId;
+
+    public Customer(int id, int userId) {
+        this.id = id;
+        this.userId = userId;
+    }
 
     public Customer() {
     }
 
-    public Customer(int customerId, int userId, int medicalHistoryId) {
-        this.customerId = customerId;
-        this.userId = userId;
-        this.medicalHistoryId = medicalHistoryId;
+    public int getId() {
+        return id;
     }
 
-    public int getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getUserId() {
@@ -35,14 +34,5 @@ public class Customer {
     public void setUserId(int userId) {
         this.userId = userId;
     }
-
-    public int getMedicalHistoryId() {
-        return medicalHistoryId;
-    }
-
-    public void setMedicalHistoryId(int medicalHistoryId) {
-        this.medicalHistoryId = medicalHistoryId;
-    }
     
-
 }
