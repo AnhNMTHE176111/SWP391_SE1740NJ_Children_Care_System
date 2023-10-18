@@ -34,7 +34,8 @@ public class DAOService extends DBContext {
     }
 
     public ArrayList<Service> getListService() {
-        String sql = " select * from Services";
+        String sql = " select * from Services join DoctorServices \n"
+                + "  on Services.ServiceId = DoctorServices.ServiceId";
         ArrayList<Service> data = new ArrayList<>();
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -43,7 +44,8 @@ public class DAOService extends DBContext {
                 String ServiceId = rs.getString(1);
                 String ServiceName = rs.getString(2);
                 String Description = rs.getString(3);
-                Service c = new Service(Integer.parseInt(ServiceId), ServiceName, Description);
+                int docId = rs.getInt(5);
+                Service c = new Service(Integer.parseInt(ServiceId), ServiceName, Description, docId);
                 data.add(c);
             }
         } catch (SQLException e) {

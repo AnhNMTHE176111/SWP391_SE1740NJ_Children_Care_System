@@ -4,6 +4,7 @@
  */
 package controller.commonFeature;
 
+import DAO.DAODoctor;
 import DAO.DAOUser;
 import model.User;
 import java.io.IOException;
@@ -103,7 +104,13 @@ public class login extends HttpServlet {
             session.setAttribute("user", user);
             session.setAttribute("roleId", user.getRoleId());
             session.setAttribute("name", user.getFirstName() + " " + user.getLastName());
-            
+
+            DAODoctor doctorDao = new DAODoctor();
+            if (user.getRoleId() == 2) {
+                int docId = doctorDao.getDoctorIdByUserId(user.getUserId());
+                session.setAttribute("docId", docId);
+            }
+
             System.out.println("roleid: " + user.getRoleId());
 
             if(user.getRoleId() == 1) {
@@ -118,7 +125,7 @@ public class login extends HttpServlet {
             if(user.getRoleId() == 4) {
                 response.sendRedirect("admin");
             }
-            
+
         } else {
             //Report an error when the user enters an incorrect email or password
             String mess = "Wrong email or password!";
