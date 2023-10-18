@@ -193,7 +193,7 @@ public class bookingController extends HttpServlet {
         int customerId = customer.addCustomer(addedUserId);
 
 //Booking infomation      
-        int bookingId = booking.addBooking(0, customerId, slotDoctorId);
+        int bookingId = booking.addBooking(1, customerId, slotDoctorId);
 
     }
 
