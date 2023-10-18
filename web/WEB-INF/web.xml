@@ -26,7 +26,7 @@
     </servlet>
     <servlet>
         <servlet-name>staffDashboard</servlet-name>
-        <servlet-class>controller.staffFeature.staffDashboard</servlet-class>
+        <servlet-class>controller.staffFeature.staffController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>logout</servlet-name>

@@ -50,6 +50,11 @@ public class Service {
         this.description = description;
     }
 
+    public Service(String serviceName, int specId) {
+        this.serviceName = serviceName;
+        this.specId = specId;
+    }
+
     public int getServiceId() {
         return serviceId;
     }

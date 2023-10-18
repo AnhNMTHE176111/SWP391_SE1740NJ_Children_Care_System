@@ -31,30 +31,39 @@ public class DAOSlot extends DBContext {
         cnn = super.connection;
     }
     
-    public ArrayList<Slot> getListSlot() {
+    public String formatTimeFromMinutes(int minutes) {
+    int hours = minutes / 60;
+    int remainingMinutes = minutes % 60;
+    return String.format("%02d:%02d", hours, remainingMinutes);
+}
+
+public ArrayList<Slot> getListSlot() {
     ArrayList<Slot> data = new ArrayList<Slot>();
-    SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-    SimpleDateFormat outputFormat = new SimpleDateFormat("HH:mm");
-    
+
     try {
-        String strSQL = "select StartTime from Slots";
+        String strSQL = "select SlotId, StartTime from Slots"; 
         pstm = cnn.prepareStatement(strSQL);
         rs = pstm.executeQuery();
+        
         while (rs.next()) {
-            String startTime = rs.getString(1);
+            int slotId = rs.getInt("SlotId");
+            String startTimeString = rs.getString("StartTime");
             
-            // Chuyển đổi chuỗi datetime thành đối tượng Date
-            Date date = inputFormat.parse(startTime);
+            // Parse the date and time
+            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+            Date date = inputFormat.parse(startTimeString);
             
-            // Định dạng lại thành chuỗi giờ và phút
+            // Extract only the time component for output
+            SimpleDateFormat outputFormat = new SimpleDateFormat("HH:mm");
             String formattedTime = outputFormat.format(date);
             
-            Slot slot = new Slot(0, formattedTime, "");
+            Slot slot = new Slot(slotId, formattedTime);
             data.add(slot);
         }
     } catch (Exception e) {
         System.out.println("getListSlot: " + e.getMessage());
-   } 
+    }
     return data;
 }
+
 }

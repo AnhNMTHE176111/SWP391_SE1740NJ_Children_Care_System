@@ -12,7 +12,8 @@
         <title>JSP Page</title>
         <style>
             table {
-                width: 100%;
+                margin-left: 140px;
+                width: 80%;
                 border-collapse: collapse;
             }
             th, td {
@@ -36,13 +37,14 @@
                 padding: 5px;
                 border-radius: 5px;
             }
+
         </style>
     </head>
     <jsp:include page="header.jsp"></jsp:include>
         <body>
             <h1 style="margin-left: 100px;padding: 40px;">List reservation  ${currentUser.getLastName()} ${currentUser.getFirstName()}</h1>
 
-        <table id="sortableTable">
+        <table id="sortableTable" >
             <thead>
                 <tr>
                     <th onclick="sortTable(0)">ID</th>
@@ -68,6 +70,8 @@
 
                                     if (status_${item.getSlotId()} === 1) {
                                         statusDisplay_${item.getSlotId()}.innerHTML = '<div class="active">Active</div>';
+                                    } else if (status_${item.getSlotId()} === 2) {
+                                        statusDisplay_${item.getSlotId()}.innerHTML = '<div class="active">Active</div>';
                                     } else {
                                         statusDisplay_${item.getSlotId()}.innerHTML = '<div class="inactive">Inactive</div>';
                                     }
@@ -92,7 +96,7 @@
 <script>
     let ascending = true;
 
-   function getStatusValue(status) {
+    function getStatusValue(status) {
         return parseInt(status) === 1 ? 'Active' : 'Inactive';
     }
 
@@ -148,7 +152,7 @@
         // Toggle sort order for the next click
         ascending = !ascending;
     }
- 
+
 
 
 

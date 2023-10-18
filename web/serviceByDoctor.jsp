@@ -51,6 +51,7 @@
                             <h5>${doc.getDoctorId()}. ${doc.getFirstname()} ${doc.getLastname()}</h5>
                             <ul class="services">
                                 <c:forEach var="service" items="${service}">
+
                                     <c:if test="${doc.getDoctorId() == service.getDoctorId()}">
                                         <li>
                                             <a href="servicelist?id=${service.getServiceId()}">${service.getServiceName()}</a>
