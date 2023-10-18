@@ -16,9 +16,7 @@
     <body>
         <jsp:include page="header.jsp"></jsp:include>
 
-
-
-
+        <jsp:include page="bannerHome.jsp"></jsp:include>
 
         <!-- Registration Start -->
         <div class="container-fluid py-5">
@@ -33,7 +31,7 @@
                             <li class="py-2"><b>Outpatient Services</b></li>
                             <li class="py-2"><b>Emergency Care</b></li>
                         </ul>
-                        <a href="" class="btn btn-primary mt-4 py-2 px-4">Book Now</a>
+                        <a href="booking" class="btn btn-primary mt-4 py-2 px-4">Book Now</a>
                     </div>
                     <div class="col-lg-5">
                         <div class="card border-0">

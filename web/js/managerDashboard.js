@@ -184,7 +184,7 @@ for (let booking of bookings) {
   }
 }
 
-// Create dropdown options for weeks
+
 let weekSelector = document.getElementById('weekSelector');
 for (let weekKey in weeklyReservations) {
     let option = document.createElement('option');
@@ -195,7 +195,7 @@ for (let weekKey in weeklyReservations) {
 
 let container = document.getElementById('chartsContainer');
 
-// Create a single canvas for the chart
+
 const canvasElement = document.createElement('canvas');
 canvasElement.id = 'myChart';
 canvasElement.width = 400;
@@ -204,7 +204,7 @@ container.appendChild(canvasElement);
 const ctx = canvasElement.getContext('2d');
 let myChart;
 
-// Function to update the chart
+
 function updateChart(weekKey) {
     const reservationData = {
         labels: Object.keys(weeklyReservations[weekKey]).map(day => day + ' (' + weeklyReservations[weekKey][day].date + ')'),

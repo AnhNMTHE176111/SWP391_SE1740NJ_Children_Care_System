@@ -13,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import model.User;
 
 /**
@@ -71,18 +72,30 @@ public class changePassword extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         String email = request.getParameter("email");
-        String oldpassword = request.getParameter("oldpassword");
+        String codeString = request.getParameter("code");
         String newpassword = request.getParameter("newpassword");
         String repassword = request.getParameter("repassword");
         DAOUser userDao = new DAOUser();
         //Get the user's account information
-        User user = userDao.getUserByEmailAndPassword(email, oldpassword);
+        User user = userDao.getUserByEmail(email);
         boolean valid = true;
-        //Check the repassword
-        if(!oldpassword.equals(user.getPassword())){
+        
+        if (codeString != null && codeString.matches("\\d+")) {
+            int code = Integer.parseInt(codeString);
+            HttpSession session = request.getSession();
+            int storedCode = (int) session.getAttribute("code");
+
+
+            if (code == storedCode) {
+                valid = true;
+            } else {
+                valid = false;
+                request.setAttribute("mess", "Verification code is incorrect!");
+                request.getRequestDispatcher("changePassword.jsp").forward(request, response);
+            }
+        } else {
             valid = false;
-            String mess = "Wrong currently password";
-            request.setAttribute("mess", mess);
+            request.setAttribute("mess", "Verification codes can only be numbers!");
             request.getRequestDispatcher("changePassword.jsp").forward(request, response);
         }
         

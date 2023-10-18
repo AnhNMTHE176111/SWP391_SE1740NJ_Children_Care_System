@@ -10,18 +10,25 @@ import java.util.Date;
  *
  * @author dmx
  */
-public class SlotDoctor {
+public class SlotDoctor extends Slot {
 
-    private int slotDoctorId, slotId, doctorId, status;
+    private int slotDoctorId, doctorId, status;
     private String description;
     private Date day;
+
+    public SlotDoctor(int slotId, String startTime, String endTime, int doctorId, int status, String description) {
+        super(slotId, startTime, endTime);
+        this.doctorId = doctorId;
+        this.status = status;
+        this.description = description;
+    }
 
     public SlotDoctor() {
     }
 
     public SlotDoctor(int doctorId, int slotId, Date day) {
         this.doctorId = doctorId;
-        this.slotId = slotId;
+        setSlotId(slotId);
         this.day = day;
 
     }
@@ -40,14 +47,6 @@ public class SlotDoctor {
 
     public void setSlotDoctorId(int slotDoctorId) {
         this.slotDoctorId = slotDoctorId;
-    }
-
-    public int getSlotId() {
-        return slotId;
-    }
-
-    public void setSlotId(int slotId) {
-        this.slotId = slotId;
     }
 
     public int getDoctorId() {
@@ -74,4 +73,5 @@ public class SlotDoctor {
         this.description = description;
     }
 
+   
 }

@@ -8,7 +8,14 @@ import dal.DBContext;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
 import java.sql.Statement;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import model.Customer;
+
 
 /**
  *
@@ -26,6 +33,7 @@ public class DAOCustomer extends DBContext{
     public void connect() {
         cnn = super.connection;
     }
+
     
 
     
@@ -51,6 +59,7 @@ public class DAOCustomer extends DBContext{
         e.printStackTrace();
     }
     return generatedId;
+
 }
 
 }

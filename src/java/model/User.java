@@ -18,13 +18,50 @@ public class User {
             address,
             phone,
             dob,
+            createdAt,
             avatar,
             gender;
+
     private int userId, roleId;
 
     public User() {
     }
 
+
+    public User(String status, String firstName, String lastName, String gender, String email, String password, String address, String phone, String dob, String avatar, String createdAt, int userId, int roleId) {
+        this.status = status;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.email = email;
+        this.password = password;
+        this.address = address;
+        this.phone = phone;
+        this.dob = dob;
+        this.avatar = avatar;
+ 
+        this.createdAt = createdAt;
+        this.userId = userId;
+        this.roleId = roleId;
+    }
+    
+    
+
+    public User(String status, String firstName, String lastName, String gender, String email, String password, String address, String phone, String dob, String avatar, int roleId) {
+        this.status = status;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.email = email;
+        this.password = password;
+        this.address = address;
+        this.phone = phone;
+        this.dob = dob;
+        this.avatar = avatar;
+        this.roleId = roleId;
+    }
+
+    
     public User(String status, String firstName, String lastName, String email, String password, String address, String phone, String dob, String avatar, int roleId) {
         this.status = status;
         this.firstName = firstName;
@@ -37,6 +74,7 @@ public class User {
         this.avatar = avatar;
         this.roleId = roleId;
     }
+
 
     public User(String firstName, String lastName, String email, String password, String address, String phone, String dob) {
         this.firstName = firstName;
@@ -64,6 +102,15 @@ public class User {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public User(String status, String firstName, String lastName, String email, String avatar, int roleId) {
+        this.status = status;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.avatar = avatar;
+        this.roleId = roleId;
     }
 
     public String getStatus() {
@@ -152,5 +199,15 @@ public class User {
 
     public void setRoleId(int roleId) {
         this.roleId = roleId;
+    }
+
+  
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 }

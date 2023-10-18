@@ -9,13 +9,14 @@ package model;
  * @author dmx
  */
 public class Feedback {
-    private int ratingId, medicalInfoId, ratingValue;
+    private int ratingId, medicalInfoId;
+    Float ratingValue;
     private String comment;
 
     public Feedback() {
     }
 
-    public Feedback(int ratingId, int medicalInfoId, int ratingValue, String comment) {
+    public Feedback(int ratingId, int medicalInfoId, Float ratingValue, String comment) {
         this.ratingId = ratingId;
         this.medicalInfoId = medicalInfoId;
         this.ratingValue = ratingValue;
@@ -38,11 +39,11 @@ public class Feedback {
         this.medicalInfoId = medicalInfoId;
     }
 
-    public int getRatingValue() {
+    public Float getRatingValue() {
         return ratingValue;
     }
 
-    public void setRatingValue(int ratingValue) {
+    public void setRatingValue(Float ratingValue) {
         this.ratingValue = ratingValue;
     }
 

@@ -13,10 +13,12 @@ import java.util.Date;
 public class Booking {
 
     private int bookingId, bookingStatus, customerId, medicalInfoId, slotDoctorId, slotId, doctorId, status;
-    private String description, doctorName, customerName, startTime;
+    private String description, doctorName, customerName, startTime, symptomps, bookingDate, bookingTime, bookingCreateDate, bookingCreateTime;
+  
     private Date day;
     public Booking() {
     }
+
 
     public Booking(int stauts, int customerId, int medicalInfoId, int slotDoctorId) {
         this.status = stauts;
@@ -46,6 +48,18 @@ public class Booking {
         this.customerName = customerName;
         this.day = day;
     }
+    
+    public Booking(int bookingId, int bookingStatus, int customerId, String symptomps, String bookingDate, String bookingTime, String doctorName, String bookingCreateDate, String bookingCreateTime) {
+        this.bookingId = bookingId;
+        this.bookingStatus = bookingStatus;
+        this.customerId = customerId;
+        this.symptomps = symptomps;
+        this.bookingDate = bookingDate;
+        this.bookingTime = bookingTime;
+        this.doctorName = doctorName;
+        this.bookingCreateDate = bookingCreateDate;
+        this.bookingCreateTime = bookingCreateTime;
+    }
 
     public String getDoctorName() {
         return doctorName;
@@ -69,7 +83,56 @@ public class Booking {
 
     public void setStartTime(String startTime) {
         this.startTime = startTime;
+
+    
     }
+  
+
+    public String getSymptomps() {
+        return symptomps;
+    }
+
+    public String getBookingDate() {
+        return bookingDate;
+    }
+
+    public String getBookingTime() {
+        return bookingTime;
+    }
+
+ 
+    public String getBookingCreateTime() {
+        return bookingCreateTime;
+    }
+
+  
+    public void setSymptomps(String symptomps) {
+        this.symptomps = symptomps;
+    }
+
+    public void setBookingDate(String bookingDate) {
+        this.bookingDate = bookingDate;
+    }
+
+    public void setBookingTime(String bookingTime) {
+        this.bookingTime = bookingTime;
+    }
+
+
+
+    public void setBookingCreateDate(String bookingCreateDate) {
+        this.bookingCreateDate = bookingCreateDate;
+    }
+
+    public void setBookingCreateTime(String bookingCreateTime) {
+        this.bookingCreateTime = bookingCreateTime;
+    }
+
+    public String getBookingCreateDate() {
+        return bookingCreateDate;
+    }
+    
+    
 
     
     
