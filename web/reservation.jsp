@@ -47,7 +47,7 @@
                 <tr>
                     <th onclick="sortTable(0)">ID</th>
                     <th>Name of specialty</th>
-                    <th>Status</th>
+                    <th onclick="sortTable(2)">Status</th>
                     <th onclick="sortTable(3)">Start time</th>
                     <th onclick="sortTable(4)">End time</th>
                     <th onclick="sortTable(5)">Description</th>
@@ -56,7 +56,7 @@
                 </tr>
             </thead>
             <tbody>
-                <c:forEach var="item" items="${slotDoc}">
+                <c:forEach var="item" items="${slotDoc}" >
                     <tr>
                         <td>${item.getSlotId()} </td>
                         <td>${specialty} </td>
@@ -64,7 +64,7 @@
                             <div id="statusDisplay_${item.getSlotId()}">
                                 <script>
                                     const statusDisplay_${item.getSlotId()} = document.getElementById('statusDisplay_${item.getSlotId()}');
-                                    const status_${item.getSlotId()} = 1;  // Replace with your actual status value
+                                    const status_${item.getSlotId()} = ${item.getStatus()};  // Replace with your actual status value
 
                                     if (status_${item.getSlotId()} === 1) {
                                         statusDisplay_${item.getSlotId()}.innerHTML = '<div class="active">Active</div>';
@@ -73,6 +73,9 @@
                                     }
                                 </script>
                             </div>
+                        </td>
+
+
                         </td>
                         <td>${item.getStartTime()} </td>
                         <td>${item.getEndTime()} </td>
@@ -89,19 +92,52 @@
 <script>
     let ascending = true;
 
+   function getStatusValue(status) {
+        return parseInt(status) === 1 ? 'Active' : 'Inactive';
+    }
+
     function sortTable(columnIndex) {
         const table = document.getElementById('sortableTable');
         const rows = Array.from(table.rows).slice(1); // Exclude header row
 
         rows.sort((rowA, rowB) => {
-            const cellA = rowA.cells[columnIndex].textContent;
-            const cellB = rowB.cells[columnIndex].textContent;
+            let valueA, valueB;
 
-            // Parse dates in "YYYY-MM-DD HH:MM:SS" format and compare
-            const dateA = new Date(cellA);
-            const dateB = new Date(cellB);
+            switch (columnIndex) {
+                case 0: // ID column
+                    valueA = parseInt(rowA.cells[columnIndex].textContent);
+                    valueB = parseInt(rowB.cells[columnIndex].textContent);
+                    break;
 
-            return ascending ? dateA - dateB : dateB - dateA;
+                case 2: // Status column
+                    valueA = getStatusValue(rowA.cells[columnIndex].textContent);
+                    valueB = getStatusValue(rowB.cells[columnIndex].textContent);
+                    break;
+
+                case 3: // Start time column
+                case 4: // End time column
+                    valueA = new Date(rowA.cells[columnIndex].textContent);
+                    valueB = new Date(rowB.cells[columnIndex].textContent);
+                    break;
+
+                case 5: // Description column
+                    valueA = rowA.cells[columnIndex].textContent;
+                    valueB = rowB.cells[columnIndex].textContent;
+                    break;
+
+                default:
+                    // Unsupported column index
+                    return 0;
+            }
+
+            // Compare values based on the column type
+            if (valueA < valueB) {
+                return ascending ? -1 : 1;
+            } else if (valueA > valueB) {
+                return ascending ? 1 : -1;
+            } else {
+                return 0;
+            }
         });
 
         // Rearrange the rows based on the sorting
@@ -112,7 +148,37 @@
         // Toggle sort order for the next click
         ascending = !ascending;
     }
+ 
+
+
+
+//    let ascending = true;
+//
+//    function sortTable(columnIndex) {
+//        const table = document.getElementById('sortableTable');
+//        const rows = Array.from(table.rows).slice(1); // Exclude header row
+//
+//        rows.sort((rowA, rowB) => {
+//            const cellA = rowA.cells[columnIndex].textContent;
+//            const cellB = rowB.cells[columnIndex].textContent;
+//
+//            // Parse dates in "YYYY-MM-DD HH:MM:SS" format and compare
+//            const dateA = new Date(cellA);
+//            const dateB = new Date(cellB);
+//
+//            return ascending ? dateA - dateB : dateB - dateA;
+//        });
+//
+//        // Rearrange the rows based on the sorting
+//        for (const row of rows) {
+//            table.tBodies[0].appendChild(row);
+//        }
+//
+//        // Toggle sort order for the next click
+//        ascending = !ascending;
+//    }
 </script>
+
 </body>
 
 <jsp:include page="footer.jsp"></jsp:include>

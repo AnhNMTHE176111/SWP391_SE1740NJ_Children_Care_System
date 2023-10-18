@@ -86,7 +86,7 @@ public class DAODoctor extends DBContext {
                 String eTime = outputFormat.format(end);
                 
                 String Description = rs.getString(6);
-                int status = Integer.parseInt(rs.getString(5));
+                int status = rs.getInt(5);
                 int docId = Integer.parseInt(rs.getString(4));
                 int slotId = Integer.parseInt(rs.getString(1));
                 SlotDoctor c = new SlotDoctor(slotId, sTime, eTime, docId, status, Description);
