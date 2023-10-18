@@ -92,7 +92,7 @@ public class filterUser extends HttpServlet {
                 userDao.filterUser(address, phone, dobFrom, dobTo, createdFrom, createdTo, roleid, status, gender);
         System.out.println("listFilterUSer: " + listFilteredUser.size());
         request.setAttribute("listUser", listFilteredUser);
-        request.getRequestDispatcher("adminDashboard.jsp").forward(request, response);
+        request.getRequestDispatcher("admin_Dashboard_ListUser.jsp").forward(request, response);
     }
 
     /** 
