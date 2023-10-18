@@ -63,6 +63,10 @@
                     <file>${file.reference.jakarta.servlet.jsp.jstl-2.0.0.jar-3}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
+                <library dirs="200">
+                    <file>${file.reference.sqljdbc42.jar-1}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
             </web-module-libraries>
             <web-module-additional-libraries/>
             <source-roots>
