@@ -99,6 +99,53 @@ public class DAOPost extends DBContext {
         }
         return null;
     }
+    
+  //============== DELETE =================
+    public void deletePost(String id) {
+        String query = "delete from Post where PostId = ?";
+        try {
+            PreparedStatement pstm = cnn.prepareStatement(query);
+            pstm.setString(1, id);
+            pstm.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("SQL <deletePost>: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("<deletePost>: " + e.getMessage());
+        }
+    }
+//================ ADD ===================
+    public void addPost(String title, String content, String Avatar) {
+        String query = "INSERT [dbo].[Post] ([title], [content], [createdAt], [Avatar]) VALUES (?,?, GETDATE() ,?)";
+        try {
+            PreparedStatement pstm = cnn.prepareStatement(query);
+            pstm.setString(1, title);
+            pstm.setString(2, content);
+            pstm.setString(3, Avatar);
+
+            pstm.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("SQL <addPost>: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("<addPost>: " + e.getMessage());
+        }
+    }
+
+    public void editPost(String title, String content, String Avatar, String PostId) {
+        String query = "update Post set[title]=?, [content]=?, [Avatar]=? where PostId = ?";
+        try {
+            PreparedStatement pstm = cnn.prepareStatement(query);
+
+            pstm.setString(1, title);
+            pstm.setString(2, content);
+            pstm.setString(3, Avatar);
+            pstm.setString(4, PostId);
+            pstm.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("SQL <editPost>: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("<editPost>: " + e.getMessage());
+        }
+    }
 
 //    public List<Post> getPostByName(String text) {
 //        List<Post> list = new ArrayList<>();
@@ -140,21 +187,21 @@ public class DAOPost extends DBContext {
 
     public static void main(String[] args) {
         DAOPost daoPost = new DAOPost();
-//    ArrayList<Post> postList = daoPost.getListPost();
+    ArrayList<Post> postList = daoPost.getListPost();
         List p = daoPost.getPostByName("man");
         System.out.println(p);
-//    if (postList != null && !postList.isEmpty()) {
-//        for (Post post : postList) {
-//            System.out.println("ID: " + post.getPostId());
-//            System.out.println("Title: " + post.getTitle());
-//            System.out.println("Avatar: " + post.getAvatar());
-//            System.out.println("Content: " + post.getContent());
-//            System.out.println("Viewer: " + post.getViewer());
-//            System.out.println("Rate: " + post.getRate());
-//        }
-//    } else {
-//        System.out.println("Empty Data");
-//    }
+    if (postList != null && !postList.isEmpty()) {
+        for (Post post : postList) {
+            System.out.println("ID: " + post.getPostId());
+            System.out.println("Title: " + post.getTitle());
+            System.out.println("Avatar: " + post.getAvatar());
+            System.out.println("Content: " + post.getContent());
+            System.out.println("Viewer: " + post.getViewer());
+            System.out.println("Rate: " + post.getRate());
+        }
+    } else {
+        System.out.println("Empty Data");
+    }
     }
 
 }

@@ -12,7 +12,7 @@
         <title>JSP Page</title>
         <link href="css/home.css" rel="stylesheet"/>
     </head>
-    <body>
+    <body>      
         <jsp:include page="header.jsp"></jsp:include>
 
         <form action="searchPost" method="post" class="form-inline" style="margin-left: 145px">
