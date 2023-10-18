@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -89,6 +90,7 @@ public class DAOBooking extends DBContext {
         return String.format("%02d:%02d", hours, remainingMinutes);
     }
 
+
     public List<Booking> getBookingListForManage() {
         List<Booking> bookings = new ArrayList<>();
         String strSQL = "SELECT \n"
@@ -141,6 +143,7 @@ public class DAOBooking extends DBContext {
 
         return bookings;
     }
+
 
     public List<Booking> getListCusReservation(int cusId, int pageIndex) {
         ArrayList<Booking> listCustReservation = new ArrayList<Booking>();
@@ -201,9 +204,58 @@ public class DAOBooking extends DBContext {
         return 0;
     }
 
+    
+     public String getTotalNumberOfBooking() {
+        try {
+            String strSQL = "select count(BookingId) as total from Booking";
+            pstm = cnn.prepareStatement(strSQL);
+            rs = pstm.executeQuery();
+            if (rs.next()) {
+                int total = rs.getInt(1);
+                DecimalFormat decimalFormat = new DecimalFormat("#,###");
+                String formattedNumber = decimalFormat.format(total);
+                return formattedNumber;
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL getTotalNumberOfBooking: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("getTotalNumberOfBooking: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public String getTotalMoney() {
+        try {
+            String strSQL = "select sum(abc.Price) as total from Booking b\n"
+                    + "join SlotDoctor sd \n"
+                    + "on b.slotDoctorId = sd.slotDoctorId\n"
+                    + "join (\n"
+                    + "	select ds.DoctorId, s.ServiceId, s.Price\n"
+                    + "	from DoctorServices ds\n"
+                    + "	join Doctors d on ds.DoctorId = d.DoctorId\n"
+                    + "	join Services s on ds.ServiceId = s.ServiceId \n"
+                    + ") abc on abc.DoctorId = sd.DoctorId\n"
+                    + "where b.BookingStatus = 1";
+            pstm = cnn.prepareStatement(strSQL);
+            rs = pstm.executeQuery();
+            if (rs.next()) {
+                int total = rs.getInt(1);
+                DecimalFormat decimalFormat = new DecimalFormat("#,###");
+                String formattedNumber = decimalFormat.format(total);
+                return formattedNumber;
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL getTotalMoney: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("getTotalMoney: " + e.getMessage());
+        }
+        return null;
+    }
+
+
     public static void main(String[] args) {
         DAOBooking bookDao = new DAOBooking();
-        int count = bookDao.getTotalCusReservation(1);
+        int count = bookDao.getTotalCusReservation(0);
         System.out.println(count);
     }
 
