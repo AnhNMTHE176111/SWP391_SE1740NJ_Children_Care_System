@@ -4,6 +4,7 @@
  */
 package controller.staffFeature;
 
+import DAO.DAODoctor;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -16,7 +17,7 @@ import jakarta.servlet.http.HttpSession;
  *
  * @author dmx
  */
-public class staffDashboard extends HttpServlet {
+public class staffController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -80,7 +81,18 @@ public class staffDashboard extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        DAODoctor d = new DAODoctor();
+        int medId = Integer.parseInt(request.getParameter("medId"));
+        String revisit = request.getParameter("dateOfRevisit");
+        String symtoms = request.getParameter("symtoms");
+        String diagnosis = request.getParameter("diagnosis");
+        String treatmentPlan = request.getParameter("treatmentPlan");
+        String status = request.getParameter("status");
+                
+        d.updateStatusByBookingId(medId,status);        
+        d.updateMedicalInfoByMedId(medId,revisit,symtoms,diagnosis,treatmentPlan);
+        
+        response.sendRedirect("reservation");
     }
 
     /**

@@ -63,7 +63,6 @@ public class DAODoctor extends DBContext {
         return data;
     }
 
-
     public ArrayList<SlotDoctor> getReservationByDocId(int doctorId) {
         String sql = "SELECT Slots.SlotId, startTime, endTime, DoctorId, status, Description\n"
                 + "FROM slots\n"
@@ -84,7 +83,7 @@ public class DAODoctor extends DBContext {
                 String endTime = rs.getString(3);
                 Date end = inputFormat.parse(endTime);
                 String eTime = outputFormat.format(end);
-                
+
                 String Description = rs.getString(6);
                 int status = rs.getInt(5);
                 int docId = Integer.parseInt(rs.getString(4));
@@ -210,10 +209,11 @@ public class DAODoctor extends DBContext {
     }
 
     public MedicalInfo getMedInfo(int slotDoctorId) {
-        String sql = "select dateOfVisit,dateOfRevisit,Symptoms,diagnosis,treatmentPlan,ratingId,MedicalInfo.MedicalInfoId,ratingValue,comment from SlotDoctor \n"
+        String sql = "select dateOfVisit,dateOfRevisit,Symptoms,diagnosis,treatmentPlan,\n"
+                + "MedicalInfo.MedicalInfoId\n"
+                + "from SlotDoctor\n"
                 + "join Booking on SlotDoctor.slotDoctorId= Booking.slotDoctorId\n"
                 + "join MedicalInfo on Booking.MedicalInfoId = MedicalInfo.MedicalInfoId\n"
-                + "join Feedback on MedicalInfo.MedicalInfoId = Feedback.MedicalInfoID\n"
                 + "where SlotDoctor.slotDoctorId = ?";
         MedicalInfo data = new MedicalInfo();
         try {
@@ -226,10 +226,11 @@ public class DAODoctor extends DBContext {
                 data.setSymptons(rs.getString(3));
                 data.setDiagnosis(rs.getString(4));
                 data.setTreatmentPlan(rs.getString(5));
+                data.setMedicalInfoId(rs.getInt(6));
+
+                data.setRatingValue(rs.getFloat(6));
+                data.setComment(rs.getString(6));
                 data.setRatingId(rs.getInt(6));
-                data.setMedicalInfoId(rs.getInt(7));
-                data.setRatingValue(rs.getFloat(8));
-                data.setComment(rs.getString(9));
 
             }
         } catch (SQLException e) {
@@ -239,4 +240,50 @@ public class DAODoctor extends DBContext {
         }
         return data;
     }
+
+    public void updateMedicalInfoByMedId(int medId, String revisit, String symtoms, String diagnosis, String treatmentPlan) {
+        String sql = "update MedicalInfo\n"
+                + "set \n"
+                + "	DateOfReVisit = ?,  \n"
+                + "	Symptoms = ?,       \n"
+                + "	Diagnosis = ? ,     \n"
+                + "	TreatmentPlan = ?   \n"
+                + "where MedicalInfoId = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, revisit);
+            ps.setString(2, symtoms);
+            ps.setString(3, diagnosis);
+            ps.setString(4, treatmentPlan);
+            ps.setInt(5, medId);
+            int update = ps.executeUpdate();
+            System.out.println("update successfully: " + update);
+        } catch (SQLException e) {
+            System.out.println("SQL <updateMedicalInfoByMedId>: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("<updateMedicalInfoByMedId>: " + e.getMessage());
+        }
+    }
+
+    public void updateStatusByBookingId(int medId, String status) {
+        String sql = "UPDATE SlotDoctor\n"
+                + "SET Status = ?\n"
+                + "WHERE slotDoctorId in (select slotDoctorId from Booking where MedicalInfoId = ? );";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            if (status.equals("active")) {
+                ps.setInt(1, 1);
+            } else {
+                ps.setInt(1, 0);
+            }
+            ps.setInt(2, medId);
+            int update = ps.executeUpdate();
+            System.out.println("update successfully: " + update);
+        } catch (SQLException e) {
+            System.out.println("SQL <updateStatusByBookingId>: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("<updateStatusByBookingId>: " + e.getMessage());
+        }
+    }
+
 }

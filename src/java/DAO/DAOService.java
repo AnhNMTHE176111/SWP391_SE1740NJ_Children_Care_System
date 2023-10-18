@@ -112,7 +112,7 @@ public class DAOService extends DBContext {
             while (rs.next()) {
                 String serviceName = rs.getString(2);
                 int serviceId = Integer.parseInt(rs.getString(1));
-                int doctorId = Integer.parseInt(rs.getString(4));
+                int doctorId = Integer.parseInt(rs.getString(5));
                 Service c = new Service(serviceId, serviceName, doctorId);
                 data.add(c);
             }
@@ -135,11 +135,9 @@ public class DAOService extends DBContext {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                int serviceId = Integer.parseInt(rs.getString(1));
                 String serviceName = rs.getString(2);
                 int specId = Integer.parseInt(rs.getString(3));
-                String des = rs.getString(4);
-                Service c = new Service(serviceId, serviceName, des, specId);
+                Service c = new Service(serviceName, specId);
                 data.add(c);
             }
         } catch (SQLException e) {
