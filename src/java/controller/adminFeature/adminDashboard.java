@@ -60,16 +60,13 @@ public class adminDashboard extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        if (String.valueOf(session.getAttribute("roleId")).equals("null")) {
+        if (String.valueOf(session.getAttribute("roleId")).equals("null") || Integer.parseInt(String.valueOf(session.getAttribute("roleId"))) != 4) {
             response.sendRedirect("403.jsp");
-        } else {
-            int roleId = Integer.parseInt(String.valueOf(session.getAttribute("roleId")));
-            if (roleId == 4) {
-                request.getRequestDispatcher("adminDashboard.jsp").forward(request, response);
-            } else {
-                response.sendRedirect("403.jsp");
-            }
         }
+        ArrayList<User> listUser = (new DAOUser()).getListUser();
+        request.setAttribute("totalUser", listUser.size());
+        request.setAttribute("listUser", listUser);
+        request.getRequestDispatcher("adminDashboard.jsp").forward(request, response);
 
     }
 
