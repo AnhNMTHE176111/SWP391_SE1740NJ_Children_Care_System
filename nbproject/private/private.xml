@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/D:/FPT_Curriculum/Fall2023/SWP391/Project/SWP391_SE1740NJ_Children_Care_System/web/header.jsp</file>
             <file>file:/D:/FPT_Curriculum/Fall2023/SWP391/Project/SWP391_SE1740NJ_Children_Care_System/src/java/controller/adminFeature/adminDeleteUser.java</file>
             <file>file:/D:/FPT_Curriculum/Fall2023/SWP391/Project/SWP391_SE1740NJ_Children_Care_System/web/WEB-INF/web.xml</file>
@@ -24,6 +25,33 @@
             <file>file:/D:/FPT_Curriculum/Fall2023/SWP391/Project/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAOUser.java</file>
             <file>file:/D:/FPT_Curriculum/Fall2023/SWP391/Project/SWP391_SE1740NJ_Children_Care_System/src/java/controller/adminFeature/addNewUser.java</file>
             <file>file:/D:/FPT_Curriculum/Fall2023/SWP391/Project/SWP391_SE1740NJ_Children_Care_System/web/adminDashboard.jsp</file>
+=======
+            <file>file:/E:/SWT301_Document/SWP391_SE1740NJ_Children_Care_System/src/java/model/GoogleUtils.java</file>
+            <file>file:/E:/SWT301_Document/SWP391_SE1740NJ_Children_Care_System/web/js/home.js</file>
+            <file>file:/E:/SWT301_Document/SWP391_SE1740NJ_Children_Care_System/web/myReservation.jsp</file>
+            <file>file:/E:/SWT301_Document/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAOSlot.java</file>
+            <file>file:/E:/SWT301_Document/SWP391_SE1740NJ_Children_Care_System/src/java/controller/commonFeature/postDetailController.java</file>
+            <file>file:/E:/SWT301_Document/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAOBooking.java</file>
+            <file>file:/E:/SWT301_Document/SWP391_SE1740NJ_Children_Care_System/src/java/controller/commonFeature/logout.java</file>
+            <file>file:/E:/SWT301_Document/SWP391_SE1740NJ_Children_Care_System/web/managerDashboard.jsp</file>
+            <file>file:/E:/SWT301_Document/SWP391_SE1740NJ_Children_Care_System/web/admin_Dashboard_ListUser.jsp</file>
+            <file>file:/E:/SWT301_Document/SWP391_SE1740NJ_Children_Care_System/web/css/reservation.css</file>
+            <file>file:/E:/SWT301_Document/SWP391_SE1740NJ_Children_Care_System/web/index.html</file>
+            <file>file:/E:/SWT301_Document/SWP391_SE1740NJ_Children_Care_System/src/java/controller/commonFeature/bookingController.java</file>
+            <file>file:/E:/SWT301_Document/SWP391_SE1740NJ_Children_Care_System/web/bannerHome.jsp</file>
+            <file>file:/E:/SWT301_Document/SWP391_SE1740NJ_Children_Care_System/src/java/controller/commonFeature/homeController.java</file>
+            <file>file:/E:/SWT301_Document/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAORole.java</file>
+            <file>file:/E:/SWT301_Document/SWP391_SE1740NJ_Children_Care_System/web/reservationInformation.jsp</file>
+            <file>file:/E:/SWT301_Document/SWP391_SE1740NJ_Children_Care_System/web/header.jsp</file>
+            <file>file:/E:/SWT301_Document/SWP391_SE1740NJ_Children_Care_System/src/java/controller/commonFeature/login.java</file>
+            <file>file:/E:/SWT301_Document/SWP391_SE1740NJ_Children_Care_System/src/java/controller/commonFeature/myReservation.java</file>
+            <file>file:/E:/SWT301_Document/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAOSpecialty.java</file>
+            <file>file:/E:/SWT301_Document/SWP391_SE1740NJ_Children_Care_System/web/home.jsp</file>
+            <file>file:/E:/SWT301_Document/SWP391_SE1740NJ_Children_Care_System/src/java/model/Booking.java</file>
+            <file>file:/E:/SWT301_Document/SWP391_SE1740NJ_Children_Care_System/web/login.jsp</file>
+            <file>file:/E:/SWT301_Document/SWP391_SE1740NJ_Children_Care_System/web/index.jsp</file>
+            <file>file:/E:/SWT301_Document/SWP391_SE1740NJ_Children_Care_System/src/java/controller/commonFeature/forgotPassword.java</file>
+>>>>>>> c03988ac2bab07892e1cf1646ca25acbf2932244
         </group>
     </open-files>
 </project-private>

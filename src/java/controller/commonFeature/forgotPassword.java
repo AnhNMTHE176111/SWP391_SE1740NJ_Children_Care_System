@@ -16,7 +16,6 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -120,9 +119,9 @@ public class forgotPassword extends HttpServlet {
             } catch (MessagingException e) {
                 throw new RuntimeException(e);
             }
-            request.getRequestDispatcher("changePassword.jsp").forward(request, response);
             session.setAttribute("code", verificationCode);
             session.setAttribute("email", email);
+            request.getRequestDispatcher("changePassword.jsp").forward(request, response);
         }
     }
 

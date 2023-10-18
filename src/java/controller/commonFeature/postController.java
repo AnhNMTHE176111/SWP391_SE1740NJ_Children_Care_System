@@ -90,14 +90,6 @@ public class postController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-
-        DAOPost Postdao = new DAOPost();
-        String postID = request.getParameter("postid"); // cid la ten dat trong jsp
-
-        ArrayList<Post> listP = Postdao.getListPost();
-
-        request.setAttribute("listP", listP);
-        request.getRequestDispatcher("blog.jsp").forward(request, response);
     }
 
     /**

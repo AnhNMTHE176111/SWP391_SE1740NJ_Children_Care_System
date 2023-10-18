@@ -26,6 +26,8 @@ import model.Specialty;
  */
 public class serviceServlet extends HttpServlet {
 
+    private final String mess = "Chất lượng khám chữa bệnh luôn là tiêu chí được Hệ thống Y tế ChildCare quan tâm hàng đầu. Bên cạnh đội ngũ giáo sư, bác sĩ giỏi, nhiều năm kinh nghiệm thuộc nhiều chuyên khoa khác nhau, hệ thống trang thiết bị y tế được đầu tư hiện đại và đồng bộ, cơ sở vật chất khang trang, sạch sẽ, tiện nghi. ";
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -67,10 +69,7 @@ public class serviceServlet extends HttpServlet {
         DAOService d = new DAOService();
         ArrayList<Service> service = d.getListService();
         request.setAttribute("service", service);
-//        ArrayList<Doctor> doc = d.getListDoctor();
-//        request.setAttribute("doc", doc);
-//        ArrayList<Specialty> spec = d.getListSpecialty();
-//        request.setAttribute("spec", spec);
+        request.setAttribute("mess", mess);
         request.getRequestDispatcher("service.jsp").forward(request, response);
     }
 
@@ -88,11 +87,13 @@ public class serviceServlet extends HttpServlet {
             case "doctor":
                 request.setAttribute("doc", doc);
                 request.setAttribute("service", serByDoc);
+                request.setAttribute("mess", mess);
                 request.getRequestDispatcher("serviceByDoctor.jsp").forward(request, response);
                 break;
             case "specialty":
                 request.setAttribute("spec", spec);
                 request.setAttribute("serBySpec", serBySpec);
+                request.setAttribute("mess", mess);
                 request.getRequestDispatcher("serviceBySpecialty.jsp").forward(request, response);
                 break;
             default:

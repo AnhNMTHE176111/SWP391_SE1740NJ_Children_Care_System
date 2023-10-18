@@ -37,6 +37,10 @@
         <servlet-class>controller.commonFeature.homeController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>reservationController</servlet-name>
+        <servlet-class>controller.staffFeature.reservationController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>adminManageUser</servlet-name>
         <servlet-class>controller.adminFeature.adminManageUser</servlet-class>
     </servlet>
@@ -63,6 +67,14 @@
     <servlet>
         <servlet-name>postController</servlet-name>
         <servlet-class>controller.commonFeature.postController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>postDetailController</servlet-name>
+        <servlet-class>controller.commonFeature.postDetailController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>searchPostController</servlet-name>
+        <servlet-class>controller.commonFeature.searchPostController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>login</servlet-name>
@@ -101,6 +113,10 @@
         <url-pattern>/home</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>reservationController</servlet-name>
+        <url-pattern>/reservation</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>adminManageUser</servlet-name>
         <url-pattern>/admin-manage-user</url-pattern>
     </servlet-mapping>
@@ -127,6 +143,14 @@
     <servlet-mapping>
         <servlet-name>adminViewProfileUser</servlet-name>
         <url-pattern>/admin-view-profile-user</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>postDetailController</servlet-name>
+        <url-pattern>/postDetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>searchPostController</servlet-name>
+        <url-pattern>/searchPost</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
