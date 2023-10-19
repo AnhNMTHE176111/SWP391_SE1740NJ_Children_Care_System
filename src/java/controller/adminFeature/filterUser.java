@@ -78,21 +78,12 @@ public class filterUser extends HttpServlet {
         String roleid = request.getParameter("roleidFilter");
         String status = request.getParameter("statusFilter");
         String gender = request.getParameter("genderFilter");
-        System.out.println("addess: " + address);
-        System.out.println("phone: " + phone);
-        System.out.println("dobFrom: " + dobFrom);
-        System.out.println("dobTo: " + dobTo);
-        System.out.println("createdFrom: " + createdFrom);
-        System.out.println("createdTo: " + createdTo);
-        System.out.println("roleid: " + roleid);
-        System.out.println("status: " + status);
-        System.out.println("gender: " + gender);
         DAOUser userDao = new DAOUser();
         ArrayList<User> listFilteredUser = 
                 userDao.filterUser(address, phone, dobFrom, dobTo, createdFrom, createdTo, roleid, status, gender);
         System.out.println("listFilterUSer: " + listFilteredUser.size());
         request.setAttribute("listUser", listFilteredUser);
-        request.getRequestDispatcher("adminDashboard.jsp").forward(request, response);
+        request.getRequestDispatcher("admin_Dashboard_ListUser.jsp").forward(request, response);
     }
 
     /** 
