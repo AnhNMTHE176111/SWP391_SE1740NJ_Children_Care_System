@@ -5,18 +5,20 @@
 package controller.commonFeature;
 
 import DAO.DAOUser;
-import java.io.IOException;
-import java.util.Properties;
-import java.util.Random;
 
-import jakarta.servlet.RequestDispatcher;
+import java.io.IOException;
+
+
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+
 import java.io.PrintWriter;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.Message;
@@ -27,7 +29,11 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
+
+
 import model.User;
+
 
 /**
  *
@@ -88,46 +94,64 @@ public class forgotPassword extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String email = request.getParameter("email");
-        int verificationCode;
-        HttpSession session = request.getSession();
+       String email = request.getParameter("email");
+        String codeString = request.getParameter("code");
+        String newpassword = request.getParameter("newpassword");
+        String repassword = request.getParameter("repassword");
         DAOUser userDao = new DAOUser();
-        User u = userDao.checkEmailExist(email);
+        //Get the user's account information
+        User user = userDao.getUserByEmail(email);
+        boolean valid = true;
+        
+        if (codeString != null && codeString.matches("\\d+")) {
+            int code = Integer.parseInt(codeString);
+            HttpSession session = request.getSession();
+            int storedCode = (int) session.getAttribute("code");
 
-        if (u.getEmail() != null) {
-            // sending Verification Code
-            Random rand = new Random();
-            //Randomly generate 6-digit verification code
-            verificationCode = rand.nextInt(900000) + 100000;
-            Properties props = new Properties();
-            props.put("mail.smtp.host", "smtp.gmail.com");
-            props.put("mail.smtp.socketFactory.port", "465");
-            props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-            props.put("mail.smtp.auth", "true");
-            props.put("mail.smtp.port", "465");
-            Session codeSession = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
-                @Override
-                protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication("childrencaresystemse1740nj@gmail.com", "swjo blyb vziq xpxz");
-                }
-            });
-            // compose message
-            try {
-                MimeMessage message = new MimeMessage(codeSession);
-                message.setFrom(new InternetAddress(email));// change accordingly
-                message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
-                message.setSubject("Children Care System Verification Code");
-                message.setText("Your verification code is: " + verificationCode);
-                // send message
-                Transport.send(message);
-            } catch (MessagingException e) {
-                throw new RuntimeException(e);
+
+            if (code == storedCode) {
+                valid = true;
+            } else {
+                valid = false;
+                request.setAttribute("mess", "Verification code is incorrect!");
+                request.getRequestDispatcher("changePassword.jsp").forward(request, response);
             }
+        } else {
+            valid = false;
+            request.setAttribute("mess", "Verification codes can only be numbers!");
             request.getRequestDispatcher("changePassword.jsp").forward(request, response);
-            session.setAttribute("code", verificationCode);
-            session.setAttribute("email", email);
+        }
+        
+        //Check if the new password is entered in the correct system format
+        if (!newpassword.matches(".*[0-9].*") || !newpassword.matches(".*[A-Z].*")) {
+            valid = false;
+            String mess = "Password must contain at least one digit and one uppercase letter!";
+            request.setAttribute("mess", mess);
+            request.getRequestDispatcher("changePassword.jsp").forward(request, response);
+        }
+        //Check the length of the new password
+        if (newpassword.length() < 8) {
+            valid = false;
+            String mess = "Password must be at least 8 characters!";
+            request.setAttribute("mess", mess);
+            request.getRequestDispatcher("changePassword.jsp").forward(request, response);
+        }
+        //Check to see if the old password matches
+        if (!repassword.equals(newpassword)) {
+            valid = false;
+            String mess = "Re-entered password is incorrect!";
+            request.setAttribute("mess", mess);
+            request.getRequestDispatcher("changePassword.jsp").forward(request, response);
+        }
+        
+        if(valid == true){
+            //Update new password for users
+            user.setPassword(repassword);
+            userDao.updatePasswordByEmail(user);
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         }
     }
+    
 
     /**
      * Returns a short description of the servlet.

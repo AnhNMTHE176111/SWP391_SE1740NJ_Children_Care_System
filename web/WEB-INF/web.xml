@@ -26,7 +26,7 @@
     </servlet>
     <servlet>
         <servlet-name>staffDashboard</servlet-name>
-        <servlet-class>controller.staffFeature.staffDashboard</servlet-class>
+        <servlet-class>controller.staffFeature.staffController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>logout</servlet-name>
@@ -35,6 +35,10 @@
     <servlet>
         <servlet-name>homeController</servlet-name>
         <servlet-class>controller.commonFeature.homeController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>reservationController</servlet-name>
+        <servlet-class>controller.staffFeature.reservationController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>adminManageUser</servlet-name>
@@ -129,6 +133,10 @@
         <url-pattern>/home</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>reservationController</servlet-name>
+        <url-pattern>/reservation</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>adminManageUser</servlet-name>
         <url-pattern>/admin-manage-user</url-pattern>
     </servlet-mapping>
@@ -188,6 +196,6 @@
         <session-timeout>30</session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>myReservation.jsp</welcome-file>
+        <welcome-file>home.jsp</welcome-file>
     </welcome-file-list>
 </web-app>

@@ -9,7 +9,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import java.sql.Statement;
+
 import java.util.ArrayList;
+
 import model.User;
 
 /**
@@ -82,7 +86,6 @@ public class DAOUser extends DBContext {
                 user.setStatus(rs.getString(2));
                 user.setFirstName(rs.getString(3));
                 user.setLastName(rs.getString(4));
-                user.setGender(rs.getString(5));
                 user.setEmail(rs.getString(6));
                 user.setPassword(rs.getString(7));
                 user.setAddress(rs.getString(8));
@@ -90,8 +93,7 @@ public class DAOUser extends DBContext {
                 user.setDob(rs.getString(10));
                 user.setAvatar(rs.getString(11));
                 user.setRoleId(Integer.parseInt(rs.getString(12)));
-                user.setCreatedAt(rs.getString(13));
-                
+
                 // some code to finish
             }
             return user;
@@ -210,6 +212,36 @@ public class DAOUser extends DBContext {
             System.out.println("updatePasswordByEmail: " + e.getMessage());
         }
     }
+
+
+    public int addGuess(String firstName, String lastName, String gender, String email, String phone, String dob, int roleId) {
+        int generatedId = -1;
+        try {
+            String strSQL = "insert into Users(firstName, lastName, gender, email, phone, dob, roleId) values(?,?,?,?,?,?,?); SELECT SCOPE_IDENTITY();";
+
+            pstm = cnn.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
+
+            pstm.setString(1, firstName);
+            pstm.setString(2, lastName);
+            pstm.setString(3, gender);
+            pstm.setString(4, email);
+            pstm.setString(5, phone);
+            pstm.setString(6, dob);
+            pstm.setInt(7, roleId);
+
+            if (pstm.executeUpdate() > 0) {
+                try (ResultSet generatedKeys = pstm.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        generatedId = generatedKeys.getInt(1);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return generatedId;
+    }
+
 
     public void updateProfile(String fName, String lName, String phone, String address, String dob, String avatar, String email) {
         try {
@@ -468,5 +500,6 @@ public class DAOUser extends DBContext {
             System.out.println("updateProfileByAdmin: " + e.getMessage());
         }
     }
+
 }
 //include jsp//

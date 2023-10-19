@@ -4,30 +4,49 @@
  */
 package model;
 
+import java.util.Date;
+
 /**
  *
  * @author dmx
  */
-public class SlotDoctor {
-    private int slotId, doctorId, status;
+public class SlotDoctor extends Slot {
+
+    private int slotDoctorId, doctorId, status;
     private String description;
+    private Date day;
 
-    public SlotDoctor() {
-    }
-
-    public SlotDoctor(int slotId, int doctorId, int status, String description) {
-        this.slotId = slotId;
+    public SlotDoctor(int slotId, String startTime, String endTime, int doctorId, int status, String description) {
+        super(slotId, startTime, endTime);
         this.doctorId = doctorId;
         this.status = status;
         this.description = description;
     }
 
-    public int getSlotId() {
-        return slotId;
+    public SlotDoctor() {
     }
 
-    public void setSlotId(int slotId) {
-        this.slotId = slotId;
+    public SlotDoctor(int doctorId, int slotId, Date day) {
+        this.doctorId = doctorId;
+        setSlotId(slotId);
+        this.day = day;
+
+    }
+
+    public Date getDay() {
+        return day;
+    }
+
+    public void setDay(Date day) {
+        this.day = day;
+    }
+
+    public int getSlotDoctorId() {
+        return slotDoctorId;
+    }
+
+    public void setSlotDoctorId(int slotDoctorId) {
+        this.slotDoctorId = slotDoctorId;
     }
 
     public int getDoctorId() {
@@ -53,5 +72,6 @@ public class SlotDoctor {
     public void setDescription(String description) {
         this.description = description;
     }
-    
+
+   
 }

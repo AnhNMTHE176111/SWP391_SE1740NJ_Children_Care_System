@@ -21,11 +21,11 @@ public class Service {
         this.doctorId = doctorId;
     }
 
-    public Service(int serviceId, String serviceName, String description, int specId) {
+    public Service(int serviceId, String serviceName, String description, int doctorId) {
         this.serviceId = serviceId;
         this.serviceName = serviceName;
         this.description = description;
-        this.specId = specId;
+        this.doctorId = doctorId;
     }
  
     public int getDoctorId() {
@@ -48,6 +48,11 @@ public class Service {
         this.serviceId = serviceId;
         this.serviceName = serviceName;
         this.description = description;
+    }
+
+    public Service(String serviceName, int specId) {
+        this.serviceName = serviceName;
+        this.specId = specId;
     }
 
     public int getServiceId() {

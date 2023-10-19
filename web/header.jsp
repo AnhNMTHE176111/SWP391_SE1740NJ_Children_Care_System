@@ -13,7 +13,7 @@
     <body>
         <jsp:include page="change-profile.jsp"></jsp:include>
 
-        <!-- Navbar Start -->
+            <!-- Navbar Start -->
         <div class="container-fluid position-relative shadow">
             <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0 px-lg-5">
                 <a href="" class="navbar-brand font-weight-bold text-secondary" style="font-size: 50px;">
@@ -34,8 +34,8 @@
                         <a href="/service" class="nav-item nav-link">Services</a>
                         <a href="team.html" class="nav-item nav-link">Doctors</a>
                         <div class="nav-item dropdown">
-                            <a href="/servicelist" class="nav-link dropdown-toggle"
-                               data-toggle="dropdown">Specialist</a>
+                            <a href="/servicelist" class="nav-link dropdown-toggle" data-toggle="dropdown">Specialist</a>
+
                             <div class="dropdown-menu rounded-0 m-0">
                                 <a href="blog.html" class="dropdown-item">Blog Grid</a>
                                 <a href="single.html" class="dropdown-item">Blog Detail</a>
@@ -47,7 +47,7 @@
                     <ul class="nav">
                         <c:if test="${sessionScope.name ne null}">
                             <li class="nav-item">
-                                <a class="nav-link" href="#" onclick="showPopup()">${sessionScope.name}</a>
+                                <a class="nav-link" href="/my">${sessionScope.name}</a>
                             </li>
                             <li class="nav-item">
                                 <img onclick="showPopup()" style="height:40px;width:40px;border-radius:50%; object-fit: cover; cursor: pointer"
@@ -69,8 +69,6 @@
                 </div>
             </nav>
         </div>
-
-
 
         <script src="./js/changeImageProfile.js"></script>
     </body>

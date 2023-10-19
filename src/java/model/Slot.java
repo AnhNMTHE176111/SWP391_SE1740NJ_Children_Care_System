@@ -9,16 +9,30 @@ package model;
  * @author dmx
  */
 public class Slot {
-    private int slotId;
+
+    private int slotId, status;
     private String startTime, endTime;
 
     public Slot() {
+    }
+
+    public Slot(int slotId, String startTime) {
+        this.slotId = slotId;
+        this.startTime = startTime;
     }
 
     public Slot(int slotId, String startTime, String endTime) {
         this.slotId = slotId;
         this.startTime = startTime;
         this.endTime = endTime;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public int getSlotId() {
@@ -44,5 +58,5 @@ public class Slot {
     public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
-    
+
 }

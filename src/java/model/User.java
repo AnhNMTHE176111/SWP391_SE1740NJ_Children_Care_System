@@ -13,18 +13,20 @@ public class User {
     private String status,
             firstName,
             lastName,
-            gender,
             email,
             password,
             address,
-            phone, 
+            phone,
             dob,
-            avatar, 
-            createdAt;
+            createdAt,
+            avatar,
+            gender;
+
     private int userId, roleId;
 
     public User() {
     }
+
 
     public User(String status, String firstName, String lastName, String gender, String email, String password, String address, String phone, String dob, String avatar, String createdAt, int userId, int roleId) {
         this.status = status;
@@ -37,6 +39,7 @@ public class User {
         this.phone = phone;
         this.dob = dob;
         this.avatar = avatar;
+ 
         this.createdAt = createdAt;
         this.userId = userId;
         this.roleId = roleId;
@@ -72,6 +75,7 @@ public class User {
         this.roleId = roleId;
     }
 
+
     public User(String firstName, String lastName, String email, String password, String address, String phone, String dob) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -80,6 +84,24 @@ public class User {
         this.address = address;
         this.phone = phone;
         this.dob = dob;
+    }
+
+    public User(String firstName, String lastName, String gender, String email, String phone, String dob, int roleId) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.email = email;
+        this.phone = phone;
+        this.dob = dob;
+        this.roleId = roleId;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public User(String status, String firstName, String lastName, String email, String avatar, int roleId) {
@@ -179,13 +201,7 @@ public class User {
         this.roleId = roleId;
     }
 
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
+  
 
     public String getCreatedAt() {
         return createdAt;

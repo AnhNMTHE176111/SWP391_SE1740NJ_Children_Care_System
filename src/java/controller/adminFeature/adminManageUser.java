@@ -62,7 +62,7 @@ public class adminManageUser extends HttpServlet {
         ArrayList<User> listUser = daoUser.getListUser();
 
         request.setAttribute("listUser", listUser);
-        request.getRequestDispatcher("adminDashboard.jsp").forward(request, response);
+        request.getRequestDispatcher("admin_Dashboard_ListUser.jsp").forward(request, response);
     }
 
     /**
@@ -80,7 +80,7 @@ public class adminManageUser extends HttpServlet {
         DAOUser daoUser = new DAOUser();
         ArrayList<User> listUser = daoUser.getListUserByName(username);
         request.setAttribute("listUser", listUser);
-        request.getRequestDispatcher("adminDashboard.jsp").forward(request, response);
+        request.getRequestDispatcher("admin_Dashboard_ListUser.jsp").forward(request, response);
     }
 
     /**

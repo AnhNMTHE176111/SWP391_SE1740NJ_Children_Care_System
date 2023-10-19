@@ -4,18 +4,24 @@
  */
 package controller.managerFeature;
 
+import DAO.DAOBooking;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
+import model.Booking;
 
 /**
  *
  * @author dmx
  */
+@WebServlet(name = "managerDashboardController", urlPatterns = {"/managerDashboard"})
 public class managerDashboard extends HttpServlet {
 
     /**
@@ -30,7 +36,7 @@ public class managerDashboard extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -56,17 +62,24 @@ public class managerDashboard extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        if (String.valueOf(session.getAttribute("roleId")).equals("null")) {
-            response.sendRedirect("403.jsp");
-        } else {
-            int roleId = Integer.parseInt(String.valueOf(session.getAttribute("roleId")));
-            if (roleId == 3) {
+      //  HttpSession session = request.getSession();
+//        if (String.valueOf(session.getAttribute("roleId")).equals("null")) {
+//            response.sendRedirect("403.jsp");
+//        } else {
+//            int roleId = Integer.parseInt(String.valueOf(session.getAttribute("roleId")));
+//            if (roleId == 3) {
+                DAOBooking booking = new DAOBooking();
+                List<Booking> reservationList = booking.getBookingList();
+                List<Booking> reservationListForManage = booking.getBookingListForManage();
+                
+                request.setAttribute("reservationListForManage", reservationListForManage);
+                request.setAttribute("reservationList", reservationList);  
                 request.getRequestDispatcher("managerDashboard.jsp").forward(request, response);
-            } else {
-                response.sendRedirect("403.jsp");
-            }
-        }
+
+//            } else {
+//                response.sendRedirect("403.jsp");
+//            }
+//        }
     }
 
     /**
