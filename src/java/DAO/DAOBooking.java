@@ -25,6 +25,7 @@ import java.util.ArrayList;
 
 import java.util.List;
 import model.Booking;
+import model.Customer;
 
 public class DAOBooking extends DBContext {
 
@@ -144,17 +145,20 @@ public class DAOBooking extends DBContext {
         return bookings;
     }
 
-
     public List<Booking> getListCusReservation(int cusId, int pageIndex) {
         ArrayList<Booking> listCustReservation = new ArrayList<Booking>();
         try {
             String strSQL = "SELECT\n"
-                    + "b.*,\n"
-                    + "m.Diagnosis,\n"
-                    + "CONCAT(u.firstName, ' ', u.lastName) AS fullName\n"
+                    + "  b.*,\n"
+                    + "  m.Diagnosis,\n"
+                    + "  CONCAT(u.firstName, ' ', u.lastName) AS fullName,\n"
+                    + "  s.StartTime,\n"
+                    + "  s.EndTime\n"
                     + "FROM Booking b\n"
                     + "JOIN MedicalInfo m ON b.MedicalInfoId = m.MedicalInfoId\n"
                     + "JOIN Doctors d ON b.slotDoctorId = d.DoctorId\n"
+                    + "JOIN SlotDoctor sd ON b.slotDoctorId = sd.slotDoctorId\n"
+                    + "JOIN Slots s ON sd.SlotId = s.SlotId\n"
                     + "JOIN Users u ON d.userId = u.userId\n"
                     + "WHERE b.CustomerId = '" + cusId + "'\n"
                     + "ORDER BY b.CustomerId\n"
@@ -166,12 +170,12 @@ public class DAOBooking extends DBContext {
                 int BookingId = rs.getInt(1);
                 int BookingStatus = rs.getInt(2);
                 int CustomerID = rs.getInt(3);
-                String Symptomps = rs.getString(8);
-                String BookingDate = String.valueOf(rs.getDate(5));
-                String BookingTime = String.valueOf(rs.getTime(5));
-                String DoctorName = rs.getString(9);
-                String CreateDate = String.valueOf(rs.getDate(7));
-                String CreateTime = String.valueOf(rs.getTime(7));
+                String Symptomps = rs.getString(7);
+                String BookingDate = String.valueOf(rs.getDate(9));
+                String BookingTime = String.valueOf("From " + rs.getTime(9) + " to " + rs.getTime(10));
+                String DoctorName = rs.getString(8);
+                String CreateDate = String.valueOf(rs.getDate(6));
+                String CreateTime = String.valueOf(rs.getTime(6));
                 Booking cusBooking = new Booking(BookingId, BookingStatus, CustomerID, Symptomps, BookingDate, BookingTime, DoctorName, CreateDate, CreateTime);
                 listCustReservation.add(cusBooking);
             }

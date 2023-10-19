@@ -6,6 +6,7 @@ package controller.commonFeature;
 
 import DAO.DAOBooking;
 import DAO.DAOCustomer;
+import DAO.DAOUser;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -17,6 +18,7 @@ import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import model.Booking;
 import model.Customer;
+import model.User;
 
 /**
  *
@@ -64,21 +66,24 @@ public class myReservation extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String cusIdStr = request.getParameter("id");
+        DAOUser userDao = new DAOUser();
+        DAOBooking bookingDao = new DAOBooking();
+        DAOCustomer cusDao = new DAOCustomer();
+        User user = (User) session.getAttribute("user");
+        Customer cusId = cusDao.getCusIdByUserId(user.getUserId());
         String pageIndexStr = request.getParameter("pageIndex");
         if (pageIndexStr == null) {
             pageIndexStr = "1";
         }
         int pageIndex = Integer.parseInt(pageIndexStr);
-        int cusId = 1;
-        DAOBooking bookingDao = new DAOBooking();
-        DAOCustomer cusDao = new DAOCustomer();
-        int count = bookingDao.getTotalCusReservation(cusId);
+
+
+        int count = bookingDao.getTotalCusReservation(cusId.getId());
         int endPage = count / 2;
         if (count % 2 != 0) {
             endPage++;
         }
-        List<Booking> customerReservation = bookingDao.getListCusReservation(cusId, pageIndex);
+        List<Booking> customerReservation = bookingDao.getListCusReservation(cusId.getId(), pageIndex);
         request.setAttribute("endP", endPage);
         session.setAttribute("customerReservation", customerReservation);
         request.getRequestDispatcher("myReservation.jsp").forward(request, response);

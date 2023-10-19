@@ -36,7 +36,6 @@
                         <h2>Your Reservation Id:</h2>
                     </div>
                 </div>
-                <form>
                     <div class="col-md-12 reservation-info">
                         <div class="row">
                             <div class="col-md-3 reservation-info-content">
@@ -75,7 +74,7 @@
                             </div>
                         </div>
                         <div class="row reservation-button">
-                            <button class="bg-success btn-3" type="submit">
+                            <button class="bg-success btn-3" onclick="showPopup()">
                                 Update The Reservation
                             </button>
                             <button class="bg-danger btn-3" type="submit">
@@ -83,7 +82,6 @@
                             </button>
                         </div>
                     </div>
-                </form>
                 <div class="col-md-12 list-services">
                     <form class="reserved-services">
                         <div class="reserved-services-details">
@@ -196,6 +194,7 @@
             </div>
         </div>
     <jsp:include page="footer.jsp"></jsp:include>
+    <script src="./js/changeImageProfile.js"></script>
 </body>
 <script
     src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
