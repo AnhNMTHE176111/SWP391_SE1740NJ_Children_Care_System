@@ -5,6 +5,7 @@
 
 package controller.commonFeature;
 
+import DAO.DAOCustomer;
 import DAO.DAOUser;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,6 +15,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import model.Customer;
 import model.User;
 
 /**
@@ -60,8 +62,12 @@ public class informationReservation extends HttpServlet {
     throws ServletException, IOException {
         HttpSession session = request.getSession();
         DAOUser userDao = new DAOUser();
-        User user = (User) session.getAttribute("user");
-         request.getRequestDispatcher("reservationInformation.jsp").forward(request, response);
+        DAOCustomer cusDao = new DAOCustomer();
+        String bookingId = request.getParameter("id");
+        Customer cusInfo = cusDao.getCusBookingInforByBookId(bookingId);
+        session.setAttribute("bookingId", bookingId);
+        session.setAttribute("cusInfo", cusInfo);
+        request.getRequestDispatcher("reservationInformation.jsp").forward(request, response);
     } 
 
     /** 

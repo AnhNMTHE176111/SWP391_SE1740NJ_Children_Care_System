@@ -59,7 +59,7 @@
                                         <td class="table-reservation-column col-md-1">
                                             <label class="item">${cr.bookingId}</label>
                                         </td>
-                                        <td class="table-reservation-column col-md-4">
+                                        <td class="table-reservation-column col-md-3">
                                             <p class="item item-name" style="margin-left: 20px">Reservation created at:</p>
                                             <ul class="table-reservation-list">
                                                 <li class="item">
@@ -102,6 +102,10 @@
                                                     <label class="item">Unknown Status</label>
                                                 </c:otherwise>
                                             </c:choose>
+                                        </td>
+                                        <td class="table-reservation-column col-md-1">
+                                            <button><a href="/information?get&id=${cr.bookingId}">Detail</a>
+</button>
                                         </td>
                                     </tr>
                                 </c:forEach>
