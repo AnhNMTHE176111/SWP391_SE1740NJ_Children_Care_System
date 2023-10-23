@@ -203,4 +203,43 @@ public class DAOService extends DBContext {
         return data;
     }
 
+    public Doctor getDoctorById_UserID(String id, int userId) {
+        String sql = " SELECT ExperienceYears,Rating,Doctors.Description,Position,firstName,lastName,email,phone,SpecialtyName\n"
+                + "FROM DoctorServices\n"
+                + "INNER JOIN Doctors ON DoctorServices.doctorId = Doctors.DoctorId\n"
+                + "INNER JOIN Users on Doctors.userId = Users.userId \n"
+                + "Inner join Specialty on Specialty.SpecialtyId=Doctors.SpecialtyId\n"
+                + "WHERE DoctorServices.ServiceId = ? and \n"
+                + "DoctorServices.DoctorId in \n"
+                + "(select DoctorId from Doctors\n"
+                + "inner join Users on Doctors.userId = Users.userId\n"
+                + "where Users.userId = ?);\n"
+                + "        ";
+        Doctor data = new Doctor();
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, id);
+            ps.setInt(2, userId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String expYears = rs.getString(1);
+                Float rate = Float.parseFloat(rs.getString(2));
+                String Description = rs.getString(3);
+                String position = rs.getString(4);
+                String firstName = rs.getString(5);
+                String lastName = rs.getString(6);
+                String email = rs.getString(7);
+                String phone = rs.getString(8);
+                String specName = rs.getString(9);
+
+                data = new Doctor(Integer.parseInt(expYears), rate, Description, position, firstName, lastName, email, phone, specName);
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL <getDoctorById>: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("<getDoctorById>: " + e.getMessage());
+        }
+        return data;
+    }
+
 }
