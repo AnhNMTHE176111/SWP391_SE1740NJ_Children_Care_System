@@ -191,6 +191,8 @@ public class DAOBooking extends DBContext {
                     + "FROM Booking b\n"
                     + "JOIN MedicalInfo m ON b.MedicalInfoId = m.MedicalInfoId\n"
                     + "JOIN Doctors d ON b.slotDoctorId = d.DoctorId\n"
+                    + "JOIN SlotDoctor sd ON b.slotDoctorId = sd.slotDoctorId\n"
+                    + "JOIN Slots s ON sd.SlotId = s.SlotId\n"
                     + "JOIN Users u ON d.userId = u.userId\n"
                     + "WHERE b.CustomerId = '" + cusId + "'";
             pstm = cnn.prepareStatement(strSQL);
