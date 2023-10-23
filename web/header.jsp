@@ -33,14 +33,9 @@
                         <a href="/blog" class="nav-item nav-link">Blogs</a>
                         <a href="/service" class="nav-item nav-link">Services</a>
                         <a href="team.html" class="nav-item nav-link">Doctors</a>
-                        <div class="nav-item dropdown">
-                            <a href="/servicelist" class="nav-link dropdown-toggle" data-toggle="dropdown">Specialist</a>
-
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="blog.html" class="dropdown-item">Blog Grid</a>
-                                <a href="single.html" class="dropdown-item">Blog Detail</a>
-                            </div>
-                        </div>
+                        <c:if test="${sessionScope.roleId eq 2}">
+                            <a href="/reservation" class="nav-item nav-link " >Reservation</a>
+                        </c:if>
                         <a href="booking" class="nav-item nav-link">Booking</a>
                     </div>
 
