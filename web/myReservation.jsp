@@ -35,7 +35,7 @@
             <div class="container-fluid my-reservation-container">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2>My Reservations</h2>
+                        <h2>${sessionScope.cusName}'s reservation list</h2>
                     </div>
                 <c:choose>
                     <c:when test="${requestScope.endP == 0}">

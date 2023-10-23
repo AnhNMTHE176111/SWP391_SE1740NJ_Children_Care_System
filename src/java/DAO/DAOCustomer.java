@@ -38,17 +38,18 @@ public class DAOCustomer extends DBContext {
 
     public Customer getCusIdByUserId(int userId) {
         try {
-            String strSQL = "SELECT Id "
+            String strSQL = "SELECT * "
                     + "FROM Customers "
                     + "WHERE UserId = ?";
             pstm = cnn.prepareStatement(strSQL);
             pstm.setInt(1, userId);
             rs = pstm.executeQuery();
 
-            Customer customer = new Customer(); // Tạo một đối tượng Customer
+            Customer customer = new Customer();
 
             while (rs.next()) {
-                customer.setId(rs.getInt(1)); // Lấy giá trị Id từ cột 1
+                customer.setId(rs.getInt(1));
+                customer.setUserId(rs.getInt(2));
             }
             return customer;
         } catch (SQLException e) {
