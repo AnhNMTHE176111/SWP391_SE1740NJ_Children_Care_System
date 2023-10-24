@@ -31,211 +31,159 @@
         </div>
 
 
-        <div class="popup" style="display: none;">
-            <div class="filter-container" id="add-newuser-container" style="display: none;">
-                <form action="">
-                    <div class="filter-title">
-                        <h1>Add New Reservation</h1>
-                    </div>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td><label for="username">User Name</label></td>
-                                <td><input type="username" placeholder="Enter User Name..." id="username"></td>
-                            </tr>
-                            <tr>
-                                <td><label for="email">Email</label></td>
-                                <td><input type="email" placeholder="Enter Email..." id="email"></td>
-                            </tr>
-                            <tr>
-                                <td><label for="address">Address</label></td>
-                                <td><input type="address" placeholder="Enter Address..." id="address"></td>
-                            </tr>
-                            <tr>
-                                <td><label for="phone">Phone</label></td>
-                                <td><input type="phone" placeholder="Enter phone..." id="phone"></td>
-                            </tr>
-                            <tr>
-                                <td>Date Of Birth</td>
-                                <td><input type="date" name="dobFrom" id="dobFrom"></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Role
-                                    <select name="" id="">
-                                        <option value="">Choose Role</option>
-                                        <option value="">Admin</option>
-                                        <option value="">Manager</option>
-                                        <option value="">Staff</option>
-                                        <option value="">Customer</option>
-                                        <option value="">Guest</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    Status
-                                    <select name="" id="">
-                                        <option value="">Choose Status</option>
-                                        <option value="">Active</option>
-                                        <option value="">Banned</option>
-                                    </select>
-
-                                    Gender
-                                    <select name="" id="">
-                                        <option value="">Choose Gender</option>
-                                        <option value="">Male</option>
-                                        <option value="">Female</option>
-                                    </select>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="filter-btn">
-                        <button id="cancel-btn">Cancel</button>
-                        <button id="add-user-btn">Add</button>
-                    </div>
-                </form>
-            </div>
-
-            <div class="filter-container" id="filter-container" style="display: none;">
-                <form action="">
-                    <div class="filter-title">
-                        <h1>Filter Option</h1>
-                    </div>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td><label for="username">User Name</label></td>
-                                <td><input type="username" placeholder="Enter User Name..." id="username"></td>
-                            </tr>
-                            <tr>
-                                <td><label for="email">Email</label></td>
-                                <td><input type="email" placeholder="Enter Email..." id="email"></td>
-                            </tr>
-                            <tr>
-                                <td><label for="address">Address</label></td>
-                                <td><input type="address" placeholder="Enter Address..." id="address"></td>
-                            </tr>
-                            <tr>
-                                <td><label for="phone">Phone</label></td>
-                                <td><input type="phone" placeholder="Enter phone..." id="phone"></td>
-                            </tr>
-                            <tr>
-                                <td>Date Of Birth From</td>
-                                <td><input type="date" name="dobFrom" id="dobFrom"> To <input type="date" name="dobTo"
-                                                                                              id="dobTo"></td>
-                            </tr>
-                            <tr>
-                                <td>Created From</td>
-                                <td><input type="date" name="dobFrom" id="dobFrom"> To <input type="date" name="dobTo"
-                                                                                              id="dobTo"></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Role
-                                    <select name="" id="">
-                                        <option value="">Choose Role</option>
-                                        <option value="">Admin</option>
-                                        <option value="">Manager</option>
-                                        <option value="">Staff</option>
-                                        <option value="">Customer</option>
-                                        <option value="">Guest</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    Status
-                                    <select name="" id="">
-                                        <option value="">Choose Status</option>
-                                        <option value="">Active</option>
-                                        <option value="">Banned</option>
-                                    </select>
-
-                                    Gender
-                                    <select name="" id="">
-                                        <option value="">Choose Gender</option>
-                                        <option value="">Male</option>
-                                        <option value="">Female</option>
-                                    </select>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="filter-btn">
-                        <button id="cancel-btn">Cancel</button>
-                        <button id="filter-btn">Filter</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
         <div class="dashboard-container">
             <div class="side-navbar-container">
-                <h3>Admin Dashboard</h3>
+                <h3>Manager Dashboard</h3>
                 <ul>
-                    <li id="analyticsMenu"><i class="fa-solid fa-chart-simple"></i>Analytics</li>
-                    <li id="reservationManager"><i class="fa-solid fa-users"></i>Reservation Manager</li>
+                    <li id="analyticsMenu">
+                        <i class="fa-solid fa-chart-simple"></i>Analytics
+                    </li>
+                    <li id="reservationManager">
+                        <i class="fa-solid fa-users"></i>Reservation Manager
+                    </li>
                     <li><i class="fa-solid fa-gear"></i>Setting</li>
+                 <li>
+    <a href="/managePost">
+        <i class="fa-solid fa-gear"></i> Manage Post
+    </a>
+</li>
+
                 </ul>
             </div>
 
-            <div class="user-container">
+            <div class="analytic-container" style="width: 80%; margin-left: 20%;">
+                <h1>Dashboard</h1>
+                <div class="number-total-container">
+                    <div class="number-total-item" style="display: flex;">
+                        <div class="number-total-item-detail">
+                            <h3 class="number-total-item-title">Reservation</h3>
+                            <h4 class="number-total-item-number">1780</h4>
+                        </div>
+                        <div class="total-item-logo">
+                            <i class="fa-solid fa-list-check"></i>
+                        </div>
+                    </div>
+                    <div class="number-total-item" style="display: flex;">
+                        <div class="number-total-item-detail">
+                            <h3 class="number-total-item-title">Earning</h3>
+                            <h4 class="number-total-item-number">$ 120.00</h4>
+                        </div>
+                        <div class="total-item-logo">
+                            <i class="fa-solid fa-money-bill"></i>
+                        </div>
+                    </div>
+                    <div class="number-total-item" style="display: flex;">
+                        <div class="number-total-item-detail">
+                            <h3 class="number-total-item-title">Feedback</h3>
+                            <h4 class="number-total-item-number">84%</h4>
+                        </div>
+                        <div class="total-item-logo">
+                            <i class="fa-solid fa-comments"></i>
+                        </div>
+                    </div>
+                    <div class="number-total-item" style="display: flex;">
+                        <div class="number-total-item-detail">
+                            <h3 class="number-total-item-title">User</h3>
+                            <h4 class="number-total-item-number">${totalUser}</h4>
+                        </div>
+                        <div class="total-item-logo">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="user-chart-container">
+                        <div class="chart-item" >
+                            <div class="chart-item-detail">
+                                Number of User Created
+                                <select id="week-dropdown"></select>
+
+                            </div>
+                            <div style="width: 100%; height: 90%; padding: 10px;">
+                                <canvas id="user-line-chart" width="10" height=""></canvas>
+                            </div>
+                        </div>
+                        <div class="chart-item">
+                            <div class="chart-item-detail">
+                                Users Overview
+                            </div>
+                            <div style="width: 100%; height: 90%;">
+                                <canvas id="user-pie-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="reservation-chart-container">
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="reservation-manager-container" style="width: 100%; margin-left: 15%; display: none;">
                 <div class="user-list-container">
-                    <h1 class="user-container-table">List User</h1>
                     <div class="top-option">
-                        <form action="" class="search-name-form">
-                            <input type="text" placeholder="Enter name of User...">
-                            <button><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+                        <form action="admin-manage-user" class="search-name-form" method="post">
+                            <input type="text" name="username" placeholder="Enter name of User...">
+                            <button type="submit"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
                             <button id="btn-show-filter"><i class="fa-solid fa-filter"></i> Filter</button>
                         </form>
-                        <button id="addNewUser"><i class="fa-solid fa-user-plus"></i> Add New User</button>
+                        <button id="submitAllChanges"><i class="fa-solid fa-user-plus"></i> Submit all Change</button>
+
                     </div>
-
-
-                    <div id="container">
-                        <div class = "charts">
-                            <div id="chartsContainer" ></div>
-                            <select id="weekSelector"></select>
-                        </div>
-                        <canvas class="chart" id="statusPieChart" style="display: block; box-sizing: border-box; height: 100; width: 100;">hg</canvas>
-                    </div>
-
-                    <div id="reservationsContainer" style="display: none;">
-                        <table border="1">
-                            <thead>
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th>Booking Id</th>
+                                <th>Status</th>
+                                <th>Slot</th>
+                                <th>SlotStatus</th>
+                                <th>Doctor Name</th>s
+                                <th>Customer Name</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach var="rs" items="${reservationListForManage}">
                                 <tr>
-                                    <th>Booking Id</th>
-                                    <th>Status</th>
-                                    <th>Slot</th>
-                                    <th>SlotStatus</th>
-                                    <th>Doctor Name</th>    
-                                    <th>Customer Name</th>
-                                    <th>Date</th>
-                                    <th>Actions</th>
+                                    <td>
+                                        <span class="editable">${rs.bookingId}</span>
+                                        <input type="hidden" name="bookingId" class="hidden-input" value="${rs.bookingId}" />
+                                    </td>
+                                    <td>
+                                        <span class="editable">${rs.status}</span>
+                                        <input type="hidden" name="status" class="hidden-input" value="${rs.status}" />
+                                    </td>
+                                    <td>
+                                        <span class="editable">${rs.getStartTime()}</span>
+                                        <input type="hidden" name="startTime" class="hidden-input" value="${rs.getStartTime()}" />
+                                    </td>
+                                    <td>
+                                        <span class="editable">${rs.status}</span>
+                                        <input type="hidden" name="slotStatus" class="hidden-input" value="${rs.status}" />
+                                    </td>
+                                    <td>
+                                        <span class="editable">${rs.doctorName}</span>
+                                        <input type="hidden" name="doctorName" class="hidden-input" value="${rs.doctorName}" />
+                                    </td>
+                                    <td>
+                                        <span class="editable">${rs.customerName}</span>
+                                        <input type="hidden" name="customerName" class="hidden-input" value="${rs.customerName}" />
+                                    </td>
+                                    <td>
+                                        <span class="editable">${rs.day}</span>
+                                        <input type="hidden" name="day" class="hidden-input" value="${rs.day}" />
+                                    </td>
+                                    <td>
+                                        <button onclick="makeEditable(this);"><i class="fa-solid fa-user-pen"></i>Update</button>
+                                        <button onclick="deleteBooking(${rs.bookingId});"><i class="fa-solid fa-user-pen"></i>Delete</button>
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach var="rs" items="${reservationListForManage}">
-                                    <tr>
-                                        <td><span class="editable">${rs.bookingId}</span><input type="hidden" class="hidden-input" value="${rs.bookingId}" /></td>
-                                        <td><span class="editable">${rs.status}</span><input type="hidden" class="hidden-input" value="${rs.status}" /></td>
-                                        <td><span class="editable">${rs.getStartTime()}</span><input type="hidden" class="hidden-input" value="${rs.getStartTime()}" /></td>
-                                        <td><span class="editable">${rs.status}</span><input type="hidden" class="hidden-input" value="${rs.status}" /></td>
-                                        <td><span class="editable">${rs.doctorName}</span><input type="hidden" class="hidden-input" value="${rs.doctorName}" /></td>
-                                        <td><span class="editable">${rs.customerName}</span><input type="hidden" class="hidden-input" value="${rs.customerName}" /></td>
-                                        <td><span class="editable">${rs.day}</span><input type="hidden" class="hidden-input" value="${rs.day}" /></td>
-                                        <td>
-                                            <button onclick="makeEditable(this);">Update</button>
-                                            <button onclick="deleteBooking(${rs.bookingId});">Delete</button>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-                            </tbody>
-                        </table>
-                    </div>
+                            </c:forEach>
 
-
-
-
-
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

@@ -1,0 +1,117 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Sep 16, 2023, 11:10:13 PM
+    Author     : ASUS
+*/
+.login_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 150px;
+  
+}
+.login_headling {
+  margin-left: 180px;
+}
+.login_headling h1 {
+  font-family: "Handlee", cursive;
+  font-size: 2em;
+}
+
+.login_headling h3 {
+  font-family: "Handlee", cursive;
+  font-size: 1.5em;
+}
+
+.login_container label {
+  font-family: "Nunito", sans-serif;
+  font-size: 1.2em;
+}
+
+.input {
+  width: 350px;
+  height: 35px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  border: 1px solid;
+}
+.login_form_div {
+  margin-bottom: 10px;
+}
+.login_btn-1 {
+  width: 360px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 20px;
+  background: #17a2b8;
+  color: #fff;
+  text-align: center;
+  font-family: "Nunito", sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  border: none;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, cursor 0.15s ease-in-out;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+.login_btn-1:hover {
+  background-color: #138496;
+  border-color: #117a8b;
+}
+.login_btn-2 {
+  border-radius: 20px;
+  background: #353535;
+  width: 360px;
+  height: 40px;
+  flex-shrink: 0;
+  color: #fff;
+  font-family: "Nunito", sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin-bottom: 10px;
+  border:none;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, cursor 0.15s ease-in-out;
+  cursor: pointer;
+}
+.login_btn-2:hover {
+  background-color: #5e5e5e;
+  border-color: #7a7a7a;
+}
+
+.login_footer label {
+  color: #353535;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.login_body {
+  display: flex;
+}
+.login_container a {
+  color: #3f46ff;
+  font-family: "Nunito", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-decoration: none;
+  font-size: 1.1em;
+}
+
+.login_form_div input{
+    font-family: "Handlee", cursive;
+}
+
+.login_error {
+    color: red;
+}
+
+.login_success {
+    color: green;
+}

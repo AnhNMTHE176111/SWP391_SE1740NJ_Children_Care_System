@@ -1,0 +1,518 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* height: 100vh; */
+}
+.container{
+  
+}
+.error-message{
+    position: relative;
+    width : 100px;
+    display: flex;
+    transform: translate-y(-29px);
+    /*height: 20px;*/
+    padding-top: 30px;
+}
+.container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  width: 800px;
+  height:1000px;
+ 
+  position: relative;
+  top: 100px;
+}
+.background-img {
+  background-image: url("../image/background_booking/backgr_booking.jpg");
+  width: 100%;
+  height: 300px;
+}
+.select-info,
+.register {
+  position: relative;
+  top: 200px;
+}
+
+/* .step {
+    display: none;
+  } */
+
+h3 {
+  margin-top: 0;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  font-weight: bold;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+}
+
+.customer-gender-input {
+  margin-top: 5px;
+}
+
+.customer-gender-input label {
+  margin-right: 10px;
+}
+
+.submit-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 200px;
+  height: 50px;
+  position: relative;
+  top: 250px;
+}
+
+.submit-button:hover {
+  background-color: #1b67b9;
+}
+
+/* Thiết lập kiểu cho các ô slot */
+/* Thiết lập kiểu cho các ô slot */
+/* Thiết lập kiểu cho các hộp chứa ngày */
+.date-box {
+  display: inline-block;
+  margin: 5px;
+}
+
+/* Thiết lập kiểu cho các ô slot */
+
+
+.date-slot {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: center;
+  cursor: pointer;
+  background-color: #4caf50; /* Màu nền mặc định của ô slot */
+  color: white; /* Màu chữ trắng */
+  position: relative;
+  border-radius: 5px;
+  right: 20px;
+  width: 60px;
+}
+.day-select {
+  position: relative;
+  right: 10px;
+}
+.date-slots {
+  display: flex;
+  flex-direction: row;
+}
+
+/* Thiết lập kiểu cho ô slot đã chọn */
+.selected {
+  background-color: #2196f3; /* Màu nền của ô đã chọn */
+}
+.step-num {
+  color: coral;
+}
+label-box {
+  display: flex;
+  flex-direction: row;
+}
+.option-box {
+  font-size: 15px;
+  background-color: #fff;
+}
+.option-box:hover,
+.option-box:active {
+  background-color: red;
+}
+.form-control {
+  width: 100%;
+  height: 40px;
+  border-radius: 5px;
+  border: 2px solid blue;
+  position: relative;
+  top: 20px;
+}
+.form-control:hover,
+.form-control:active {
+  border-top: 2px solid #007bff;
+  border-left: 2px solid #007bff;
+  border-bottom: 2px solid #2196f3;
+  border-right: 2px solid #2196f3;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.date-select {
+  position: relative;
+  bottom: 250px;
+}
+.date {
+  display: grid;
+  grid-template-columns: repeat(4, 4fr);
+  grid-auto-rows: 1fr;
+  width: 300px;
+  margin-left: 10px;
+  gap: 0;
+  box-sizing: border-box;
+  position: absolute;
+  bottom: 100px;
+  left: -25px;
+}
+.date-hidden {
+  display: none;
+}
+
+.date button:hover,
+.date button:active {
+  color: white;
+  cursor: pointer;
+  opacity: 90%;
+  border: 3px solid #2196f3;
+  border-radius: 5px;
+  background-color: aqua;
+}
+.date button {
+  box-sizing: border-box;
+  background-color: #f2f2f2;
+  width: 80px;
+  height: 40px;
+  border-radius: 5px;
+  text-align: center;
+  padding: 10px;
+  border: none;
+  font-size: 14px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0; /* Không có khoảng cách giữa các cột */
+}
+
+.grid-item {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+.side {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  top: 200px;
+  gap: 200px;
+}
+.date-select {
+  position: relative;
+  bottom: 0px;
+}
+
+.input-size {
+  width: 400px;
+  height: 40px;
+  border-radius: 5px;
+  border: 2px solid blue;
+  position: relative;
+  top: 20px;
+}
+.input-size:hover,
+.input-size:active {
+  border-top: 2px solid #007bff;
+  border-left: 2px solid #007bff;
+  border-bottom: 2px solid #2196f3;
+  border-right: 2px solid #2196f3;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.customer-gender-input {
+  position: relative;
+  top: 25px;
+  left: 20px;
+}
+.side-name {
+  width: 250px;
+}
+.aside {
+  display: flex;
+  flex-direction: row;
+}
+.back-button {
+  background-color: white;
+  color: #1b67b9;
+  border: 2px solid #1b67b9;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 200px;
+  height: 50px;
+  position: relative;
+  top: 250px;
+  font-weight: bold;
+}
+.back-button:hover,
+.back-button:active {
+  border-color: deepskyblue;
+  transition: all 0.2s;
+}
+.form-group {
+   
+   
+    align-items: center;
+}
+.input-place {
+  height: 230px;
+  width: 330px;
+  box-sizing: border-box;
+  border: 2px solid #2196f3;
+  border-radius: 5px;
+}
+.form-input {
+  gap: 50px;
+  position: relative;
+  bottom: 40px;
+}
+.input-place:hover,
+.input-place:active {
+  border: 2px solid #1b67b9;
+}
+.button-line {
+  text-align: center;
+  position: relative;
+  bottom: 275px;
+}
+.confirm-content {
+  text-align: center;
+}
+.register-line {
+  position: relative;
+  bottom: 100px;
+}
+.step-line {
+  position: relative;
+  bottom: 80px;
+}
+
+.date {
+  display: grid;
+  grid-template-columns: repeat(4, 4fr);
+  grid-auto-rows: 1fr;
+  width: 300px;
+  margin-left: 10px;
+  gap: 0;
+  box-sizing: border-box;
+  position: absolute;
+  top: 110px;
+  left: -25px;
+}
+
+/* Add your CSS styles here */
+
+
+#doctorList {
+    margin-top: 20px;
+    font-weight: bold;
+}
+.grid-date.selected {
+    background-color: aqua;
+    color: #ffffff; /* Màu chữ khi nút đã chọn */
+}
+
+.date-box.selected {
+    background-color: #007bff; /* Màu nền ngày đã chọn */
+    color: #ffffff; /* Màu chữ khi ngày đã chọn */
+}
+
+/*.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+}*/
+
+.error-message {
+    color: red;                       /* Màu chữ đỏ */
+    font-size: 12px;                  /* Kích thước chữ nhỏ */
+    padding-left: 10px;               /* Khoảng cách từ biểu tượng đến chữ */
+    display: flex;                    /* Sử dụng flex để biểu tượng và chữ nằm trên cùng một hàng */
+    align-items: center;   
+    /* Căn giữa chữ và biểu tượng theo chiều dọc */
+}
+
+.error-message::before {
+    content: "•";                     /* Thêm biểu tượng dạng bullet */
+    font-size: 16px;                  /* Kích thước của biểu tượng */
+    margin-right: 5px;                /* Khoảng cách giữa biểu tượng và chữ */
+}
+
+/*.form-group.label-box {
+    position: relative;
+}*/
+
+.no-click {
+    pointer-events: none;
+}
+
+
+.step {
+    width: 90%; 
+    max-width: 1000px;
+    margin: 0 auto; 
+}
+
+.register-line {
+    font-size: 24px;
+    text-align: center; 
+    margin-bottom: 20px;
+}
+
+.step-line h3 {
+    font-size: 20px; 
+    text-align: center; 
+    margin-top: 30px; 
+}
+
+.form-input {
+    justify-content: space-between; 
+    flex-wrap: wrap; 
+}
+
+.form-input .aside,
+.form-input .form-group {
+    width: auto; 
+    box-sizing: border-box; 
+    display: grid;
+}
+
+.input-size,
+.input-place {
+    width: 100%; 
+    box-sizing: border-box; 
+    padding: 10px; 
+    margin-bottom: 10px; 
+    border-radius: 5px; 
+    border: 1px solid #ccc; 
+}
+
+.button-line {
+    display: flex; 
+    justify-content: space-between; 
+    margin-top: 30px; 
+}
+
+.back-button,
+.submit-button {
+    flex: 1;
+    margin: 0 10px; 
+    padding: 10px 20px; 
+}
+
+.back-button {
+    background-color: #ccc; 
+    color: #333; 
+    border: none; 
+    cursor: pointer; 
+    transition: background-color 0.3s; 
+}
+
+.back-button:hover {
+    background-color: #bbb; 
+}
+
+.confirm-content {
+    background-color: #f5f5f5; /* Màu nền xám nhạt */
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.confirm-content h3 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.confirm-content p {
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+/* Các nút chức năng */
+.button-line {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.back-button,
+.submit-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.back-button {
+    background-color: #9B9B9B; /* Màu xám trung bình */
+    color: white;
+}
+
+.back-button:hover {
+    background-color: #808080; /* Màu xám đậm hơn khi di chuột qua */
+}
+
+.submit-button {
+    background-color: #4A90E2; /* Màu xanh dương nhạt */
+    color: white;
+}
+
+.submit-button:hover {
+    background-color: #357ABD; /* Màu xanh dương đậm hơn khi di chuột qua */
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+.column {
+    flex: 1;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.column:not(:last-child) {
+    margin-right: 20px;
+}
+
+.grid-date.booked {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.disabled-slot:hover {
+    background-color: darkgrey !important; 
+    cursor: not-allowed !important; 
+}
+
+
+

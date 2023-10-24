@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="SWP391_SE1740NJ_Children_Care_System:Web exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/SWP391_SE1740NJ_Children_Care_System_Web_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="SWP391_SE1740NJ_Children_Care_System/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="SWP391_SE1740NJ_Children_Care_System" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="SWP391_SE1740NJ_Children_Care_System" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

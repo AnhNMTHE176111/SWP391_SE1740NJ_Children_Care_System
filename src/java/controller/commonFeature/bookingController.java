@@ -81,42 +81,45 @@ public class bookingController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+   @Override
+protected void doGet(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
 
-//Infomation from session
-        String userId = (String) request.getSession().getAttribute("userId");
-        User currentUser = null;
+    // Information from session
+    String userId = (String) request.getSession().getAttribute("userId");
+    User currentUser = null;
 
-        if (userId != null && !userId.isEmpty()) {
-            DAOUser userDao = new DAOUser();
-            currentUser = userDao.getUserById(userId);
-        }
+    DAOSlot slot = new DAOSlot();
+    DAOSpecialty specialty = new DAOSpecialty();
+    DAODoctor doctor = new DAODoctor();
+    DAOSlotDoctor slotDoctor = new DAOSlotDoctor();
 
-        request.setAttribute("currentUser", currentUser);
+    List<SlotDoctor> availeSlot = null;
+    List<String> dateList = null;
+    List<Doctor> doctorList = null;
+    List<Specialty> specialtyList = null;
+    List<Slot> slotList = null;
 
-//Information from db
-        DAOSlot slot = new DAOSlot();
-        DAOSpecialty specialty = new DAOSpecialty();
-        DAODoctor doctor = new DAODoctor();
-        DAOSlotDoctor slotDoctor = new DAOSlotDoctor();
-
-        List<SlotDoctor> availeSlot = slotDoctor.displayBookedSlotList();
-        List<String> dateList = getDateList();
-        List<Doctor> doctorList = doctor.getListDoctorBySpecialty();
-        List<Specialty> specialtyList = specialty.getListSpecialty();
-        List<Slot> slotList = slot.getListSlot();
-
-        request.setAttribute("currentUser", currentUser);
-        request.setAttribute("availeSlot", availeSlot);
-        request.setAttribute("slotList", slotList);
-        request.setAttribute("specialtyList", specialtyList);
-        request.setAttribute("doctorList", doctorList);
-        request.setAttribute("dateList", dateList);
-
-        request.getRequestDispatcher("Booking.jsp").forward(request, response);
+    if (userId != null && !userId.isEmpty()) {
+        DAOUser userDao = new DAOUser();
+        currentUser = userDao.getUserById(userId);
+    } else {
+        availeSlot = slotDoctor.displayBookedSlotList();
+        dateList = getDateList(); // Ensure this function is available and returns the desired result
+        doctorList = doctor.getListDoctorBySpecialty();
+        specialtyList = specialty.getListSpecialty();
+        slotList = slot.getListSlot();
     }
+
+    request.setAttribute("currentUser", currentUser);
+    request.setAttribute("availeSlot", availeSlot);
+    request.setAttribute("slotList", slotList);
+    request.setAttribute("specialtyList", specialtyList);
+    request.setAttribute("doctorList", doctorList);
+    request.setAttribute("dateList", dateList);
+
+    request.getRequestDispatcher("Booking.jsp").forward(request, response);
+}
 
     /**
      * Handles the HTTP <code>POST</code> method.

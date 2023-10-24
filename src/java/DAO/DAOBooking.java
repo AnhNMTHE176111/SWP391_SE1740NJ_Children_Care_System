@@ -207,4 +207,73 @@ public class DAOBooking extends DBContext {
         System.out.println(count);
     }
 
+    public boolean updateBookingByManager(int bookingId, int status, String startTime, int slotStatus, String doctorName, String customerName, String date) {
+
+        try {
+
+            String updateBookingSQL = "UPDATE Booking "
+                    + "SET BookingStatus = ? "
+                    + "WHERE BookingId = ?";
+            pstm = cnn.prepareStatement(updateBookingSQL);
+            pstm.setInt(1, status);
+            pstm.setInt(2, bookingId);
+            pstm.execute();
+
+            String updateStartTimeSQL = "UPDATE Slots "
+                    + "SET StartTime = ? "
+                    + "WHERE SlotId IN (SELECT SlotId FROM SlotDoctor WHERE slotDoctorId IN (SELECT slotDoctorId FROM Booking WHERE BookingId = ?))";
+            pstm = cnn.prepareStatement(updateStartTimeSQL);
+            pstm.setString(1, startTime);
+            pstm.setInt(2, bookingId);
+            pstm.execute();
+
+            String updateSlotStatusSQL = "  UPDATE SlotDoctor \n" +
+"                   SET Status = ?\n" +
+"                  WHERE slotDoctorId IN (SELECT slotDoctorId FROM Booking WHERE BookingId = ?);";
+            pstm = cnn.prepareStatement(updateSlotStatusSQL);
+            pstm.setInt(1, slotStatus);
+            pstm.setInt(2, bookingId);
+            pstm.execute();
+
+            String updateDoctorNameSQL = "UPDATE Users "
+                    + "SET firstName = ?, lastName = ? "
+                    + "WHERE UserId IN (SELECT DoctorId FROM Doctors WHERE DoctorId IN (SELECT DoctorId FROM SlotDoctor WHERE slotDoctorId IN (SELECT slotDoctorId FROM Booking WHERE BookingId = ?)))";
+            pstm = cnn.prepareStatement(updateDoctorNameSQL);
+            String[] doctorNames = doctorName.split(" ");
+            pstm.setString(1, doctorNames[0]);
+            pstm.setString(2, doctorNames[1]);
+            pstm.setInt(3, bookingId);
+            pstm.execute();
+
+            String updateCustomerNameSQL = "UPDATE Users "
+                    + "SET firstName = ?, lastName = ? "
+                    + "WHERE UserId IN (SELECT Id FROM Customers WHERE Id IN (SELECT CustomerId FROM Booking WHERE BookingId = ?))";
+            pstm = cnn.prepareStatement(updateCustomerNameSQL);
+            String[] customerNames = customerName.split(" ");
+            pstm.setString(1, customerNames[0]);
+            pstm.setString(2, customerNames[1]);
+            pstm.setInt(3, bookingId);
+            pstm.execute();
+
+        } catch (SQLException e) {
+            System.out.println("SQL updateBookingByManager: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("updateBookingByManager: " + e.getMessage());
+        } finally {
+            // Đóng PreparedStatement và Connection (nếu bạn quản lý chúng ở đây)
+            try {
+                if (pstm != null) {
+                    pstm.close();
+                }
+                if (cnn != null) {
+                    cnn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return false;  // Trả về false nếu có lỗi
+    }
+
 }
