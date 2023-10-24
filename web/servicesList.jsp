@@ -39,9 +39,9 @@
                         <div class="text-start mb-1-6 wow fadeIn">
                             <h2 class="h1 mb-0 text-primary">${serviceList.getServiceName()}</h2>
                         </div>
+                        <p>Giá tiền: ${serviceList.getPrice()}.</p>
                         <p>${serviceList.getDescription()}.</p>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis non purus quis tellus pretium varius. Maecenas auctor orci id purus suscipit, ac scelerisque quam ultricies. In hac habitasse platea dictumst. Integer quis ullamcorper velit. Maecenas ultrices eros ut aliquam aliquet. Sed lacinia nibh vitae erat suscipit, quis malesuada sem ultricies. </p>
-                        <p class="mb-0">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
                     </div>                
                 </div>
                 <div class="ps-lg-1-6 ps-xl-5">

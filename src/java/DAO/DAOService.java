@@ -159,8 +159,9 @@ public class DAOService extends DBContext {
             while (rs.next()) {
                 String serid = rs.getString(1);
                 String serName = rs.getString(2);
-                String Description = rs.getString(3);
-                data = new Service(Integer.parseInt(serid), serName, Description);
+                float price = rs.getFloat(3);
+                String description = rs.getString(4);
+                data = new Service(Integer.parseInt(serid), serName,description, price);
             }
         } catch (SQLException e) {
             System.out.println("SQL <getServiceById>: " + e.getMessage());

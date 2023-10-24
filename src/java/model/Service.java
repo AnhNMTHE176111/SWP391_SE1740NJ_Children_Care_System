@@ -14,7 +14,26 @@ public class Service {
     private String serviceName, description;
     //thêm code để phù hợp với màn hình service của HongNT
     private int doctorId;
+    private float price;
     private int specId;
+
+    public Service(int serviceId, String serviceName, String description, float price) {
+        this.serviceId = serviceId;
+        this.serviceName = serviceName;
+        this.description = description;
+        this.price = price;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+    
+    
+    
     public Service(int serviceId, String serviceName, int doctorId) {
         this.serviceId = serviceId;
         this.serviceName = serviceName;
