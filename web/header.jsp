@@ -29,8 +29,8 @@
                         <c:if test="${sessionScope.roleId eq 4}">
                             <a href="admin" class="nav-item nav-link">Admin Dashboard</a>
                         </c:if>
-                        <a href="home" class="nav-item nav-link">Home</a>
-                        <a href="about.html" class="nav-item nav-link">Blogs</a>
+                        <a href="/home" class="nav-item nav-link">Home</a>
+                        <a href="/blog" class="nav-item nav-link">Blogs</a>
                         <a href="/service" class="nav-item nav-link">Services</a>
                         <a href="team.html" class="nav-item nav-link">Doctors</a>
                         <div class="nav-item dropdown">
