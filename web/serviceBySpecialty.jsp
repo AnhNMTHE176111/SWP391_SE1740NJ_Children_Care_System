@@ -49,7 +49,7 @@
                                 <h5>${spec.getSpecialtyId()}. ${spec.getSpecialtyName()}</h5>
                                 <ul class="services">
                                 <c:forEach var="serBySpec" items="${serBySpec}">
-                                    <c:if test="${spec.getSpecialtyId()==serBySpec.getSpecId()  }">
+                                    <c:if test="${spec.getSpecialtyId()==serBySpec.getDoctorId()  }">
                                         <li>
                                             <a href="servicelist?id=${serBySpec.getServiceId()}"> ${serBySpec.getServiceName()}</a>  
                                         </li>
