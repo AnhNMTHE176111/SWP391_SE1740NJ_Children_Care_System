@@ -73,7 +73,7 @@
                                         <td class="table-reservation-column col-md-3">
                                             <ul class="table-reservation-list">
                                                 <li class="item">
-                                                    <i class="fa-solid fa-disease"></i> ${cr.symptomps}
+                                                    <i class="fa-solid fa-disease"></i> ${cr.diagnosis}
                                                 </li>
                                                 <li class="item">
                                                     <i class="fa-solid fa-calendar-alt"></i> ${cr.bookingDate}
@@ -104,8 +104,7 @@
                                             </c:choose>
                                         </td>
                                         <td class="table-reservation-column col-md-1">
-                                            <button><a href="/information?get&id=${cr.bookingId}">Detail</a>
-</button>
+                                            <button class="button-4" role="button"><a href="/information?get&id=${cr.bookingId}" style="text-decoration: none;">Detail</a></button>
                                         </td>
                                     </tr>
                                 </c:forEach>

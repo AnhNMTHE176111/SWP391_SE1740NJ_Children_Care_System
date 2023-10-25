@@ -34,49 +34,60 @@
                 <div class="col-md-12">
                     <div class="row">
                         <h2>Your Reservation Id: ${sessionScope.bookingId}</h2>
-                    </div>
                 </div>
-                <div class="col-md-12 reservation-info">
-                    <div class="row">
-                        <div class="col-md-3 reservation-info-content">
-                            <label>Full Name</label>
-                            <input type="text" value="${cusInfo.firstName} ${cusInfo.lastName}" readonly="readonly"/>
+            </div>
+            <div class="col-md-12 reservation-info">
+                <div class="row">
+                    <div class="col-md-3 reservation-info-content">
+                        <label>Full Name</label>
+                        <input type="text" value="${cusInfo.firstName} ${cusInfo.lastName}"/>
                     </div>
                     <div class="col-md-3 reservation-info-content">
                         <label>Gender</label>
-                        <input type="text" value="${cusInfo.gender}" readonly="readonly"/>
+                        <input type="text" value="${cusInfo.gender}"/>
                     </div>
                     <div class="col-md-3 reservation-info-content">
                         <label>Telephone Number</label>
-                        <input type="text" value="${cusInfo.phone}" readonly="readonly"/>
+                        <input type="text" value="${cusInfo.phone}"/>
                     </div>
                     <div class="col-md-3 reservation-info-content">
                         <label>Email Address</label>
-                        <input type="text" value="${cusInfo.email}" readonly="readonly"/>
+                        <input type="text" value="${cusInfo.email}"/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-3 reservation-info-content">
                         <label>Reservation Date</label>
-                        <input type="text" value="${cusInfo.reservationDate}" readonly="readonly"/>
+                        <input type="text" value="${cusInfo.reservationDate}"/>
                     </div>
                     <div class="col-md-3 reservation-info-content">
                         <label>Time To Check Up</label>
-                        <input type="text" value="${cusInfo.timeCheckUp}" readonly="readonly"/>
+                        <input type="text" value="${cusInfo.timeCheckUp}"/>
                     </div>
                     <div class="col-md-3 reservation-info-content">
                         <label>Diagnosis</label>
-                        <input type="text" value="${cusInfo.diagnosis}" readonly="readonly"/>
+                        <input type="text" value="${cusInfo.diagnosis}"/>
                     </div>
                     <div class="col-md-3 reservation-info-content">
                         <label>Status</label>
-                        <input type="text" value="${cusInfo.status}" readonly="readonly"/>
+                        <c:choose>
+                            <c:when test="${cusInfo.status == 1}">
+                                <input type="text" style="color: #e0d31e" value="Submitted" readonly/>
+                            </c:when>
+                            <c:when test="${cusInfo.status == 2}">
+                                <input type="text" style="color: yellowgreen" value="Success" readonly/>
+                            </c:when>
+                            <c:when test="${cusInfo.status == 3}">
+                                <input type="text" style="color: red" value="Cancelled" readonly/>
+                            </c:when>
+                            <c:otherwise>
+                                <<input type="text" value="Unknow Status" readonly/>
+                            </c:otherwise>
+                        </c:choose>
+
                     </div>
                 </div>
                 <div class="row reservation-button">
-                    <button class="bg-success btn-3" onclick="showPopup()">
-                        Update The Reservation
-                    </button>
                     <button class="bg-danger btn-3" type="submit">
                         Cancel The Reservation
                     </button>

@@ -169,14 +169,14 @@ public class DAOBooking extends DBContext {
             while (rs.next()) {
                 int BookingId = rs.getInt(1);
                 int BookingStatus = rs.getInt(2);
-                int CustomerID = rs.getInt(3);
-                String Symptomps = rs.getString(7);
-                String BookingDate = String.valueOf(rs.getDate(9));
-                String BookingTime = String.valueOf("From " + rs.getTime(9) + " to " + rs.getTime(10));
-                String DoctorName = rs.getString(8);
-                String CreateDate = String.valueOf(rs.getDate(6));
-                String CreateTime = String.valueOf(rs.getTime(6));
-                Booking cusBooking = new Booking(BookingId, BookingStatus, CustomerID, Symptomps, BookingDate, BookingTime, DoctorName, CreateDate, CreateTime);
+                int CustomerID = rs.getInt(4);
+                String Diagnosis = rs.getString(8);
+                String BookingDate = String.valueOf(rs.getDate(10));
+                String BookingTime = String.valueOf("From " + rs.getTime(10) + " to " + rs.getTime(11));
+                String DoctorName = rs.getString(9);
+                String CreateDate = String.valueOf(rs.getDate(7));
+                String CreateTime = String.valueOf(rs.getTime(7));
+                Booking cusBooking = new Booking(BookingId, BookingStatus, CustomerID, Diagnosis, BookingDate, BookingTime, DoctorName, CreateDate, CreateTime);
                 listCustReservation.add(cusBooking);
             }
         } catch (Exception e) {
