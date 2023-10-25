@@ -135,9 +135,10 @@ public class DAOService extends DBContext {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
+                int serid = rs.getInt(1);
                 String serviceName = rs.getString(2);
                 int specId = Integer.parseInt(rs.getString(3));
-                Service c = new Service(serviceName, specId);
+                Service c = new Service(serid,serviceName, specId);
                 data.add(c);
             }
         } catch (SQLException e) {
@@ -172,7 +173,7 @@ public class DAOService extends DBContext {
     }
 
     public Doctor getDoctorById(String id) {
-        String sql = " SELECT ExperienceYears,Rating,Doctors.Description,Position,firstName,lastName,email,phone,SpecialtyName\n"
+        String sql = " SELECT ExperienceYears,Rating,Doctors.Description,Position,firstName,lastName,email,phone,SpecialtyName, avatar\n"
                 + "FROM DoctorServices\n"
                 + "INNER JOIN Doctors ON DoctorServices.doctorId = Doctors.DoctorId\n"
                 + "INNER JOIN Users on Doctors.userId = Users.userId\n"
@@ -193,8 +194,9 @@ public class DAOService extends DBContext {
                 String email = rs.getString(7);
                 String phone = rs.getString(8);
                 String specName = rs.getString(9);
+                String avatar = rs.getString(10);
 
-                data = new Doctor(Integer.parseInt(expYears), rate, Description, position, firstName, lastName, email, phone, specName);
+                data = new Doctor(Integer.parseInt(expYears), rate, Description, position, firstName, lastName, email, phone, specName,avatar);
             }
         } catch (SQLException e) {
             System.out.println("SQL <getDoctorById>: " + e.getMessage());
@@ -205,7 +207,7 @@ public class DAOService extends DBContext {
     }
 
     public Doctor getDoctorById_UserID(String id, int userId) {
-        String sql = " SELECT ExperienceYears,Rating,Doctors.Description,Position,firstName,lastName,email,phone,SpecialtyName\n"
+        String sql = " SELECT ExperienceYears,Rating,Doctors.Description,Position,firstName,lastName,email,phone,SpecialtyName, avatar\n"
                 + "FROM DoctorServices\n"
                 + "INNER JOIN Doctors ON DoctorServices.doctorId = Doctors.DoctorId\n"
                 + "INNER JOIN Users on Doctors.userId = Users.userId \n"
@@ -232,8 +234,9 @@ public class DAOService extends DBContext {
                 String email = rs.getString(7);
                 String phone = rs.getString(8);
                 String specName = rs.getString(9);
+                String avatar = rs.getString(10);
 
-                data = new Doctor(Integer.parseInt(expYears), rate, Description, position, firstName, lastName, email, phone, specName);
+                data = new Doctor(Integer.parseInt(expYears), rate, Description, position, firstName, lastName, email, phone, specName,avatar);
             }
         } catch (SQLException e) {
             System.out.println("SQL <getDoctorById>: " + e.getMessage());

@@ -14,6 +14,7 @@ public class Doctor {
     private double rating;
     private String Description, Position, email, phone, specialtyName;
     private String name, specialty;
+    private String avatar;
     
 //code riêng dùng trong màn hình services của HongNT
     private String lastname, firstname;
@@ -29,7 +30,7 @@ public class Doctor {
         this.specialtyId = specialtyId;
     }
 
-    public Doctor(int ExperienceYears, double rating, String Description, String Position, String firstname, String lastname, String email, String phone, String specialtyName) {
+    public Doctor(int ExperienceYears, double rating, String Description, String Position, String firstname, String lastname, String email, String phone, String specialtyName, String avatar) {
         this.ExperienceYears = ExperienceYears;
         this.rating = rating;
         this.Description = Description;
@@ -39,6 +40,7 @@ public class Doctor {
         this.specialtyName = specialtyName;
         this.lastname = lastname;
         this.firstname = firstname;
+        this.avatar = avatar;
     }
 
     public String getLastname() {
@@ -157,6 +159,14 @@ public class Doctor {
 
     public void setPosition(String Position) {
         this.Position = Position;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
 }
