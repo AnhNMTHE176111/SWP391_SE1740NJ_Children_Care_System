@@ -209,6 +209,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     justify-content: center ;
 }
 
+.reservation-button a {
+    color: blue;
+}
+
 .btn-reserve {
     border-radius: 30px;
     border: none;
@@ -300,4 +304,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 .button-4:-webkit-details-marker {
   display: none;
+}
+
+.cancel_success{
+    color: greenyellow;
 }

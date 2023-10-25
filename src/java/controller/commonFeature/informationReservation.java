@@ -5,6 +5,7 @@
 
 package controller.commonFeature;
 
+import DAO.DAOBooking;
 import DAO.DAOCustomer;
 import DAO.DAOUser;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import model.Booking;
 import model.Customer;
 import model.User;
 
@@ -80,7 +82,17 @@ public class informationReservation extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        String cancelBookingId = request.getParameter("bookingId");
+        DAOBooking bookDao = new DAOBooking();
+        DAOCustomer cusDao = new DAOCustomer();
+        String cancelBooking = bookDao.cancelCusBookingByBookId(cancelBookingId);
+        Customer cusInfo = cusDao.getCusBookingInforByBookId(cancelBooking);
+        String mess = "The reservation has been canceled";
+        request.setAttribute("mess", mess);
+        session.setAttribute("bookingId", cancelBookingId);
+        session.setAttribute("cusInfo", cusInfo);
+        request.getRequestDispatcher("reservationInformation.jsp").forward(request, response);
     }
 
     /** 
