@@ -58,7 +58,7 @@ public class bookingController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -166,11 +166,10 @@ public class bookingController extends HttpServlet {
 
         } catch (ParseException e) {
             e.printStackTrace();
-         
+
         }
         int slotDoctorId = slotDoctor.addSlotDoctor(doctorIdInt, slotIdInt, 1, formattedDate);
-        
-        
+
 //About Customer Backend
         String name = request.getParameter("name");
         String gender = request.getParameter("gender");
@@ -194,7 +193,7 @@ public class bookingController extends HttpServlet {
 
 //Booking infomation      
         int bookingId = booking.addBooking(1, customerId, slotDoctorId);
-
+        response.sendRedirect("/home");
     }
 
     @Override
