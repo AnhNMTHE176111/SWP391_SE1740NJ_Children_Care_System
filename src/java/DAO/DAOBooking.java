@@ -53,7 +53,7 @@ public class DAOBooking extends DBContext {
             pstm.setInt(3, slotDoctorId);
 
             if (pstm.executeUpdate() > 0) {
-                try (ResultSet generatedKeys = pstm.getGeneratedKeys()) {
+                try ( ResultSet generatedKeys = pstm.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         generatedId = generatedKeys.getInt(1);
                     }
@@ -71,7 +71,7 @@ public class DAOBooking extends DBContext {
                 + "join SlotDoctor on SlotDoctor.slotDoctorId = Booking.slotDoctorId\n"
                 + "where day is not null";
 
-        try (PreparedStatement pstm = cnn.prepareStatement(strSQL); ResultSet rs = pstm.executeQuery()) {
+        try ( PreparedStatement pstm = cnn.prepareStatement(strSQL);  ResultSet rs = pstm.executeQuery()) {
             while (rs.next()) {
                 int bookingId = rs.getInt("BookingId");
                 int status = rs.getInt("BookingStatus");
@@ -90,7 +90,6 @@ public class DAOBooking extends DBContext {
         int remainingMinutes = minutes % 60;
         return String.format("%02d:%02d", hours, remainingMinutes);
     }
-
 
     public List<Booking> getBookingListForManage() {
         List<Booking> bookings = new ArrayList<>();
@@ -119,7 +118,7 @@ public class DAOBooking extends DBContext {
                 + "WHERE \n"
                 + "    day IS NOT NULL;";
 
-        try (PreparedStatement pstm = cnn.prepareStatement(strSQL); ResultSet rs = pstm.executeQuery()) {
+        try ( PreparedStatement pstm = cnn.prepareStatement(strSQL);  ResultSet rs = pstm.executeQuery()) {
             while (rs.next()) {
                 int bookingId = rs.getInt("BookingId");
                 int bookingStatus = rs.getInt("BookingStatus");
@@ -169,14 +168,14 @@ public class DAOBooking extends DBContext {
             while (rs.next()) {
                 int BookingId = rs.getInt(1);
                 int BookingStatus = rs.getInt(2);
-                int CustomerID = rs.getInt(3);
-                String Symptomps = rs.getString(7);
-                String BookingDate = String.valueOf(rs.getDate(9));
-                String BookingTime = String.valueOf("From " + rs.getTime(9) + " to " + rs.getTime(10));
-                String DoctorName = rs.getString(8);
-                String CreateDate = String.valueOf(rs.getDate(6));
-                String CreateTime = String.valueOf(rs.getTime(6));
-                Booking cusBooking = new Booking(BookingId, BookingStatus, CustomerID, Symptomps, BookingDate, BookingTime, DoctorName, CreateDate, CreateTime);
+                int CustomerID = rs.getInt(4);
+                String Diagnosis = rs.getString(8);
+                String BookingDate = String.valueOf(rs.getDate(10));
+                String BookingTime = String.valueOf("From " + rs.getTime(10) + " to " + rs.getTime(11));
+                String DoctorName = rs.getString(9);
+                String CreateDate = String.valueOf(rs.getDate(7));
+                String CreateTime = String.valueOf(rs.getTime(7));
+                Booking cusBooking = new Booking(BookingId, BookingStatus, CustomerID, Diagnosis, BookingDate, BookingTime, DoctorName, CreateDate, CreateTime);
                 listCustReservation.add(cusBooking);
             }
         } catch (Exception e) {
@@ -191,6 +190,8 @@ public class DAOBooking extends DBContext {
                     + "FROM Booking b\n"
                     + "JOIN MedicalInfo m ON b.MedicalInfoId = m.MedicalInfoId\n"
                     + "JOIN Doctors d ON b.slotDoctorId = d.DoctorId\n"
+                    + "JOIN SlotDoctor sd ON b.slotDoctorId = sd.slotDoctorId\n"
+                    + "JOIN Slots s ON sd.SlotId = s.SlotId\n"
                     + "JOIN Users u ON d.userId = u.userId\n"
                     + "WHERE b.CustomerId = '" + cusId + "'";
             pstm = cnn.prepareStatement(strSQL);
@@ -208,8 +209,7 @@ public class DAOBooking extends DBContext {
         return 0;
     }
 
-    
-     public String getTotalNumberOfBooking() {
+    public String getTotalNumberOfBooking() {
         try {
             String strSQL = "select count(BookingId) as total from Booking";
             pstm = cnn.prepareStatement(strSQL);
@@ -256,11 +256,27 @@ public class DAOBooking extends DBContext {
         return null;
     }
 
-
     public static void main(String[] args) {
         DAOBooking bookDao = new DAOBooking();
         int count = bookDao.getTotalCusReservation(0);
         System.out.println(count);
+    }
+
+    public String cancelCusBookingByBookId(String cancelBookId) {
+        try {
+            String strSQL = "update Booking\n"
+                    + "set BookingStatus = '3'\n"
+                    + "where BookingId = ?";
+            pstm = cnn.prepareStatement(strSQL);
+            pstm.setString(1, cancelBookId);
+            rs = pstm.executeQuery();
+
+        } catch (SQLException e) {
+            System.out.println("SQL cancelCusBookingByBookId: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("cancelCusBookingByBookId: " + e.getMessage());
+        }
+        return cancelBookId;
     }
 
 }

@@ -135,9 +135,10 @@ public class DAOService extends DBContext {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
+                int serid = rs.getInt(1);
                 String serviceName = rs.getString(2);
                 int specId = Integer.parseInt(rs.getString(3));
-                Service c = new Service(serviceName, specId);
+                Service c = new Service(serid,serviceName, specId);
                 data.add(c);
             }
         } catch (SQLException e) {
@@ -159,8 +160,9 @@ public class DAOService extends DBContext {
             while (rs.next()) {
                 String serid = rs.getString(1);
                 String serName = rs.getString(2);
-                String Description = rs.getString(3);
-                data = new Service(Integer.parseInt(serid), serName, Description);
+                float price = rs.getFloat(3);
+                String description = rs.getString(4);
+                data = new Service(Integer.parseInt(serid), serName,description, price);
             }
         } catch (SQLException e) {
             System.out.println("SQL <getServiceById>: " + e.getMessage());
@@ -171,7 +173,7 @@ public class DAOService extends DBContext {
     }
 
     public Doctor getDoctorById(String id) {
-        String sql = " SELECT ExperienceYears,Rating,Doctors.Description,Position,firstName,lastName,email,phone,SpecialtyName\n"
+        String sql = " SELECT ExperienceYears,Rating,Doctors.Description,Position,firstName,lastName,email,phone,SpecialtyName, avatar\n"
                 + "FROM DoctorServices\n"
                 + "INNER JOIN Doctors ON DoctorServices.doctorId = Doctors.DoctorId\n"
                 + "INNER JOIN Users on Doctors.userId = Users.userId\n"
@@ -192,8 +194,49 @@ public class DAOService extends DBContext {
                 String email = rs.getString(7);
                 String phone = rs.getString(8);
                 String specName = rs.getString(9);
+                String avatar = rs.getString(10);
 
-                data = new Doctor(Integer.parseInt(expYears), rate, Description, position, firstName, lastName, email, phone, specName);
+                data = new Doctor(Integer.parseInt(expYears), rate, Description, position, firstName, lastName, email, phone, specName,avatar);
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL <getDoctorById>: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("<getDoctorById>: " + e.getMessage());
+        }
+        return data;
+    }
+
+    public Doctor getDoctorById_UserID(String id, int userId) {
+        String sql = " SELECT ExperienceYears,Rating,Doctors.Description,Position,firstName,lastName,email,phone,SpecialtyName, avatar\n"
+                + "FROM DoctorServices\n"
+                + "INNER JOIN Doctors ON DoctorServices.doctorId = Doctors.DoctorId\n"
+                + "INNER JOIN Users on Doctors.userId = Users.userId \n"
+                + "Inner join Specialty on Specialty.SpecialtyId=Doctors.SpecialtyId\n"
+                + "WHERE DoctorServices.ServiceId = ? and \n"
+                + "DoctorServices.DoctorId in \n"
+                + "(select DoctorId from Doctors\n"
+                + "inner join Users on Doctors.userId = Users.userId\n"
+                + "where Users.userId = ?);\n"
+                + "        ";
+        Doctor data = new Doctor();
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, id);
+            ps.setInt(2, userId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String expYears = rs.getString(1);
+                Float rate = Float.parseFloat(rs.getString(2));
+                String Description = rs.getString(3);
+                String position = rs.getString(4);
+                String firstName = rs.getString(5);
+                String lastName = rs.getString(6);
+                String email = rs.getString(7);
+                String phone = rs.getString(8);
+                String specName = rs.getString(9);
+                String avatar = rs.getString(10);
+
+                data = new Doctor(Integer.parseInt(expYears), rate, Description, position, firstName, lastName, email, phone, specName,avatar);
             }
         } catch (SQLException e) {
             System.out.println("SQL <getDoctorById>: " + e.getMessage());

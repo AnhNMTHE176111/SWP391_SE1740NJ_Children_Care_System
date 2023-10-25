@@ -35,7 +35,7 @@
             <div class="container-fluid my-reservation-container">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2>My Reservations</h2>
+                        <h2>${sessionScope.cusName}'s reservation list</h2>
                     </div>
                 <c:choose>
                     <c:when test="${requestScope.endP == 0}">
@@ -59,7 +59,7 @@
                                         <td class="table-reservation-column col-md-1">
                                             <label class="item">${cr.bookingId}</label>
                                         </td>
-                                        <td class="table-reservation-column col-md-4">
+                                        <td class="table-reservation-column col-md-3">
                                             <p class="item item-name" style="margin-left: 20px">Reservation created at:</p>
                                             <ul class="table-reservation-list">
                                                 <li class="item">
@@ -73,7 +73,7 @@
                                         <td class="table-reservation-column col-md-3">
                                             <ul class="table-reservation-list">
                                                 <li class="item">
-                                                    <i class="fa-solid fa-disease"></i> ${cr.symptomps}
+                                                    <i class="fa-solid fa-disease"></i> ${cr.diagnosis}
                                                 </li>
                                                 <li class="item">
                                                     <i class="fa-solid fa-calendar-alt"></i> ${cr.bookingDate}
@@ -102,6 +102,9 @@
                                                     <label class="item">Unknown Status</label>
                                                 </c:otherwise>
                                             </c:choose>
+                                        </td>
+                                        <td class="table-reservation-column col-md-1">
+                                            <button class="button-4" role="button"><a href="/information?get&id=${cr.bookingId}" style="text-decoration: none;">Detail</a></button>
                                         </td>
                                     </tr>
                                 </c:forEach>
