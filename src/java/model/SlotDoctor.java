@@ -10,20 +10,23 @@ import java.util.Date;
  *
  * @author dmx
  */
-public class SlotDoctor extends Slot{
-    private int slotId, doctorId, status;
+public class SlotDoctor extends Slot {
+
+    private int slotDoctorId, doctorId, status;
     private String description;
-<<<<<<< Updated upstream
+
     private int day;
     
     public SlotDoctor( int slotId, String startTime,String endTime,  int doctorId, int status, String description) {
-=======
+
     private Date day;
 
     public SlotDoctor(int slotId, String startTime, String endTime, int doctorId, int status, String description, Date day) {
->>>>>>> Stashed changes
+
+    private Date day;
+
+    public SlotDoctor(int slotId, String startTime, String endTime, int doctorId, int status, String description) {
         super(slotId, startTime, endTime);
-        this.slotId = slotId;
         this.doctorId = doctorId;
         this.status = status;
         this.description = description;
@@ -33,19 +36,27 @@ public class SlotDoctor extends Slot{
     public SlotDoctor() {
     }
 
-    public SlotDoctor(int slotId, int doctorId, int status, String description) {
-        this.slotId = slotId;
+    public SlotDoctor(int doctorId, int slotId, Date day) {
         this.doctorId = doctorId;
-        this.status = status;
-        this.description = description;
+        setSlotId(slotId);
+        this.day = day;
+
     }
 
-    public int getSlotId() {
-        return slotId;
+    public Date getDay() {
+        return day;
     }
 
-    public void setSlotId(int slotId) {
-        this.slotId = slotId;
+    public void setDay(Date day) {
+        this.day = day;
+    }
+
+    public int getSlotDoctorId() {
+        return slotDoctorId;
+    }
+
+    public void setSlotDoctorId(int slotDoctorId) {
+        this.slotDoctorId = slotDoctorId;
     }
 
     public int getDoctorId() {
@@ -72,17 +83,5 @@ public class SlotDoctor extends Slot{
         this.description = description;
     }
 
-    public int getDay() {
-        return day;
-    }
-
-    public void setDay(int day) {
-        this.day = day;
-    }
-
-    @Override
-    public String toString() {
-        return "SlotDoctor{" + "slotId=" + slotId + ", doctorId=" + doctorId + ", status=" + status + ", description=" + description + ", day=" + day + '}';
-    }
-    
+   
 }

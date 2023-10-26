@@ -13,14 +13,15 @@ public class User {
     private String status,
             firstName,
             lastName,
-            gender,
             email,
             password,
             address,
-            phone, 
+            phone,
             dob,
-            avatar, 
-            createdAt;
+            createdAt,
+            avatar,
+            gender;
+
     private int userId, roleId;
 
     public User() {
@@ -83,6 +84,24 @@ public class User {
         this.address = address;
         this.phone = phone;
         this.dob = dob;
+    }
+
+    public User(String firstName, String lastName, String gender, String email, String phone, String dob, int roleId) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.email = email;
+        this.phone = phone;
+        this.dob = dob;
+        this.roleId = roleId;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public User(String status, String firstName, String lastName, String email, String avatar, int roleId) {
@@ -182,13 +201,7 @@ public class User {
         this.roleId = roleId;
     }
 
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
+  
 
     public String getCreatedAt() {
         return createdAt;

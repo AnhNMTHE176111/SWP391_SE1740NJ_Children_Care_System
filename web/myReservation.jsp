@@ -27,70 +27,89 @@
             referrerpolicy="no-referrer"
             />
         <link href="css/reservation.css" rel="stylesheet"/>
+        <link href="css/home.css" rel="stylesheet"/>
     </head>
     <body>
+        <jsp:include page="header.jsp"></jsp:include>
 
-
-        <div class="container-fluid my-reservation-container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h2>My Reservations</h2>
-                </div>
+            <div class="container-fluid my-reservation-container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>${sessionScope.cusName}'s reservation list</h2>
+                    </div>
                 <c:choose>
                     <c:when test="${requestScope.endP == 0}">
-                            <div class="none_reservation col-md-12">
-                                <img src="image/reservation/dontHaveAnyReservation.png" alt="" style="width: 30%;"/>
-                                <h3 style="color: rgb(255, 157, 0);">Sorry! You don't have any reservations</h3>
-                            </div>
+                        <div class="none_reservation col-md-12">
+                            <img src="image/reservation/dontHaveAnyReservation.png" alt="" style="width: 30%;"/>
+                            <h3 style="color: rgb(255, 157, 0);">Sorry! You don't have any reservations</h3>
+                        </div>
                     </c:when>
                     <c:otherwise>
-                        <table class="table table-reservation">
-                            <tr class="table-reservation-row">
-                                <th class="table-reservation-header">ID</th>
-                                <th class="table-reservation-header">Your service</th>
-                                <th class="table-reservation-header">Time to check up</th>
-                                <th class="table-reservation-header">Doctor</th>
-                                <th class="table-reservation-header">Status</th>
-                            </tr>
-                            <c:forEach items="${sessionScope.customerReservation}" var="cr">
+                        <div class="list-reservation col-md-12">
+                            <table class="table table-reservation">
                                 <tr class="table-reservation-row">
-                                    <td class="table-reservation-column">
-                                        <label class="item">${cr.bookingId}</label>
-                                    </td>
-                                    <td class="table-reservation-column">
-                                        <p class="item item-name">Reservation created at:</p>
-                                        <ul class="table-reservation-list">
-                                            <li class="item">
-                                                <i class="fa-solid fa-calendar-alt"></i> ${cr.bookingCreateDate}
-                                            </li>
-                                            <li class="item">
-                                                <i class="fa-solid fa-clock"></i> ${cr.bookingCreateTime}
-                                            </li>
-                                        </ul>
-                                    </td>
-                                    <td class="table-reservation-column">
-                                        <ul class="table-reservation-list">
-                                            <li class="item">
-                                                <i class="fa-solid fa-disease"></i> ${cr.symptomps}
-                                            </li>
-                                            <li class="item">
-                                                <i class="fa-solid fa-calendar-alt"></i> ${cr.bookingDate}
-                                            </li>
-                                            <li class="item">
-                                                <i class="fa-solid fa-clock"></i> ${cr.bookingTime}
-                                            </li>
-                                        </ul>
-                                    </td>
-                                    <td class="table-reservation-column">
-                                        <i style="color: white" class="fa-solid fa-user-doctor"></i>
-                                        <label class="item"> ${cr.doctorName}</label>
-                                    </td>
-                                    <td class="table-reservation-column">
-                                        <label class="item">${cr.bookingStatus}</label>
-                                    </td>
+                                    <th class="table-reservation-header col-md-1">ID</th>
+                                    <th class="table-reservation-header col-md-4">Your service</th>
+                                    <th class="table-reservation-header col-md-3">Time to check up</th>
+                                    <th class="table-reservation-header col-md-2">Doctor</th>
+                                    <th class="table-reservation-header col-md-2">Status</th>
                                 </tr>
-                            </c:forEach>
-                        </table>
+                                <c:forEach items="${sessionScope.customerReservation}" var="cr">
+                                    <tr class="table-reservation-row">
+                                        <td class="table-reservation-column col-md-1">
+                                            <label class="item">${cr.bookingId}</label>
+                                        </td>
+                                        <td class="table-reservation-column col-md-3">
+                                            <p class="item item-name" style="margin-left: 20px">Reservation created at:</p>
+                                            <ul class="table-reservation-list">
+                                                <li class="item">
+                                                    <i class="fa-solid fa-calendar-alt"></i> ${cr.bookingCreateDate}
+                                                </li>
+                                                <li class="item">
+                                                    <i class="fa-solid fa-clock"></i> ${cr.bookingCreateTime}
+                                                </li>
+                                            </ul>
+                                        </td>
+                                        <td class="table-reservation-column col-md-3">
+                                            <ul class="table-reservation-list">
+                                                <li class="item">
+                                                    <i class="fa-solid fa-disease"></i> ${cr.diagnosis}
+                                                </li>
+                                                <li class="item">
+                                                    <i class="fa-solid fa-calendar-alt"></i> ${cr.bookingDate}
+                                                </li>
+                                                <li class="item">
+                                                    <i class="fa-solid fa-clock"></i> ${cr.bookingTime}
+                                                </li>
+                                            </ul>
+                                        </td>
+                                        <td class="table-reservation-column col-md-2">
+                                            <i style="color: white" class="fa-solid fa-user-doctor"></i>
+                                            <label class="item"> ${cr.doctorName}</label>
+                                        </td>
+                                        <td class="table-reservation-column col-md-2">
+                                            <c:choose>
+                                                <c:when test="${cr.bookingStatus == 1}">
+                                                    <label class="item" style="color: yellow">Submitted</label>
+                                                </c:when>
+                                                <c:when test="${cr.bookingStatus == 2}">
+                                                    <label class="item" style="color: greenyellow">Success</label>
+                                                </c:when>
+                                                <c:when test="${cr.bookingStatus == 3}">
+                                                    <label class="item" style="color: red">Cancelled</label>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <label class="item">Unknown Status</label>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </td>
+                                        <td class="table-reservation-column col-md-1">
+                                            <button class="button-4" role="button"><a href="/information?get&id=${cr.bookingId}" style="text-decoration: none;">Detail</a></button>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </table>
+                        </div>
                     </c:otherwise>
                 </c:choose>
                 <div class="paging col-md-12">
@@ -99,78 +118,64 @@
                         </c:forEach>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-2"><h2>Post</h2></div>
-                <div class="post-search col-md-10">
-                    <input class="post-search-input" type="text" placeholder="Search" />
-                    <button class="btn btn-search" type="submit">
-                        <i class="fa-solid fa-magnifying-glass"> </i>
-                    </button>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12 col-sm-6 col-md-4">
-                    <div class="card">
-                        <img
-                            src="https://images.unsplash.com/photo-1514477917009-389c76a86b68?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1067&q=80"
-                            class="card-img-top"
-                            alt="..."
-                            />
-                        <div class="card-body">
-                            <h5 class="card-title">Product Name</h5>
-                            <label style="float: left"><i class="fa-solid fa-eye"></i></label>
-                            Viewer: 1234 <label style="float: right">Rating:<i></i></label
-                            ><br />
-                            <p>
-                                Neque porro quisquam est qui dolorem ipsum quia dolor sit amet,
-                                consectetur, adipisci velit...
-                            </p>
-                            <a href="#">Read More <i class="fa-solid fa-arrow-right"></i></a>
-                        </div>
+            <div class="container-fluid pt-5">
+                <div class="container">
+                    <div class="text-center pb-2">
+                        <p class="section-title px-5"><span class="px-2">Our Blog</span></p>
+                        <h2 class="mb-4">Typical Blog</h2>
                     </div>
-                </div>
-                <div class="col-12 col-sm-6 col-md-4">
-                    <div class="card">
-                        <img
-                            src="https://images.unsplash.com/photo-1514477917009-389c76a86b68?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1067&q=80"
-                            class="card-img-top"
-                            alt="..."
-                            />
-                        <div class="card-body">
-                            <h5 class="card-title">Product Name</h5>
-                            <label style="float: left"><i class="fa-solid fa-eye"></i></label>
-                            Viewer: 1234 <label style="float: right">Rating:<i></i></label
-                            ><br />
-                            <p>
-                                Neque porro quisquam est qui dolorem ipsum quia dolor sit amet,
-                                consectetur, adipisci velit...
-                            </p>
-                            <a href="#">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                    <div class="row pb-3">
+                        <div class="col-lg-4 mb-4">
+                            <div class="card border-0 shadow-sm mb-2">
+                                <img class="card-img-top mb-2" src="https://vinmec-prod.s3.amazonaws.com/images/20191130_030902_740495_20190226_042612_26719.max-800x800.png" alt="">
+                                <div class="card-body bg-light text-center p-4">
+                                    <h4 class="">Những lưu ý quan trọng trước khi khám sức khỏe tổng quát</h4>
+                                    <!--            <div class="d-flex justify-content-center mb-3">
+                                                   <small class="mr-3"><i class="fa fa-user text-primary"></i> Admin</small>
+                                                   <small class="mr-3"><i class="fa fa-folder text-primary"></i> Web Design</small>
+                                                  <small class="mr-3"><i class="fa fa-comments text-primary"></i> 15</small>
+                                    </div>-->
+                                    <p>Theo khuyến cáo từ Hiệp hội Tim mạch Mỹ, bạn cần tiến hành kiểm tra huyết áp hàng năm ở độ tuổi từ 18 trở lên để tầm soát nguy cơ tăng huyết áp.</p>
+                                    <a href="" class="btn btn-primary px-4 mx-auto my-2">Read More</a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6 col-md-4">
-                    <div class="card">
-                        <img
-                            src="https://images.unsplash.com/photo-1514477917009-389c76a86b68?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1067&q=80"
-                            class="card-img-top"
-                            alt="..."
-                            />
-                        <div class="card-body">
-                            <h5 class="card-title">Product Name</h5>
-                            <label style="float: left"><i class="fa-solid fa-eye"></i></label>
-                            Viewer: 1234 <label style="float: right">Rating:<i></i></label
-                            ><br />
-                            <p>
-                                Neque porro quisquam est qui dolorem ipsum quia dolor sit amet,
-                                consectetur, adipisci velit...
-                            </p>
-                            <a href="#">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                        <div class="col-lg-4 mb-4">
+                            <div class="card border-0 shadow-sm mb-2">
+                                <img class="card-img-top mb-2" src="https://vinmec-prod.s3.amazonaws.com/images/20191120_084425_617598_tiem-phong-vacxin.max-800x800.png" alt="">
+                                <div class="card-body bg-light text-center p-4">
+                                    <h4 class="">Có nên trì hoãn việc tiêm chủng trong đợt dịch Covid-19?</h4>
+                                    <!--                            <div class="d-flex justify-content-center mb-3">
+                                                                    <small class="mr-3"><i class="fa fa-user text-primary"></i> Admin</small>
+                                                                    <small class="mr-3"><i class="fa fa-folder text-primary"></i> Web Design</small>
+                                                                    <small class="mr-3"><i class="fa fa-comments text-primary"></i> 15</small>
+                                                                </div>-->
+                                    <p>Theo khuyến cáo của các chuyên gia y tế, ngay cả trong thời điểm có dịch bệnh, phụ huynh vẫn nên đưa con đi tiêm vắc xin đúng lịch. </p>
+                                    <a href="" class="btn btn-primary px-4 mx-auto my-2">Read More</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 mb-4">
+                            <div class="card border-0 shadow-sm mb-2">
+                                <img class="card-img-top mb-2" src="https://vinmec-prod.s3.amazonaws.com/images/20190909_040421_333458_giao-duc-gioi-tinh.max-800x800.jpg" alt="">
+                                <div class="card-body bg-light text-center p-4">
+                                    <h4 class="">Giáo dục giới tính cho trẻ nhỏ</h4>
+                                    <!--                            <div class="d-flex justify-content-center mb-3">
+                                                                    <small class="mr-3"><i class="fa fa-user text-primary"></i> Admin</small>
+                                                                    <small class="mr-3"><i class="fa fa-folder text-primary"></i> Web Design</small>
+                                                                    <small class="mr-3"><i class="fa fa-comments text-primary"></i> 15</small>
+                                                                </div>-->
+                                    <p>Giáo dục giới tính ở trẻ em luôn là khía cạnh nhận được nhiều sự quan tâm từ phía xã hội. Trách nhiệm của cả gia đình và nhà trường </p>
+                                    </p>
+                                    <a href="" class="btn btn-primary px-4 mx-auto my-2">Read More</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <jsp:include page="footer.jsp"></jsp:include>
     </body>
     <script
         src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"

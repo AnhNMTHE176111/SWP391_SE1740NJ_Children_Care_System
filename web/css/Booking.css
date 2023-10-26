@@ -8,14 +8,25 @@ body {
   align-items: center;
   /* height: 100vh; */
 }
-
+.container{
+  
+}
+.error-message{
+    position: relative;
+    width : 100px;
+    display: flex;
+    transform: translate-y(-29px);
+    /*height: 20px;*/
+    padding-top: 30px;
+}
 .container {
   background-color: #fff;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   width: 800px;
-  height: 600px;
+  height:1000px;
+ 
   position: relative;
   top: 100px;
 }
@@ -119,7 +130,7 @@ label {
 .step-num {
   color: coral;
 }
-.label-box {
+label-box {
   display: flex;
   flex-direction: row;
 }
@@ -261,8 +272,9 @@ label {
   transition: all 0.2s;
 }
 .form-group {
-  display: flex;
-  flex-direction: column;
+   
+   
+    align-items: center;
 }
 .input-place {
   height: 230px;
@@ -272,8 +284,6 @@ label {
   border-radius: 5px;
 }
 .form-input {
-  display: flex;
-  flex-direction: row;
   gap: 50px;
   position: relative;
   bottom: 40px;
@@ -328,4 +338,181 @@ label {
     background-color: #007bff; /* Màu nền ngày đã chọn */
     color: #ffffff; /* Màu chữ khi ngày đã chọn */
 }
+
+/*.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+}*/
+
+.error-message {
+    color: red;                       /* Màu chữ đỏ */
+    font-size: 12px;                  /* Kích thước chữ nhỏ */
+    padding-left: 10px;               /* Khoảng cách từ biểu tượng đến chữ */
+    display: flex;                    /* Sử dụng flex để biểu tượng và chữ nằm trên cùng một hàng */
+    align-items: center;   
+    /* Căn giữa chữ và biểu tượng theo chiều dọc */
+}
+
+.error-message::before {
+    content: "•";                     /* Thêm biểu tượng dạng bullet */
+    font-size: 16px;                  /* Kích thước của biểu tượng */
+    margin-right: 5px;                /* Khoảng cách giữa biểu tượng và chữ */
+}
+
+/*.form-group.label-box {
+    position: relative;
+}*/
+
+.no-click {
+    pointer-events: none;
+}
+
+
+.step {
+    width: 90%; 
+    max-width: 1000px;
+    margin: 0 auto; 
+}
+
+.register-line {
+    font-size: 24px;
+    text-align: center; 
+    margin-bottom: 20px;
+}
+
+.step-line h3 {
+    font-size: 20px; 
+    text-align: center; 
+    margin-top: 30px; 
+}
+
+.form-input {
+    justify-content: space-between; 
+    flex-wrap: wrap; 
+}
+
+.form-input .aside,
+.form-input .form-group {
+    width: auto; 
+    box-sizing: border-box; 
+    display: grid;
+}
+
+.input-size,
+.input-place {
+    width: 100%; 
+    box-sizing: border-box; 
+    padding: 10px; 
+    margin-bottom: 10px; 
+    border-radius: 5px; 
+    border: 1px solid #ccc; 
+}
+
+.button-line {
+    display: flex; 
+    justify-content: space-between; 
+    margin-top: 30px; 
+}
+
+.back-button,
+.submit-button {
+    flex: 1;
+    margin: 0 10px; 
+    padding: 10px 20px; 
+}
+
+.back-button {
+    background-color: #ccc; 
+    color: #333; 
+    border: none; 
+    cursor: pointer; 
+    transition: background-color 0.3s; 
+}
+
+.back-button:hover {
+    background-color: #bbb; 
+}
+
+.confirm-content {
+    background-color: #f5f5f5; /* Màu nền xám nhạt */
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.confirm-content h3 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.confirm-content p {
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+/* Các nút chức năng */
+.button-line {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.back-button,
+.submit-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.back-button {
+    background-color: #9B9B9B; /* Màu xám trung bình */
+    color: white;
+}
+
+.back-button:hover {
+    background-color: #808080; /* Màu xám đậm hơn khi di chuột qua */
+}
+
+.submit-button {
+    background-color: #4A90E2; /* Màu xanh dương nhạt */
+    color: white;
+}
+
+.submit-button:hover {
+    background-color: #357ABD; /* Màu xanh dương đậm hơn khi di chuột qua */
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+.column {
+    flex: 1;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.column:not(:last-child) {
+    margin-right: 20px;
+}
+
+.grid-date.booked {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.disabled-slot:hover {
+    background-color: darkgrey !important; 
+    cursor: not-allowed !important; 
+}
+
+
 

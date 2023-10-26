@@ -1,0 +1,16 @@
+<component name="libraryTable">
+  <library name="SWP391_SE1740NJ_Children_Care_System">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/jakarta.servlet.jsp.jstl-api-2.0.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/gson-2.8.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/httpclient-4.5.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/jakarta.servlet.jsp.jstl-2.0.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/httpcore-4.4.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/commons-logging-1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/sqljdbc42.jar!/" />
+      <root url="jar://$PROJECT_DIR$/fluent-hc-4.5.5.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

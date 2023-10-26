@@ -11,11 +11,17 @@ import java.util.Date;
  * @author dmx
  */
 public class Slot {
-    private int slotId;
+
+    private int slotId, status;
     private String startTime, endTime;
     private Date day;
 
     public Slot() {
+    }
+
+    public Slot(int slotId, String startTime) {
+        this.slotId = slotId;
+        this.startTime = startTime;
     }
 
     public Slot(int slotId, String startTime, String endTime) {
@@ -36,6 +42,14 @@ public class Slot {
 
     public void setDay(Date day) {
         this.day = day;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public int getSlotId() {
@@ -61,5 +75,5 @@ public class Slot {
     public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
-    
+
 }

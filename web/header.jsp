@@ -30,7 +30,7 @@
                             <a href="admin" class="nav-item nav-link">Admin Dashboard</a>
                         </c:if>
                         <a href="home" class="nav-item nav-link">Home</a>
-                        <a href="about.html" class="nav-item nav-link">Blogs</a>
+                        <a href="/blog" class="nav-item nav-link">Blogs</a>
                         <a href="/service" class="nav-item nav-link">Services</a>
                         <a href="team.html" class="nav-item nav-link">Doctors</a>
                         <c:if test="${sessionScope.roleId eq 2}">
@@ -42,7 +42,7 @@
                     <ul class="nav">
                         <c:if test="${sessionScope.name ne null}">
                             <li class="nav-item">
-                                <a class="nav-link" href="#" onclick="showPopup()">${sessionScope.name}</a>
+                                <a class="nav-link" href="/my">${sessionScope.name}</a>
                             </li>
                             <li class="nav-item">
                                 <img onclick="showPopup()" style="height:40px;width:40px;border-radius:50%; object-fit: cover; cursor: pointer"
