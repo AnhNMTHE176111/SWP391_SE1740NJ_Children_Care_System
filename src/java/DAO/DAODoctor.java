@@ -53,7 +53,13 @@ public class DAODoctor extends DBContext {
                 String name = rs.getString(1);
                 String specialty = rs.getString(2);
 
+<<<<<<< Updated upstream
                 Doctor doctor = new Doctor(0, 0, 0, name, specialty, "", "");
+=======
+                int id = Integer.parseInt(rs.getString(2));
+                int doctorId = rs.getInt(3);
+                Doctor doctor = new Doctor(name, id, doctorId);
+>>>>>>> Stashed changes
 
                 data.add(doctor);
             }
@@ -64,12 +70,12 @@ public class DAODoctor extends DBContext {
     }
 
     public ArrayList<SlotDoctor> getReservationByDocId(int doctorId) {
-        String sql = "SELECT Slots.SlotId, startTime, endTime, DoctorId, status, Description\n"
+        String sql = "SELECT Slots.SlotId, startTime, endTime, DoctorId, status, Description, day\n"
                 + "FROM slots\n"
                 + "INNER JOIN SlotDoctor ON slots.slotid = SlotDoctor.slotid "
                 + "where DoctorId = ?";
         SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("HH:mm:ss");
         ArrayList<SlotDoctor> data = new ArrayList<>();
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -88,7 +94,8 @@ public class DAODoctor extends DBContext {
                 int status = rs.getInt(5);
                 int docId = Integer.parseInt(rs.getString(4));
                 int slotId = Integer.parseInt(rs.getString(1));
-                SlotDoctor c = new SlotDoctor(slotId, sTime, eTime, docId, status, Description);
+                Date day = rs.getDate(7);
+                SlotDoctor c = new SlotDoctor(slotId, sTime, eTime, docId, status, Description, day);
                 data.add(c);
             }
         } catch (SQLException e) {
@@ -186,18 +193,29 @@ public class DAODoctor extends DBContext {
         return data;
     }
 
-    public Slot getSlotBySlotId(int slotId) {
-        String sql = "select * from Slots where slotId = ?";
+    public Slot getSlotBySlotId(int slotId, int docId) {
+        String sql = "select * from Slots inner join SlotDoctor ON slots.slotid = SlotDoctor.slotid "
+                + " where slots.slotId = ? and DoctorId = ?";
         Slot data = new Slot();
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("HH:mm:ss");
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, slotId);
+            ps.setInt(2, docId);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 data.setSlotId(rs.getInt(1));
-                data.setStartTime(rs.getString(2));
-                data.setEndTime(rs.getString(3));
+                String startTime = rs.getString(2);
+                Date start = inputFormat.parse(startTime);
+                String sTime = outputFormat.format(start);
+                String endTime = rs.getString(3);
+                Date end = inputFormat.parse(endTime);
+                String eTime = outputFormat.format(end);
 
+                data.setStartTime(sTime);
+                data.setEndTime(eTime);
+                data.setDay(rs.getDate(9));
             }
         } catch (SQLException e) {
             System.out.println("SQL <getSlotBySlotId>: " + e.getMessage());
@@ -278,11 +296,33 @@ public class DAODoctor extends DBContext {
             }
             ps.setInt(2, medId);
             int update = ps.executeUpdate();
-            System.out.println("update successfully: " + update);
+            System.out.println("update successfully: updateStatusByBookingId " + update);
         } catch (SQLException e) {
             System.out.println("SQL <updateStatusByBookingId>: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("<updateStatusByBookingId>: " + e.getMessage());
+        }
+    }
+
+    public void changeStatusBySlotIdandDocId(int slotId, int doctorId, int status) {
+        String sql = "UPDATE SlotDoctor\n"
+                + "Set Status = ?\n"
+                + "where slotid = ? and DoctorId = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            if (status == 1) {
+                ps.setInt(1, 0);
+            } else {
+                ps.setInt(1, 1);
+            }
+            ps.setInt(2, slotId);
+            ps.setInt(3, doctorId);
+            int update = ps.executeUpdate();
+            System.out.println("update successfully: changeStatusBySlotIdandDocId" + update);
+        } catch (SQLException e) {
+            System.out.println("SQL <changeStatusBySlotIdandDocId>: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("<changeStatusBySlotIdandDocId>: " + e.getMessage());
         }
     }
 

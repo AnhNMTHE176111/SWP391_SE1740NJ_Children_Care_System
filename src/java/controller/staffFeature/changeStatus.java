@@ -11,13 +11,12 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 /**
  *
- * @author dmx
+ * @author Admin
  */
-public class staffController extends HttpServlet {
+public class changeStatus extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,10 +35,10 @@ public class staffController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet staffDashboard</title>");
+            out.println("<title>Servlet changeStatus</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet staffDashboard at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet changeStatus at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -57,17 +56,7 @@ public class staffController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        if (String.valueOf(session.getAttribute("roleId")).equals("null")) {
-            response.sendRedirect("403.jsp");
-        } else {
-            int roleId = Integer.parseInt(String.valueOf(session.getAttribute("roleId")));
-            if (roleId == 2) {
-                response.sendRedirect("reservation");
-            } else {
-                response.sendRedirect("403.jsp");
-            }
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -81,16 +70,12 @@ public class staffController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        System.out.println("Change status");
         DAODoctor d = new DAODoctor();
-        int medId = Integer.parseInt(request.getParameter("medId"));
-        String revisit = request.getParameter("dateOfRevisit");
-        String symtoms = request.getParameter("symtoms");
-        String diagnosis = request.getParameter("diagnosis");
-        String treatmentPlan = request.getParameter("treatmentPlan");
-        String status = request.getParameter("status");
-                
-        d.updateMedicalInfoByMedId(medId,revisit,symtoms,diagnosis,treatmentPlan);
-        
+        int slotId = Integer.parseInt(request.getParameter("slotId"));
+        int doctorId = Integer.parseInt(request.getParameter("doctorId"));
+        int status = Integer.parseInt(request.getParameter("status"));
+        d.changeStatusBySlotIdandDocId(slotId, doctorId, status);
         response.sendRedirect("reservation");
     }
 

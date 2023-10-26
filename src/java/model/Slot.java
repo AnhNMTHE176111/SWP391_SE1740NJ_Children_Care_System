@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.util.Date;
+
 /**
  *
  * @author dmx
@@ -11,6 +13,7 @@ package model;
 public class Slot {
     private int slotId;
     private String startTime, endTime;
+    private Date day;
 
     public Slot() {
     }
@@ -19,6 +22,20 @@ public class Slot {
         this.slotId = slotId;
         this.startTime = startTime;
         this.endTime = endTime;
+    }
+    public Slot(int slotId, String startTime, String endTime, Date day) {
+        this.slotId = slotId;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.day = day;
+    }
+
+    public Date getDay() {
+        return day;
+    }
+
+    public void setDay(Date day) {
+        this.day = day;
     }
 
     public int getSlotId() {

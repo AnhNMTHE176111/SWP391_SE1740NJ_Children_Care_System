@@ -13,14 +13,21 @@ import java.util.Date;
 public class SlotDoctor extends Slot{
     private int slotId, doctorId, status;
     private String description;
+<<<<<<< Updated upstream
     private int day;
     
     public SlotDoctor( int slotId, String startTime,String endTime,  int doctorId, int status, String description) {
+=======
+    private Date day;
+
+    public SlotDoctor(int slotId, String startTime, String endTime, int doctorId, int status, String description, Date day) {
+>>>>>>> Stashed changes
         super(slotId, startTime, endTime);
         this.slotId = slotId;
         this.doctorId = doctorId;
         this.status = status;
         this.description = description;
+        this.day = day;
     }
 
     public SlotDoctor() {
