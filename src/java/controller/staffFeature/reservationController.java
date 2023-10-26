@@ -12,7 +12,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
-import model.Customer;
 import model.MedicalInfo;
 import model.Slot;
 import model.SlotDoctor;
@@ -29,11 +28,11 @@ public class reservationController extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession(true);
         DAODoctor d = new DAODoctor();
+        User currentUser = (User) session.getAttribute("user");
 
-        if (session == null) {
+        if (currentUser == null) {
             response.sendRedirect("403.jsp");
         } else {
-            User currentUser = (User) session.getAttribute("user");
             int doctorId = d.getDoctorIdByUserId(currentUser.getUserId());
             ArrayList<SlotDoctor> slotDoc = d.getReservationByDocId(doctorId);
             String specialty = d.getspecialtyNameByDocId(doctorId);
@@ -53,17 +52,18 @@ public class reservationController extends HttpServlet {
         int doctorId = Integer.parseInt(request.getParameter("doctorId"));
         int slotDoctorId = d.getSlotDoctorId(slotId, doctorId);
         User khachHang = d.getUserInfoBySlotDoctorId(slotDoctorId);
-        Slot rightSlot = d.getSlotBySlotId(slotId);
+        Slot rightSlot = d.getSlotBySlotId(slotId, doctorId);
         MedicalInfo med = d.getMedInfo(slotDoctorId);
-        
-        request.setAttribute("med", med);
-        request.setAttribute("slotId", slotId);
-        request.setAttribute("doctorId", doctorId);
-        request.setAttribute("khachHang", khachHang);
-        request.setAttribute("rightSlot", rightSlot);
-        request.setAttribute("slotDoctorId", slotDoctorId);
-        request.getRequestDispatcher("reservationDetail.jsp").forward(request, response);
-    }
+
+            request.setAttribute("med", med);
+            request.setAttribute("slotId", slotId);
+            request.setAttribute("doctorId", doctorId);
+            request.setAttribute("khachHang", khachHang);
+            request.setAttribute("rightSlot", rightSlot);
+            request.setAttribute("slotDoctorId", slotDoctorId);
+            request.getRequestDispatcher("reservationDetail.jsp").forward(request, response);
+     
+        }
 
     @Override
     public String getServletInfo() {

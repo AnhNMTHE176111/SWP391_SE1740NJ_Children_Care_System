@@ -14,6 +14,15 @@ public class SlotDoctor extends Slot {
 
     private int slotDoctorId, doctorId, status;
     private String description;
+
+    private int day;
+    
+    public SlotDoctor( int slotId, String startTime,String endTime,  int doctorId, int status, String description) {
+
+    private Date day;
+
+    public SlotDoctor(int slotId, String startTime, String endTime, int doctorId, int status, String description, Date day) {
+
     private Date day;
 
     public SlotDoctor(int slotId, String startTime, String endTime, int doctorId, int status, String description) {
@@ -21,6 +30,7 @@ public class SlotDoctor extends Slot {
         this.doctorId = doctorId;
         this.status = status;
         this.description = description;
+        this.day = day;
     }
 
     public SlotDoctor() {
