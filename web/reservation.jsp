@@ -47,20 +47,20 @@
         <table id="sortableTable" >
             <thead>
                 <tr>
-                    <th onclick="sortTable(0)">ID</th>
                     <th>Name of specialty</th>
                     <th onclick="sortTable(2)">Status</th>
                     <th onclick="sortTable(3)">Start time</th>
                     <th onclick="sortTable(4)">End time</th>
-                    <th onclick="sortTable(5)">Description</th>
+                    <th onclick="sortTable(6)">Day</th>
+                    <th onclick="sortTable(7)">Description</th>
                     <th>Details</th>
+                    <th>Status</th>
 
                 </tr>
             </thead>
             <tbody>
                 <c:forEach var="item" items="${slotDoc}" >
                     <tr>
-                        <td>${item.getSlotId()} </td>
                         <td>${specialty} </td>
                         <td>
                             <div id="statusDisplay_${item.getSlotId()}">
@@ -78,17 +78,22 @@
                                 </script>
                             </div>
                         </td>
-
-
                         </td>
                         <td>${item.getStartTime()} </td>
                         <td>${item.getEndTime()} </td>
+                        <td>${item.getDay()} </td>
                         <td>${item.getDescription()} </td>
-                <form name="reservation" method="POST">
+                <form action="reservation" method="POST" >
                     <input type="hidden" name="slotId" value="${item.getSlotId()}">
                     <input type="hidden" name="doctorId" value="${item.getDoctorId()}">
-                    <td><input type="submit" value="Read more"></td>
+                    <td><input type="submit" value="Read more" ></td>
                 </form>    
+                <form action="changeStatus" method="POST" >
+                    <input type="hidden" name="slotId" value="${item.getSlotId()}">
+                    <input type="hidden" name="status" value="${item.getStatus()}">
+                    <input type="hidden" name="doctorId" value="${item.getDoctorId()}">
+                    <td><input type="submit" value="Change" ></td>
+                </form>   
             </tr>
         </c:forEach>
     </tbody>
@@ -156,31 +161,6 @@
 
 
 
-//    let ascending = true;
-//
-//    function sortTable(columnIndex) {
-//        const table = document.getElementById('sortableTable');
-//        const rows = Array.from(table.rows).slice(1); // Exclude header row
-//
-//        rows.sort((rowA, rowB) => {
-//            const cellA = rowA.cells[columnIndex].textContent;
-//            const cellB = rowB.cells[columnIndex].textContent;
-//
-//            // Parse dates in "YYYY-MM-DD HH:MM:SS" format and compare
-//            const dateA = new Date(cellA);
-//            const dateB = new Date(cellB);
-//
-//            return ascending ? dateA - dateB : dateB - dateA;
-//        });
-//
-//        // Rearrange the rows based on the sorting
-//        for (const row of rows) {
-//            table.tBodies[0].appendChild(row);
-//        }
-//
-//        // Toggle sort order for the next click
-//        ascending = !ascending;
-//    }
 </script>
 
 </body>
