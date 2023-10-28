@@ -13,7 +13,7 @@ import java.util.Date;
 public class Booking {
 
     private int bookingId, bookingStatus, customerId, medicalInfoId, slotDoctorId, slotId, doctorId, status;
-    private String description, doctorName, customerName, startTime, symptomps, bookingDate, bookingTime, bookingCreateDate, bookingCreateTime;
+    private String description, doctorName, customerName, startTime, diagnosis, bookingDate, bookingTime, bookingCreateDate, bookingCreateTime, serviceName;
   
     private Date day;
     public Booking() {
@@ -49,14 +49,15 @@ public class Booking {
         this.day = day;
     }
     
-    public Booking(int bookingId, int bookingStatus, int customerId, String symptomps, String bookingDate, String bookingTime, String doctorName, String bookingCreateDate, String bookingCreateTime) {
+    public Booking(int bookingId, int bookingStatus, int customerId, String diagnosis, String bookingDate, String bookingTime, String doctorName, String serviceName, String bookingCreateDate, String bookingCreateTime) {
         this.bookingId = bookingId;
         this.bookingStatus = bookingStatus;
         this.customerId = customerId;
-        this.symptomps = symptomps;
+        this.diagnosis = diagnosis;
         this.bookingDate = bookingDate;
         this.bookingTime = bookingTime;
         this.doctorName = doctorName;
+        this.serviceName = serviceName;
         this.bookingCreateDate = bookingCreateDate;
         this.bookingCreateTime = bookingCreateTime;
     }
@@ -86,10 +87,14 @@ public class Booking {
 
     
     }
-  
 
-    public String getSymptomps() {
-        return symptomps;
+    public String getServiceName() {
+        return serviceName;
+    }
+    
+
+    public String getDiagnosis() {
+        return diagnosis;
     }
 
     public String getBookingDate() {
@@ -105,9 +110,12 @@ public class Booking {
         return bookingCreateTime;
     }
 
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
+    }
   
-    public void setSymptomps(String symptomps) {
-        this.symptomps = symptomps;
+    public void setDiagnosis(String diagnosis) {
+        this.diagnosis = diagnosis;
     }
 
     public void setBookingDate(String bookingDate) {

@@ -5,6 +5,9 @@
 
 package controller.commonFeature;
 
+import DAO.DAOBooking;
+import DAO.DAOCustomer;
+import DAO.DAOService;
 import DAO.DAOUser;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,6 +17,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import model.Booking;
+import model.Customer;
+import model.Service;
 import model.User;
 
 /**
@@ -60,8 +66,15 @@ public class informationReservation extends HttpServlet {
     throws ServletException, IOException {
         HttpSession session = request.getSession();
         DAOUser userDao = new DAOUser();
-        User user = (User) session.getAttribute("user");
-         request.getRequestDispatcher("reservationInformation.jsp").forward(request, response);
+        DAOCustomer cusDao = new DAOCustomer();
+        DAOService serDao = new DAOService();
+        String bookingId = request.getParameter("id");
+        Customer cusInfo = cusDao.getCusBookingInforByBookId(bookingId);
+        Service cusService = serDao.getCusServiceInforByBookingId(bookingId);
+        session.setAttribute("bookingId", bookingId);
+        session.setAttribute("cusInfo", cusInfo);
+        session.setAttribute("cusService", cusService);
+        request.getRequestDispatcher("reservationInformation.jsp").forward(request, response);
     } 
 
     /** 
@@ -74,7 +87,17 @@ public class informationReservation extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        String cancelBookingId = request.getParameter("bookingId");
+        DAOBooking bookDao = new DAOBooking();
+        DAOCustomer cusDao = new DAOCustomer();
+        String cancelBooking = bookDao.cancelCusBookingByBookId(cancelBookingId);
+        Customer cusInfo = cusDao.getCusBookingInforByBookId(cancelBooking);
+        String mess = "The reservation has been canceled";
+        request.setAttribute("mess", mess);
+        session.setAttribute("bookingId", cancelBookingId);
+        session.setAttribute("cusInfo", cusInfo);
+        request.getRequestDispatcher("reservationInformation.jsp").forward(request, response);
     }
 
     /** 
