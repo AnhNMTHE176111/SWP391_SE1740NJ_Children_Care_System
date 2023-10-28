@@ -11,7 +11,7 @@ package model;
 public class Service {
 
     private int serviceId;
-    private String serviceName, description;
+    private String serviceName, description, doctorName;
     //thêm code để phù hợp với màn hình service của HongNT
     private int doctorId;
     private float price;
@@ -19,6 +19,13 @@ public class Service {
 
     public Service(int serviceId, String serviceName, String description, float price) {
         this.serviceId = serviceId;
+        this.serviceName = serviceName;
+        this.description = description;
+        this.price = price;
+    }
+    
+    public Service(String serviceName, String description, String doctorName, float price) {
+        this.doctorName = doctorName;
         this.serviceName = serviceName;
         this.description = description;
         this.price = price;
@@ -46,7 +53,15 @@ public class Service {
         this.description = description;
         this.doctorId = doctorId;
     }
- 
+
+    public String getDoctorName() {
+        return doctorName;
+    }
+
+    public void setDoctorName(String doctorName) {
+        this.doctorName = doctorName;
+    }
+    
     public int getDoctorId() {
         return doctorId;
     }

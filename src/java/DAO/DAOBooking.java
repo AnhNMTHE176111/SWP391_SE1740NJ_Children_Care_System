@@ -152,13 +152,15 @@ public class DAOBooking extends DBContext {
                     + "  m.Diagnosis,\n"
                     + "  CONCAT(u.firstName, ' ', u.lastName) AS fullName,\n"
                     + "  s.StartTime,\n"
-                    + "  s.EndTime\n"
+                    + "  s.EndTime,\n"
+                    + "  se.ServiceName\n"
                     + "FROM Booking b\n"
                     + "JOIN MedicalInfo m ON b.MedicalInfoId = m.MedicalInfoId\n"
                     + "JOIN Doctors d ON b.slotDoctorId = d.DoctorId\n"
                     + "JOIN SlotDoctor sd ON b.slotDoctorId = sd.slotDoctorId\n"
                     + "JOIN Slots s ON sd.SlotId = s.SlotId\n"
                     + "JOIN Users u ON d.userId = u.userId\n"
+                    + "JOIN Services se ON b.ServiceId = se.ServiceId\n"
                     + "WHERE b.CustomerId = '" + cusId + "'\n"
                     + "ORDER BY b.CustomerId\n"
                     + "OFFSET ? ROWS FETCH NEXT 2 ROWS ONLY";
@@ -175,7 +177,8 @@ public class DAOBooking extends DBContext {
                 String DoctorName = rs.getString(9);
                 String CreateDate = String.valueOf(rs.getDate(7));
                 String CreateTime = String.valueOf(rs.getTime(7));
-                Booking cusBooking = new Booking(BookingId, BookingStatus, CustomerID, Diagnosis, BookingDate, BookingTime, DoctorName, CreateDate, CreateTime);
+                String ServiceName = rs.getString(12);
+                Booking cusBooking = new Booking(BookingId, BookingStatus, CustomerID, Diagnosis, BookingDate, BookingTime, DoctorName, ServiceName, CreateDate, CreateTime);
                 listCustReservation.add(cusBooking);
             }
         } catch (Exception e) {

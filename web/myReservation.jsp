@@ -60,7 +60,7 @@
                                             <label class="item">${cr.bookingId}</label>
                                         </td>
                                         <td class="table-reservation-column col-md-3">
-                                            <p class="item item-name" style="margin-left: 20px">Reservation created at:</p>
+                                            <p class="item item-name" style="margin-left: 20px">${cr.serviceName}</p>
                                             <ul class="table-reservation-list">
                                                 <li class="item">
                                                     <i class="fa-solid fa-calendar-alt"></i> ${cr.bookingCreateDate}
@@ -90,16 +90,16 @@
                                         <td class="table-reservation-column col-md-2">
                                             <c:choose>
                                                 <c:when test="${cr.bookingStatus == 1}">
-                                                    <label class="item" style="color: yellow">Submitted</label>
+                                                    <p class="item" style="color: yellow">Submitted</p>
                                                 </c:when>
                                                 <c:when test="${cr.bookingStatus == 2}">
-                                                    <label class="item" style="color: greenyellow">Success</label>
+                                                    <p class="item" style="color: greenyellow">Success</p>
                                                 </c:when>
                                                 <c:when test="${cr.bookingStatus == 3}">
-                                                    <label class="item" style="color: red">Cancelled</label>
+                                                    <p class="item" style="color: red">Cancelled</p>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <label class="item">Unknown Status</label>
+                                                    <p class="item">Unknown Status</p>
                                                 </c:otherwise>
                                             </c:choose>
                                         </td>
