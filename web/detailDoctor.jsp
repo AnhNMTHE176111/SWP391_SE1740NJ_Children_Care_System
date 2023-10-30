@@ -12,7 +12,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <link href="css/home.css" rel="stylesheet"/>
-        <!--        <style>
+        <!--       
+                   test
+                    <style>
                     .gallery-wrap .img-big-wrap img {
                         height: 450px;
                         width: auto;
