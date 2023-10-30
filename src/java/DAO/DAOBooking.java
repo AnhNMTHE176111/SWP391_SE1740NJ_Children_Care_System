@@ -171,6 +171,7 @@ public class DAOBooking extends DBContext {
                 int BookingId = rs.getInt(1);
                 int BookingStatus = rs.getInt(2);
                 int CustomerID = rs.getInt(4);
+                int MedicalInfoId = rs.getInt(5);
                 String Diagnosis = rs.getString(8);
                 String BookingDate = String.valueOf(rs.getDate(10));
                 String BookingTime = String.valueOf("From " + rs.getTime(10) + " to " + rs.getTime(11));
@@ -178,7 +179,7 @@ public class DAOBooking extends DBContext {
                 String CreateDate = String.valueOf(rs.getDate(7));
                 String CreateTime = String.valueOf(rs.getTime(7));
                 String ServiceName = rs.getString(12);
-                Booking cusBooking = new Booking(BookingId, BookingStatus, CustomerID, Diagnosis, BookingDate, BookingTime, DoctorName, ServiceName, CreateDate, CreateTime);
+                Booking cusBooking = new Booking(BookingId, BookingStatus, CustomerID, MedicalInfoId, Diagnosis, BookingDate, BookingTime, DoctorName, ServiceName, CreateDate, CreateTime);
                 listCustReservation.add(cusBooking);
             }
         } catch (Exception e) {
