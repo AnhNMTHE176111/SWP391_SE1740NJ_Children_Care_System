@@ -49,7 +49,7 @@ public class Booking {
         this.day = day;
     }
     
-    public Booking(int bookingId, int bookingStatus, int customerId, String diagnosis, String bookingDate, String bookingTime, String doctorName, String serviceName, String bookingCreateDate, String bookingCreateTime) {
+    public Booking(int bookingId, int bookingStatus, int customerId, int medicalInfoId, String diagnosis, String bookingDate, String bookingTime, String doctorName, String serviceName, String bookingCreateDate, String bookingCreateTime) {
         this.bookingId = bookingId;
         this.bookingStatus = bookingStatus;
         this.customerId = customerId;
@@ -60,6 +60,7 @@ public class Booking {
         this.serviceName = serviceName;
         this.bookingCreateDate = bookingCreateDate;
         this.bookingCreateTime = bookingCreateTime;
+        this.medicalInfoId = medicalInfoId;
     }
 
     public String getDoctorName() {

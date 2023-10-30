@@ -105,6 +105,7 @@
                                         </td>
                                         <td class="table-reservation-column col-md-1">
                                             <button class="button-4" role="button"><a href="/information?get&id=${cr.bookingId}" style="text-decoration: none;">Detail</a></button>
+                                            <button class="button-4" role="button" style="background-color: yellow"><a href="/feedback?get&id=${cr.medicalInfoId}" style="text-decoration: none;">Feedback</a></button>
                                         </td>
                                     </tr>
                                 </c:forEach>
