@@ -17,6 +17,7 @@
         <jsp:include page="header.jsp"></jsp:include>
         <jsp:include page="bannerHome.jsp"></jsp:include>
 
+        <input type="hidden" name="id" value="hiddenValue">
         <h1 style="margin-left: 50px">Feedback Detail</h1>
         <form action="feedback" method="post" style="margin-bottom: 100px; padding-left: 100px">
             <label for="vote">Vote:</label>
@@ -28,9 +29,9 @@
             </select>
             <br>
             <label for="comment">Comment:</label><br>
-            <textarea name="comment" id="comment" rows="4" cols="50"></textarea>
+            <textarea name="comment" id="comment" rows="4" cols="50" style="border-radius: 20px"></textarea>
             <br><br>
-            <input type="submit" value="Submit">
+            <input type="submit" value="Submit" style="background-color: greenyellow">
         </form>
         
         <jsp:include page="footer.jsp"></jsp:include>
