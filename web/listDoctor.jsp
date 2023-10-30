@@ -39,7 +39,7 @@
                 <c:forEach items="${listD}" var="o" varStatus="status">
                     <div class="col-lg-4 col-md-6 col-sm-12"> 
                         <div class="card border-0 shadow-sm mb-2">
-                            <a href=""> <img class="card-img-top mb-2 mt-5" style="width:100%; height:350px;" src="${o.getAvatar()}" alt=""> </a>
+                            <a href="detailDoctor?doctorId=${o.doctorId}"> <img class="card-img-top mb-2 mt-5" style="width:100%; height:350px;" src="${o.getAvatar()}" alt=""> </a>
                             <div class="card-body bg-light text-center p-4">
                                 <p style="font-size: 20px; font-weight: 600; color: #222;">${o.lastname} ${o.firstname}</p>
                                 <div class="d-flex justify-content-center mb-3">

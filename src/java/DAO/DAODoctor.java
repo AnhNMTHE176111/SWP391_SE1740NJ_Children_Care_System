@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import model.Doctor;
 import model.MedicalInfo;
 import model.Post;
@@ -56,9 +57,6 @@ public class DAODoctor extends DBContext {
                 int id = Integer.parseInt(rs.getString(2));
                 int doctorId = rs.getInt(3);
                 Doctor doctor = new Doctor(name, id, doctorId);
-
- 
-
 
                 data.add(doctor);
             }
@@ -233,7 +231,7 @@ public class DAODoctor extends DBContext {
                 data.setTreatmentPlan(rs.getString(5));
                 data.setMedicalInfoId(rs.getInt(6));
 
-                data.setRatingValue(rs.getFloat(6));
+                data.setRatingValue(rs.getString(6));
                 data.setComment(rs.getString(6));
                 data.setRatingId(rs.getInt(6));
 
@@ -290,10 +288,10 @@ public class DAODoctor extends DBContext {
             System.out.println("<updateStatusByBookingId>: " + e.getMessage());
         }
     }
-    
+
     public ArrayList<Doctor> getListDoctor() {
-        String sql = "select DoctorId, lastName, firstName, Description, avatar from Doctors d, Users u\n" +
-                    "where u.userId = d.userId";
+        String sql = "select DoctorId, lastName, firstName, Description, avatar from Doctors d, Users u\n"
+                + "where u.userId = d.userId";
         ArrayList<Doctor> data = new ArrayList<>();
         try {
             PreparedStatement pstm = cnn.prepareStatement(sql);
@@ -312,6 +310,29 @@ public class DAODoctor extends DBContext {
             System.out.println("<getListDoctor>: " + e.getMessage());
         }
         return data;
+    }
+
+    public  Doctor getDoctorbyID(int id) {
+        List<Doctor> list = new ArrayList<>();
+        String query = "select DoctorId, lastName, firstName, Description, avatar from Doctors d, Users u\n" +
+"                       where u.userId = d.userId and DoctorId = ? ";
+        try {
+            PreparedStatement pstm = cnn.prepareStatement(query);
+            pstm.setInt(1, id);
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next()) {
+                return new Doctor(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5));
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL <getPostById>: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("<getPostById>: " + e.getMessage());
+        }
+        return null;
     }
 
 }

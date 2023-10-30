@@ -10,13 +10,13 @@ package model;
  */
 public class Feedback {
     private int ratingId, medicalInfoId;
-    Float ratingValue;
+    private String ratingValue;
     private String comment;
 
     public Feedback() {
     }
 
-    public Feedback(int ratingId, int medicalInfoId, Float ratingValue, String comment) {
+    public Feedback(int ratingId, int medicalInfoId, String ratingValue, String comment) {
         this.ratingId = ratingId;
         this.medicalInfoId = medicalInfoId;
         this.ratingValue = ratingValue;
@@ -39,11 +39,11 @@ public class Feedback {
         this.medicalInfoId = medicalInfoId;
     }
 
-    public Float getRatingValue() {
+    public String getRatingValue() {
         return ratingValue;
     }
 
-    public void setRatingValue(Float ratingValue) {
+    public void setRatingValue(String ratingValue) {
         this.ratingValue = ratingValue;
     }
 
@@ -53,6 +53,11 @@ public class Feedback {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    @Override
+    public String toString() {
+        return "Feedback{" + "ratingId=" + ratingId + ", medicalInfoId=" + medicalInfoId + ", ratingValue=" + ratingValue + ", comment=" + comment + '}';
     }
     
 }
