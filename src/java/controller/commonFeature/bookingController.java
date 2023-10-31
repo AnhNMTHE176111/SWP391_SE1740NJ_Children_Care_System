@@ -187,7 +187,7 @@ public class bookingController extends HttpServlet {
         }
         lastName = lastName.trim();
 
-        int roleId = 1;
+        int roleId = 0;
         int addedUserId = user.addGuess(firstName, lastName, gender, email, phone, dob, roleId);
         int customerId = customer.addCustomer(addedUserId);
 
