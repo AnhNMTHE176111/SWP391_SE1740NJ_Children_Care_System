@@ -142,7 +142,7 @@
                     </div>
 
                     <!-- Search Form -->
-                    <div class="mb-5" style="padding-top: 10px">
+<!--                    <div class="mb-5" style="padding-top: 10px">
                         <form action="">
                             <div class="input-group">
                                 <input name="txt" type="text" class="form-control" placeholder="Search...">
@@ -153,14 +153,14 @@
                                 </div>
                             </div>
                         </form>
-                    </div>
+                    </div>-->
                     <!-- Single Image -->
                     <!--                    <div class="mb-5">
                                             <img src="img/blog-1.jpg" alt="" class="img-fluid rounded">
                                         </div>-->
 
                     <!-- Recent Post -->
-                    <div class="mb-5">
+                    <div class="mb-5 mt-5">
                         <h2 class="mb-4">Another Post</h2>
                         <c:forEach items="${listP}" var="o" varStatus="status">
                             <div class="d-flex align-items-center bg-light shadow-sm rounded overflow-hidden mb-3"> 

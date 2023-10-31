@@ -15,7 +15,30 @@ public class Doctor {
     private String Description, Position, email, phone, specialtyName;
     private String name, specialty;
     private String avatar;
-    
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    @Override
+    public String toString() {
+        return "Doctor{" + "doctorId=" + doctorId + ", Description=" + Description + ", avatar=" + avatar + ", lastname=" + lastname + ", firstname=" + firstname + '}';
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public Doctor(int doctorId,String lastname, String firstname, String Description, String avatar ) {
+        this.doctorId = doctorId;
+        this.Description = Description;
+        this.avatar = avatar;
+        this.lastname = lastname;
+        this.firstname = firstname;
+    }
+
+
+
 //code riêng dùng trong màn hình services của HongNT
     private String lastname, firstname;
 
@@ -161,13 +184,4 @@ public class Doctor {
     public void setPosition(String Position) {
         this.Position = Position;
     }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
 }
