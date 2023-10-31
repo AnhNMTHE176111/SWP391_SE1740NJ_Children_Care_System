@@ -13,16 +13,24 @@ import java.util.Date;
 public class SlotDoctor extends Slot {
 
     private int slotDoctorId, doctorId, status;
-    private String description;
+    private String description, serviceName;
     private Date day;
 
-    public SlotDoctor(int slotId, String startTime, String endTime, int doctorId, int status, String description, Date day) {
+    public SlotDoctor(int slotId, String startTime, String endTime, int doctorId, int status, String description, Date day, String serviceName) {
         super(slotId, startTime, endTime);
         this.doctorId = doctorId;
         this.status = status;
         this.description = description;
         this.day = day;
+        this.serviceName = serviceName;
+    }
 
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
     }
 
     public SlotDoctor(int slotId, String startTime, String endTime, int doctorId, int status, String description) {

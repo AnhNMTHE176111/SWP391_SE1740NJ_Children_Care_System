@@ -15,7 +15,7 @@
 
             .report-container {
                 max-width: 60%;
-                margin: 0 auto;
+                margin: 20px auto;
                 padding: 20px;
                 border: 1px solid #ccc;
                 background-color: #fff;
@@ -155,7 +155,8 @@
                     <textarea id="treatmentPlan" name="treatmentPlan">${med.getTreatmentPlan()}</textarea><br><br>
 
                     
-                    <button style="margin-top: 20px;" type="submit" name="medId" value="${med.getMedicalInfoId()}">Update Information</button>
+                    <button style="margin-top: 20px; border-radius: 5px;" class="btn-success" type="submit" name="medId" value="${med.getMedicalInfoId()}">Update Information</button>
+                    <a style=" border-radius: 5px;" class="btn btn-secondary" href="/reservation"">Back</a>
                 </form>
             </div>
 

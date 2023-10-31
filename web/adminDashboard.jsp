@@ -34,7 +34,7 @@
                     <li onclick="changeLocation('/admin-manage-setting')"> <i class="fa-solid fa-gear"></i> Setting</a></li>
                 </ul>
             </div> 
-
+            
             <div class="analytic-container" style="width: 80%; margin-left: 20%;">
                 <h1>Dashboard</h1>
                 <div class="number-total-container">

@@ -69,12 +69,13 @@ public class DAODoctor extends DBContext {
     }
 
     public ArrayList<SlotDoctor> getReservationByDocId(int doctorId) {
-        String sql = "SELECT Slots.SlotId, startTime, endTime, DoctorId, BookingStatus, Description, day\n"
-                + " FROM slots\n"
-                + " INNER JOIN SlotDoctor ON slots.slotid = SlotDoctor.slotid \n"
-                + " inner join Booking on SlotDoctor.slotDoctorId = Booking.slotDoctorId\n"
-                + "where DoctorId = ?\n"
-                + "";
+        String sql = "SELECT sl.SlotId, startTime, endTime, DoctorId, status, sd.Description, day, s.ServiceName\n"
+                + "FROM slots sl\n"
+                + "INNER JOIN SlotDoctor sd ON sl.slotid = sd.slotid \n"
+                + "join Booking b on b.slotDoctorId = sd.slotDoctorId\n"
+                + "join Services s on s.ServiceId = b.ServiceId\n"
+                + "where DoctorId = ?";
+
         SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         SimpleDateFormat outputFormat = new SimpleDateFormat("HH:mm:ss");
         ArrayList<SlotDoctor> data = new ArrayList<>();
@@ -96,7 +97,8 @@ public class DAODoctor extends DBContext {
                 int docId = Integer.parseInt(rs.getString(4));
                 int slotId = Integer.parseInt(rs.getString(1));
                 Date day = rs.getDate(7);
-                SlotDoctor c = new SlotDoctor(slotId, sTime, eTime, docId, status, Description, day);
+                String serviceName = rs.getString(8);
+                SlotDoctor c = new SlotDoctor(slotId, sTime, eTime, docId, status, Description, day, serviceName);
                 data.add(c);
             }
         } catch (SQLException e) {

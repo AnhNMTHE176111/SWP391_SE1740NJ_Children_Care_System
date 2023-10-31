@@ -217,7 +217,7 @@ public class DAOUser extends DBContext {
     public int addGuess(String firstName, String lastName, String gender, String email, String phone, String dob, int roleId) {
         int generatedId = -1;
         try {
-            String strSQL = "insert into Users(firstName, lastName, gender, email, phone, dob, roleId) values(?,?,?,?,?,?,?); SELECT SCOPE_IDENTITY();";
+            String strSQL = "insert into Users(firstName, lastName, gender, email, phone, dob, roleId, status) values(?,?,?,?,?,?,?, 0); SELECT SCOPE_IDENTITY();";
 
             pstm = cnn.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
 
