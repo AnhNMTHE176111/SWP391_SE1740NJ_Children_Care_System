@@ -32,126 +32,114 @@
                         <h2>Your Reservation Id: ${sessionScope.bookingId}</h2>
                     </div>
                 </div>
-                <div class="col-md-12 reservation-info">
-                    <div class="row">
-                        <div class="col-md-3 reservation-info-content">
-                            <label>Full Name</label>
-                            <input type="text" value="${cusInfo.firstName} ${cusInfo.lastName}" />
-                        </div>
-                        <div class="col-md-3 reservation-info-content">
-                            <label>Gender</label>
-                            <input type="text" value="${cusInfo.gender}" />
-                        </div>
-                        <div class="col-md-3 reservation-info-content">
-                            <label>Telephone Number</label>
-                            <input type="text" value="${cusInfo.phone}" />
-                        </div>
-                        <div class="col-md-3 reservation-info-content">
-                            <label>Email Address</label>
-                            <input type="text" value="${cusInfo.email}" />
-                        </div>
+                <div class="col-md-12 reservation-detail">
+                    <div class="col-md-3" style="padding: 0%">
+                        <img
+                            class="col-md-12"
+                            src="./image/reservation/nurse.png"
+                            alt=""
+                            style="width: 400px; padding: 0%"
+                            />
                     </div>
-                    <div class="row">
-                        <div class="col-md-3 reservation-info-content">
-                            <label>Reservation Date</label>
-                            <input type="text" value="${cusInfo.reservationDate}" />
+                    <div class="col-md-6 reservation-info">
+                        <div class="row">
+                            <div class="col-md-6 reservation-info-content">
+                                <label>Full Name</label>
+                                <input type="text" value="${cusInfo.lastName} ${cusInfo.firstName}" readonly/>
+                            </div>
+                            <div class="col-md-6 reservation-info-content">
+                                <label>Gender</label>
+                                <input type="text" value="${cusInfo.gender}" readonly/>
+                            </div>
                         </div>
-                        <div class="col-md-3 reservation-info-content">
-                            <label>Time To Check Up</label>
-                            <input type="text" value="${cusInfo.timeCheckUp}" />
+                        <div class="row">
+                            <div class="col-md-6 reservation-info-content">
+                                <label>Telephone Number</label>
+                                <input type="text" value="${cusInfo.phone}" readonly/>
+                            </div>
+                            <div class="col-md-6 reservation-info-content">
+                                <label>Email Address</label>
+                                <input type="text" value="${cusInfo.email}" readonly/>
+                            </div>
                         </div>
-                        <div class="col-md-3 reservation-info-content">
-                            <label>Diagnosis</label>
-                            <input type="text" value="${cusInfo.diagnosis}" />
+                        <div class="row">
+                            <div class="col-md-6 reservation-info-content">
+                                <label>Reservation Date</label>
+                                <input type="text" value="${cusInfo.reservationDate}" readonly/>
+                            </div>
+                            <div class="col-md-6 reservation-info-content">
+                                <label>Time To Check Up</label>
+                                <input type="text" value="${cusInfo.timeCheckUp}" readonly/>
+                            </div>
                         </div>
-                        <div class="col-md-3 reservation-info-content">
-                            <label>Status</label>
+                        <div class="row">
+                            <div class="col-md-6 reservation-info-content">
+                                <label>Diagnosis</label>
+                                <input type="text" value="${cusInfo.diagnosis}" readonly/>
+                            </div>
+                            <div class="col-md-6 reservation-info-content">
+                                <label>Status</label>
+                                <c:choose>
+                                    <c:when test="${cusInfo.status == 1}">
+                                        <input type="text" style="color: #e0d31e" value="Submitted" readonly />
+                                    </c:when>
+                                    <c:when test="${cusInfo.status == 2}">
+                                        <input type="text" style="color: yellowgreen" value="Success" readonly />
+                                    </c:when>
+                                    <c:when test="${cusInfo.status == 3}">
+                                        <input type="text" style="color: red" value="Cancelled" readonly />
+                                    </c:when>
+                                    <c:otherwise>
+                                        <input type="text" value="Unknown Status" readonly />
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                        </div>
+                        <div class="row reservation-button">
                             <c:choose>
-                                <c:when test="${cusInfo.status == 1}">
-                                    <input type="text" style="color: #e0d31e" value="Submitted" readonly />
-                                </c:when>
-                                <c:when test="${cusInfo.status == 2}">
-                                    <input type="text" style="color: yellowgreen" value="Success" readonly />
-                                </c:when>
                                 <c:when test="${cusInfo.status == 3}">
-                                    <input type="text" style="color: red" value="Cancelled" readonly />
+                                    <div>
+                                        <a href="/my">--- Return to your reservation list ---</a><br>
+                                        <p class="cancel_success">${requestScope.mess}</p>
+                                    </div>
                                 </c:when>
                                 <c:otherwise>
-                                    <input type="text" value="Unknown Status" readonly />
+                                    <button class="bg-danger btn-3" type="submit">
+                                        Cancel The Reservation
+                                    </button>
                                 </c:otherwise>
                             </c:choose>
                         </div>
                     </div>
-                    <div class="row reservation-button">
-                        <c:choose>
-                            <c:when test="${cusInfo.status == 3}">
-                                <div>
-                                    <a href="/my">Return to your reservation list</a><br>
-                                    <p class="cancel_success">${requestScope.mess}</p>
-                                </div>
-                            </c:when>
-                            <c:otherwise>
-                                <button class="bg-danger btn-3" type="submit">
-                                    Cancel The Reservation
-                                </button>
-                            </c:otherwise>
-                        </c:choose>
+                    <div class="col-md-2 reservation-info-section">
+                        <div class="row">
+                            <div class="col-md-12 reservation-info-section_1">
+                                <h3 class="reservation-info-section-detail-1">Your service is:</h3>
+                                <h5 class="reservation-info-section-detail-2">${cusService.serviceName}</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 reservation-info-section_2">
+                                <h3 class="reservation-info-section-detail-1">Service Description:</h3>
+                                <h5 class="reservation-info-section-detail-2">${cusService.description}</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 reservation-info-section_3">
+                                <h3 class="reservation-info-section-detail-1">Doctor Name:</h3>
+                                <h5 class="reservation-info-section-detail-2">Dr ${cusService.doctorName}</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 reservation-info-section_4">
+                                <h3 class="reservation-info-section-detail-1">Service Price:</h3>
+                                <h5 class="reservation-info-section-detail-2">${cusService.price} VND</h5>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
             </form>
-            <div class="col-md-12 list-services">
-                <form class="reserved-services">
-                    <div class="reserved-services-details">
-                        <h2>X-ray service</h2>
-                        <div>
-                            <p>
-                                Chụp X-ray cho cơ xương khớp
-                            </p>
-                        </div>
-                    </div>
-                    <div class="reserved-services-details">
-                        <h4>Doctor</h4>
-                        <p>Doctor Name</p>
-                    </div>
-                    <div class="reserved-services-details">
-                        <h4>Price</h4>
-                        <p>30,000VND</p>
-                    </div>
-<!--                    <div class="reserved-services-details">
-                        <button type="submit" class="btn-reserve">Re-reserve</button>
-                        <button type="submit" class="btn-feedback">Feedback</button>
-                    </div>-->
-                </form>
-            </div>
-            <div class="col-md-12 list-services">
-                <form class="reserved-services">
-                    <div class="reserved-services-details">
-                        <h2>Dịch vụ x-ray</h2>
-                        <div>
-                            <p>
-                                Chụp X-ray cho cơ xương khớp
-                            </p>
-                        </div>
-                    </div>
-                    <div class="reserved-services-details">
-                        <h4>Doctor</h4>
-                        <p>Doctor Name</p>
-                    </div>
-                    <div class="reserved-services-details">
-                        <h4>Price</h4>
-                        <p>30,000VND</p>
-                    </div>
-<!--                    <div class "reserved-services-details">
-                        <button type="submit" class="btn-reserve">Re-reserve</button>
-                        <button type="submit" class="btn-feedback">Feedback</button>
-                    </div>-->
-                </form>
-            </div>
-            <div class="paging col-md-12">
-                <a href="#"><button class="btn-1">1</button></a>
-                <a href="#"><button class="btn-1">1</button></a>
-                <a href="#">3</a>
-            </div>
             <div class="container-fluid pt-5">
                 <div class="container">
                     <div class="text-center pb-2">

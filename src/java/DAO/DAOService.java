@@ -138,7 +138,7 @@ public class DAOService extends DBContext {
                 int serid = rs.getInt(1);
                 String serviceName = rs.getString(2);
                 int specId = Integer.parseInt(rs.getString(3));
-                Service c = new Service(serid,serviceName, specId);
+                Service c = new Service(serid, serviceName, specId);
                 data.add(c);
             }
         } catch (SQLException e) {
@@ -162,7 +162,7 @@ public class DAOService extends DBContext {
                 String serName = rs.getString(2);
                 float price = rs.getFloat(3);
                 String description = rs.getString(4);
-                data = new Service(Integer.parseInt(serid), serName,description, price);
+                data = new Service(Integer.parseInt(serid), serName, description, price);
             }
         } catch (SQLException e) {
             System.out.println("SQL <getServiceById>: " + e.getMessage());
@@ -196,7 +196,7 @@ public class DAOService extends DBContext {
                 String specName = rs.getString(9);
                 String avatar = rs.getString(10);
 
-                data = new Doctor(Integer.parseInt(expYears), rate, Description, position, firstName, lastName, email, phone, specName,avatar);
+                data = new Doctor(Integer.parseInt(expYears), rate, Description, position, firstName, lastName, email, phone, specName, avatar);
             }
         } catch (SQLException e) {
             System.out.println("SQL <getDoctorById>: " + e.getMessage());
@@ -236,7 +236,7 @@ public class DAOService extends DBContext {
                 String specName = rs.getString(9);
                 String avatar = rs.getString(10);
 
-                data = new Doctor(Integer.parseInt(expYears), rate, Description, position, firstName, lastName, email, phone, specName,avatar);
+                data = new Doctor(Integer.parseInt(expYears), rate, Description, position, firstName, lastName, email, phone, specName, avatar);
             }
         } catch (SQLException e) {
             System.out.println("SQL <getDoctorById>: " + e.getMessage());
@@ -244,6 +244,34 @@ public class DAOService extends DBContext {
             System.out.println("<getDoctorById>: " + e.getMessage());
         }
         return data;
+    }
+
+    public Service getCusServiceInforByBookingId(String bookingId) {
+        try {
+            String strSQL = "select s.*, u.firstName, u.lastName from Services s\n"
+                    + "JOIN Booking b ON s.ServiceId = b.ServiceId\n"
+                    + "JOIN SlotDoctor sd ON b.slotDoctorId = sd.slotDoctorId\n"
+                    + "JOIN Doctors d ON sd.DoctorId = d.DoctorId\n"
+                    + "JOIN Users u ON d.userId = u.userId\n"
+                    + "where b.BookingId = ?";
+            pstm = cnn.prepareStatement(strSQL);
+            pstm.setString(1, bookingId);
+            rs = pstm.executeQuery();
+            Service service = new Service();
+            while (rs.next()) {
+                service.setServiceName(rs.getString(2));
+                service.setDescription(rs.getString(4));
+                service.setDoctorName(rs.getString(6) + " " + rs.getString(5));
+                service.setPrice(rs.getFloat(3));
+            }
+            return service;
+        } catch (SQLException e) {
+            System.out.println("SQL getCusServiceInforByBookingId: " + e.getMessage());
+            return null;
+        } catch (Exception e) {
+            System.out.println("getCusServiceInforByBookingId: " + e.getMessage());
+            return null;
+        }
     }
 
 }

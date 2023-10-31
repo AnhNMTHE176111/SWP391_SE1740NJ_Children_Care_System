@@ -15,7 +15,7 @@
 
             .report-container {
                 max-width: 60%;
-                margin: 0 auto;
+                margin: 20px auto;
                 padding: 20px;
                 border: 1px solid #ccc;
                 background-color: #fff;
@@ -133,9 +133,9 @@
             <div class="section-heading">Appointment Details</div>
             <div class="subsection">
                 <h2>Slot Information:</h2>
-                <p>Slot: ${slotId}</p>
                 <p>Start Time: ${rightSlot.getStartTime()}</p>
                 <p>End Time: ${rightSlot.getEndTime()}</p>
+                <p>Day: ${rightSlot.getDay()}</p>
             </div>
 
             <div class="subsection">
@@ -154,13 +154,9 @@
                     <label for="treatmentPlan">Treatment Plan:</label>
                     <textarea id="treatmentPlan" name="treatmentPlan">${med.getTreatmentPlan()}</textarea><br><br>
 
-                    <label for="status">Status</label>
-                    <select id="status" name="status">
-                        <option value="active">Active</option>
-                        <option value="inactive">Inactive</option>
-                    </select>
                     
-                    <button style="margin-top: 20px;" type="submit" name="medId" value="${med.getMedicalInfoId()}">Update Information</button>
+                    <button style="margin-top: 20px; border-radius: 5px;" class="btn-success" type="submit" name="medId" value="${med.getMedicalInfoId()}">Update Information</button>
+                    <a style=" border-radius: 5px;" class="btn btn-secondary" href="/reservation"">Back</a>
                 </form>
             </div>
 

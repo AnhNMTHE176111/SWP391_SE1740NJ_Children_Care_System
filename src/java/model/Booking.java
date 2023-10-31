@@ -13,7 +13,7 @@ import java.util.Date;
 public class Booking {
 
     private int bookingId, bookingStatus, customerId, medicalInfoId, slotDoctorId, slotId, doctorId, status;
-    private String description, doctorName, customerName, startTime, diagnosis, bookingDate, bookingTime, bookingCreateDate, bookingCreateTime;
+    private String description, doctorName, customerName, startTime, diagnosis, bookingDate, bookingTime, bookingCreateDate, bookingCreateTime, serviceName;
   
     private Date day;
     public Booking() {
@@ -49,7 +49,7 @@ public class Booking {
         this.day = day;
     }
     
-    public Booking(int bookingId, int bookingStatus, int customerId, String diagnosis, String bookingDate, String bookingTime, String doctorName, String bookingCreateDate, String bookingCreateTime) {
+    public Booking(int bookingId, int bookingStatus, int customerId, int medicalInfoId, String diagnosis, String bookingDate, String bookingTime, String doctorName, String serviceName, String bookingCreateDate, String bookingCreateTime) {
         this.bookingId = bookingId;
         this.bookingStatus = bookingStatus;
         this.customerId = customerId;
@@ -57,8 +57,10 @@ public class Booking {
         this.bookingDate = bookingDate;
         this.bookingTime = bookingTime;
         this.doctorName = doctorName;
+        this.serviceName = serviceName;
         this.bookingCreateDate = bookingCreateDate;
         this.bookingCreateTime = bookingCreateTime;
+        this.medicalInfoId = medicalInfoId;
     }
 
     public String getDoctorName() {
@@ -86,7 +88,11 @@ public class Booking {
 
     
     }
-  
+
+    public String getServiceName() {
+        return serviceName;
+    }
+    
 
     public String getDiagnosis() {
         return diagnosis;
@@ -105,6 +111,9 @@ public class Booking {
         return bookingCreateTime;
     }
 
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
+    }
   
     public void setDiagnosis(String diagnosis) {
         this.diagnosis = diagnosis;
