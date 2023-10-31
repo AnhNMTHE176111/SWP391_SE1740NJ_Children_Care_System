@@ -98,6 +98,17 @@
         <servlet-class>controller.managerFeature.loadPost</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>listDoctorController</servlet-name>
+        <servlet-class>controller.commonFeature.listDoctorController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>doctorDetailController</servlet-name>
+        <servlet-class>controller.commonFeature.doctorDetailController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>feedbackController</servlet-name>
+        <servlet-class>controller.commonFeature.feedbackController</servlet-class>
+    </servlet>
         <servlet-name>changeStatus</servlet-name>
         <servlet-class>controller.staffFeature.changeStatus</servlet-class>
     </servlet>
@@ -200,6 +211,17 @@
         <url-pattern>/loadPost</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>listDoctorController</servlet-name>
+        <url-pattern>/listDoctor</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>doctorDetailController</servlet-name>
+        <url-pattern>/detailDoctor</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>feedbackController</servlet-name>
+        <url-pattern>/feedback</url-pattern>
+    </servlet-mapping>=======
         <servlet-name>changeStatus</servlet-name>
         <url-pattern>/changeStatus</url-pattern>
     </servlet-mapping>
