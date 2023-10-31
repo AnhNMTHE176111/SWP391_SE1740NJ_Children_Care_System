@@ -71,7 +71,7 @@ public class myReservation extends HttpServlet {
         DAOCustomer cusDao = new DAOCustomer();
         User user = (User) session.getAttribute("user");
         Customer cusId = cusDao.getCusIdByUserId(user.getUserId());
-        String pageIndexStr = request.getParameter("pageIndex");
+         String pageIndexStr = request.getParameter("pageIndex");
         if (pageIndexStr == null) {
             pageIndexStr = "1";
         }
@@ -86,6 +86,7 @@ public class myReservation extends HttpServlet {
         List<Booking> customerReservation = bookingDao.getListCusReservation(cusId.getId(), pageIndex);
         request.setAttribute("endP", endPage);
         session.setAttribute("customerReservation", customerReservation);
+        session.setAttribute("cusName", user.getFirstName() + " " + user.getLastName());
         request.getRequestDispatcher("myReservation.jsp").forward(request, response);
     }
 

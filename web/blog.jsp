@@ -17,6 +17,8 @@
         
         <jsp:include page="bannerHome.jsp"></jsp:include>
 
+
+
         <form action="searchPost" method="post" class="form-inline" style="margin-left: 1000px">
                 <div class="input-group">
                     <input name="txt" type="text" class="form-control" placeholder="Search...">

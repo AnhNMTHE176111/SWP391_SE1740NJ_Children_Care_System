@@ -89,7 +89,6 @@ public class staffController extends HttpServlet {
         String treatmentPlan = request.getParameter("treatmentPlan");
         String status = request.getParameter("status");
                 
-        d.updateStatusByBookingId(medId,status);        
         d.updateMedicalInfoByMedId(medId,revisit,symtoms,diagnosis,treatmentPlan);
         
         response.sendRedirect("reservation");

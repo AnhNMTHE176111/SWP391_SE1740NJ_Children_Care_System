@@ -2,26 +2,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.commonFeature;
+package controller.staffFeature;
 
-import DAO.DAOService;
+import DAO.DAODoctor;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
-import model.Doctor;
-import model.Service;
-import model.User;
 
 /**
  *
  * @author Admin
  */
-public class serviceListServlet extends HttpServlet {
+public class changeStatus extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +35,10 @@ public class serviceListServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet serviceListServlet</title>");
+            out.println("<title>Servlet changeStatus</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet serviceListServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet changeStatus at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,20 +56,7 @@ public class serviceListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String id = request.getParameter("id");
-        DAOService d = new DAOService();
-        Service serviceList = d.getServiceById(id);
-        HttpSession session = request.getSession();
-        User currentUser = (User) session.getAttribute("user");
-        Doctor doc;
-        if (currentUser != null) {
-            doc = d.getDoctorById_UserID(id, currentUser.getUserId());
-        } else {
-            doc = d.getDoctorById(id);
-        }
-        request.setAttribute("serviceList", serviceList);
-        request.setAttribute("doc", doc);
-        request.getRequestDispatcher("servicesList.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -88,7 +70,13 @@ public class serviceListServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        System.out.println("Change status");
+        DAODoctor d = new DAODoctor();
+        int slotId = Integer.parseInt(request.getParameter("slotId"));
+        int doctorId = Integer.parseInt(request.getParameter("doctorId"));
+        int status = Integer.parseInt(request.getParameter("status"));
+        d.changeStatusBySlotIdandDocId(slotId, doctorId, status);
+        response.sendRedirect("reservation");
     }
 
     /**

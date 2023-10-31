@@ -30,24 +30,23 @@
                             <a href="admin" class="nav-item nav-link">Admin Dashboard</a>
                         </c:if>
                         <a href="/home" class="nav-item nav-link">Home</a>
+                        <a href="home" class="nav-item nav-link">Home</a>
                         <a href="/blog" class="nav-item nav-link">Blogs</a>
                         <a href="/service" class="nav-item nav-link">Services</a>
                         <a href="team.html" class="nav-item nav-link">Doctors</a>
-                        <div class="nav-item dropdown">
-                            <a href="/servicelist" class="nav-link dropdown-toggle" data-toggle="dropdown">Specialist</a>
-
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="blog.html" class="dropdown-item">Blog Grid</a>
-                                <a href="single.html" class="dropdown-item">Blog Detail</a>
-                            </div>
-                        </div>
+                        <c:if test="${sessionScope.roleId eq 1}">
+                            <a href="/my" class="nav-item nav-link " >My Reservation</a>
+                        </c:if>
+                        <c:if test="${sessionScope.roleId eq 2}">
+                            <a href="/reservation" class="nav-item nav-link " >Reservation</a>
+                        </c:if>
                         <a href="booking" class="nav-item nav-link">Booking</a>
                     </div>
 
                     <ul class="nav">
                         <c:if test="${sessionScope.name ne null}">
                             <li class="nav-item">
-                                <a class="nav-link" href="/my">${sessionScope.name}</a>
+                                <a class="nav-link" href="#" onclick="showPopup()">${sessionScope.name}</a>
                             </li>
                             <li class="nav-item">
                                 <img onclick="showPopup()" style="height:40px;width:40px;border-radius:50%; object-fit: cover; cursor: pointer"
