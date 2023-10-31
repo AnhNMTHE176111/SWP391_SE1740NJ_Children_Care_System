@@ -115,7 +115,7 @@
                 <div class="row pb-3">
                     <div class="col-lg-4 mb-4">
                         <div class="card border-0 shadow-sm mb-2">
-                            <img class="card-img-top mb-2" src="https://vinmec-prod.s3.amazonaws.com/images/20191130_030902_740495_20190226_042612_26719.max-800x800.png" alt="">
+                            <a href="postDetail?postId=2"><img class="card-img-top mb-2" src="https://vinmec-prod.s3.amazonaws.com/images/20191130_030902_740495_20190226_042612_26719.max-800x800.png" alt=""></a>
                             <div class="card-body bg-light text-center p-4">
                                 <h4 class="">Những lưu ý quan trọng trước khi khám sức khỏe tổng quát</h4>
                                 <!--            <div class="d-flex justify-content-center mb-3">
@@ -124,13 +124,13 @@
                                               <small class="mr-3"><i class="fa fa-comments text-primary"></i> 15</small>
                                 </div>-->
                                 <p>Theo khuyến cáo từ Hiệp hội Tim mạch Mỹ, bạn cần tiến hành kiểm tra huyết áp hàng năm ở độ tuổi từ 18 trở lên để tầm soát nguy cơ tăng huyết áp.</p>
-                                <a href="" class="btn btn-primary px-4 mx-auto my-2">Read More</a>
+                                <a href="postDetail?postId=2" class="btn btn-primary px-4 mx-auto my-2">Read More</a>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4 mb-4">
                         <div class="card border-0 shadow-sm mb-2">
-                            <img class="card-img-top mb-2" src="https://vinmec-prod.s3.amazonaws.com/images/20191120_084425_617598_tiem-phong-vacxin.max-800x800.png" alt="">
+                            <a href="postDetail?postId=1"><img class="card-img-top mb-2" src="https://vinmec-prod.s3.amazonaws.com/images/20191120_084425_617598_tiem-phong-vacxin.max-800x800.png" alt=""></a>
                             <div class="card-body bg-light text-center p-4">
                                 <h4 class="">Có nên trì hoãn việc tiêm chủng trong đợt dịch Covid-19?</h4>
                                 <!--                            <div class="d-flex justify-content-center mb-3">
@@ -139,13 +139,13 @@
                                                                 <small class="mr-3"><i class="fa fa-comments text-primary"></i> 15</small>
                                                             </div>-->
                                 <p>Theo khuyến cáo của các chuyên gia y tế, ngay cả trong thời điểm có dịch bệnh, phụ huynh vẫn nên đưa con đi tiêm vắc xin đúng lịch. </p>
-                                <a href="" class="btn btn-primary px-4 mx-auto my-2">Read More</a>
+                                <a href="postDetail?postId=1" class="btn btn-primary px-4 mx-auto my-2">Read More</a>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4 mb-4">
                         <div class="card border-0 shadow-sm mb-2">
-                            <img class="card-img-top mb-2" src="https://vinmec-prod.s3.amazonaws.com/images/20190909_040421_333458_giao-duc-gioi-tinh.max-800x800.jpg" alt="">
+                            <a href="postDetail?postId=5"><img class="card-img-top mb-2" src="https://vinmec-prod.s3.amazonaws.com/images/20190909_040421_333458_giao-duc-gioi-tinh.max-800x800.jpg" alt=""></a>
                             <div class="card-body bg-light text-center p-4">
                                 <h4 class="">Giáo dục giới tính cho trẻ nhỏ</h4>
                                 <!--                            <div class="d-flex justify-content-center mb-3">
@@ -155,7 +155,7 @@
                                                             </div>-->
                                 <p>Giáo dục giới tính ở trẻ em luôn là khía cạnh nhận được nhiều sự quan tâm từ phía xã hội. Trách nhiệm của cả gia đình và nhà trường </p>
 </p>
-                                <a href="" class="btn btn-primary px-4 mx-auto my-2">Read More</a>
+                                <a href="postDetail?postId=5" class="btn btn-primary px-4 mx-auto my-2">Read More</a>
                             </div>
                         </div>
                     </div>

@@ -57,9 +57,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     margin: 0;
 }
 
-.item, .table-reservation-header {
+.table-reservation-header {
     color: white;
     font-family: "Handlee", cursive;
+}
+
+.item {
+    color: white;
+    font-family: "Nunito", sans-serif;
 }
 
 .table-reservation-header, .table-reservation-column {
@@ -75,7 +80,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     margin: 20px 0;
 }
 
-.row h2{
+.reservation-header h2{
     font-family: "Handlee", cursive;
     color: #00394F;
 }
@@ -127,9 +132,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     flex-direction: column;
     justify-content: center;
     background-color:#17a2b8;
-    height: 250px;
     border-radius: 20px;
-    margin-bottom: 50px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    transition: box-shadow 0.3s;
 }
 
 .reservation-info-content {
@@ -182,15 +187,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     align-items:center;
 }
 
-.reserved-services-details p{
-    color: #666666;
-}
-
-.reserved-services-details h2, h4{
-    color: #00394f;
-    font-family: "Nunito", sans-serif;
-    font-weight: 600;
-}
 
 .btn-3{
     border-radius: 30px;
@@ -249,63 +245,126 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 .button-4 {
-  appearance: none;
-  background-color: #FAFBFC;
-  border: 1px solid rgba(27, 31, 35, 0.15);
-  border-radius: 6px;
-  box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
-  box-sizing: border-box;
-  color: #24292E;
-  cursor: pointer;
-  display: inline-block;
-  font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 20px;
-  list-style: none;
-  padding: 6px 16px;
-  position: relative;
-  transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  vertical-align: middle;
-  white-space: nowrap;
-  word-wrap: break-word;
-  text-decoration: none;
+    appearance: none;
+    background-color: #FAFBFC;
+    border: 1px solid rgba(27, 31, 35, 0.15);
+    border-radius: 6px;
+    box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+    box-sizing: border-box;
+    color: #24292E;
+    cursor: pointer;
+    display: inline-block;
+    font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    list-style: none;
+    padding: 6px 16px;
+    position: relative;
+    transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+    white-space: nowrap;
+    word-wrap: break-word;
+    text-decoration: none;
 }
 
 .button-4:hover {
-  background-color: #F3F4F6;
-  text-decoration: none;
-  transition-duration: 0.1s;
+    background-color: #F3F4F6;
+    text-decoration: none;
+    transition-duration: 0.1s;
 }
 
 .button-4:disabled {
-  background-color: #FAFBFC;
-  border-color: rgba(27, 31, 35, 0.15);
-  color: #959DA5;
-  cursor: default;
+    background-color: #FAFBFC;
+    border-color: rgba(27, 31, 35, 0.15);
+    color: #959DA5;
+    cursor: default;
 }
 
 .button-4:active {
-  background-color: #EDEFF2;
-  box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
-  transition: none 0s;
+    background-color: #EDEFF2;
+    box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
+    transition: none 0s;
 }
 
 .button-4:focus {
-  outline: 1px transparent;
+    outline: 1px transparent;
 }
 
 .button-4:before {
-  display: none;
+    display: none;
 }
 
 .button-4:-webkit-details-marker {
-  display: none;
+    display: none;
 }
 
 .cancel_success{
     color: greenyellow;
 }
+
+.reservation-detail {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+
+.reservation-info-section_1 {
+    background-color:#17a2b8;
+    padding: 10px;
+    border-radius: 20px 20px 0 0;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    transition: box-shadow 0.3s;
+}
+
+.reservation-info-section_2 {
+    background-color:#17a2b8;
+    padding: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    transition: box-shadow 0.3s;
+}
+
+.reservation-info-section_3 {
+    background-color:#17a2b8;
+    padding: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    transition: box-shadow 0.3s;
+}
+
+.reservation-info-section_4 {
+    background-color:#17a2b8;
+    padding: 10px;
+    border-radius: 0 0 20px 20px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    transition: box-shadow 0.3s;
+}
+
+.reservation-info-section_1:hover {
+    box-shadow: rgba(0, 0, 0, 0.7) 0px 10px 20px;
+}
+
+.reservation-info-section_2:hover {
+    box-shadow: rgba(0, 0, 0, 0.7) 0px 10px 20px;
+}
+
+.reservation-info-section_3:hover {
+    box-shadow: rgba(0, 0, 0, 0.7) 0px 10px 20px;
+}
+
+.reservation-info-section_4:hover {
+    box-shadow: rgba(0, 0, 0, 0.7) 0px 10px 20px;
+}
+
+.reservation-info-section-detail-1{
+    color: white;
+}
+
+.reservation-info-section-detail-2{
+    font-family: "Nunito", sans-serif;
+    color: white;
+}
+

@@ -5,29 +5,23 @@
 
 package controller.commonFeature;
 
-import DAO.DAOBooking;
-import DAO.DAOCustomer;
-import DAO.DAOService;
-import DAO.DAOUser;
+import DAO.DAODoctor;
+import DAO.DAOPost;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import model.Booking;
-import model.Customer;
-import model.Service;
-import model.User;
+import java.util.ArrayList;
+import model.Doctor;
+import model.Post;
 
 /**
  *
- * @author ASUS
+ * @author admin
  */
-@WebServlet(name="informationReservation", urlPatterns={"/information"})
-public class informationReservation extends HttpServlet {
+public class listDoctorController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -44,10 +38,10 @@ public class informationReservation extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet informationReservation</title>");  
+            out.println("<title>Servlet listDoctorController</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet informationReservation at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet listDoctorController at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,18 +58,20 @@ public class informationReservation extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        DAOUser userDao = new DAOUser();
-        DAOCustomer cusDao = new DAOCustomer();
-        DAOService serDao = new DAOService();
+        response.setContentType("text/html;charset=UTF-8");
+        DAODoctor dao = new DAODoctor();
+        ArrayList<String> listIntro = new ArrayList<>();
         
-        String bookingId = request.getParameter("id");
-        Customer cusInfo = cusDao.getCusBookingInforByBookId(bookingId);
-        Service cusService = serDao.getCusServiceInforByBookingId(bookingId);
-        session.setAttribute("bookingId", bookingId);
-        session.setAttribute("cusInfo", cusInfo);
-        session.setAttribute("cusService", cusService);
-        request.getRequestDispatcher("reservationInformation.jsp").forward(request, response);
+        ArrayList<Doctor> listD = dao.getListDoctor();
+        for (Doctor doctor : listD) {
+            String intro = doctor.getDescription().substring(0, 5) + "...";
+            listIntro.add(intro);
+        }
+        
+        
+        request.setAttribute("listD", listD);
+        request.setAttribute("listIntro", listIntro);
+        request.getRequestDispatcher("listDoctor.jsp").forward(request, response);
     } 
 
     /** 
@@ -88,17 +84,7 @@ public class informationReservation extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String cancelBookingId = request.getParameter("bookingId");
-        DAOBooking bookDao = new DAOBooking();
-        DAOCustomer cusDao = new DAOCustomer();
-        String cancelBooking = bookDao.cancelCusBookingByBookId(cancelBookingId);
-        Customer cusInfo = cusDao.getCusBookingInforByBookId(cancelBooking);
-        String mess = "The reservation has been canceled";
-        request.setAttribute("mess", mess);
-        session.setAttribute("bookingId", cancelBookingId);
-        session.setAttribute("cusInfo", cusInfo);
-        request.getRequestDispatcher("reservationInformation.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /** 
