@@ -57,7 +57,7 @@ public class DAODoctor extends DBContext {
                 Doctor doctor = new Doctor(0, 0, 0, name, specialty, "", "");
                 int id = Integer.parseInt(rs.getString(2));
                 int doctorId = rs.getInt(3);
-                Doctor doctor = new Doctor(name, id, doctorId);
+                doctor = new Doctor(name, id, doctorId);
 
                 doctor = new Doctor(name, id, doctorId);
                 data.add(doctor);
@@ -347,6 +347,7 @@ public class DAODoctor extends DBContext {
             System.out.println("<getPostById>: " + e.getMessage());
         }
         return null;
+    }
     public void changeStatusBySlotIdandDocId(int slotId, int doctorId, int status) {
         String sql = "UPDATE SlotDoctor\n"
                 + "Set Status = ?\n"

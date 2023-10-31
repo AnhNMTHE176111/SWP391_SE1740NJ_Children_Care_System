@@ -109,6 +109,7 @@
         <servlet-name>feedbackController</servlet-name>
         <servlet-class>controller.commonFeature.feedbackController</servlet-class>
     </servlet>
+    <servlet>
         <servlet-name>changeStatus</servlet-name>
         <servlet-class>controller.staffFeature.changeStatus</servlet-class>
     </servlet>
@@ -221,11 +222,11 @@
     <servlet-mapping>
         <servlet-name>feedbackController</servlet-name>
         <url-pattern>/feedback</url-pattern>
-    </servlet-mapping>=======
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>changeStatus</servlet-name>
         <url-pattern>/changeStatus</url-pattern>
     </servlet-mapping>
-
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
