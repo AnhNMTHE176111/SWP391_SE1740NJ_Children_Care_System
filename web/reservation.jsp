@@ -59,21 +59,21 @@
                 </tr>
             </thead>
             <tbody>
-                <c:forEach var="item" items="${slotDoc}" >
+                <c:forEach var="item" items="${slotDoc}" varStatus="loop">
+                    <c:set var="count" value="${loop.index + 1}" />
                     <tr>
                         <td>${specialty} </td>
                         <td>
-                            <div id="statusDisplay_${item.getSlotId()}">
+                            <div id="statusDisplay_${count}">
                                 <script>
-                                    const statusDisplay_${item.getSlotId()} = document.getElementById('statusDisplay_${item.getSlotId()}');
-                                    const status_${item.getSlotId()} = ${item.getStatus()};  // Replace with your actual status value
+                                    const statusDisplay_${count} = document.getElementById('statusDisplay_${count}');
 
-                                    if (status_${item.getSlotId()} === 1) {
-                                        statusDisplay_${item.getSlotId()}.innerHTML = '<div class="active">Active</div>';
-                                    } else if (status_${item.getSlotId()} === 2) {
-                                        statusDisplay_${item.getSlotId()}.innerHTML = '<div class="active">Active</div>';
+                                    if (${item.getStatus()}== 1) {
+                                        statusDisplay_${count}.innerHTML = '<div class="active">Submit</div>';
+                                    } else if (${item.getStatus()} == 2) {
+                                        statusDisplay_${count}.innerHTML = '<div class="inactive">Cancel</div>';
                                     } else {
-                                        statusDisplay_${item.getSlotId()}.innerHTML = '<div class="inactive">Inactive</div>';
+                                        statusDisplay_${count}.innerHTML = '<div class="active">Success</div>';
                                     }
                                 </script>
                             </div>
@@ -89,10 +89,20 @@
                     <td><input type="submit" value="Read more" ></td>
                 </form>    
                 <form action="changeStatus" method="POST" >
-                    <input type="hidden" name="slotId" value="${item.getSlotId()}">
+                    <td>
+                        <select name="status" id="status">
+                            <option value="3">Success</option>
+                            <option value="2">Cancel</option>
+                        </select>                    
+                        <input type="hidden" name="slotId" value="${item.getSlotId()}">
+                        <input type="hidden" name="doctorId" value="${item.getDoctorId()}">
+                        <input type="submit" value="Change" >
+                    </td>
+<!--                    <input type="hidden" name="slotId" value="${item.getSlotId()}">
                     <input type="hidden" name="status" value="${item.getStatus()}">
                     <input type="hidden" name="doctorId" value="${item.getDoctorId()}">
-                    <td><input type="submit" value="Change" ></td>
+                    <td><input type="submit" value="Change" ></td>-->
+
                 </form>   
             </tr>
         </c:forEach>

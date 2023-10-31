@@ -184,13 +184,4 @@ public class Doctor {
     public void setPosition(String Position) {
         this.Position = Position;
     }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
 }

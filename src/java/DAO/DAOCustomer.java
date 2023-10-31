@@ -4,6 +4,7 @@
  */
 package DAO;
 
+import com.oracle.wls.shaded.org.apache.bcel.generic.AALOAD;
 import dal.DBContext;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -124,8 +125,124 @@ public class DAOCustomer extends DBContext {
             System.out.println("SQL getCusBookingInforByBookId: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("getCusBookingInforByBookId: " + e.getMessage());
-        } 
+        }
         return customer;
+    }
+
+    public ArrayList<User> getListCustomer(int currentPage, int itemsPerPage) {
+        String sql = " SELECT * FROM Users where RoleId = 1 ORDER BY userId"
+                + " OFFSET ? ROWS FETCH NEXT ? ROWS ONLY;";
+        int offset = (currentPage - 1) * itemsPerPage;
+
+        ArrayList<User> data = new ArrayList<>();
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, offset);
+            ps.setInt(2, itemsPerPage);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String userId = rs.getString(1);
+                String status = rs.getString(2);
+                String fname = rs.getString(3);
+                String lname = rs.getString(4);
+                boolean gender = rs.getBoolean(5);
+                String sex;
+                if (gender) {
+                    sex = "male";
+                } else {
+                    sex = "female";
+                }
+                String email = rs.getString(6);
+                String phone = rs.getString(9);
+                String address = rs.getString(8);
+                String dob = rs.getString(10);
+                String avatar = rs.getString(11);
+                String creatAt = rs.getString(12);
+                User c = new User(status, fname, lname, sex, email, "", address, phone, dob, avatar, creatAt, Integer.parseInt(userId), 0);
+                data.add(c);
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL <getListCustomer>: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("<getListCustomer>: " + e.getMessage());
+        }
+        return data;
+    }
+
+    public void deleteCustomerById(String UserId) {
+        String sql = " DELETE FROM Users\n"
+                + "WHERE userId = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, Integer.parseInt(UserId));
+
+            int rowsDeleted = ps.executeUpdate();
+            if (rowsDeleted > 0) {
+                System.out.println("success.jsp");
+            } else {
+                System.out.println("notfound.jsp");
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL <deleteCustomerById>: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("<deleteCustomerById>: " + e.getMessage());
+        }
+
+    }
+
+    public User getUserById(String UserId) {
+        String sql = " select * from users \n"
+                + "  where roleId = 1 and userId = ?";
+        User c = new User();
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, Integer.parseInt(UserId));
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String userId = rs.getString(1);
+                String status = rs.getString(2);
+                String fname = rs.getString(3);
+                String lname = rs.getString(4);
+                boolean gender = rs.getBoolean(5);
+                String sex;
+                if (gender) {
+                    sex = "male";
+                } else {
+                    sex = "female";
+                }
+                String email = rs.getString(6);
+                String phone = rs.getString(9);
+                String address = rs.getString(8);
+                String dob = rs.getString(10);
+                String avatar = rs.getString(11);
+                String creatAt = rs.getString(12);
+                c = new User(status, fname, lname, sex, email, "", address, phone, dob, avatar, creatAt, Integer.parseInt(userId), 0);
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL <getUserById>: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("<getUserById>: " + e.getMessage());
+        }
+        return c;
+    }
+
+    public int getTotalItemCount() {
+        String sql = " SELECT COUNT(*) FROM Users where RoleId = 1;";
+        int total = 0;
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                total = rs.getInt(1);
+                System.out.println(total);
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL <getTotalItemCount>: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("<getTotalItemCount>: " + e.getMessage());
+        }
+        return total;
     }
 
 }
