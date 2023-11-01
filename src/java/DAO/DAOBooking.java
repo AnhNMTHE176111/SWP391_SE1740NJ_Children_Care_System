@@ -20,10 +20,12 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import java.util.List;
 import model.Booking;
+import model.Customer;
 
 public class DAOBooking extends DBContext {
 
@@ -39,17 +41,17 @@ public class DAOBooking extends DBContext {
         cnn = super.connection;
     }
 
-    public int addBooking(int status, int customerId, int slotDoctorId) {
+    public int addBooking(int status, int customerId, int slotDoctorId, int serviceId) {
         int generatedId = -1;
         try {
-            String strSQL = "insert into Booking(BookingStatus, CustomerID, slotDoctorId) values(?,?,?); SELECT SCOPE_IDENTITY();";
+            String strSQL = "insert into Booking(BookingStatus, CustomerID, slotDoctorId, ServiceId) values(?,?,?,?); SELECT SCOPE_IDENTITY();";
 
             pstm = cnn.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
 
             pstm.setInt(1, status);
             pstm.setInt(2, customerId);
             pstm.setInt(3, slotDoctorId);
-
+            pstm.setInt(4, serviceId);
             if (pstm.executeUpdate() > 0) {
                 try (ResultSet generatedKeys = pstm.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
@@ -91,14 +93,16 @@ public class DAOBooking extends DBContext {
 
     public List<Booking> getBookingListForManage() {
         List<Booking> bookings = new ArrayList<>();
-        String strSQL = "SELECT \n"
+        String strSQL = "					SELECT \n"
                 + "    Booking.BookingId, \n"
+                + "    Doctors.DoctorId AS DoctorId,\n"
+                + "    SlotDoctor.SlotId AS SlotId,\n"
                 + "    Booking.BookingStatus,\n"
-                + "	Slots.StartTime,\n"
-                + "	SlotDoctor.Status,\n"
+                + "    Slots.StartTime,\n"
+                + "    SlotDoctor.Status,\n"
                 + "    DoctorUsers.firstName + ' ' + DoctorUsers.lastName AS DoctorName, \n"
                 + "    CustomerUsers.firstName + ' ' + CustomerUsers.lastName AS CustomerName,\n"
-                + " day\n"
+                + "    day\n"
                 + "FROM \n"
                 + "    Booking\n"
                 + "JOIN \n"
@@ -108,17 +112,19 @@ public class DAOBooking extends DBContext {
                 + "JOIN \n"
                 + "    Users AS DoctorUsers ON DoctorUsers.userId = Doctors.userId\n"
                 + "JOIN \n"
-                + "    Customers ON Customers.Id = Booking.CustomerId -- Giả định Booking có một trường CustomerId\n"
+                + "    Customers ON Customers.Id = Booking.CustomerId\n"
                 + "JOIN \n"
                 + "    Users AS CustomerUsers ON CustomerUsers.userId = Customers.userId\n"
-                + "	join \n"
-                + "	Slots on Slots.SlotId = SlotDoctor.SlotId\n"
+                + "JOIN \n"
+                + "    Slots on Slots.SlotId = SlotDoctor.SlotId\n"
                 + "WHERE \n"
                 + "    day IS NOT NULL;";
 
         try (PreparedStatement pstm = cnn.prepareStatement(strSQL); ResultSet rs = pstm.executeQuery()) {
             while (rs.next()) {
                 int bookingId = rs.getInt("BookingId");
+                int doctorId = rs.getInt("DoctorId");
+                int slotId = rs.getInt("SlotId");
                 int bookingStatus = rs.getInt("BookingStatus");
                 String startTimeString = rs.getString("StartTime");
 
@@ -133,7 +139,7 @@ public class DAOBooking extends DBContext {
                 String doctorName = rs.getString("DoctorName");
                 String customerName = rs.getString("CustomerName");
                 Date dayResult = rs.getDate("day");
-                bookings.add(new Booking(bookingId, bookingStatus, formattedTime, status, doctorName, customerName, dayResult));
+                bookings.add(new Booking(bookingId, doctorId, slotId, bookingStatus, formattedTime, status, doctorName, customerName, dayResult));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -146,12 +152,16 @@ public class DAOBooking extends DBContext {
         ArrayList<Booking> listCustReservation = new ArrayList<Booking>();
         try {
             String strSQL = "SELECT\n"
-                    + "b.*,\n"
-                    + "m.Diagnosis,\n"
-                    + "CONCAT(u.firstName, ' ', u.lastName) AS fullName\n"
+                    + "  b.*,\n"
+                    + "  m.Diagnosis,\n"
+                    + "  CONCAT(u.firstName, ' ', u.lastName) AS fullName,\n"
+                    + "  s.StartTime,\n"
+                    + "  s.EndTime\n"
                     + "FROM Booking b\n"
                     + "JOIN MedicalInfo m ON b.MedicalInfoId = m.MedicalInfoId\n"
                     + "JOIN Doctors d ON b.slotDoctorId = d.DoctorId\n"
+                    + "JOIN SlotDoctor sd ON b.slotDoctorId = sd.slotDoctorId\n"
+                    + "JOIN Slots s ON sd.SlotId = s.SlotId\n"
                     + "JOIN Users u ON d.userId = u.userId\n"
                     + "WHERE b.CustomerId = '" + cusId + "'\n"
                     + "ORDER BY b.CustomerId\n"
@@ -163,12 +173,12 @@ public class DAOBooking extends DBContext {
                 int BookingId = rs.getInt(1);
                 int BookingStatus = rs.getInt(2);
                 int CustomerID = rs.getInt(3);
-                String Symptomps = rs.getString(8);
-                String BookingDate = String.valueOf(rs.getDate(5));
-                String BookingTime = String.valueOf(rs.getTime(5));
-                String DoctorName = rs.getString(9);
-                String CreateDate = String.valueOf(rs.getDate(7));
-                String CreateTime = String.valueOf(rs.getTime(7));
+                String Symptomps = rs.getString(7);
+                String BookingDate = String.valueOf(rs.getDate(9));
+                String BookingTime = String.valueOf("From " + rs.getTime(9) + " to " + rs.getTime(10));
+                String DoctorName = rs.getString(8);
+                String CreateDate = String.valueOf(rs.getDate(6));
+                String CreateTime = String.valueOf(rs.getTime(6));
                 Booking cusBooking = new Booking(BookingId, BookingStatus, CustomerID, Symptomps, BookingDate, BookingTime, DoctorName, CreateDate, CreateTime);
                 listCustReservation.add(cusBooking);
             }
@@ -184,6 +194,8 @@ public class DAOBooking extends DBContext {
                     + "FROM Booking b\n"
                     + "JOIN MedicalInfo m ON b.MedicalInfoId = m.MedicalInfoId\n"
                     + "JOIN Doctors d ON b.slotDoctorId = d.DoctorId\n"
+                    + "JOIN SlotDoctor sd ON b.slotDoctorId = sd.slotDoctorId\n"
+                    + "JOIN Slots s ON sd.SlotId = s.SlotId\n"
                     + "JOIN Users u ON d.userId = u.userId\n"
                     + "WHERE b.CustomerId = '" + cusId + "'";
             pstm = cnn.prepareStatement(strSQL);
@@ -201,16 +213,62 @@ public class DAOBooking extends DBContext {
         return 0;
     }
 
+    public String getTotalNumberOfBooking() {
+        try {
+            String strSQL = "select count(BookingId) as total from Booking";
+            pstm = cnn.prepareStatement(strSQL);
+            rs = pstm.executeQuery();
+            if (rs.next()) {
+                int total = rs.getInt(1);
+                DecimalFormat decimalFormat = new DecimalFormat("#,###");
+                String formattedNumber = decimalFormat.format(total);
+                return formattedNumber;
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL getTotalNumberOfBooking: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("getTotalNumberOfBooking: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public String getTotalMoney() {
+        try {
+            String strSQL = "select sum(abc.Price) as total from Booking b\n"
+                    + "join SlotDoctor sd \n"
+                    + "on b.slotDoctorId = sd.slotDoctorId\n"
+                    + "join (\n"
+                    + "	select ds.DoctorId, s.ServiceId, s.Price\n"
+                    + "	from DoctorServices ds\n"
+                    + "	join Doctors d on ds.DoctorId = d.DoctorId\n"
+                    + "	join Services s on ds.ServiceId = s.ServiceId \n"
+                    + ") abc on abc.DoctorId = sd.DoctorId\n"
+                    + "where b.BookingStatus = 1";
+            pstm = cnn.prepareStatement(strSQL);
+            rs = pstm.executeQuery();
+            if (rs.next()) {
+                int total = rs.getInt(1);
+                DecimalFormat decimalFormat = new DecimalFormat("#,###");
+                String formattedNumber = decimalFormat.format(total);
+                return formattedNumber;
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL getTotalMoney: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("getTotalMoney: " + e.getMessage());
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         DAOBooking bookDao = new DAOBooking();
-        int count = bookDao.getTotalCusReservation(1);
+        int count = bookDao.getTotalCusReservation(0);
         System.out.println(count);
     }
 
-    public boolean updateBookingByManager(int bookingId, int status, String startTime, int slotStatus, String doctorName, String customerName, String date) {
+    public boolean updateBookingByManager(int bookingId, int status, int slotId, int slotStatus, String doctorFirstName, String doctorLastName, String customerFirstName, String customerLastName, String date) {
 
         try {
-
             String updateBookingSQL = "UPDATE Booking "
                     + "SET BookingStatus = ? "
                     + "WHERE BookingId = ?";
@@ -219,46 +277,46 @@ public class DAOBooking extends DBContext {
             pstm.setInt(2, bookingId);
             pstm.execute();
 
-            String updateStartTimeSQL = "UPDATE Slots "
-                    + "SET StartTime = ? "
-                    + "WHERE SlotId IN (SELECT SlotId FROM SlotDoctor WHERE slotDoctorId IN (SELECT slotDoctorId FROM Booking WHERE BookingId = ?))";
-            pstm = cnn.prepareStatement(updateStartTimeSQL);
-            pstm.setString(1, startTime);
-            pstm.setInt(2, bookingId);
-            pstm.execute();
-
-            String updateSlotStatusSQL = "  UPDATE SlotDoctor \n" +
-"                   SET Status = ?\n" +
-"                  WHERE slotDoctorId IN (SELECT slotDoctorId FROM Booking WHERE BookingId = ?);";
+            String updateSlotStatusSQL = "UPDATE SlotDoctor "
+                    + "SET Status = ?, SlotId = ?, day = ? "
+                    + "WHERE slotDoctorId IN (SELECT slotDoctorId FROM Booking WHERE BookingId = ?)";
             pstm = cnn.prepareStatement(updateSlotStatusSQL);
             pstm.setInt(1, slotStatus);
-            pstm.setInt(2, bookingId);
+            pstm.setInt(2, slotId);
+            pstm.setString(3, date);
+            pstm.setInt(4, bookingId);
             pstm.execute();
 
             String updateDoctorNameSQL = "UPDATE Users "
                     + "SET firstName = ?, lastName = ? "
                     + "WHERE UserId IN (SELECT DoctorId FROM Doctors WHERE DoctorId IN (SELECT DoctorId FROM SlotDoctor WHERE slotDoctorId IN (SELECT slotDoctorId FROM Booking WHERE BookingId = ?)))";
             pstm = cnn.prepareStatement(updateDoctorNameSQL);
-            String[] doctorNames = doctorName.split(" ");
-            pstm.setString(1, doctorNames[0]);
-            pstm.setString(2, doctorNames[1]);
+            pstm.setString(1, doctorFirstName);
+            pstm.setString(2, doctorLastName);
             pstm.setInt(3, bookingId);
             pstm.execute();
 
-            String updateCustomerNameSQL = "UPDATE Users "
-                    + "SET firstName = ?, lastName = ? "
-                    + "WHERE UserId IN (SELECT Id FROM Customers WHERE Id IN (SELECT CustomerId FROM Booking WHERE BookingId = ?))";
+            String updateCustomerNameSQL = "				   UPDATE Users\n"
+                    + "SET firstName = ?, lastName = ?\n"
+                    + "WHERE Users.userId IN (\n"
+                    + "    SELECT CustomerUsers.userId \n"
+                    + "    FROM Booking\n"
+                    + "    JOIN Customers ON Customers.Id = Booking.CustomerId\n"
+                    + "    JOIN Users AS CustomerUsers ON CustomerUsers.userId = Customers.userId\n"
+                    + "    WHERE Booking.BookingId = ?\n"
+                    + ")";
             pstm = cnn.prepareStatement(updateCustomerNameSQL);
-            String[] customerNames = customerName.split(" ");
-            pstm.setString(1, customerNames[0]);
-            pstm.setString(2, customerNames[1]);
+            pstm.setString(1, customerFirstName);
+            pstm.setString(2, customerLastName);
             pstm.setInt(3, bookingId);
             pstm.execute();
 
         } catch (SQLException e) {
             System.out.println("SQL updateBookingByManager: " + e.getMessage());
+            return false;
         } catch (Exception e) {
             System.out.println("updateBookingByManager: " + e.getMessage());
+            return false;
         } finally {
             // Đóng PreparedStatement và Connection (nếu bạn quản lý chúng ở đây)
             try {
@@ -270,10 +328,11 @@ public class DAOBooking extends DBContext {
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
+                return false;
             }
         }
 
-        return false;  // Trả về false nếu có lỗi
+        return true;  // Trả về true nếu tất cả đều thành công, false nếu có lỗi
     }
 
 }

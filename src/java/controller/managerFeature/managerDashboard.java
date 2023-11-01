@@ -5,6 +5,8 @@
 package controller.managerFeature;
 
 import DAO.DAOBooking;
+import DAO.DAOSlot;
+import DAO.DAOSlotDoctor;
 import com.google.gson.*;
 
 import java.io.IOException;
@@ -25,6 +27,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import model.Booking;
+import model.Slot;
+import model.SlotDoctor;
 
 /**
  *
@@ -71,15 +75,26 @@ public class managerDashboard extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
         if (String.valueOf(session.getAttribute("roleId")).equals("null") || Integer.parseInt(String.valueOf(session.getAttribute("roleId"))) != 3) {
             response.sendRedirect("403.jsp");
+            return;
         }
 
         DAOBooking booking = new DAOBooking();
+        DAOSlotDoctor slotDoctor = new DAOSlotDoctor();
+        DAOSlot slot = new DAOSlot();
+        
+        List<Slot> slotList = slot.getListSlot();
         List<Booking> reservationList = booking.getBookingList();
         List<Booking> reservationListForManage = booking.getBookingListForManage();
 
+        List<SlotDoctor> availeSlot = slotDoctor.displayBookedSlotList();
+
+        
+        request.setAttribute("slotList", slotList);
+        request.setAttribute("availeSlot", availeSlot);
         request.setAttribute("reservationListForManage", reservationListForManage);
         request.setAttribute("reservationList", reservationList);
         request.getRequestDispatcher("managerDashboard.jsp").forward(request, response);
@@ -100,10 +115,10 @@ public class managerDashboard extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
         boolean success = true;
         DAOBooking bookingDAO = new DAOBooking();
 
-        // Đọc dữ liệu từ request body
         String jsonData = new BufferedReader(request.getReader()).lines().collect(Collectors.joining("\n"));
 
         Gson gson = new Gson();
@@ -116,21 +131,32 @@ public class managerDashboard extends HttpServlet {
             return;
         }
 
-        // Duyệt qua mỗi đối tượng trong jsonArray và xử lý
         for (JsonElement element : jsonArray) {
             try {
                 JsonObject jsonObject = element.getAsJsonObject();
 
                 int bookingId = jsonObject.get("bookingId").getAsInt();
                 int status = jsonObject.get("status").getAsInt();
-                String startTime = jsonObject.get("startTime").getAsString();
+                int slotId = jsonObject.get("slotId").getAsInt();
                 int slotStatus = jsonObject.get("slotStatus").getAsInt();
                 String doctorName = jsonObject.get("doctorName").getAsString();
                 String customerName = jsonObject.get("customerName").getAsString();
+                String[] doctorNameParts = doctorName.split(" ");
+                String doctorLastName = doctorNameParts[doctorNameParts.length - 1];
+                String doctorFirstName = doctorName.substring(0, doctorName.lastIndexOf(doctorLastName)).trim();
+     
+                String[] customerNameParts = customerName.split(" ");
+                String customerLastName = customerNameParts[customerNameParts.length - 1];
+                String customerFirstName = customerName.substring(0, customerName.lastIndexOf(customerLastName)).trim();
+
                 String day = jsonObject.get("day").getAsString();
 
-                if (!bookingDAO.updateBookingByManager(bookingId, status, startTime, slotStatus, doctorName, customerName, day)) {
-                    success = false;
+                if (bookingDAO.updateBookingByManager(bookingId, status, slotId, slotStatus, doctorFirstName, doctorLastName, customerFirstName, customerLastName, day)) {
+                    System.out.println(doctorName);
+                    System.out.println(customerName);
+                    System.out.println("hihi");
+           System.out.println(bookingId);
+                    success = true;
                     break;
                 }
 

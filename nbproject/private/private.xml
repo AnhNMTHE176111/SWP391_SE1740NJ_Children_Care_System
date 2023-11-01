@@ -3,14 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/web/managerDashboard.jsp</file>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAOBooking.java</file>
+            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/controller/commonFeature/bookingController.java</file>
             <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/model/Slot.java</file>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/web/META-INF/context.xml</file>
             <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/model/Booking.java</file>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/controller/managerFeature/managerDashboard.java</file>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/web/js/managerDashboard.js</file>
+            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/model/User.java</file>
             <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/controller/commonFeature/changePassword.java</file>
+            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/web/js/Booking.js</file>
+            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/web/Booking.jsp</file>
         </group>
     </open-files>
 </project-private>

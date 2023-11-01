@@ -33,16 +33,17 @@ public class DAOSlotDoctor extends DBContext {
         cnn = super.connection;
     }
 
-    public int addSlotDoctor(int doctorId, int slotId, int status, String day) {
+    public int addSlotDoctor(int doctorId, int slotId, int status, String description, String day) {
         int generatedId = -1;
         try {
-            String strSQL = "insert into SlotDoctor(DoctorId, SlotId, Status, day) values(?,?,?,?); SELECT SCOPE_IDENTITY();";
+            String strSQL = "insert into SlotDoctor(DoctorId, SlotId, Status, Description, day) values(?,?,?,?,?); SELECT SCOPE_IDENTITY();";
 
             pstm = cnn.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
             pstm.setInt(1, doctorId);
             pstm.setInt(2, slotId);
             pstm.setInt(3, status);
-            pstm.setString(4, day);
+            pstm.setString(4, description);
+            pstm.setString(5, day);
             if (pstm.executeUpdate() > 0) {
                 try (ResultSet generatedKeys = pstm.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
@@ -76,7 +77,7 @@ public class DAOSlotDoctor extends DBContext {
                 int slotId = rs.getInt("SlotId");
                 Date day = rs.getDate("day");
 
-                SlotDoctor slotDoctor = new SlotDoctor(DoctorId, slotId, day); // giả sử bạn đã có constructor phù hợp
+                SlotDoctor slotDoctor = new SlotDoctor(DoctorId, slotId, day); 
                 bookedSlots.add(slotDoctor);
             }
 

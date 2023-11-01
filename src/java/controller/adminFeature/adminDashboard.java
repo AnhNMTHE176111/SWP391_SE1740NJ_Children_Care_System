@@ -4,6 +4,7 @@
  */
 package controller.adminFeature;
 
+import DAO.DAOBooking;
 import DAO.DAOUser;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -63,7 +64,12 @@ public class adminDashboard extends HttpServlet {
         if (String.valueOf(session.getAttribute("roleId")).equals("null") || Integer.parseInt(String.valueOf(session.getAttribute("roleId"))) != 4) {
             response.sendRedirect("403.jsp");
         }
+        String totalMoney = (new DAOBooking()).getTotalMoney();
+        String totalNumberOfBooking = (new DAOBooking()).getTotalNumberOfBooking();
         ArrayList<User> listUser = (new DAOUser()).getListUser();
+        
+        request.setAttribute("totalMoney", totalMoney);
+        request.setAttribute("totalNumberOfBooking", totalNumberOfBooking);
         request.setAttribute("totalUser", listUser.size());
         request.setAttribute("listUser", listUser);
         request.getRequestDispatcher("adminDashboard.jsp").forward(request, response);

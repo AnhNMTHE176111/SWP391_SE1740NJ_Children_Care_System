@@ -212,27 +212,6 @@ document.getElementById('analyticsMenu').addEventListener('click', function () {
     }
 });
 
-
-
-function makeEditable(btn) {
-    var row = btn.parentNode.parentNode;
-    row.style.backgroundColor = "#FFD700";
-    row.classList.add("edited");
-
-    var editables = row.querySelectorAll('.editable');
-    var hiddenInputs = row.querySelectorAll('.hidden-input');
-
-    editables.forEach(function (editable, index) {
-        editable.onclick = function () {
-            var newValue = prompt("Edit value:", hiddenInputs[index].value);
-            if (newValue !== null) {
-                hiddenInputs[index].value = newValue;
-                editable.textContent = newValue;
-            }
-        }
-    });
-}
-
 //function makeEditable(btn) {
 //    var row = btn.parentNode.parentNode;
 //    var editables = row.querySelectorAll('.editable');
@@ -259,25 +238,152 @@ function makeEditable(btn) {
 //    });
 //}
 
-document.getElementById("submitAllChanges").addEventListener("click", function () {
-    var editedRows = document.querySelectorAll(".edited");
-    var dataToSend = [];
+//function makeEditable(btn) {
+//    var row = btn.closest('tr');
+//    row.style.backgroundColor = "#FFD700";
+//    row.classList.add("edited");
+//
+//    var editables = row.querySelectorAll('.editable');
+//    var hiddenInputs = row.querySelectorAll('.hidden-input');
+//
+//    editables.forEach(function (editable, index) {
+//        editable.onclick = function () {
+//            var newValue = prompt("Edit value:", hiddenInputs[index].value);
+//            if (newValue !== null) {
+//                hiddenInputs[index].value = newValue;
+//                editable.textContent = newValue;
+//            }
+//        }
+//    });
+//}
 
-    editedRows.forEach(function (row) {
-        var data = {
-            bookingId: row.querySelector('[name="bookingId"]').value,
-            status: row.querySelector('[name="status"]').value,
-            startTime: row.querySelector('[name="startTime"]').value,
-            slotStatus: row.querySelector('[name="slotStatus"]').value,
-            doctorName: row.querySelector('[name="doctorName"]').value,
-            customerName: row.querySelector('[name="customerName"]').value,
-            day: row.querySelector('[name="day"]').value,
+const bookedSlotsElement = document.getElementById('bookedSlotsData');
+const bookedSlotsData = JSON.parse(bookedSlotsElement.getAttribute('data-booked-slots'));
+
+const slotIdList = document.getElementById('slotList');
+const slotList = JSON.parse(slotIdList.getAttribute('data-slotList'));
+
+
+console.log(bookedSlotsData)
+function getSlotIdFromStartTime(startTimeValue) {
+    for (let slot of slotList) {
+        if (slot.StartTime === startTimeValue) {
+            return slot.SlotId;
+        }
+    }
+    console.log("Không tìm thấy ID tương ứng với startTime:", startTimeValue);
+    return null;
+}
+
+function isSlotBooked(doctorId, slotId, day) {
+    return bookedSlotsData.some((slot, index) => {
+        const slotDoctorId = String(slot.DoctorId).trim();
+        const slotSlotId = String(slot.SlotId).trim();
+        const slotDay = new Date(slot.Day.trim()).toDateString();
+
+        const inputDoctorId = String(doctorId).trim();
+        const inputSlotId = String(slotId).trim();
+        const inputDay = new Date(day.trim()).toDateString();
+
+        if (slotDoctorId === inputDoctorId && slotSlotId === inputSlotId && slotDay === inputDay) {
+            console.log(`Exact match found at index: ${index}`);
+            console.log(`Slot details - DoctorId: ${slotDoctorId}, SlotId: ${slotSlotId}, Day: ${slotDay}`);
+            console.log(`Input details - DoctorId: ${inputDoctorId}, SlotId: ${inputSlotId}, Day: ${inputDay}`);
+            return true;
+        }
+        return false;
+    });
+}
+
+
+
+
+
+
+
+//function isSlotBooked(doctorId, slotId, day) {
+//    return bookedSlotsData.some(slot => {
+//        // Ghi log ra một cách rõ ràng hơn
+//        console.log(`Checking for DoctorId: ${slot.DoctorId}, SlotId: ${slot.SlotId}, Day: ${slot.Day}`);
+//       if ${slot.DoctorId} === doctorId &&
+//                ${slot.SlotId} === slotId &&
+//               ${slot.Day} === day;
+//       return true
+//    });
+//}
+
+function makeEditable(btn) {
+    const row = btn.closest('tr');
+    row.style.backgroundColor = "#FFD700";
+    row.classList.add("edited");
+
+    const editables = row.querySelectorAll('.editable');
+    const hiddenInputs = row.querySelectorAll('.hidden-input');
+
+    editables.forEach(function (editable, index) {
+        editable.onclick = function () {
+            const newValue = prompt("Edit value:", hiddenInputs[index].value);
+            if (newValue !== null) {
+                if (editable.getAttribute('name') === 'startTime') {
+                    const doctorId = row.querySelector('input[name="doctorId"]').value;
+                    const day = row.querySelector('input[name="day"]').value;
+                    const correspondingSlotId = getSlotIdFromStartTime(newValue);
+                    
+                    if (isSlotBooked(doctorId, correspondingSlotId, day)) {
+                        alert('This slot has already been booked by another doctor! Please select another one.');
+                    } else {
+                        hiddenInputs[index].value = newValue;
+                        editable.textContent = newValue;
+                        row.querySelector('input[name="slotid"]').value = correspondingSlotId;
+                    }
+                } else {
+                    hiddenInputs[index].value = newValue;
+                    editable.textContent = newValue;
+                }
+            }
+        }
+    });
+}
+
+document.getElementById("submitAllChanges").addEventListener("click", function () {
+    const tableRows = document.querySelectorAll(".edited");
+    const dataToSend = [];
+
+    let hasInvalidData = false;
+
+    tableRows.forEach(function (row) {
+        const doctorId = row.querySelector('input[name="doctorId"]').value;
+        const day = row.querySelector('input[name="day"]').value;
+        const startTimeValue = row.querySelector('input[name="startTime"]').value;
+
+        const correspondingSlotId = getSlotIdFromStartTime(startTimeValue);
+        console.log(doctorId)
+        console.log(correspondingSlotId)
+        console.log(day)
+
+        if (isSlotBooked(doctorId, correspondingSlotId, day)) {
+            alert('This slot has already been booked by another doctor for the entry with startTime: ' + startTimeValue + '. Please select another one.');
+            hasInvalidData = true;
+            return;
+        }
+
+        const data = {
+            bookingId: row.querySelector('input[name="bookingId"]').value,
+            status: row.querySelector('input[name="status"]').value,
+            slotId: correspondingSlotId,
+            slotStatus: row.querySelector('input[name="slotStatus"]').value,
+            doctorName: row.querySelector('input[name="doctorName"]').value,
+            customerName: row.querySelector('input[name="customerName"]').value,
+            day: day,
         };
         dataToSend.push(data);
     });
 
-    saveAllChangesToDatabase(dataToSend);
+    if (!hasInvalidData) {
+        saveAllChangesToDatabase(dataToSend);
+    }
 });
+
 
 
 function saveAllChangesToDatabase(data) {
@@ -290,13 +396,10 @@ function saveAllChangesToDatabase(data) {
     })
             .then(response => response.json())
             .then(result => {
-                console.log(result)
                 if (result.success) {
                     alert('Update successful');
-                    var editedRows = document.querySelectorAll(".edited");
-                    editedRows.forEach(function (row) {
+                    document.querySelectorAll(".edited").forEach(row => {
                         row.classList.remove("edited");
-                        console.log("hihi");
                     });
                 } else {
                     alert('Update failed: ' + result.message);
@@ -307,6 +410,48 @@ function saveAllChangesToDatabase(data) {
                 alert('Update failed');
             });
 }
+
+
+
+
+function searchByUserName() {
+    let input = document.getElementById('searchInputUser');
+    let filter = input.value.toUpperCase();
+    let table = document.querySelector('.user-list-container table');
+    let tr = table.getElementsByTagName('tr');
+
+    for (let i = 1; i < tr.length; i++) {
+        let td = tr[i].getElementsByTagName('td')[6]; // 5 là cột "Customer Name"
+        if (td) {
+            let txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+}
+
+function searchByDoctorName() {
+    let input = document.getElementById('searchInputDoctor');
+    let filter = input.value.toUpperCase();
+    let table = document.querySelector('.user-list-container table');
+    let tr = table.getElementsByTagName('tr');
+
+    for (let i = 1; i < tr.length; i++) {
+        let td = tr[i].getElementsByTagName('td')[5]; // 5 là cột "Customer Name"
+        if (td) {
+            let txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+}
+
 
 
 

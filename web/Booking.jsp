@@ -4,10 +4,14 @@
 <%@page import= "DAO.DAODoctor" %>
 <%@page import= "DAO.DAOSlot" %>
 <%@page import= "DAO.DAOSpecialty" %>
+<%@page import= "DAO.DAOUser" %>
+<%@page import= "DAO.DAOSlotDoctor" %>
 <%@page import= "model.Specialty" %>
 <%@page import= "model.Booking" %>
+<%@page import= "model.User" %>
 <%@page import= "model.Slot" %>
 <%@page import= "model.Doctor" %>
+<%@page import= "model.SlotDoctor" %>
 <%@page import= "java.util.ArrayList" %>
 <%--<%@page import= "util.SomeClassInUtilPackage" %>--%>
 
@@ -21,6 +25,16 @@
         <title>Đặt Lịch Hẹn</title>
     </head>
     <body>
+        <div id="serviceListData" style="display: none;"
+             data-service-list='[
+             <c:forEach var="slot" items="${serviceList}" varStatus="loop">
+                 {"ServiceId": ${slot.getServiceId()}, "ServiceName": "${slot.getServiceName()}", "DoctorId": "${slot.getDoctorId()}"}
+                 <c:if test="${not loop.last}">,</c:if>
+             </c:forEach>
+             ]'>
+        </div>
+
+
         <div id="bookedSlotsData" style="display: none;"
              data-booked-slots='[
              <c:forEach var="slot" items="${availeSlot}" varStatus="loop">
@@ -61,9 +75,9 @@
                                         </option>
                                     </c:forEach>
                                 </select>
-<span class="error-message" id="specialtyError"></span>
+                                <!--<span class="error-message" id="specialtyError"></span>-->
                             </div>
-                            
+
                             <div class="form-group label-box">
                                 <select
                                     id="selectedDoctor"
@@ -85,9 +99,16 @@
                                         </option>
                                     </c:forEach>
                                 </select>
-                                <span class="error-message" id="doctorError"></span>
+                                <!--                                <span class="error-message" id="doctorError"></span>-->
                             </div>
 
+                            <div class="form-group label-box">
+
+                                <select id="serviceDropdown" class="form-control select2-hidden-accessible" onchange="onDoctorChange(this)">
+                                    <option class="option-box" value="0">Chọn dịch vụ</option>
+
+                                </select>
+                            </div>
 
 
 
@@ -132,63 +153,69 @@
 
                     <div class="form-input">
                         <div>
-                            <div class="aside">
-                                <div class="form-group">
-                                    <label for="customer-name"></label>
-                                    <input
-                                        class="input-size side-name"
-                                        type="text"
-                                        placeholder="Họ và tên (*)"
-                                        id="customer-name"
-                                        value="${currentUser != null ? currentUser.name : ''}"
-                                        />
-                                </div>
-                                <div class="form-group">
-                                    <div class="customer-gender-input">
-                                        <input type="radio" id="male" name="gender" value="Nam" 
-                                               ${currentUser != null && currentUser.gender == 'Nam' ? 'checked' : ''}/>
-                                        <label for="male">Nam</label>
+                             <div class="aside">
+            <div class="form-group">
+                <label for="customer-name"></label>
+                <input
+                    class="input-size side-name"
+                    type="text"
+                    placeholder="Họ và tên (*)"
+                    id="customer-name"
+                    value="${(currentUser != null) ? currentUser.getLastName().concat(' ').concat(currentUser.getFirstName()) : ''}"
+                    ${currentUser != null ? 'readonly' : ''}
+                />
+            </div>
+            <div class="form-group">
+                <div class="customer-gender-input">
+                    <input type="radio" id="male" name="gender" value="Nam" 
+                        ${currentUser != null && currentUser.getGender() == 'Nam' ? 'checked' : ''}
+                 
+                    />
+                    <label for="male">Nam</label>
 
-                                        <input type="radio" id="female" name="gender" value="Nữ" 
-                                               ${currentUser != null && currentUser.gender == 'Nữ' ? 'checked' : ''}/>
-                                        <label for="female">Nữ</label>
-                                    </div>
-                                </div>
-                            </div>
+                    <input type="radio" id="female" name="gender" value="Nữ" 
+                        ${currentUser != null && currentUser.getGender() == 'Nữ' ? 'checked' : ''}
+                  
+                    />
+                    <label for="female">Nữ</label>
+                </div>
+            </div>
 
-                            <div class="form-group">
-                                <label for="bookingdob"></label>
-                                <input
-                                    class="input-size"
-                                    type="date"
-                                    placeholder="Ngày sinh (*)"
-                                    id="bookingdob"
-                                    value="${currentUser != null ? currentUser.dob : ''}"
-                                    />
-                            </div>
+            <div class="form-group">
+                <label for="bookingdob"></label>
+                <input
+                    class="input-size"
+                    type="date"
+                    placeholder="Ngày sinh (*)"
+                    id="bookingdob"
+                    value="${currentUser != null ? currentUser.getDob() : ''}"
+                    ${currentUser != null ? 'readonly' : ''}
+                />
+            </div>
 
-                            <div class="form-group">
-                                <label for="customer-phone"></label>
-                                <input
-                                    class="input-size"
-                                    type="text"
-                                    placeholder="Số điện thoại (*)"
-                                    id="customer-phone"                                  
-                                    value="${currentUser != null ? currentUser.phone : ''}"
-                                    />
-                            </div>
+            <div class="form-group">
+                <label for="customer-phone"></label>
+                <input
+                    class="input-size"
+                    type="text"
+                    placeholder="Số điện thoại (*)"
+                    id="customer-phone"                                  
+                    value="${currentUser != null ? currentUser.getPhone() : ''}"
+                    ${currentUser != null ? 'readonly' : ''}
+                />
+            </div>
 
-                            <div class="form-group">
-                                <label for="customer-email"></label>
-                                <input
-                                    class="input-size"
-                                    type="text"
-                                    placeholder="Để lại email để nhận thông tin lịch hẹn"
-                                    id="customer-email"
-                                    value="${currentUser != null ? currentUser.email : ''}"
-                                    />
-                            </div>
-                        </div>
+            <div class="form-group">
+                <label for="customer-email"></label>
+                <input
+                    class="input-size"
+                    type="text"
+                    placeholder="Để lại email để nhận thông tin lịch hẹn"
+                    id="customer-email"
+                    value="${currentUser != null ? currentUser.getEmail() : ''}"
+                    ${currentUser != null ? 'readonly' : ''}
+                />
+            </div>
 
                         <div class="form-group">
                             <div style="position: relative; top: 20px">
@@ -199,7 +226,7 @@
                                     placeholder="Mô tả triệu chứng của bạn và nhu cầu thăm khám (*)"
                                     id="customer-symptoms"
                                     class="input-place"
-                                    >${currentUser != null ? currentUser.symptoms : ''}</textarea>
+                                    ></textarea>
                             </div>
                         </div>
                     </div>
@@ -239,7 +266,11 @@
                                     <input type="hidden" name="selectedSlot" id="hidden-slot" value="">
                                 </p>
                                 <p><strong>Bác sĩ:</strong> <span id="confirm-doctor"></span>
-                                    <input type="hidden" name="doctor" id="hidden-doctor" value="">
+                                    <input type="hidden" name="selectedDoctor" id="hidden-doctor" value="">
+                                </p>
+
+                                <p><strong>Dịch vụ:</strong> <span id="confirm-service"></span>
+                                    <input type="hidden" name="selectedService" id="hidden-service" value="">
                                 </p>
                             </div>
 
@@ -271,9 +302,11 @@
                     </div>
                     <div class="button-line">
                         <button class="back-button" type="button" onclick="showStep(2)">Quay Lại</button>
-
-                        <button class="submit-button" type="submit">Xác nhận</button>
+                        <button class="submit-button" type="submit" onclick="redirectToHome()">Xác nhận</button>
                     </div>
+
+             
+
                 </form>
 
             </div>

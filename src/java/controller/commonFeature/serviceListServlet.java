@@ -11,9 +11,11 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import model.Doctor;
 import model.Service;
+import model.User;
 
 /**
  *
@@ -61,8 +63,11 @@ public class serviceListServlet extends HttpServlet {
             throws ServletException, IOException {
         String id = request.getParameter("id");
         DAOService d = new DAOService();
-        Service serviceList= d.getServiceById(id);
-        Doctor doc = d.getDoctorById(id);
+        Service serviceList = d.getServiceById(id);
+        HttpSession session = request.getSession();
+        User currentUser = (User) session.getAttribute("user");
+        Doctor doc = d.getDoctorById_UserID(id,currentUser.getUserId());
+
         request.setAttribute("serviceList", serviceList);
         request.setAttribute("doc", doc);
         request.getRequestDispatcher("servicesList.jsp").forward(request, response);

@@ -27,6 +27,7 @@ public class Service {
         this.description = description;
         this.doctorId = doctorId;
     }
+    
  
     public int getDoctorId() {
         return doctorId;

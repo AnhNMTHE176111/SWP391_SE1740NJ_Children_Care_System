@@ -14,8 +14,10 @@ import DAO.DAOBooking;
 import DAO.DAOCustomer;
 import DAO.DAOSlot;
 import DAO.DAODoctor;
+import DAO.DAOService;
 import DAO.DAOSlotDoctor;
 import DAO.DAOSpecialty;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
@@ -25,6 +27,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import model.Doctor;
+import model.Service;
 import model.Slot;
 import model.SlotDoctor;
 import model.Specialty;
@@ -81,45 +84,69 @@ public class bookingController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-   @Override
-protected void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession();
+        // Information from session
+        //   String userId = String.valueOf(session.getAttribute("userId"));
+        User currentUser = (User) session.getAttribute("user");
+        DAOService service = new DAOService();
+        DAOSlot slot = new DAOSlot();
+        DAOSpecialty specialty = new DAOSpecialty();
+        DAODoctor doctor = new DAODoctor();
+        DAOSlotDoctor slotDoctor = new DAOSlotDoctor();
 
-    // Information from session
-    String userId = (String) request.getSession().getAttribute("userId");
-    User currentUser = null;
+        List<Service> serviceList = null;
+        List<SlotDoctor> availeSlot = null;
+        List<String> dateList = null;
+        List<Doctor> doctorList = null;
+        List<Specialty> specialtyList = null;
+        List<Slot> slotList = null;
 
-    DAOSlot slot = new DAOSlot();
-    DAOSpecialty specialty = new DAOSpecialty();
-    DAODoctor doctor = new DAODoctor();
-    DAOSlotDoctor slotDoctor = new DAOSlotDoctor();
+        if (currentUser != null) {
+            System.out.println("haha here the customer");
+            int userId = currentUser.getUserId();
+            System.out.println("here the userid:" + currentUser.getUserId());
+            System.out.println("currentUser.firstName: " + currentUser.getFirstName());
+            System.out.println("currentUser.firstName: " + currentUser.getLastName());
+            System.out.println("gender:" + currentUser.getGender());
+            System.out.println("currentUser" + currentUser.getDob());
+            System.out.println("phoneL" + currentUser.getPhone());
+            System.out.println("email:" + currentUser.getEmail());
 
-    List<SlotDoctor> availeSlot = null;
-    List<String> dateList = null;
-    List<Doctor> doctorList = null;
-    List<Specialty> specialtyList = null;
-    List<Slot> slotList = null;
+            serviceList = service.getListServiceByDoctor();
+            availeSlot = slotDoctor.displayBookedSlotList();
+            dateList = getDateList(); // Ensure this function is available and returns the desired result
+            doctorList = doctor.getListDoctorBySpecialty();
+            specialtyList = specialty.getListSpecialty();
+            slotList = slot.getListSlot();
+            System.out.println(currentUser);
+            request.setAttribute("currentUser", currentUser);
+            System.out.println("hihi");
+        } else {
+            System.out.println("nono");
+            serviceList = service.getListServiceByDoctor();
+            availeSlot = slotDoctor.displayBookedSlotList();
+            dateList = getDateList();
+            doctorList = doctor.getListDoctorBySpecialty();
+            specialtyList = specialty.getListSpecialty();
+            slotList = slot.getListSlot();
+        }
 
-    if (userId != null && !userId.isEmpty()) {
-        DAOUser userDao = new DAOUser();
-        currentUser = userDao.getUserById(userId);
-    } else {
-        availeSlot = slotDoctor.displayBookedSlotList();
-        dateList = getDateList(); // Ensure this function is available and returns the desired result
-        doctorList = doctor.getListDoctorBySpecialty();
-        specialtyList = specialty.getListSpecialty();
-        slotList = slot.getListSlot();
+// Đặt các danh sách vào request attribute
+        request.setAttribute("serviceList", serviceList);
+        request.setAttribute("availeSlot", availeSlot);
+        request.setAttribute("dateList", dateList);
+        request.setAttribute("doctorList", doctorList);
+        request.setAttribute("specialtyList", specialtyList);
+        request.setAttribute("slotList", slotList);
+
+// Chuyển hướng đến trang Booking.jsp
+        request.getRequestDispatcher("Booking.jsp").forward(request, response);
+
     }
-
-    request.setAttribute("currentUser", currentUser);
-    request.setAttribute("availeSlot", availeSlot);
-    request.setAttribute("slotList", slotList);
-    request.setAttribute("specialtyList", specialtyList);
-    request.setAttribute("doctorList", doctorList);
-    request.setAttribute("dateList", dateList);
-
-    request.getRequestDispatcher("Booking.jsp").forward(request, response);
-}
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -133,7 +160,10 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-
+        HttpSession session = request.getSession();
+        // Information from session
+        //   String userId = String.valueOf(session.getAttribute("userId"));
+        User currentUser = (User) session.getAttribute("user");
         DAOCustomer customer = new DAOCustomer();
         DAOUser user = new DAOUser();
         DAOSlotDoctor slotDoctor = new DAOSlotDoctor();
@@ -146,7 +176,10 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
         String selectedDoctor = request.getParameter("doctor");
         String selectedDate = request.getParameter("selectedDate");
         String selectedSlot = request.getParameter("selectedSlot");
+        String selectedService = request.getParameter("selectedService");
+        int serviceId = Integer.parseInt(selectedService);
 
+        String symptoms = request.getParameter("symptoms");
 //About Doctor Backend
         int slotIdInt = Integer.parseInt(slotId);
         int doctorIdInt = Integer.parseInt(doctorId);
@@ -169,34 +202,42 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
 
         } catch (ParseException e) {
             e.printStackTrace();
-         
+
         }
-        int slotDoctorId = slotDoctor.addSlotDoctor(doctorIdInt, slotIdInt, 1, formattedDate);
-        
-        
+        int slotDoctorId = 0;
+        int addedUserId = 0;
+        int customerId = 0;
+        int bookingId = 0;
+        if (currentUser == null) {
+            slotDoctorId = slotDoctor.addSlotDoctor(doctorIdInt, slotIdInt, 1, symptoms, formattedDate);
+
 //About Customer Backend
-        String name = request.getParameter("name");
-        String gender = request.getParameter("gender");
-        String dob = request.getParameter("dob");
-        String phone = request.getParameter("phone");
-        String email = request.getParameter("email");
-        String symptoms = request.getParameter("symptoms");
+            String name = request.getParameter("name");
+            String gender = request.getParameter("gender");
+            String dob = request.getParameter("dob");
+            String phone = request.getParameter("phone");
+            String email = request.getParameter("email");
 
-        String[] parts = name.split("\\s+");
-        String firstName = parts[0];
+            String[] parts = name.split("\\s+");
+            String firstName = parts[0];
 
-        String lastName = "";
-        for (int i = 1; i < parts.length; i++) {
-            lastName += parts[i] + " ";
+            String lastName = "";
+            for (int i = 1; i < parts.length; i++) {
+                lastName += parts[i] + " ";
+            }
+            lastName = lastName.trim();
+
+            int roleId = 1;
+            addedUserId = user.addGuess(firstName, lastName, gender, email, phone, dob, roleId);
+            customerId = customer.addCustomer(addedUserId);
+            bookingId = booking.addBooking(1, customerId, slotDoctorId, serviceId);
+             response.sendRedirect("/home");
+        } else {
+            slotDoctorId = slotDoctor.addSlotDoctor(doctorIdInt, slotIdInt, 1, symptoms, formattedDate);
+            customerId = customer.getCusIdByUserIdReturn(currentUser.getUserId());
+            bookingId = booking.addBooking(1, customerId, slotDoctorId, serviceId);
+             response.sendRedirect("/home");
         }
-        lastName = lastName.trim();
-
-        int roleId = 1;
-        int addedUserId = user.addGuess(firstName, lastName, gender, email, phone, dob, roleId);
-        int customerId = customer.addCustomer(addedUserId);
-
-//Booking infomation      
-        int bookingId = booking.addBooking(1, customerId, slotDoctorId);
 
     }
 

@@ -39,8 +39,10 @@ public class Booking {
         this.day = day;
     }
     
-    public Booking(int bookingId, int bookingStatus, String starTime, int status,  String doctorName, String customerName, Date day){
+    public Booking(int bookingId, int doctorId,int slotId, int bookingStatus, String starTime, int status,  String doctorName, String customerName, Date day){
         this.bookingId = bookingId;
+        this.doctorId = doctorId;
+        this.slotId = slotId;
         this.bookingStatus = bookingStatus;
         this.startTime = starTime;
         this.status = status;

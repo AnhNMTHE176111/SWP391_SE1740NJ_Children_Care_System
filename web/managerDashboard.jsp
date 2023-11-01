@@ -4,6 +4,10 @@
 <%@page import= "DAO.DAOBooking" %>
 <%@page import= "java.util.ArrayList" %>
 <%@page import= "model.Booking" %>
+<%@page import= "model.Slot" %>
+<%@page import= "model.SlotDoctor" %>
+<%@page import= "DAO.DAOSlotDoctor" %>
+<%@page import= "DAO.DAOSlot" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -21,10 +25,28 @@
     </head>
 
     <body>
+
+        <div id="slotList" style="display: none;"
+             data-slotList='[
+             <c:forEach var="rs" items="${slotList}" varStatus="loop">
+                 {"SlotId": "${rs.slotId}", "StartTime": "${rs.startTime}"}<c:if test="${not loop.last}">,</c:if>
+             </c:forEach>
+             ]'>
+        </div>
+
         <div id="bookingList" style="display: none;"
              data-bookingList='[
              <c:forEach var="rs" items="${reservationList}" varStatus="loop">
                  {"BookingId": ${rs.getBookingId()}, "BookingStatus": ${rs.getStatus()}, "Day": "${rs.getDay()}"}
+                 <c:if test="${not loop.last}">,</c:if>
+             </c:forEach>
+             ]'>
+        </div>
+
+        <div id="bookedSlotsData" style="display: none;"
+             data-booked-slots='[
+             <c:forEach var="slot" items="${availeSlot}" varStatus="loop">
+                 {"DoctorId": ${slot.getDoctorId()}, "SlotId": ${slot.getSlotId()}, "Day": "${slot.getDay()}"}
                  <c:if test="${not loop.last}">,</c:if>
              </c:forEach>
              ]'>
@@ -42,11 +64,11 @@
                         <i class="fa-solid fa-users"></i>Reservation Manager
                     </li>
                     <li><i class="fa-solid fa-gear"></i>Setting</li>
-                 <li>
-    <a href="/managePost">
-        <i class="fa-solid fa-gear"></i> Manage Post
-    </a>
-</li>
+                    <li>
+                        <a href="/managePost">
+                            <i class="fa-solid fa-gear"></i> Manage Post
+                        </a>
+                    </li>
 
                 </ul>
             </div>
@@ -124,8 +146,9 @@
                 <div class="user-list-container">
                     <div class="top-option">
                         <form action="admin-manage-user" class="search-name-form" method="post">
-                            <input type="text" name="username" placeholder="Enter name of User...">
-                            <button type="submit"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+
+                            <input type="text" id="searchInputUser" placeholder="Enter name of User..." onkeyup="searchByUserName()">
+                            <input type="text" id="searchInputDoctor" placeholder="Enter name of Doctor..." onkeyup="searchByDoctorName()">
                             <button id="btn-show-filter"><i class="fa-solid fa-filter"></i> Filter</button>
                         </form>
                         <button id="submitAllChanges"><i class="fa-solid fa-user-plus"></i> Submit all Change</button>
@@ -151,14 +174,20 @@
                                         <span class="editable">${rs.bookingId}</span>
                                         <input type="hidden" name="bookingId" class="hidden-input" value="${rs.bookingId}" />
                                     </td>
+                                    <td style="display: none;">
+                                        <span class="editable">${rs.doctorId}</span>
+                                        <input type="hidden" name="doctorId" class="hidden-input" value="${rs.doctorId}" />
+                                    </td>
+                      
                                     <td>
-                                        <span class="editable">${rs.status}</span>
-                                        <input type="hidden" name="status" class="hidden-input" value="${rs.status}" />
+                                        <span class="editable">${rs.bookingStatus}</span>
+                                        <input type="hidden" name="status" class="hidden-input" value="${rs.bookingStatus}" />
                                     </td>
                                     <td>
                                         <span class="editable">${rs.getStartTime()}</span>
-                                        <input type="hidden" name="startTime" class="hidden-input" value="${rs.getStartTime()}" />
+                                        <input type="hidden" name="startTime" class="hidden-input" value="${rs.getStartTime()}" onchange="dropdowId(this)" />
                                     </td>
+
                                     <td>
                                         <span class="editable">${rs.status}</span>
                                         <input type="hidden" name="slotStatus" class="hidden-input" value="${rs.status}" />
