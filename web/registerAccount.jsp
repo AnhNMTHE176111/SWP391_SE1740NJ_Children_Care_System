@@ -55,12 +55,12 @@
                         <input class="input" type="date" name="dob" placeholder="Enter your birthday" required/>
                     </div>
                     <div class="register_form_div">
-                        <label>Male</label>
-                        <input type="radio"/>
-                        <label>Female</label>
-                        <input type="radio"/>
-                        <label>Other</label>
-                        <input type="radio"/>
+                        <label>
+                            <input type="radio" name="gender" value="male"/> Male
+                        </label>
+                        <label>
+                            <input type="radio" name="gender" value="female"/> Female
+                        </label>
                     </div>
                     <div class="register_form_div">
                         <p>By signing up I agree to the <a href="#">terms & conditions</a> and<br>
