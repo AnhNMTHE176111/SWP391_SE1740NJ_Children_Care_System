@@ -27,19 +27,20 @@
             <div class="container-fluid">
                 <form action="information" method="post">
                     <input type="hidden" name="bookingId" value="${sessionScope.bookingId}">
-                <div class="col-md-12">
-                    <div class="row">
-                        <h2>Your Reservation Id: ${sessionScope.bookingId}</h2>
-                    </div>
-                </div>
                 <div class="col-md-12 reservation-detail">
-                    <div class="col-md-3" style="padding: 0%">
-                        <img
-                            class="col-md-12"
-                            src="./image/reservation/nurse.png"
-                            alt=""
-                            style="width: 400px; padding: 0%"
-                            />
+                    <div class="col-md-3 card-wrapper">
+
+                        <div class="card-doctor">
+
+                            <div class="card-doctor-image">
+                                <img src="${sessionScope.doctorAvatar}" alt="" style="width: 100%">
+                            </div>
+
+
+                            <div class="details">
+                                <h2 class="card-doctor-info">${cusService.doctorName}</h2>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-6 reservation-info">
                         <div class="row">
@@ -81,13 +82,13 @@
                                 <label>Status</label>
                                 <c:choose>
                                     <c:when test="${cusInfo.status == 1}">
-                                        <input type="text" style="color: #e0d31e" value="Submitted" readonly />
-                                    </c:when>
-                                    <c:when test="${cusInfo.status == 2}">
                                         <input type="text" style="color: yellowgreen" value="Success" readonly />
                                     </c:when>
-                                    <c:when test="${cusInfo.status == 3}">
+                                    <c:when test="${cusInfo.status == 2}">
                                         <input type="text" style="color: red" value="Cancelled" readonly />
+                                    </c:when>
+                                    <c:when test="${cusInfo.status == 3}">
+                                        <input type="text" style="color: #e0d31e" value="Submitted" readonly />
                                     </c:when>
                                     <c:otherwise>
                                         <input type="text" value="Unknown Status" readonly />
@@ -97,14 +98,14 @@
                         </div>
                         <div class="row reservation-button">
                             <c:choose>
-                                <c:when test="${cusInfo.status == 3}">
+                                <c:when test="${cusInfo.status == 1 || cusInfo.status == 2}">
                                     <div>
                                         <a href="/my">--- Return to your reservation list ---</a><br>
                                         <p class="cancel_success">${requestScope.mess}</p>
                                     </div>
                                 </c:when>
                                 <c:otherwise>
-                                    <button class="bg-danger btn-3" type="submit">
+                                    <button class="bg-danger btn-3" type="button" id="cancelButton">
                                         Cancel The Reservation
                                     </button>
                                 </c:otherwise>
@@ -133,7 +134,9 @@
                         <div class="row">
                             <div class="col-md-12 reservation-info-section_4">
                                 <h3 class="reservation-info-section-detail-1">Service Price:</h3>
-                                <h5 class="reservation-info-section-detail-2">${cusService.price} VND</h5>
+                                <h5 class="reservation-info-section-detail-2">
+                                    <span id="formattedPrice"></span> VND
+                                </h5>
                             </div>
                         </div>
                     </div>
@@ -188,7 +191,20 @@
             </div>
         </div>
         <jsp:include page="footer.jsp"></jsp:include>
-        <script src="./js/changeImageProfile.js"></script>
+            <script>
+                var price = ${cusService.price};
+                var formattedPrice = new Intl.NumberFormat('vi-VN').format(price);
+                document.getElementById('formattedPrice').textContent = formattedPrice;
+                document.getElementById("cancelButton").addEventListener("click", function () {
+                    var userConfirmed = confirm("Are you sure you want to cancel your reservation?");
+                    if (userConfirmed) {
+                        var form = this.closest("form");
+                        if (form) {
+                            form.submit();
+                        }
+                    }
+                });
+        </script>
     </body>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
             integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"

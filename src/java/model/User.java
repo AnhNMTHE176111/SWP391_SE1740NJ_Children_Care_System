@@ -61,20 +61,7 @@ public class User {
         this.roleId = roleId;
     }
 
-    
-    public User(String status, String firstName, String lastName, String email, String password, String address, String phone, String dob, String avatar, int roleId) {
-        this.status = status;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.address = address;
-        this.phone = phone;
-        this.dob = dob;
-        this.avatar = avatar;
-        this.roleId = roleId;
-    }
-
+   
 
     public User(String firstName, String lastName, String email, String password, String address, String phone, String dob) {
         this.firstName = firstName;

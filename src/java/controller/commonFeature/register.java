@@ -81,6 +81,7 @@ public class register extends HttpServlet {
 
         String firstName = request.getParameter("firstname");
         String lastName = request.getParameter("lastname");
+        String gender = request.getParameter("gender");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String rePassword = request.getParameter("repassword");
@@ -145,7 +146,7 @@ public class register extends HttpServlet {
             return;
         }
 
-        User user = new User("1", firstName, lastName, email, hashedPassword, address, phone, dob, "image/profile_user/default.jpg", 1);
+        User user = new User("1", firstName, lastName, gender, email, hashedPassword, address, phone, dob, "image/profile_user/default.jpg", 1);
 
         if (valid) {
             userDao.addNewAccountByEmail(user);
