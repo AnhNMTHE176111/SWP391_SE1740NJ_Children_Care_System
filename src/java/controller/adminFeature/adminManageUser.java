@@ -59,8 +59,20 @@ public class adminManageUser extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         DAOUser daoUser = new DAOUser();
-        ArrayList<User> listUser = daoUser.getListUser();
-
+        ArrayList<User> data = daoUser.getListUser();
+        ArrayList<User> listUser = new ArrayList<>();
+        String page = request.getParameter("page");
+        int pageInt = 1;
+        if (page != null) {
+            pageInt = Integer.parseInt(page);
+        }
+        int begin = 10 * (pageInt - 1);
+        int end = 10 * pageInt > data.size() ? data.size() : 10 * pageInt;
+        for (int i = begin; i < end; i++) {
+            listUser.add(data.get(i));
+        }
+        request.setAttribute("currentPage", page);
+        request.setAttribute("totalPages", Math.ceil((float) (data.size() / 10.0)));
         request.setAttribute("listUser", listUser);
         request.getRequestDispatcher("admin_Dashboard_ListUser.jsp").forward(request, response);
     }
