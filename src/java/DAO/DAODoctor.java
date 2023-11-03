@@ -69,12 +69,13 @@ public class DAODoctor extends DBContext {
     }
 
     public ArrayList<SlotDoctor> getReservationByDocId(int doctorId) {
-        String sql = "SELECT sl.SlotId, startTime, endTime, DoctorId, status, sd.Description, day, s.ServiceName\n"
+        String sql = "SELECT sl.SlotId, sl.startTime, sl.endTime, DoctorId, status, sd.Description, sd.day, s.ServiceName\n"
                 + "FROM slots sl\n"
                 + "INNER JOIN SlotDoctor sd ON sl.slotid = sd.slotid \n"
                 + "join Booking b on b.slotDoctorId = sd.slotDoctorId\n"
                 + "join Services s on s.ServiceId = b.ServiceId\n"
-                + "where DoctorId = ?";
+                + "where DoctorId = ? \n"
+                + "order by sd.day, sl.StartTime";
 
         SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         SimpleDateFormat outputFormat = new SimpleDateFormat("HH:mm:ss");
