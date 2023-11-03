@@ -90,15 +90,15 @@
                             <div class="col-12 row d-flex justify-content-center">
                                 <ul class="pagination justify-content-center mb-0">
                                     <li class="page-item <c:if test="${currentPage == 1}">disabled</c:if>">
-                                        <a class="page-link" href="admin-manage-user?page=${currentPage - 1}">Prev</a>
+                                        <a class="page-link" href="${currentLinkPage}?page=${currentPage - 1}">Prev</a>
                                     </li>
                                     <c:forEach begin="1" end="${totalPages}" var="page">
                                         <li class="page-item <c:if test="${currentPage == page}">active</c:if>">
-                                            <a class="page-link" href="admin-manage-user?page=${page}">${page}</a>
+                                            <a class="page-link" href="${currentLinkPage}?page=${page}">${page}</a>
                                         </li>
                                     </c:forEach>
                                     <li class="page-item <c:if test="${currentPage == totalPages}">disabled</c:if>">
-                                        <a class="page-link" href="admin-manage-user?page=${currentPage + 1}">Next</a>
+                                        <a class="page-link" href="${currentLinkPage}?page=${currentPage + 1}">Next</a>
                                     </li>
                                 </ul>
                             </div>

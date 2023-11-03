@@ -62,6 +62,9 @@ public class adminManageUser extends HttpServlet {
         ArrayList<User> data = daoUser.getListUser();
         ArrayList<User> listUser = new ArrayList<>();
         String page = request.getParameter("page");
+        String currentLinkPage = request.getParameter("currentLinkPage");
+        
+        // pageination
         int pageInt = 1;
         if (page != null) {
             pageInt = Integer.parseInt(page);
@@ -71,6 +74,8 @@ public class adminManageUser extends HttpServlet {
         for (int i = begin; i < end; i++) {
             listUser.add(data.get(i));
         }
+        
+        request.setAttribute("currentLinkPage", currentLinkPage);
         request.setAttribute("currentPage", page);
         request.setAttribute("totalPages", Math.ceil((float) (data.size() / 10.0)));
         request.setAttribute("listUser", listUser);
