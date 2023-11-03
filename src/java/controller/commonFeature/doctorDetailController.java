@@ -5,29 +5,23 @@
 
 package controller.commonFeature;
 
-import DAO.DAOBooking;
-import DAO.DAOCustomer;
-import DAO.DAOService;
-import DAO.DAOUser;
+import DAO.DAODoctor;
+import DAO.DAOPost;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import model.Booking;
-import model.Customer;
-import model.Service;
-import model.User;
+import java.util.ArrayList;
+import model.Doctor;
+import model.Post;
 
 /**
  *
- * @author ASUS
+ * @author admin
  */
-@WebServlet(name="informationReservation", urlPatterns={"/information"})
-public class informationReservation extends HttpServlet {
+public class doctorDetailController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -44,10 +38,10 @@ public class informationReservation extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet informationReservation</title>");  
+            out.println("<title>Servlet doctorDetailController</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet informationReservation at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet doctorDetailController at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,21 +58,28 @@ public class informationReservation extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        DAOUser userDao = new DAOUser();
-        DAOCustomer cusDao = new DAOCustomer();
-        DAOService serDao = new DAOService();
-        String doctorIdStr = request.getParameter("doctorId");
-        int doctorId = Integer.parseInt(doctorIdStr);
-        String bookingId = request.getParameter("id");
-        Customer cusInfo = cusDao.getCusBookingInforByBookId(bookingId);
-        Service cusService = serDao.getCusServiceInforByBookingId(bookingId);
-        String doctorAvatar = userDao.getAvatarById(doctorId);
-        session.setAttribute("doctorAvatar", doctorAvatar);
-        session.setAttribute("bookingId", bookingId);
-        session.setAttribute("cusInfo", cusInfo);
-        session.setAttribute("cusService", cusService);
-        request.getRequestDispatcher("reservationInformation.jsp").forward(request, response);
+        
+        DAOPost Postdao = new DAOPost();
+        ArrayList<String> listIntro = new ArrayList<>();
+        
+        ArrayList<Post> listP = Postdao.getListPost();
+        for (Post post : listP) {
+            String intro = post.getContent().substring(0, 150) + "...";
+            listIntro.add(intro);
+        }
+        
+
+        DAODoctor dao = new DAODoctor();
+        
+        String id = request.getParameter("doctorId");
+        Doctor p = dao.getDoctorbyID(Integer.parseInt(id));
+        
+        
+        
+        request.setAttribute("listP", listP);
+        request.setAttribute("listIntro", listIntro);
+        request.setAttribute("doctorDetail", p);
+        request.getRequestDispatcher("detailDoctor.jsp").forward(request, response);
     } 
 
     /** 
@@ -91,17 +92,7 @@ public class informationReservation extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String cancelBookingId = request.getParameter("bookingId");
-        DAOBooking bookDao = new DAOBooking();
-        DAOCustomer cusDao = new DAOCustomer();
-        String cancelBooking = bookDao.cancelCusBookingByBookId(cancelBookingId);
-        Customer cusInfo = cusDao.getCusBookingInforByBookId(cancelBooking);
-        String mess = "The reservation has been canceled";
-        request.setAttribute("mess", mess);
-        session.setAttribute("bookingId", cancelBookingId);
-        session.setAttribute("cusInfo", cusInfo);
-        request.getRequestDispatcher("reservationInformation.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /** 

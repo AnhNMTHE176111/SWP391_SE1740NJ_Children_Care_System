@@ -175,19 +175,20 @@ public class DAOUser extends DBContext {
 
     public void addNewAccountByEmail(User user) {
         try {
-            String strSQL = "insert into Users (firstName, lastName, email, password, address, phone, dob, status, avatar, RoleId, createdAt)"
-                    + " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, GETDATE())";
+            String strSQL = "insert into Users (firstName, lastName, gender, email, password, address, phone, dob, status, avatar, RoleId, createdAt)"
+                    + " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, GETDATE())";
             pstm = cnn.prepareStatement(strSQL);
             pstm.setString(1, user.getFirstName());
             pstm.setString(2, user.getLastName());
-            pstm.setString(3, user.getEmail());
-            pstm.setString(4, user.getPassword());
-            pstm.setString(5, user.getAddress());
-            pstm.setString(6, user.getPhone());
-            pstm.setString(7, user.getDob());
-            pstm.setString(8, user.getStatus());
-            pstm.setString(9, user.getAvatar());
-            pstm.setString(10, String.valueOf(user.getRoleId()));
+            pstm.setString(3, user.getGender());
+            pstm.setString(4, user.getEmail());
+            pstm.setString(5, user.getPassword());
+            pstm.setString(6, user.getAddress());
+            pstm.setString(7, user.getPhone());
+            pstm.setString(8, user.getDob());
+            pstm.setString(9, user.getStatus());
+            pstm.setString(10, user.getAvatar());
+            pstm.setString(11, String.valueOf(user.getRoleId()));
 
             pstm.execute();
 
@@ -499,6 +500,25 @@ public class DAOUser extends DBContext {
         } catch (Exception e) {
             System.out.println("updateProfileByAdmin: " + e.getMessage());
         }
+    }
+
+
+    public String getAvatarById(int doctorId) {
+        String sql = "select avatar from Users where userId = ?";
+        String avatar = null;
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, doctorId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                avatar = rs.getString(1);
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL <getspecialtyNameByDocId>: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("<getspecialtyNameByDocId>: " + e.getMessage());
+        }
+        return avatar;
     }
 
 }

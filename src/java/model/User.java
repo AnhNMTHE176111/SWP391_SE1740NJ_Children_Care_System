@@ -61,20 +61,7 @@ public class User {
         this.roleId = roleId;
     }
 
-    
-    public User(String status, String firstName, String lastName, String email, String password, String address, String phone, String dob, String avatar, int roleId) {
-        this.status = status;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.address = address;
-        this.phone = phone;
-        this.dob = dob;
-        this.avatar = avatar;
-        this.roleId = roleId;
-    }
-
+   
 
     public User(String firstName, String lastName, String email, String password, String address, String phone, String dob) {
         this.firstName = firstName;
@@ -210,4 +197,10 @@ public class User {
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
+
+    @Override
+    public String toString() {
+        return "User{" + "status=" + status + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", password=" + password + ", address=" + address + ", phone=" + phone + ", dob=" + dob + ", createdAt=" + createdAt + ", avatar=" + avatar + ", gender=" + gender + ", userId=" + userId + ", roleId=" + roleId + '}';
+    }
+    
 }

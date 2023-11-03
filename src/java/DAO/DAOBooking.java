@@ -153,7 +153,8 @@ public class DAOBooking extends DBContext {
                     + "  CONCAT(u.firstName, ' ', u.lastName) AS fullName,\n"
                     + "  s.StartTime,\n"
                     + "  s.EndTime,\n"
-                    + "  se.ServiceName\n"
+                    + "  se.ServiceName,\n"
+                    + "  d.DoctorId\n"
                     + "FROM Booking b\n"
                     + "JOIN MedicalInfo m ON b.MedicalInfoId = m.MedicalInfoId\n"
                     + "JOIN Doctors d ON b.slotDoctorId = d.DoctorId\n"
@@ -179,7 +180,8 @@ public class DAOBooking extends DBContext {
                 String CreateDate = String.valueOf(rs.getDate(7));
                 String CreateTime = String.valueOf(rs.getTime(7));
                 String ServiceName = rs.getString(12);
-                Booking cusBooking = new Booking(BookingId, BookingStatus, CustomerID, MedicalInfoId, Diagnosis, BookingDate, BookingTime, DoctorName, ServiceName, CreateDate, CreateTime);
+                int DoctorId = rs.getInt(13);
+                Booking cusBooking = new Booking(BookingId, BookingStatus, CustomerID, MedicalInfoId, Diagnosis, BookingDate, BookingTime, DoctorName, ServiceName, CreateDate, CreateTime, DoctorId);
                 listCustReservation.add(cusBooking);
             }
         } catch (Exception e) {
@@ -269,7 +271,7 @@ public class DAOBooking extends DBContext {
     public String cancelCusBookingByBookId(String cancelBookId) {
         try {
             String strSQL = "update Booking\n"
-                    + "set BookingStatus = '3'\n"
+                    + "set BookingStatus = '2'\n"
                     + "where BookingId = ?";
             pstm = cnn.prepareStatement(strSQL);
             pstm.setString(1, cancelBookId);

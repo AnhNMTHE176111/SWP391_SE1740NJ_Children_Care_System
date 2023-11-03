@@ -59,9 +59,6 @@ public class reservationController extends HttpServlet {
 
             String module = request.getParameter("module");
             String date = request.getParameter("date");
-            System.out.println("module" + "'" + module + "'");
-            System.out.println("currentdate" + currentDate);
-            System.out.println("date: " + date);
             // get date from now
             if (module == null) {
                 for (SlotDoctor slotDoctor : slotDoc) {

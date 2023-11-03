@@ -25,7 +25,7 @@ public class MedicalInfo extends Feedback{
         this.treatmentPlan = treatmentPlan;
     }
 
-    public MedicalInfo(String dateOfVisit, String dateOfRevisit, String symptons, String diagnosis, String treatmentPlan, int ratingId, int medicalInfoId, Float ratingValue, String comment) {
+    public MedicalInfo(String dateOfVisit, String dateOfRevisit, String symptons, String diagnosis, String treatmentPlan, int ratingId, int medicalInfoId, String ratingValue, String comment) {
         super(ratingId, medicalInfoId, ratingValue, comment);
         this.dateOfVisit = dateOfVisit;
         this.dateOfRevisit = dateOfRevisit;

@@ -39,6 +39,7 @@
     <jsp:include page="header.jsp"></jsp:include>
 
         <body>
+
             <h1 style="margin-left: 100px;padding: 40px;">List Reservation </h1>
             <div class="col-12 d-flex justify-content-center">
                 <div class="col-2">

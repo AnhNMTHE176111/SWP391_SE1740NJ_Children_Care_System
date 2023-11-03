@@ -12,8 +12,10 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import model.Doctor;
 import model.MedicalInfo;
+import model.Post;
 import model.Service;
 import model.Slot;
 import model.SlotDoctor;
@@ -56,6 +58,8 @@ public class DAODoctor extends DBContext {
                 int id = Integer.parseInt(rs.getString(2));
                 int doctorId = rs.getInt(3);
                 doctor = new Doctor(name, id, doctorId);
+
+                doctor = new Doctor(name, id, doctorId);
                 data.add(doctor);
             }
         } catch (Exception e) {
@@ -72,6 +76,7 @@ public class DAODoctor extends DBContext {
                 + "join Services s on s.ServiceId = b.ServiceId\n"
                 + "where DoctorId = ? \n"
                 + "order by sd.day, sl.StartTime";
+
         SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         SimpleDateFormat outputFormat = new SimpleDateFormat("HH:mm:ss");
         ArrayList<SlotDoctor> data = new ArrayList<>();
@@ -245,7 +250,7 @@ public class DAODoctor extends DBContext {
                 data.setTreatmentPlan(rs.getString(5));
                 data.setMedicalInfoId(rs.getInt(6));
 
-                data.setRatingValue(rs.getFloat(6));
+                data.setRatingValue(rs.getString(6));
                 data.setComment(rs.getString(6));
                 data.setRatingId(rs.getInt(6));
 
@@ -303,21 +308,65 @@ public class DAODoctor extends DBContext {
         }
     }
 
+    public ArrayList<Doctor> getListDoctor() {
+        String sql = "select DoctorId, lastName, firstName, Description, avatar from Doctors d, Users u\n"
+                + "where u.userId = d.userId";
+        ArrayList<Doctor> data = new ArrayList<>();
+        try {
+            PreparedStatement pstm = cnn.prepareStatement(sql);
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                data.add(new Doctor(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5)));
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL <getListDoctor>: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("<getListDoctor>: " + e.getMessage());
+        }
+        return data;
+    }
+
+    public  Doctor getDoctorbyID(int id) {
+        List<Doctor> list = new ArrayList<>();
+        String query = "select DoctorId, lastName, firstName, Description, avatar from Doctors d, Users u\n" +
+"                       where u.userId = d.userId and DoctorId = ? ";
+        try {
+            PreparedStatement pstm = cnn.prepareStatement(query);
+            pstm.setInt(1, id);
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next()) {
+                return new Doctor(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5));
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL <getPostById>: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("<getPostById>: " + e.getMessage());
+        }
+        return null;
+    }
     public void changeStatusBySlotIdandDocId(int slotId, int doctorId, int status) {
-        String sql = "UPDATE SlotDoctor\n"
-                + "Set Status = ?\n"
-                + "where slotid = ? and DoctorId = ?";
+        String sql = "update Booking set BookingStatus = ? where slotDoctorId in (select slotDoctorId from SlotDoctor where DoctorId = ? and SlotId = ?)";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
-            if (status == 1) {
-                ps.setInt(1, 0);
+            if (status == 2) {
+                ps.setInt(1, 2);
             } else {
-                ps.setInt(1, 1);
+                ps.setInt(1, 3);
             }
-            ps.setInt(2, slotId);
-            ps.setInt(3, doctorId);
+            ps.setInt(3, slotId);
+            ps.setInt(2, doctorId);
             int update = ps.executeUpdate();
-            System.out.println("update successfully: changeStatusBySlotIdandDocId" + update);
+            System.out.println("update successfully: changeStatusBySlotIdandDocId " + update);
+            System.out.println("docId " + doctorId + "slotID " + slotId);
         } catch (SQLException e) {
             System.out.println("SQL <changeStatusBySlotIdandDocId>: " + e.getMessage());
         } catch (Exception e) {
