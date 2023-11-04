@@ -426,9 +426,6 @@ public class DAOUser extends DBContext {
         } else {
             listUser.addAll(dataRaw);
         }
-        System.out.println("listUser: " + listUser.size());
-        System.out.println("dataraw: " + dataRaw.size());
-
         return listUser;
     }
 
