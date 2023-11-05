@@ -18,7 +18,8 @@ import model.Post;
  *
  * @author dmx
  */
-public class DAOFeedback extends DBContext{
+public class DAOFeedback extends DBContext {
+
     PreparedStatement pstm;
     Connection cnn;
     ResultSet rs;
@@ -30,7 +31,7 @@ public class DAOFeedback extends DBContext{
     public void connect() {
         cnn = super.connection;
     }
-    
+
     public void addFeedback(String medicalInforId, String ratingValue, String comment) {
         String query = "INSERT [dbo].[Feedback] ([MedicalInfoID], [RatingValue], [Comment] ) VALUES (?,?,?)";
         try {
@@ -46,4 +47,31 @@ public class DAOFeedback extends DBContext{
             System.out.println("<addPost>: " + e.getMessage());
         }
     }
+
+    public ArrayList<Feedback> getListFeedback() {
+        ArrayList<Feedback> listFeedback = new ArrayList<>();
+        try {
+            String strSQL = "select * from Feedback";
+            pstm = cnn.prepareStatement(strSQL);
+            rs = pstm.executeQuery();
+            while (rs.next()) {
+                Feedback feedback = new Feedback();
+                feedback.setRatingId(Integer.parseInt(rs.getString(1)));
+                feedback.setMedicalInfoId(Integer.parseInt(rs.getString(2)));
+                feedback.setRatingValue(rs.getString(3));
+                feedback.setComment(rs.getString(4));
+
+                // some code to finish
+                listFeedback.add(feedback);
+            }
+            return listFeedback;
+        } catch (SQLException e) {
+            System.out.println("SQL getListFeedback: " + e.getMessage());
+            return null;
+        } catch (Exception e) {
+            System.out.println("getListFeedback: " + e.getMessage());
+            return null;
+        }
+    }
+
 }
