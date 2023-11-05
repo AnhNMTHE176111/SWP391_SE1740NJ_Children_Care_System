@@ -73,9 +73,6 @@
                                         <td class="table-reservation-column col-md-3">
                                             <ul class="table-reservation-list">
                                                 <li class="item">
-                                                    <i class="fa-solid fa-disease"></i> ${cr.diagnosis}
-                                                </li>
-                                                <li class="item">
                                                     <i class="fa-solid fa-calendar-alt"></i> ${cr.bookingDate}
                                                 </li>
                                                 <li class="item">
@@ -90,13 +87,13 @@
                                         <td class="table-reservation-column col-md-2">
                                             <c:choose>
                                                 <c:when test="${cr.bookingStatus == 1}">
-                                                    <p class="item" style="color: yellow">Submitted</p>
-                                                </c:when>
-                                                <c:when test="${cr.bookingStatus == 2}">
                                                     <p class="item" style="color: greenyellow">Success</p>
                                                 </c:when>
-                                                <c:when test="${cr.bookingStatus == 3}">
+                                                <c:when test="${cr.bookingStatus == 2}">
                                                     <p class="item" style="color: red">Cancelled</p>
+                                                </c:when>
+                                                <c:when test="${cr.bookingStatus == 3}">
+                                                    <p class="item" style="color: yellow">Submitted</p>
                                                 </c:when>
                                                 <c:otherwise>
                                                     <p class="item">Unknown Status</p>
@@ -104,7 +101,7 @@
                                             </c:choose>
                                         </td>
                                         <td class="table-reservation-column col-md-1">
-                                            <button class="button-4" role="button"><a href="/information?get&id=${cr.bookingId}" style="text-decoration: none;">Detail</a></button>
+                                            <button class="button-4" role="button"><a href="/information?get&id=${cr.bookingId}&doctorId=${cr.doctorId}" style="text-decoration: none;">Detail</a></button>
                                             <button class="button-4" role="button" style="background-color: yellow"><a href="/feedback?get&id=${cr.medicalInfoId}" style="text-decoration: none;">Feedback</a></button>
                                         </td>
                                     </tr>

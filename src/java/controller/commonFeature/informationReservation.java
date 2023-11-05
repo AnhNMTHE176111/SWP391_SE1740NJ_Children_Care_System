@@ -68,10 +68,13 @@ public class informationReservation extends HttpServlet {
         DAOUser userDao = new DAOUser();
         DAOCustomer cusDao = new DAOCustomer();
         DAOService serDao = new DAOService();
-        
+        String doctorIdStr = request.getParameter("doctorId");
+        int doctorId = Integer.parseInt(doctorIdStr);
         String bookingId = request.getParameter("id");
         Customer cusInfo = cusDao.getCusBookingInforByBookId(bookingId);
         Service cusService = serDao.getCusServiceInforByBookingId(bookingId);
+        String doctorAvatar = userDao.getAvatarById(doctorId);
+        session.setAttribute("doctorAvatar", doctorAvatar);
         session.setAttribute("bookingId", bookingId);
         session.setAttribute("cusInfo", cusInfo);
         session.setAttribute("cusService", cusService);

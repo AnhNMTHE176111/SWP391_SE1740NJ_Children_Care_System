@@ -13,6 +13,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import javax.xml.bind.DatatypeConverter;
 import model.User;
 
 /**
@@ -78,6 +81,7 @@ public class changePassword extends HttpServlet {
         String codeString = request.getParameter("code");
         String newpassword = request.getParameter("newpassword");
         String repassword = request.getParameter("repassword");
+        String hashedPassword;
         DAOUser userDao = new DAOUser();
         //Get the user's account information
         User user = userDao.getUserByEmail(email);
@@ -122,11 +126,22 @@ public class changePassword extends HttpServlet {
             request.setAttribute("mess", mess);
             request.getRequestDispatcher("changePassword.jsp").forward(request, response);
         }
+        
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(repassword.getBytes());
+            byte[] digest = md.digest();
+            hashedPassword = DatatypeConverter.printHexBinary(digest).toUpperCase();
+        } catch (NoSuchAlgorithmException e) {
+            return;
+        }
 
         if (valid == true) {
             //Update new password for users
-            user.setPassword(repassword);
+            user.setPassword(hashedPassword);
             userDao.updatePasswordByEmail(user);
+            String mess = "Your password has been changed successfully!";
+            request.setAttribute("mess1", mess);
             request.getRequestDispatcher("login.jsp").forward(request, response);
         }
     }
