@@ -27,7 +27,7 @@ import model.Specialty;
 public class serviceServlet extends HttpServlet {
 
     private final String mess = "Chất lượng khám chữa bệnh luôn là tiêu chí được Hệ thống Y tế ChildCare quan tâm hàng đầu. Bên cạnh đội ngũ giáo sư, bác sĩ giỏi, nhiều năm kinh nghiệm thuộc nhiều chuyên khoa khác nhau, hệ thống trang thiết bị y tế được đầu tư hiện đại và đồng bộ, cơ sở vật chất khang trang, sạch sẽ, tiện nghi. ";
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -67,7 +67,20 @@ public class serviceServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         DAOService d = new DAOService();
-        ArrayList<Service> service = d.getListService();
+
+        int itemsPerPage = 7;
+        String page = request.getParameter("page");
+        int currentPage = 1;
+        if (page != null) {
+            currentPage = Integer.parseInt(page);
+        }
+        int totalItems = d.getTotalItemCount();
+        int totalPages = (int) Math.ceil((double) totalItems / itemsPerPage);
+
+        request.setAttribute("currentPage", currentPage);
+        request.setAttribute("totalPages", totalPages);
+
+        ArrayList<Service> service = d.getListService(currentPage, itemsPerPage);
         request.setAttribute("service", service);
         request.setAttribute("mess", mess);
         request.getRequestDispatcher("service.jsp").forward(request, response);

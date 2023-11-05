@@ -4,7 +4,10 @@
  */
 package controller.managerFeature;
 
-import DAO.DAOCustomer;
+import DAO.DAODoctor;
+import DAO.DAOService;
+import DAO.DAOSpecialty;
+import com.oracle.wls.shaded.org.apache.bcel.generic.AALOAD;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,14 +16,16 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
-import model.Customer;
+import model.Doctor;
+import model.Service;
+import model.Specialty;
 import model.User;
 
 /**
  *
  * @author Admin
  */
-public class manageCustomerController extends HttpServlet {
+public class manageServiceController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +44,10 @@ public class manageCustomerController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet manageCustomerController</title>");
+            out.println("<title>Servlet manageServiceController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet manageCustomerController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet manageServiceController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,8 +67,8 @@ public class manageCustomerController extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         User currentUser = (User) session.getAttribute("user");
-        DAOCustomer d = new DAOCustomer();
-
+        DAOService d = new DAOService();
+        
         if (currentUser != null && currentUser.getRoleId() == 3) {
             int itemsPerPage = 5;
             String page = request.getParameter("page");
@@ -73,15 +78,16 @@ public class manageCustomerController extends HttpServlet {
             }
             int totalItems = d.getTotalItemCount();
             int totalPages = (int) Math.ceil((double) totalItems / itemsPerPage);
-            ArrayList<User> customerList = d.getListCustomer(currentPage, itemsPerPage);
-
-            request.setAttribute("customerList", customerList);
+            ArrayList<Service> listService = d.getListServiceForManager(currentPage, itemsPerPage);
+            
             request.setAttribute("currentPage", currentPage);
             request.setAttribute("totalPages", totalPages);
-            request.getRequestDispatcher("manageCustomer.jsp").forward(request, response);
+            request.setAttribute("list", listService);
+            request.getRequestDispatcher("service.jsp").forward(request, response);
         } else {
             request.getRequestDispatcher("403.jsp").forward(request, response);
         }
+
     }
 
     /**
@@ -95,7 +101,25 @@ public class manageCustomerController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("enter post");
+        String delete = request.getParameter("delete");
+        String change = request.getParameter("change");
+        int serviceId = Integer.parseInt(request.getParameter("serviceId"));
+        int docId = Integer.parseInt(request.getParameter("docId"));
+        DAOService DaoService = new DAOService();
+        DAODoctor DaoDoctor = new DAODoctor();
+        DAOSpecialty DaoSpecialty = new DAOSpecialty();
+
+        if (delete != null) {
+            DaoService.deleteServiceById(serviceId, docId);
+            response.sendRedirect("/manageService");
+        } else if (change != null) {
+            Service s = DaoService.getServiceForManagerById(docId, serviceId);
+            ArrayList<Doctor> doctorList = DaoDoctor.getListDoctor();
+            request.setAttribute("service", s);
+            request.setAttribute("doctorList", doctorList);
+            request.getRequestDispatcher("manageChangeService.jsp").forward(request, response);
+        }
+
     }
 
     /**

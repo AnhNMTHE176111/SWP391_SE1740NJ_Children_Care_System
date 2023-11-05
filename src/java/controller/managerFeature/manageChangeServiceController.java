@@ -4,23 +4,19 @@
  */
 package controller.managerFeature;
 
-import DAO.DAOCustomer;
+import DAO.DAOService;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
-import model.Customer;
-import model.User;
 
 /**
  *
  * @author Admin
  */
-public class manageCustomerController extends HttpServlet {
+public class manageChangeServiceController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +35,10 @@ public class manageCustomerController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet manageCustomerController</title>");
+            out.println("<title>Servlet manageChangeServiceController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet manageCustomerController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet manageChangeServiceController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,28 +56,8 @@ public class manageCustomerController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        User currentUser = (User) session.getAttribute("user");
-        DAOCustomer d = new DAOCustomer();
-
-        if (currentUser != null && currentUser.getRoleId() == 3) {
-            int itemsPerPage = 5;
-            String page = request.getParameter("page");
-            int currentPage = 1;
-            if (page != null) {
-                currentPage = Integer.parseInt(page);
-            }
-            int totalItems = d.getTotalItemCount();
-            int totalPages = (int) Math.ceil((double) totalItems / itemsPerPage);
-            ArrayList<User> customerList = d.getListCustomer(currentPage, itemsPerPage);
-
-            request.setAttribute("customerList", customerList);
-            request.setAttribute("currentPage", currentPage);
-            request.setAttribute("totalPages", totalPages);
-            request.getRequestDispatcher("manageCustomer.jsp").forward(request, response);
-        } else {
-            request.getRequestDispatcher("403.jsp").forward(request, response);
-        }
+        request.getRequestDispatcher("403.jsp").forward(request, response);
+        
     }
 
     /**
@@ -95,7 +71,20 @@ public class manageCustomerController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("enter post");
+        String serviceId = request.getParameter("serId");
+        String newServiceName = request.getParameter("ServiceName");
+        String newDoctorId = request.getParameter("doctorId");
+        String newDescription = request.getParameter("Description");
+        String newPrice = request.getParameter("Price");
+        DAOService d = new DAOService();
+        System.out.println(serviceId + " wer awer " + newServiceName + " newDoctorId" + " newDescription" + " " + newPrice);
+        boolean update = d.updateServiceByManager(serviceId, newServiceName, newDoctorId, newDescription, newPrice);
+        if (update) {
+            request.setAttribute("mess1", "update unsuccesfully");
+        } else {
+            request.setAttribute("mess", "update succesfully");
+        }
+        response.sendRedirect("/manageService");
     }
 
     /**
