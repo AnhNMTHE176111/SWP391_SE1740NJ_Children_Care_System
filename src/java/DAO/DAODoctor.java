@@ -362,8 +362,6 @@ public class DAODoctor extends DBContext {
             ps.setInt(3, slotId);
             ps.setInt(2, doctorId);
             int update = ps.executeUpdate();
-            System.out.println("update successfully: changeStatusBySlotIdandDocId " + update);
-            System.out.println("docId " + doctorId + "slotID " + slotId);
         } catch (SQLException e) {
             System.out.println("SQL <changeStatusBySlotIdandDocId>: " + e.getMessage());
         } catch (Exception e) {

@@ -274,8 +274,8 @@
                                             </td>
                                             <td>
                                                 <ul class="list-unstyled mb-0 d-flex justify-content-end">
-                                                    <li><a href="manageCustomerDetails?id=${customerList.getUserId()}&id2=edit" class="text-primary" data-toggle="tooltip" titledata-original-title="view"><i class="far fa-eye"></i></a></li>
-                                                    <li><a href="manageCustomerDetails?id=${customerList.getUserId()}&id2=delete" class="text-danger" data-toggle="tooltip" titledata-original-title="Delete"><i class="far fa-trash-alt"></i></a></li>
+                                                    <li><a href="manageCustomerDetails?id=${customerList.getUserId()}&id2=edit" class="text-primary" data-toggle="tooltip" titledata-original-title="view" ><i class="far fa-eye"></i></a></li>
+                                                    <li><a href="manageCustomerDetails?id=${customerList.getUserId()}&id2=delete" class="text-danger" data-toggle="tooltip" titledata-original-title="Delete" onchange="showUpdateAlert()"><i class="far fa-trash-alt"></i></a></li>
                                                 </ul>
                                             </td>
                                         </c:forEach>
@@ -306,8 +306,10 @@
         </div>
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script type="text/javascript">
-
+        <script >
+            function showUpdateAlert() {
+                alert("Add service successfully!");
+            }
         </script>
     </body>
     <jsp:include page="footer.jsp"></jsp:include>

@@ -11,33 +11,82 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <style>
-            table {
-                margin-left: 140px;
-                width: 80%;
-                border-collapse: collapse;
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f0f0f0;
+                margin: 0;
+                padding: 0;
             }
+
+            /* Header Styles */
+            h1 {
+                text-align: center;
+                padding: 40px;
+            }
+
+            /* Table Styles */
+            table {
+                width: 80%;
+                margin: 0 auto;
+                border-collapse: collapse;
+                background-color: white;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
             th, td {
-                border: 1px solid black;
+                border: 1px solid #ccc;
                 padding: 10px;
                 text-align: left;
             }
+
             th {
                 background-color: #f2f2f2;
             }
+
+            /* Status Styles */
             .active {
-                background-color: green;
+                background-color: #4CAF50;
                 color: white;
                 padding: 5px;
                 border-radius: 5px;
             }
 
             .inactive {
-                background-color: red;
+                background-color: #FF5733;
                 color: white;
                 padding: 5px;
                 border-radius: 5px;
             }
 
+            /* Form Styles */
+            form {
+                display: inline;
+            }
+
+            select {
+                padding: 5px;
+            }
+
+            /* Button Styles */
+            input[type="submit"] {
+                background-color: #007BFF;
+                color: white;
+                padding: 5px 10px;
+                border: none;
+                cursor: pointer;
+            }
+
+            /* Hover Effect for Table Rows */
+            tbody tr:hover {
+                background-color: #f2f2f2;
+            }
+
+            .pending {
+                background-color: #FFA500; /* Pumpkin orange color */
+                color: white;
+                padding: 5px;
+                border-radius: 5px;
+            }
         </style>
     </head>
     <jsp:include page="header.jsp"></jsp:include>
@@ -68,8 +117,8 @@
                                 <script>
                                     const statusDisplay_${count} = document.getElementById('statusDisplay_${count}');
 
-                                    if (${item.getStatus()}== 1) {
-                                        statusDisplay_${count}.innerHTML = '<div class="active">Submit</div>';
+                                    if (${item.getStatus()} == 1) {
+                                        statusDisplay_${count}.innerHTML = '<div class="pending">Submit</div>';
                                     } else if (${item.getStatus()} == 2) {
                                         statusDisplay_${count}.innerHTML = '<div class="inactive">Cancel</div>';
                                     } else {
@@ -77,7 +126,6 @@
                                     }
                                 </script>
                             </div>
-                        </td>
                         </td>
                         <td>${item.getStartTime()} </td>
                         <td>${item.getEndTime()} </td>
@@ -98,10 +146,6 @@
                         <input type="hidden" name="doctorId" value="${item.getDoctorId()}">
                         <input type="submit" value="Change" >
                     </td>
-<!--                    <input type="hidden" name="slotId" value="${item.getSlotId()}">
-                    <input type="hidden" name="status" value="${item.getStatus()}">
-                    <input type="hidden" name="doctorId" value="${item.getDoctorId()}">
-                    <td><input type="submit" value="Change" ></td>-->
 
                 </form>   
             </tr>
