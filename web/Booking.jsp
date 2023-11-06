@@ -61,9 +61,9 @@
                                         </option>
                                     </c:forEach>
                                 </select>
-<span class="error-message" id="specialtyError"></span>
+                                <span class="error-message" id="specialtyError"></span>
                             </div>
-                            
+
                             <div class="form-group label-box">
                                 <select
                                     id="selectedDoctor"
