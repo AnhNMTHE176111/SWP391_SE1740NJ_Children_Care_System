@@ -39,7 +39,7 @@
                 <div class="row">
                 <c:forEach items="${listP}" var="o" varStatus="status">
                     <div class="col-lg-4 col-md-6 col-sm-12"> 
-                        <div class="card border-0 shadow-sm mb-2">
+                        <div class="card border-0 shadow-sm mb-2" style="height:580px">
                             <a href="postDetail?postId=${o.postId}"> <img class="card-img-top mb-2" src="${o.getAvatar()}" alt=""> </a>
                             <div class="card-body bg-light text-center p-4">
                                 <p style="font-size: 20px; font-weight: 600; color: #222;">${o.title}</p>
