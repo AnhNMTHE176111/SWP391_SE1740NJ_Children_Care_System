@@ -146,12 +146,8 @@ public class DAOCustomer extends DBContext {
                 String fname = rs.getString(3);
                 String lname = rs.getString(4);
                 boolean gender = rs.getBoolean(5);
-                String sex;
-                if (gender) {
-                    sex = "male";
-                } else {
-                    sex = "female";
-                }
+                String sex = rs.getString(5);
+              
                 String email = rs.getString(6);
                 String phone = rs.getString(9);
                 String address = rs.getString(8);

@@ -14,24 +14,36 @@
         <jsp:include page="change-profile.jsp"></jsp:include>
 
             <!-- Navbar Start -->
-        <div class="container-fluid position-relative shadow">
-            <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0 px-lg-5">
-                <a href="" class="navbar-brand font-weight-bold text-secondary" style="font-size: 50px;">
-                    <!--                <i class="flaticon-043-teddy-bear"></i>-->
-                    <span class="text-primary">ChildCare</span>
-                </a>
-                <!--            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>-->
+            <div class="container-fluid position-relative shadow">
+                <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0 px-lg-5">
+                    <a href="" class="navbar-brand font-weight-bold text-secondary" style="font-size: 50px;">
+                        <!--                <i class="flaticon-043-teddy-bear"></i>-->
+                        <span class="text-primary">ChildCare</span>
+                    </a>
+                    <!--            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>-->
 
-                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                    <div class="navbar-nav font-weight-bold mx-auto py-0">
+                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                        <div class="navbar-nav font-weight-bold mx-auto py-0">
                         <c:if test="${sessionScope.roleId eq 4}">
                             <a href="admin" class="nav-item nav-link">Admin Dashboard</a>
                         </c:if>
+                        <c:if test="${sessionScope.roleId eq 3}">
+                            <a href="/manage" class="nav-item nav-link " >Manage Dashboard</a>
+                            <a href="/manageService" class="nav-item nav-link " >Services</a>
+
+                        </c:if>
+                        <a href="/home" class="nav-item nav-link">Home</a>
+
                         <a href="home" class="nav-item nav-link">Home</a>
                         <a href="/blog" class="nav-item nav-link">Blogs</a>
-                        <a href="/service" class="nav-item nav-link">Services</a>
+
+
+                        <c:if test="${sessionScope.roleId ne 3}">
+                            <a href="/service" class="nav-item nav-link">Services</a>
+                        </c:if>
+
                         <a href="team.html" class="nav-item nav-link">Doctors</a>
                         <c:if test="${sessionScope.roleId eq 1}">
                             <a href="/my" class="nav-item nav-link " >My Reservation</a>
@@ -39,7 +51,9 @@
                         <c:if test="${sessionScope.roleId eq 2}">
                             <a href="/reservation" class="nav-item nav-link " >Reservation</a>
                         </c:if>
-                        <a href="booking" class="nav-item nav-link">Booking</a>
+                        <c:if test="${sessionScope.roleId ne 2 && sessionScope.roleId ne 3}">
+                            <a href="booking" class="nav-item nav-link">Booking</a>
+                        </c:if>
                     </div>
 
                     <ul class="nav">
