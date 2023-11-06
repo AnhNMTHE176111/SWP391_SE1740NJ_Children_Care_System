@@ -32,7 +32,7 @@
                         <a href="home" class="nav-item nav-link">Home</a>
                         <a href="/blog" class="nav-item nav-link">Blogs</a>
                         <a href="/service" class="nav-item nav-link">Services</a>
-                        <a href="team.html" class="nav-item nav-link">Doctors</a>
+                        <a href="listDoctor" class="nav-item nav-link">Doctors</a>
                         <c:if test="${sessionScope.roleId eq 1}">
                             <a href="/my" class="nav-item nav-link " >My Reservation</a>
                         </c:if>
