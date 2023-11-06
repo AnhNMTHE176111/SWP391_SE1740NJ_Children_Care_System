@@ -62,17 +62,18 @@ public class manageCustomerController extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         User currentUser = (User) session.getAttribute("user");
+        DAOCustomer d = new DAOCustomer();
+
         if (currentUser != null && currentUser.getRoleId() == 3) {
-            DAOCustomer d = new DAOCustomer();
             int itemsPerPage = 5;
             String page = request.getParameter("page");
             int currentPage = 1;
             if (page != null) {
                 currentPage = Integer.parseInt(page);
             }
-            ArrayList<User> customerList = d.getListCustomer(currentPage, itemsPerPage);
             int totalItems = d.getTotalItemCount();
             int totalPages = (int) Math.ceil((double) totalItems / itemsPerPage);
+            ArrayList<User> customerList = d.getListCustomer(currentPage, itemsPerPage);
 
             request.setAttribute("customerList", customerList);
             request.setAttribute("currentPage", currentPage);

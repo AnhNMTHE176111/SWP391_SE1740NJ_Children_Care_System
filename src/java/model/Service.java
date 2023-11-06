@@ -113,4 +113,20 @@ public class Service {
         this.description = description;
     }
 
+    public Service(int serviceId, String serviceName, String doctorName, int doctorId, float price, String Description) {
+        this.serviceId = serviceId;
+        this.serviceName = serviceName;
+        this.doctorName = doctorName;
+        this.doctorId = doctorId;
+        this.price = price;
+        this.description = Description;
+    }
+    public Service(int serviceId, String serviceName, String doctorName, int doctorId, float price) {
+        this.serviceId = serviceId;
+        this.serviceName = serviceName;
+        this.doctorName = doctorName;
+        this.doctorId = doctorId;
+        this.price = price;
+    }
+    
 }

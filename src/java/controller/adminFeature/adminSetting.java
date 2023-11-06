@@ -4,21 +4,23 @@
  */
 package controller.adminFeature;
 
-import DAO.DAOUser;
+import configuration.configuration;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.io.File;
 import java.util.ArrayList;
-import model.User;
+import java.util.HashMap;
 
 /**
  *
  * @author dmx
  */
-public class adminManageUser extends HttpServlet {
+public class adminSetting extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,10 +39,10 @@ public class adminManageUser extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet adminManageUser</title>");
+            out.println("<title>Servlet adminSetting</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet adminManageUser at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet adminSetting at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,28 +60,17 @@ public class adminManageUser extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAOUser daoUser = new DAOUser();
-        ArrayList<User> data = daoUser.getListUser();
-        ArrayList<User> listUser = new ArrayList<>();
-        String page = request.getParameter("page");
-        String currentLinkPage = request.getParameter("currentLinkPage");
-        
-        // pageination
-        int pageInt = 1;
-        if (page != null) {
-            pageInt = Integer.parseInt(page);
+        HttpSession session = request.getSession();
+        if (String.valueOf(session.getAttribute("roleId")).equals("null") || Integer.parseInt(String.valueOf(session.getAttribute("roleId"))) != 4) {
+            response.sendRedirect("403.jsp");
         }
-        int begin = 10 * (pageInt - 1);
-        int end = 10 * pageInt > data.size() ? data.size() : 10 * pageInt;
-        for (int i = begin; i < end; i++) {
-            listUser.add(data.get(i));
-        }
-        
-        request.setAttribute("currentLinkPage", currentLinkPage);
-        request.setAttribute("currentPage", page);
-        request.setAttribute("totalPages", Math.ceil((float) (data.size() / 10.0)));
-        request.setAttribute("listUser", listUser);
-        request.getRequestDispatcher("admin_Dashboard_ListUser.jsp").forward(request, response);
+        configuration config = new configuration();
+        HashMap<Integer, String> listDate = config.getDATE_OFF();
+        int num = config.getNUMBER_OF_APPOINTMENT_DATE();
+
+        request.setAttribute("listDate", listDate);
+        request.setAttribute("num", num);
+        request.getRequestDispatcher("admin_Setting.jsp").forward(request, response);
     }
 
     /**
@@ -93,11 +84,6 @@ public class adminManageUser extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("username");
-        DAOUser daoUser = new DAOUser();
-        ArrayList<User> listUser = daoUser.getListUserByName(username);
-        request.setAttribute("listUser", listUser);
-        request.getRequestDispatcher("admin_Dashboard_ListUser.jsp").forward(request, response);
     }
 
     /**
@@ -109,5 +95,9 @@ public class adminManageUser extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    public static void main(String[] args) {
+        configuration config = new configuration();
+    }
 
 }

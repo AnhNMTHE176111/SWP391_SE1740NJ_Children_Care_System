@@ -2,9 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.adminFeature;
+package controller.managerFeature;
 
-import DAO.DAOUser;
+import DAO.DAODoctor;
+import DAO.DAOService;
+import DAO.DAOSpecialty;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,13 +14,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
-import model.User;
+import model.Doctor;
+import model.Specialty;
 
 /**
  *
- * @author dmx
+ * @author Admin
  */
-public class adminManageUser extends HttpServlet {
+public class manageAddServiceController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,10 +40,10 @@ public class adminManageUser extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet adminManageUser</title>");
+            out.println("<title>Servlet manageAddServiceController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet adminManageUser at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet manageAddServiceController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,28 +61,11 @@ public class adminManageUser extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAOUser daoUser = new DAOUser();
-        ArrayList<User> data = daoUser.getListUser();
-        ArrayList<User> listUser = new ArrayList<>();
-        String page = request.getParameter("page");
-        String currentLinkPage = request.getParameter("currentLinkPage");
-        
-        // pageination
-        int pageInt = 1;
-        if (page != null) {
-            pageInt = Integer.parseInt(page);
-        }
-        int begin = 10 * (pageInt - 1);
-        int end = 10 * pageInt > data.size() ? data.size() : 10 * pageInt;
-        for (int i = begin; i < end; i++) {
-            listUser.add(data.get(i));
-        }
-        
-        request.setAttribute("currentLinkPage", currentLinkPage);
-        request.setAttribute("currentPage", page);
-        request.setAttribute("totalPages", Math.ceil((float) (data.size() / 10.0)));
-        request.setAttribute("listUser", listUser);
-        request.getRequestDispatcher("admin_Dashboard_ListUser.jsp").forward(request, response);
+        DAODoctor DaoDoctor = new DAODoctor();
+        DAOSpecialty DaoSpecialty = new DAOSpecialty();
+        ArrayList<Doctor> listDoctor = DaoDoctor.getListDoctor();
+        request.setAttribute("listDoctor", listDoctor);
+        request.getRequestDispatcher("manageAddService.jsp").forward(request, response);
     }
 
     /**
@@ -93,11 +79,24 @@ public class adminManageUser extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("username");
-        DAOUser daoUser = new DAOUser();
-        ArrayList<User> listUser = daoUser.getListUserByName(username);
-        request.setAttribute("listUser", listUser);
-        request.getRequestDispatcher("admin_Dashboard_ListUser.jsp").forward(request, response);
+        String doctorId = request.getParameter("Doctor");
+        String serviceName = request.getParameter("serviceName");
+        String price = request.getParameter("price");
+        String description = request.getParameter("description");
+        DAOService d = new DAOService();
+        String mess1 = "Add service successfully";
+        String mess = "Add service unsuccessfully";
+        boolean checkAddService = d.addNewService(doctorId, serviceName, price, description);
+        if (checkAddService) {
+            request.setAttribute("mess1", mess1);
+        } else {
+            request.setAttribute("mess", mess);
+        }
+        DAODoctor DaoDoctor = new DAODoctor();
+        ArrayList<Doctor> listDoctor = DaoDoctor.getListDoctor();
+        request.setAttribute("listDoctor", listDoctor);
+        response.sendRedirect("/manageService");
+
     }
 
     /**

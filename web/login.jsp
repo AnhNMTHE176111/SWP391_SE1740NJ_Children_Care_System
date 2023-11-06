@@ -32,8 +32,8 @@
                         <input class="input" type="password" name="password" placeholder="Enter your password" value="${cookie.cPass.value}" required/>
                     </div>
                     <div class="login_form_div">
-                        <input type="checkbox" name="remember" value="ON" value="${(cookie.cRemember!=null?'checked':'')}"/>
-                        <label>Remember me</label>
+                        <input type="checkbox" id="remember" name="remember" value="ON" value="${(cookie.cRemember!=null?'checked':'')}"/>
+                        <label for="remember">Remember me</label>
                         <a href="forgotPassword.jsp" style="margin-left: 60px;">Forgot password?</a>
                         <p class="login_error">${requestScope.mess}</p>
                         <p class="login_success">${requestScope.mess1}</p>

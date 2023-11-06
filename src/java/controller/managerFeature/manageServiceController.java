@@ -2,23 +2,30 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.adminFeature;
+package controller.managerFeature;
 
-import DAO.DAOUser;
+import DAO.DAODoctor;
+import DAO.DAOService;
+import DAO.DAOSpecialty;
+import com.oracle.wls.shaded.org.apache.bcel.generic.AALOAD;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
+import model.Doctor;
+import model.Service;
+import model.Specialty;
 import model.User;
 
 /**
  *
- * @author dmx
+ * @author Admin
  */
-public class adminManageUser extends HttpServlet {
+public class manageServiceController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,10 +44,10 @@ public class adminManageUser extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet adminManageUser</title>");
+            out.println("<title>Servlet manageServiceController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet adminManageUser at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet manageServiceController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,28 +65,29 @@ public class adminManageUser extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAOUser daoUser = new DAOUser();
-        ArrayList<User> data = daoUser.getListUser();
-        ArrayList<User> listUser = new ArrayList<>();
-        String page = request.getParameter("page");
-        String currentLinkPage = request.getParameter("currentLinkPage");
+        HttpSession session = request.getSession();
+        User currentUser = (User) session.getAttribute("user");
+        DAOService d = new DAOService();
         
-        // pageination
-        int pageInt = 1;
-        if (page != null) {
-            pageInt = Integer.parseInt(page);
+        if (currentUser != null && currentUser.getRoleId() == 3) {
+            int itemsPerPage = 5;
+            String page = request.getParameter("page");
+            int currentPage = 1;
+            if (page != null) {
+                currentPage = Integer.parseInt(page);
+            }
+            int totalItems = d.getTotalItemCount();
+            int totalPages = (int) Math.ceil((double) totalItems / itemsPerPage);
+            ArrayList<Service> listService = d.getListServiceForManager(currentPage, itemsPerPage);
+            
+            request.setAttribute("currentPage", currentPage);
+            request.setAttribute("totalPages", totalPages);
+            request.setAttribute("list", listService);
+            request.getRequestDispatcher("service.jsp").forward(request, response);
+        } else {
+            request.getRequestDispatcher("403.jsp").forward(request, response);
         }
-        int begin = 10 * (pageInt - 1);
-        int end = 10 * pageInt > data.size() ? data.size() : 10 * pageInt;
-        for (int i = begin; i < end; i++) {
-            listUser.add(data.get(i));
-        }
-        
-        request.setAttribute("currentLinkPage", currentLinkPage);
-        request.setAttribute("currentPage", page);
-        request.setAttribute("totalPages", Math.ceil((float) (data.size() / 10.0)));
-        request.setAttribute("listUser", listUser);
-        request.getRequestDispatcher("admin_Dashboard_ListUser.jsp").forward(request, response);
+
     }
 
     /**
@@ -93,11 +101,25 @@ public class adminManageUser extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("username");
-        DAOUser daoUser = new DAOUser();
-        ArrayList<User> listUser = daoUser.getListUserByName(username);
-        request.setAttribute("listUser", listUser);
-        request.getRequestDispatcher("admin_Dashboard_ListUser.jsp").forward(request, response);
+        String delete = request.getParameter("delete");
+        String change = request.getParameter("change");
+        int serviceId = Integer.parseInt(request.getParameter("serviceId"));
+        int docId = Integer.parseInt(request.getParameter("docId"));
+        DAOService DaoService = new DAOService();
+        DAODoctor DaoDoctor = new DAODoctor();
+        DAOSpecialty DaoSpecialty = new DAOSpecialty();
+
+        if (delete != null) {
+            DaoService.deleteServiceById(serviceId, docId);
+            response.sendRedirect("/manageService");
+        } else if (change != null) {
+            Service s = DaoService.getServiceForManagerById(docId, serviceId);
+            ArrayList<Doctor> doctorList = DaoDoctor.getListDoctor();
+            request.setAttribute("service", s);
+            request.setAttribute("doctorList", doctorList);
+            request.getRequestDispatcher("manageChangeService.jsp").forward(request, response);
+        }
+
     }
 
     /**
