@@ -125,6 +125,22 @@
         <servlet-class>controller.managerFeature.addCustomerController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>settingController</servlet-name>
+        <servlet-class>controller.adminFeature.settingController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>adminSetting</servlet-name>
+        <servlet-class>controller.adminFeature.adminSetting</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>dateConfigController</servlet-name>
+        <servlet-class>controller.adminFeature.dateConfigController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>numberConfig</servlet-name>
+        <servlet-class>controller.adminFeature.numberConfig</servlet-class>
+      </servlet>
+    <servlet>
         <servlet-name>manageServiceController</servlet-name>
         <servlet-class>controller.managerFeature.manageServiceController</servlet-class>
     </servlet>
@@ -260,6 +276,18 @@
         <servlet-name>addCustomerController</servlet-name>
         <url-pattern>/addCustomer</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>adminSetting</servlet-name>
+        <url-pattern>/admin-manage-setting</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>dateConfigController</servlet-name>
+        <url-pattern>/dateConfigController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>numberConfig</servlet-name>
+        <url-pattern>/numberConfig</url-pattern>
+      </servlet-mapping>
     <servlet-mapping>
         <servlet-name>manageServiceController</servlet-name>
         <url-pattern>/manageService</url-pattern>
