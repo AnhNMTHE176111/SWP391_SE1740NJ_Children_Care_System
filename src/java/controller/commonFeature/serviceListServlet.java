@@ -66,8 +66,12 @@ public class serviceListServlet extends HttpServlet {
         Service serviceList = d.getServiceById(id);
         HttpSession session = request.getSession();
         User currentUser = (User) session.getAttribute("user");
-        Doctor doc = d.getDoctorById_UserID(id,currentUser.getUserId());
-
+        Doctor doc;
+        if (currentUser != null) {
+            doc = d.getDoctorById_UserID(id, currentUser.getUserId());
+        } else {
+            doc = d.getDoctorById(id);
+        }
         request.setAttribute("serviceList", serviceList);
         request.setAttribute("doc", doc);
         request.getRequestDispatcher("servicesList.jsp").forward(request, response);

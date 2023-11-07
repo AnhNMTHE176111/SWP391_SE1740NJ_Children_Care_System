@@ -156,13 +156,16 @@ public class DAOBooking extends DBContext {
                     + "  m.Diagnosis,\n"
                     + "  CONCAT(u.firstName, ' ', u.lastName) AS fullName,\n"
                     + "  s.StartTime,\n"
-                    + "  s.EndTime\n"
+                    + "  s.EndTime,\n"
+                    + "  se.ServiceName,\n"
+                    + "  d.DoctorId\n"
                     + "FROM Booking b\n"
                     + "JOIN MedicalInfo m ON b.MedicalInfoId = m.MedicalInfoId\n"
                     + "JOIN Doctors d ON b.slotDoctorId = d.DoctorId\n"
                     + "JOIN SlotDoctor sd ON b.slotDoctorId = sd.slotDoctorId\n"
                     + "JOIN Slots s ON sd.SlotId = s.SlotId\n"
                     + "JOIN Users u ON d.userId = u.userId\n"
+                    + "JOIN Services se ON b.ServiceId = se.ServiceId\n"
                     + "WHERE b.CustomerId = '" + cusId + "'\n"
                     + "ORDER BY b.CustomerId\n"
                     + "OFFSET ? ROWS FETCH NEXT 2 ROWS ONLY";
@@ -172,14 +175,17 @@ public class DAOBooking extends DBContext {
             while (rs.next()) {
                 int BookingId = rs.getInt(1);
                 int BookingStatus = rs.getInt(2);
-                int CustomerID = rs.getInt(3);
-                String Symptomps = rs.getString(7);
-                String BookingDate = String.valueOf(rs.getDate(9));
-                String BookingTime = String.valueOf("From " + rs.getTime(9) + " to " + rs.getTime(10));
-                String DoctorName = rs.getString(8);
-                String CreateDate = String.valueOf(rs.getDate(6));
-                String CreateTime = String.valueOf(rs.getTime(6));
-                Booking cusBooking = new Booking(BookingId, BookingStatus, CustomerID, Symptomps, BookingDate, BookingTime, DoctorName, CreateDate, CreateTime);
+                int CustomerID = rs.getInt(4);
+                int MedicalInfoId = rs.getInt(5);
+                String Diagnosis = rs.getString(8);
+                String BookingDate = String.valueOf(rs.getDate(10));
+                String BookingTime = String.valueOf("From " + rs.getTime(10) + " to " + rs.getTime(11));
+                String DoctorName = rs.getString(9);
+                String CreateDate = String.valueOf(rs.getDate(7));
+                String CreateTime = String.valueOf(rs.getTime(7));
+                String ServiceName = rs.getString(12);
+                int DoctorId = rs.getInt(13);
+                Booking cusBooking = new Booking(BookingId, BookingStatus, CustomerID, MedicalInfoId, Diagnosis, BookingDate, BookingTime, DoctorName, ServiceName, CreateDate, CreateTime, DoctorId);
                 listCustReservation.add(cusBooking);
             }
         } catch (Exception e) {
@@ -333,6 +339,24 @@ public class DAOBooking extends DBContext {
         }
 
         return true;  // Trả về true nếu tất cả đều thành công, false nếu có lỗi
+    }
+
+    public String cancelCusBookingByBookId(String cancelBookId) {
+        try {
+            String strSQL = "update Booking\n"
+                    + "set BookingStatus = '2'\n"
+                    + "where BookingId = ?";
+            pstm = cnn.prepareStatement(strSQL);
+            pstm.setString(1, cancelBookId);
+            rs = pstm.executeQuery();
+
+        } catch (SQLException e) {
+            System.out.println("SQL cancelCusBookingByBookId: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("cancelCusBookingByBookId: " + e.getMessage());
+        }
+        return cancelBookId;
+
     }
 
 }

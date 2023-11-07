@@ -18,6 +18,7 @@ import DAO.DAOService;
 import DAO.DAOSlotDoctor;
 import DAO.DAOSpecialty;
 import jakarta.servlet.http.HttpSession;
+import configuration.configuration;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
@@ -25,7 +26,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import model.Doctor;
 import model.Service;
 import model.Slot;
@@ -41,6 +44,7 @@ import model.User;
 public class bookingController extends HttpServlet {
 
     private List<String> getDateList() {
+        configuration config = new configuration();
         List<String> dateList = new ArrayList<>();
 
         Date currentDate = new Date();
@@ -49,7 +53,7 @@ public class bookingController extends HttpServlet {
         calendar.setTime(currentDate);
         dateList.add(new SimpleDateFormat("dd/MM").format(currentDate));
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < config.getNUMBER_OF_APPOINTMENT_DATE() - 1; i++) {
             calendar.add(Calendar.DATE, 1);
             Date nextDate = calendar.getTime();
             dateList.add(new SimpleDateFormat("dd/MM").format(nextDate));
@@ -61,7 +65,7 @@ public class bookingController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -135,6 +139,20 @@ public class bookingController extends HttpServlet {
 
 // Đặt các danh sách vào request attribute
         request.setAttribute("serviceList", serviceList);
+
+        configuration config = new configuration();
+        HashMap<Integer, String> listDateOff = config.getDATE_OFF();
+        for (Map.Entry<Integer, String> entry : listDateOff.entrySet()) {
+            Object key = entry.getKey();
+            Object val = entry.getValue();
+            String value = val.toString().split("-")[2] + "/" + val.toString().split("-")[1];
+            String year = val.toString().split("-")[0];
+            if (dateList.contains(value) && year.equals("2023")) {
+                dateList.remove(value);
+            }
+        }
+
+        request.setAttribute("currentUser", currentUser);
         request.setAttribute("availeSlot", availeSlot);
         request.setAttribute("dateList", dateList);
         request.setAttribute("doctorList", doctorList);
@@ -202,6 +220,7 @@ public class bookingController extends HttpServlet {
             e.printStackTrace();
 
         }
+
         int slotDoctorId = 0;
         int addedUserId = 0;
         int customerId = 0;
@@ -209,6 +228,7 @@ public class bookingController extends HttpServlet {
         System.out.println(symptoms);
         slotDoctorId = slotDoctor.addSlotDoctor(doctorIdInt, slotIdInt, 1, symptoms, formattedDate);
         if (currentUser == null) {
+
 
 //About Customer Backend
             String name = request.getParameter("name");
@@ -238,7 +258,6 @@ public class bookingController extends HttpServlet {
             bookingId = booking.addBooking(1, customerId, slotDoctorId, serviceId);
             response.sendRedirect("/home");
         }
-
     }
 
     @Override

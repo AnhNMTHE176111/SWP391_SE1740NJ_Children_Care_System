@@ -15,6 +15,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.PrintWriter;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import javax.xml.bind.DatatypeConverter;
 
 /**
  *
@@ -81,7 +84,14 @@ public class login extends HttpServlet {
         Cookie cookieEmail = new Cookie("cEmail", email);
         Cookie cookiePass = new Cookie("cPass", password);
         Cookie cookieRemember = new Cookie("cRemember", rememberme);
-        //Set the cookie storage time on the browser
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(password.getBytes());
+            byte[] digest = md.digest();
+            password = DatatypeConverter.printHexBinary(digest).toUpperCase();
+        } catch (NoSuchAlgorithmException e) {
+        }
+
         if (rememberme != null) {
             cookieEmail.setMaxAge(60 * 60 * 24 * 7);//7 days
             cookiePass.setMaxAge(60 * 60 * 24 * 7);
@@ -113,21 +123,19 @@ public class login extends HttpServlet {
 
             System.out.println("roleid: " + user.getRoleId());
 
-            if(user.getRoleId() == 1) {
+            if (user.getRoleId() == 1) {
                 response.sendRedirect("home.jsp");
             }
-            if(user.getRoleId() == 2) {
+            if (user.getRoleId() == 2) {
                 response.sendRedirect("staff");
             }
             if(user.getRoleId() == 3) {
                 response.sendRedirect("manageDashboard");
             }
-            if(user.getRoleId() == 4) {
+            if (user.getRoleId() == 4) {
                 response.sendRedirect("admin");
             }
-
         } else {
-            //Report an error when the user enters an incorrect email or password
             String mess = "Wrong email or password!";
             request.setAttribute("mess", mess);
             request.getRequestDispatcher("login.jsp").forward(request, response);

@@ -72,7 +72,8 @@
                         </a>
                     </li>
 
-
+                    <li id="manageCustomer"><i class="far fa-angry"></i><a href="manageCustomer" style="text-decoration: none;color: white;">Customer Manager</a></li>
+                    <li id="manageService"><i class="far fa-server"></i><a href="manageService" style="text-decoration: none;color: white;" >Service Manager</a></li>
                 </ul>
             </div>
 
