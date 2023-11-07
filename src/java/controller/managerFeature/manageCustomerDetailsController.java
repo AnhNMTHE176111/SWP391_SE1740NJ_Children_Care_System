@@ -12,6 +12,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import model.Booking;
 import model.User;
 
 /**
@@ -62,6 +64,8 @@ public class manageCustomerDetailsController extends HttpServlet {
         String UserId = request.getParameter("id");
         String action = request.getParameter("id2");
         if (action.equals("edit")) {
+            ArrayList<Booking> listReservation = d.getListReservationByUserId(UserId);
+            request.setAttribute("listReservation", listReservation);
             User currentCustomer = d.getUserById(UserId);
             request.setAttribute("currentCustomer", currentCustomer);
             request.getRequestDispatcher("manageCustomerDetails.jsp").forward(request, response);
@@ -91,6 +95,7 @@ public class manageCustomerDetailsController extends HttpServlet {
         String status = request.getParameter("status");
         String gender = request.getParameter("gender");
         DAOUser userDao = new DAOUser();
+        DAOCustomer d = new DAOCustomer();
 
         boolean valid = true;
         //Use a regular expression to check the firstname and lastname entered
@@ -107,6 +112,8 @@ public class manageCustomerDetailsController extends HttpServlet {
             //update profile user
             userDao.updateProfileByAdmin(firstName, lastName, address, phone, dob, "1", status, gender, userId);
             //Notification of successful registration
+            ArrayList<Booking> listReservation = d.getListReservationByUserId(userId);
+            request.setAttribute("listReservation", listReservation);
             String mess = "Update Profile User Successfully";
             request.setAttribute("mess1", mess);
             User user = (new DAOUser()).getUserById(userId);
