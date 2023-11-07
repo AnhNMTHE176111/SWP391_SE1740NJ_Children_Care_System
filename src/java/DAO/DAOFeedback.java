@@ -50,20 +50,23 @@ public class DAOFeedback extends DBContext {
 
     public ArrayList<Feedback> getListFeedback(int doctorId) {
         ArrayList<Feedback> listFeedback = new ArrayList<>();
+
         try {
-            String strSQL = "select f.*,\n"
-                    + "u.firstName, u.lastName,\n"
-                    + "b.BookingId\n"
-                    + "from Feedback f\n"
-                    + "join Booking b ON f.MedicalInfoID = b.MedicalInfoId\n"
-                    + "join Customers c ON b.CustomerID = c.Id\n"
-                    + "join Users u ON c.UserId = u.userId\n"
-                    + "join SlotDoctor sd ON b.slotDoctorId = sd.slotDoctorId\n"
-                    + "join Doctors d ON sd.DoctorId = d.DoctorId\n"
-                    + "where d.DoctorId = ?";
+            String strSQL = "SELECT f.*,"
+                    + "u.firstName, u.lastName,"
+                    + "b.BookingId"
+                    + " FROM Feedback f"
+                    + " JOIN Booking b ON f.MedicalInfoID = b.MedicalInfoId"
+                    + " JOIN Customers c ON b.CustomerID = c.Id"
+                    + " JOIN Users u ON c.UserId = u.userId"
+                    + " JOIN SlotDoctor sd ON b.slotDoctorId = sd.slotDoctorId"
+                    + " JOIN Doctors d ON sd.DoctorId = d.DoctorId"
+                    + " WHERE d.DoctorId = ?";
+
             pstm = cnn.prepareStatement(strSQL);
             pstm.setInt(1, doctorId);
             rs = pstm.executeQuery();
+
             while (rs.next()) {
                 Feedback feedback = new Feedback();
                 feedback.setRatingId(Integer.parseInt(rs.getString(1)));
@@ -76,9 +79,7 @@ public class DAOFeedback extends DBContext {
                 // some code to finish
                 listFeedback.add(feedback);
             }
-            for (Feedback feedback : listFeedback) {
-                System.out.println(feedback.getUserFirstName());
-            }
+
             return listFeedback;
         } catch (SQLException e) {
             System.out.println("SQL getListFeedback: " + e.getMessage());
@@ -88,7 +89,7 @@ public class DAOFeedback extends DBContext {
             return null;
         }
     }
-
+ 
     public ArrayList<Feedback> getListFeedbackByRate(int doctorId, String rate) {
         ArrayList<Feedback> listFeedback = new ArrayList<>();
         try {
@@ -128,4 +129,6 @@ public class DAOFeedback extends DBContext {
             return null;
         }
     }
+
+
 }
