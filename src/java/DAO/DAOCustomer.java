@@ -100,7 +100,8 @@ public class DAOCustomer extends DBContext {
                     + "	s.StartTime,\n"
                     + "	s.EndTime,\n"
                     + "	m.Diagnosis,\n"
-                    + "	b.BookingStatus\n"
+                    + "	b.BookingStatus,\n"
+                    + "	sd.day\n"
                     + "FROM Customers c\n"
                     + "JOIN Users u ON c.UserId = u.userId\n"
                     + "JOIN Booking b ON c.Id = b.CustomerID\n"
@@ -120,9 +121,10 @@ public class DAOCustomer extends DBContext {
                 String email = rs.getString(5);
                 String diagnosis = rs.getString(9);
                 String reservationDate = String.valueOf(rs.getDate(6) + " " + rs.getTime(6));
-                String timeCheckUp = String.valueOf(rs.getDate(7) + " " + rs.getTime(7));
+                String timeCheckUp = String.valueOf(rs.getTime(7));
                 String status = rs.getString(10);
-                customer = new Customer(firstName, lastName, gender, phone, email, reservationDate, timeCheckUp, diagnosis, status);
+                String dateCheckUp = String.valueOf(rs.getDate(11));
+                customer = new Customer(firstName, lastName, gender, phone, email, reservationDate, timeCheckUp, dateCheckUp, diagnosis, status);
             }
         } catch (SQLException e) {
             System.out.println("SQL getCusBookingInforByBookId: " + e.getMessage());

@@ -169,7 +169,8 @@ public class DAOBooking extends DBContext {
                     + "  s.StartTime,\n"
                     + "  s.EndTime,\n"
                     + "  se.ServiceName,\n"
-                    + "  d.DoctorId\n"
+                    + "  d.DoctorId,\n"
+                    + "  sd.day\n"
                     + "FROM Booking b\n"
                     + "JOIN MedicalInfo m ON b.MedicalInfoId = m.MedicalInfoId\n"
                     + "JOIN Doctors d ON b.slotDoctorId = d.DoctorId\n"
@@ -189,7 +190,7 @@ public class DAOBooking extends DBContext {
                 int CustomerID = rs.getInt(4);
                 int MedicalInfoId = rs.getInt(5);
                 String Diagnosis = rs.getString(8);
-                String BookingDate = String.valueOf(rs.getDate(10));
+                String BookingDate = String.valueOf(rs.getDate(14));
                 String BookingTime = String.valueOf("From " + rs.getTime(10) + " to " + rs.getTime(11));
                 String DoctorName = rs.getString(9);
                 String CreateDate = String.valueOf(rs.getDate(7));
