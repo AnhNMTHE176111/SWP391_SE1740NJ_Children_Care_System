@@ -43,14 +43,29 @@ public class DAOBooking extends DBContext {
 
     public int addBooking(int status, int customerId, int slotDoctorId) {
         int generatedId = -1;
+        int medicalInforId = 0;
+
+        String sql = "select MAX(MedicalInfoId) from MedicalInfo";
+        try ( PreparedStatement pstm = cnn.prepareStatement(sql);  ResultSet rs = pstm.executeQuery()) {
+            while (rs.next()) {
+                medicalInforId = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println("MedicalInfo" + e.getMessage());
+        }
         try {
-            String strSQL = "insert into Booking(BookingStatus, CustomerID, slotDoctorId) values(?,?,?); SELECT SCOPE_IDENTITY();";
+            String strSQL = "insert into Booking(BookingStatus, CustomerID, slotDoctorId,medicalInfoId) values(?,?,?,?); "
+                    + "SELECT SCOPE_IDENTITY();"
+                    + "SET IDENTITY_INSERT medicalInfo ON;\n"
+                    + "insert into MedicalInfo(MedicalInfoId) values(?);";
 
             pstm = cnn.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
 
             pstm.setInt(1, status);
             pstm.setInt(2, customerId);
             pstm.setInt(3, slotDoctorId);
+            pstm.setInt(4, medicalInforId + 1);
+            pstm.setInt(5, medicalInforId + 1);
 
             if (pstm.executeUpdate() > 0) {
                 try ( ResultSet generatedKeys = pstm.getGeneratedKeys()) {

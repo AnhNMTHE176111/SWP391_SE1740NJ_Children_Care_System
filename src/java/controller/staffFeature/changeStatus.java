@@ -70,7 +70,6 @@ public class changeStatus extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("Change status");
         DAODoctor d = new DAODoctor();
         String date = request.getParameter("date");
         String module = request.getParameter("module");
