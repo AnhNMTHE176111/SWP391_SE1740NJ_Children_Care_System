@@ -21,6 +21,12 @@
         th {
             background-color: #f2f2f2;
         }*/
+            .pending {
+                background-color: #FFA500; /* Pumpkin orange color */
+                color: white;
+                padding: 5px;
+                border-radius: 5px;
+            }
             .active {
                 background-color: green;
                 color: white;
@@ -33,6 +39,25 @@
                 color: white;
                 padding: 5px;
                 border-radius: 5px;
+            }
+            #status {
+                padding: 5px;
+                font-size: 16px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                background-color: #fff;
+                color: #333;
+                width: 150px;
+            }
+
+            /* Style the select options */
+            #status option {
+                padding: 10px;
+            }
+
+            /* Hover effect for options */
+            #status option:hover {
+                background-color: #f0f0f0;
             }
         </style>
     </head>
@@ -92,24 +117,25 @@
                         <th onclick="sortTable(7)">Description</th>
                         <th>Details</th>
                         <th>Status</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="item" items="${slotDoc}">
+                    <c:forEach var="item" items="${slotDoc}" varStatus="loop">
+                        <c:set var="count" value="${loop.index + 1}" />
                         <tr>
                             <td style="font-weight: bolder">${item.getServiceName()} </td>
                             <td>
-                                <div id="statusDisplay_${item.getSlotId()}">
+                                <div id="statusDisplay_${count}">
                                     <script>
-                                        const statusDisplay_${ item.getSlotId()} = document.getElementById('statusDisplay_${item.getSlotId()}');
-                                        const status_${ item.getSlotId()} = ${ item.getStatus() };  // Replace with your actual status value
+                                        const statusDisplay_${count} = document.getElementById('statusDisplay_${count}');
 
-                                        if (status_${ item.getSlotId() } === 1) {
-                                            statusDisplay_${ item.getSlotId() }.innerHTML = '<div class="active btn btn-success">Success</div>';
-                                        } else if (status_${ item.getSlotId() } === 2) {
-                                            statusDisplay_${ item.getSlotId() }.innerHTML = '<div class="active btn btn-success">Success</div>';
+                                        if (${item.getStatus()} === 1) {
+                                            statusDisplay_${count}.innerHTML = '<div class="pending">Submit</div>';
+                                        } else if (${item.getStatus()} === 2) {
+                                            statusDisplay_${count}.innerHTML = '<div class="inactive">Cancel</div>';
                                         } else {
-                                            statusDisplay_${ item.getSlotId() }.innerHTML = '<div class="inactive btn btn-danger">Cancel</div>';
+                                            statusDisplay_${count}.innerHTML = '<div class="active">Success</div>';
                                         }
                                     </script>
                                 </div>
@@ -125,11 +151,17 @@
                         <td><button type="submit" class="btn btn-warning">Read More</button></td>
                     </form>
                     <form action="changeStatus" method="POST">
+
+                        <td>
+                            <select name="status" id="status">
+                                <option value="3">Success</option>
+                                <option value="2">Cancel</option>
+                            </select>                    
+                        </td>
+                        <input type="hidden" name="slotId" value="${item.getSlotId()}">
+                        <input type="hidden" name="doctorId" value="${item.getDoctorId()}">
                         <input type="hidden" name="date" value="${date}">
                         <input type="hidden" name="module" value="${module}">
-                        <input type="hidden" name="slotId" value="${item.getSlotId()}">
-                        <input type="hidden" name="status" value="${item.getStatus()}">
-                        <input type="hidden" name="doctorId" value="${item.getDoctorId()}">
                         <td><button type="submit" class="btn btn-primary">Change</button></td>
                     </form>
                     </tr>
