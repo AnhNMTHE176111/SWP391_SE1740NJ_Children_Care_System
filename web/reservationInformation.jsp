@@ -65,12 +65,12 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6 reservation-info-content">
-                                <label>Reservation Date</label>
-                                <input type="text" value="${cusInfo.reservationDate}" readonly/>
+                                <label>Reservation Created At</label>
+                                <input type="text" value="${cusInfo.reservationDate.substring(0, 16)}" readonly/>
                             </div>
                             <div class="col-md-6 reservation-info-content">
                                 <label>Time To Check Up</label>
-                                <input type="text" value="${cusInfo.timeCheckUp}" readonly/>
+                                <input type="text" value="${cusInfo.dateCheckUp} ${cusInfo.timeCheckUp.substring(0, 5)}" readonly/>
                             </div>
                         </div>
                         <div class="row">
@@ -204,6 +204,59 @@
                         }
                     }
                 });
+                function checkTimeAndShowCancel() {
+                    // Lấy thời gian hiện tại
+                    var currentDateTime = new Date();
+                    var currentHours = currentDateTime.getHours();
+                    var currentMinutes = currentDateTime.getMinutes();
+                    var currentMonth = currentDateTime.getMonth() + 1;
+                    var currentDay = currentDateTime.getDate();
+                    console.log(currentDateTime);
+                    console.log(currentMonth);
+                    console.log(currentDay);
+
+                    // Lấy thời gian "Time To Check Up" từ dữ liệu
+                    var timeToCheckUp = "${cusInfo.timeCheckUp.substring(0, 5)}";
+                    var dateToCheckUp = "${cusInfo.dateCheckUp.substring(5, 10)}";
+                    var hoursToCheckUp = parseInt(timeToCheckUp.split(":")[0]);
+                    var minutesToCheckUp = parseInt(timeToCheckUp.split(":")[1]);
+                    var monthToCheckUp = parseInt(dateToCheckUp.split("-")[0]);
+                    var dayToCheckUp = parseInt(dateToCheckUp.split("-")[1]);
+
+                    // Lấy nút "Cancel"
+                    var cancelButton = document.getElementById("cancelButton");
+
+                    // Kiểm tra nếu thời gian đã qua
+                    if (currentHours > hoursToCheckUp 
+                        || (currentHours === hoursToCheckUp && currentMinutes >= minutesToCheckUp) 
+                        || currentMonth > monthToCheckUp 
+                        || (currentMonth === monthToCheckUp && currentDay >= dayToCheckUp)) {
+                        // Ẩn nút "Cancel"
+                        console.log("true");
+                        cancelButton.style.display = "none";
+
+                        // Tạo đường liên kết "Return to your reservation list"
+                        var returnLink = document.createElement("a");
+                        returnLink.href = "/my";
+                        returnLink.innerHTML = "--- Return to your reservation list ---";
+
+                        // Thêm đường liên kết vào div reservation-button
+                        var reservationButtonDiv = document.querySelector(".reservation-button");
+                        reservationButtonDiv.appendChild(returnLink);
+                    }
+                    console.log("false");
+                    console.log(currentDay);
+                    console.log(dayToCheckUp);
+                    console.log(currentMonth);
+                    console.log(monthToCheckUp);
+                    console.log(currentHours);
+                    console.log(hoursToCheckUp);
+                    console.log(currentMinutes);
+                    console.log(minutesToCheckUp);
+                }
+
+                // Gọi hàm kiểm tra khi trang được tải
+                window.onload = checkTimeAndShowCancel;
         </script>
     </body>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"

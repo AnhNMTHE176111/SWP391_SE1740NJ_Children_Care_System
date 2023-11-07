@@ -34,8 +34,6 @@
                             <a href="/manageService" class="nav-item nav-link " >Services</a>
 
                         </c:if>
-                        <a href="/home" class="nav-item nav-link">Home</a>
-
                         <a href="home" class="nav-item nav-link">Home</a>
                         <a href="/blog" class="nav-item nav-link">Blogs</a>
 
@@ -50,6 +48,7 @@
                         </c:if>
                         <c:if test="${sessionScope.roleId eq 2}">
                             <a href="/reservation" class="nav-item nav-link " >Reservation</a>
+                            <a href="/feedbackstaff" class="nav-item nav-link " >Feedback</a>
                         </c:if>
                         <c:if test="${sessionScope.roleId ne 2 && sessionScope.roleId ne 3}">
                             <a href="booking" class="nav-item nav-link">Booking</a>
