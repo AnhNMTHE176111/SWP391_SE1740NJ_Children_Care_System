@@ -191,9 +191,13 @@ let chart = new Chart(ctx2, {
 document.getElementById('reservationManager').addEventListener('click', function () {
     const analyticContainer = document.querySelector('.analytic-container');
     const reservationManagerContainer = document.querySelector('.reservation-manager-container');
-
+    const doctorManageContainer = document.querySelector('.doctor-manager-container');
     if (analyticContainer) {
         analyticContainer.style.display = "none";
+
+    }
+    if (doctorManageContainer) {
+        doctorManageContainer.style.display = "none";
     }
     if (reservationManagerContainer) {
         reservationManagerContainer.style.display = "block";
@@ -203,14 +207,44 @@ document.getElementById('reservationManager').addEventListener('click', function
 document.getElementById('analyticsMenu').addEventListener('click', function () {
     const analyticContainer = document.querySelector('.analytic-container');
     const reservationManagerContainer = document.querySelector('.reservation-manager-container');
+    const doctorManageContainer = document.querySelector('.doctor-manager-container');
 
-    if (analyticContainer) {
-        analyticContainer.style.display = "block";
-    }
     if (reservationManagerContainer) {
         reservationManagerContainer.style.display = "none";
     }
+    if (doctorManageContainer) {
+        doctorManageContainer.style.display = "none";
+    }
+    if (analyticContainer) {
+        analyticContainer.style.display = "block";
+
+
+
+    }
+
+
 });
+
+document.getElementById('doctorManager').addEventListener('click', function () {
+    const analyticContainer = document.querySelector('.analytic-container');
+    const reservationManagerContainer = document.querySelector('.reservation-manager-container');
+    const doctorManageContainer = document.querySelector('.doctor-manager-container');
+
+    if (reservationManagerContainer) {
+        reservationManagerContainer.style.display = "none";
+    }
+
+    if (analyticContainer) {
+        analyticContainer.style.display = "none";
+
+    }
+    if (doctorManageContainer) {
+        doctorManageContainer.style.display = "block";
+    }
+
+
+});
+
 
 //function makeEditable(btn) {
 //    var row = btn.parentNode.parentNode;
@@ -328,7 +362,7 @@ function makeEditable(btn) {
                     const doctorId = row.querySelector('input[name="doctorId"]').value;
                     const day = row.querySelector('input[name="day"]').value;
                     const correspondingSlotId = getSlotIdFromStartTime(newValue);
-                    
+
                     if (isSlotBooked(doctorId, correspondingSlotId, day)) {
                         alert('This slot has already been booked by another doctor! Please select another one.');
                     } else {
@@ -451,6 +485,110 @@ function searchByDoctorName() {
         }
     }
 }
+
+
+selectedDoctorId = null;
+
+function changeSlot(doctorId) {
+    console.log("123");
+    selectedDoctorId = doctorId;
+    var updateForm = document.getElementById("updateForm");
+    updateForm.style.display = "block";
+    console.log("456");
+}
+
+//let slotSelected = false;
+//let selectedSlot = null;
+//let selectedDateSlot = null;
+//
+//const slotList2 = document.querySelectorAll(".grid-date[name='slot']");
+//const dateSelect = document.querySelector(".date-hidden");
+//
+//slotList2.forEach(function (slot) {
+//    slot.addEventListener("click", function () {
+//        if (slotSelected) {
+//            slot.classList.remove("selected");
+//            slotSelected = false;
+//
+//            if (selectedDateSlot) {
+//                selectedDateSlot.classList.remove("selected");
+//            }
+//            daysList.forEach(date => date.classList.remove('no-click'));
+//
+//            selectedSlot = null;
+//            selectedDateSlot = null;
+//            selectedSlotValue = null;
+//
+//            return;
+//        }
+//
+//        slotList.forEach(function (otherSlot) {
+//            otherSlot.classList.remove("selected");
+//        });
+//
+//        slot.classList.add("selected");
+//        selectedSlot = slot;
+//        const selectedDate = slot.getAttribute("data-date");
+//        selectedDateSlot = document.querySelector(`.date-slot[name='date'][data-date='${selectedDate}']`);
+//
+//        daysList.forEach(function (date) {
+//            date.classList.remove("selected");
+//        });
+//
+//        if (selectedDateSlot) {
+//            selectedDateSlot.classList.add("selected");
+//        }
+//
+//        slotSelected = true;
+//        daysList.forEach(date => date.classList.add('no-click'));
+//    });
+//});
+
+function onSlotSelect(button) {
+    const slotId = button.getAttribute("data-slot-id");
+    const startTime = button.textContent;
+    const selectedDate = document.getElementById("updateDate").value;
+
+    if (button.classList.contains("selected")) {
+        button.classList.remove("selected");
+
+        selectedSlots = selectedSlots.filter(slot => slot.slotId !== slotId);
+    } else {
+        button.classList.add("selected");
+
+        selectedSlots.push({
+            slotId: slotId,
+            startTime: startTime,
+            selectedDate: selectedDate
+        });
+    }
+}
+
+let selectedSlots = [];
+
+function updateDoctorSlot() {
+    const dataToSend = [];
+    console.log("Selected Slots:", selectedSlots);
+    var updateForm = document.getElementById("updateForm");
+
+    updateForm.style.display = "none";
+    const data = {
+        doctorId: selectedDoctorId,
+        slotId: selectedSlots[0],
+        slotStatus: 1,
+        selectedDate: selectedSlots[2],
+    };
+    console.log(dataToSend)
+    dataToSend.push(data);
+
+    saveAllChangesToDatabase(dataToSend);
+}
+
+
+
+
+
+
 
 
 

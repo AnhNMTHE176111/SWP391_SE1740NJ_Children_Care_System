@@ -448,3 +448,55 @@ th {
 
     padding-left: 50px;
 }
+
+#updateForm {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+}
+
+#updateForm label {
+    margin-bottom: 10px;
+}
+
+#updateForm input,
+#updateForm select {
+    margin-bottom: 15px;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#updateForm button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#updateForm button:hover {
+    background-color: #45a049;
+}
+
+
+
+
+.selected {
+  background-color: #fff; /* Màu nền của ô đã chọn */
+}
+
+

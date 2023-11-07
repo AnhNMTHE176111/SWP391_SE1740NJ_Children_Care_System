@@ -122,9 +122,7 @@ public class bookingController extends HttpServlet {
             doctorList = doctor.getListDoctorBySpecialty();
             specialtyList = specialty.getListSpecialty();
             slotList = slot.getListSlot();
-            System.out.println(currentUser);
-            request.setAttribute("currentUser", currentUser);
-            System.out.println("hihi");
+              request.setAttribute("currentUser", currentUser);
         } else {
             System.out.println("nono");
             serviceList = service.getListServiceByDoctor();
@@ -208,8 +206,9 @@ public class bookingController extends HttpServlet {
         int addedUserId = 0;
         int customerId = 0;
         int bookingId = 0;
+        System.out.println(symptoms);
+        slotDoctorId = slotDoctor.addSlotDoctor(doctorIdInt, slotIdInt, 1, symptoms, formattedDate);
         if (currentUser == null) {
-            slotDoctorId = slotDoctor.addSlotDoctor(doctorIdInt, slotIdInt, 1, symptoms, formattedDate);
 
 //About Customer Backend
             String name = request.getParameter("name");
@@ -230,13 +229,14 @@ public class bookingController extends HttpServlet {
             int roleId = 1;
             addedUserId = user.addGuess(firstName, lastName, gender, email, phone, dob, roleId);
             customerId = customer.addCustomer(addedUserId);
+            System.out.println(customerId);
             bookingId = booking.addBooking(1, customerId, slotDoctorId, serviceId);
-             response.sendRedirect("/home");
+            response.sendRedirect("/home");
         } else {
-            slotDoctorId = slotDoctor.addSlotDoctor(doctorIdInt, slotIdInt, 1, symptoms, formattedDate);
+
             customerId = customer.getCusIdByUserIdReturn(currentUser.getUserId());
             bookingId = booking.addBooking(1, customerId, slotDoctorId, serviceId);
-             response.sendRedirect("/home");
+            response.sendRedirect("/home");
         }
 
     }
@@ -244,6 +244,6 @@ public class bookingController extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

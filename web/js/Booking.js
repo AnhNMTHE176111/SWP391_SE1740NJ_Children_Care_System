@@ -28,6 +28,7 @@ function showStep(step) {
         step2.style.display = "block";
     } else if (step === 3) {
         step3.style.display = "block";
+        console.log("hihi");
     }
     currentStep = step;
 }
@@ -314,6 +315,9 @@ function onSlotSelect(slotValue, slotId) {
     document.getElementById('selectedSlotId').value = slotId;
     document.getElementById('confirm-slot').textContent = slotValue;
     document.getElementById('hidden-slot').value = slotValue;
+
+
+
 }
 //////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////
@@ -360,6 +364,8 @@ function convertToDateDBFormat(dateStr) {
 //    });
 //}
 
+
+
 function updateSlotsBasedOnDoctorAndDate() {
     var selectedDoctorId = document.getElementById('selectedDoctor').value;
     var selectedDate = document.getElementById('hidden-date').value;
@@ -391,6 +397,15 @@ function updateSlotsBasedOnDoctorAndDate() {
         }
     });
 }
+
+
+
+
+
+
+
+
+
 
 
 
@@ -460,12 +475,72 @@ function updateHiddenService() {
     document.getElementById('confirm-service').textContent = selectedServiceName;
 }
 
-
-
-
 function onDateSelect(dateValue) {
     document.getElementById('confirm-date').textContent = dateValue;
     document.getElementById('hidden-date').value = dateValue;
+    var allSlotsDisable = document.querySelectorAll('.grid-date');
+    var currentDate = new Date();
+    var year = currentDate.getFullYear();
+    var month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    var day = currentDate.getDate().toString().padStart(2, '0');
+
+    var currentHour = currentDate.getHours().toString().padStart(2, '0');
+    var currentMinute = currentDate.getMinutes().toString().padStart(2, '0');
+
+    var selectedDate = document.getElementById('hidden-date').value.trim();
+
+    var currentTime = currentHour + ":" + currentMinute
+
+    var allSlotsElements = document.querySelectorAll('.grid-date');
+
+    var slotList = [];
+
+    allSlotsElements.forEach(function (slotElement) {
+        var slotId = slotElement.getAttribute('value');
+        var startTime = slotElement.textContent.trim();
+        slotList.push({
+            slotId: slotId,
+            startTime: startTime
+        });
+    });
+
+    var selectedDateParts = selectedDate.split('/');
+
+    var selectedMonth = selectedDateParts[1].padStart(2, '0');
+    var selectedDay = selectedDateParts[0].padStart(2, '0');
+    var selectedDateWithoutSpaces = day + '/' + month;
+    console.log(slotList);
+    console.log(selectedDateWithoutSpaces);
+    console.log(selectedDate);
+    allSlotsDisable.forEach(function (slotElement) {
+        slotElement.style.backgroundColor = '';
+        slotElement.style.color = '';
+        slotElement.classList.remove('disabled-slot');
+        slotElement.disabled = false;
+    });
+    if (selectedDateWithoutSpaces === selectedDate) {
+        var selectedSlotTime = parseInt(currentTime.replace(':', ''));
+        slotList.forEach(function (slotContent) {
+            var slotTime = parseInt(slotContent.startTime.replace(':', ''));
+
+            if (slotTime < selectedSlotTime) {
+                var slotId = slotContent.slotId;
+                var slotElement = document.querySelector('.grid-date[value="' + slotId + '"]');
+                console.log(slotElement);
+                console.log("have to disable");
+               
+                slotElement.style.color = 'red';
+                slotElement.className = 'disabled-slot';
+//                slotElement.disabled = true;
+//                console.log(slotElement.classList);
+//                const a = document.createElement("div")
+//                a.innerHtml = slotElement.innerText;
+//                document.querySelector(".date-hidden .date").append(a)
+            }
+        });
+    }
+
 
     updateSlotsBasedOnDoctorAndDate();
 }
+

@@ -5,6 +5,7 @@
 package controller.managerFeature;
 
 import DAO.DAOBooking;
+import DAO.DAODoctor;
 import DAO.DAOSlot;
 import DAO.DAOSlotDoctor;
 import com.google.gson.*;
@@ -20,13 +21,17 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.lang.ProcessBuilder.Redirect.Type;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import model.Booking;
+import model.Doctor;
 import model.Slot;
 import model.SlotDoctor;
 
@@ -63,6 +68,24 @@ public class managerDashboard extends HttpServlet {
         }
     }
 
+    private List<String> getDateList() {
+        List<String> dateList = new ArrayList<>();
+
+        Date currentDate = new Date();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(currentDate);
+        dateList.add(new SimpleDateFormat("dd/MM").format(currentDate));
+
+        for (int i = 0; i < 2; i++) {
+            calendar.add(Calendar.DATE, 1);
+            Date nextDate = calendar.getTime();
+            dateList.add(new SimpleDateFormat("dd/MM").format(nextDate));
+        }
+
+        return dateList;
+    }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -81,18 +104,21 @@ public class managerDashboard extends HttpServlet {
             response.sendRedirect("403.jsp");
             return;
         }
-
+        List<String> dateList = null;
         DAOBooking booking = new DAOBooking();
         DAOSlotDoctor slotDoctor = new DAOSlotDoctor();
         DAOSlot slot = new DAOSlot();
-        
+        DAODoctor doctor = new DAODoctor();
+
+        List<Doctor> doctorList = doctor.getDoctorList();
         List<Slot> slotList = slot.getListSlot();
         List<Booking> reservationList = booking.getBookingList();
         List<Booking> reservationListForManage = booking.getBookingListForManage();
-
         List<SlotDoctor> availeSlot = slotDoctor.displayBookedSlotList();
+        dateList = getDateList();
 
-        
+        request.setAttribute("doctorList", doctorList);
+        request.setAttribute("dateList", dateList);
         request.setAttribute("slotList", slotList);
         request.setAttribute("availeSlot", availeSlot);
         request.setAttribute("reservationListForManage", reservationListForManage);
@@ -144,7 +170,7 @@ public class managerDashboard extends HttpServlet {
                 String[] doctorNameParts = doctorName.split(" ");
                 String doctorLastName = doctorNameParts[doctorNameParts.length - 1];
                 String doctorFirstName = doctorName.substring(0, doctorName.lastIndexOf(doctorLastName)).trim();
-     
+
                 String[] customerNameParts = customerName.split(" ");
                 String customerLastName = customerNameParts[customerNameParts.length - 1];
                 String customerFirstName = customerName.substring(0, customerName.lastIndexOf(customerLastName)).trim();
@@ -155,7 +181,7 @@ public class managerDashboard extends HttpServlet {
                     System.out.println(doctorName);
                     System.out.println(customerName);
                     System.out.println("hihi");
-           System.out.println(bookingId);
+                    System.out.println(bookingId);
                     success = true;
                     break;
                 }

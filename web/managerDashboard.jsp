@@ -5,9 +5,11 @@
 <%@page import= "java.util.ArrayList" %>
 <%@page import= "model.Booking" %>
 <%@page import= "model.Slot" %>
+<%@page import= "model.Doctor" %>
 <%@page import= "model.SlotDoctor" %>
 <%@page import= "DAO.DAOSlotDoctor" %>
 <%@page import= "DAO.DAOSlot" %>
+<%@page import= "DAO.DAODoctor" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -63,12 +65,13 @@
                     <li id="reservationManager">
                         <i class="fa-solid fa-users"></i>Reservation Manager
                     </li>
-                    <li><i class="fa-solid fa-gear"></i>Setting</li>
+                    <li id="doctorManager"><i class="fa-solid fa-gear"></i>Doctors Manage</li>
                     <li>
                         <a href="/managePost">
                             <i class="fa-solid fa-gear"></i> Manage Post
                         </a>
                     </li>
+
 
                 </ul>
             </div>
@@ -118,7 +121,7 @@
                     <div class="user-chart-container">
                         <div class="chart-item" >
                             <div class="chart-item-detail">
-                                Number of User Created
+                                Number of Booking Created
                                 <select id="week-dropdown"></select>
 
                             </div>
@@ -128,7 +131,7 @@
                         </div>
                         <div class="chart-item">
                             <div class="chart-item-detail">
-                                Users Overview
+                                Booking Overview
                             </div>
                             <div style="width: 100%; height: 90%;">
                                 <canvas id="user-pie-chart"></canvas>
@@ -140,6 +143,8 @@
                     </div>
                 </div>
             </div>
+
+
 
 
             <div class="reservation-manager-container" style="width: 100%; margin-left: 15%; display: none;">
@@ -178,7 +183,7 @@
                                         <span class="editable">${rs.doctorId}</span>
                                         <input type="hidden" name="doctorId" class="hidden-input" value="${rs.doctorId}" />
                                     </td>
-                      
+
                                     <td>
                                         <span class="editable">${rs.bookingStatus}</span>
                                         <input type="hidden" name="status" class="hidden-input" value="${rs.bookingStatus}" />
@@ -215,6 +220,63 @@
                     </table>
                 </div>
             </div>
+
+            <div class="doctor-manager-container" style="width: 100%; margin-left: 15%; display: none;">
+                <div class="user-list-container">
+                    <div class="top-option">
+                        <form action="admin-manage-user" class="search-name-form" method="post">
+
+                            <input type="text" id="searchInputUser" placeholder="Enter name of User..." onkeyup="searchByUserName()">
+                            <input type="text" id="searchInputDoctor" placeholder="Enter name of Doctor..." onkeyup="searchByDoctorName()">
+                            <button id="btn-show-filter"><i class="fa-solid fa-filter"></i> Filter</button>
+                        </form>
+                        <button id="submitAllChanges"><i class="fa-solid fa-user-plus"></i> Submit all Change</button>
+
+                    </div>
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Doctor</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach var="rs" items="${doctorList}">
+                                <tr>
+                                    <td>${rs.getDoctorId()}</td>
+                                    <td>${rs.getName()}</td>
+                                    <td>
+                                        <button class="update-button" onclick="changeSlot(${rs.doctorId});"><i class="fa-solid fa-user-pen"></i>Update</button>
+                                        <button class="delete-button" onclick="deleteDoctor(${rs.doctorId});"><i class="fa-solid fa-user-pen"></i>Delete</button>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+
+                    <div id="updateForm" style="display: none;">
+                        <label for="updateDate">Ngày:</label>
+                        <input type="date" id="updateDate" name="updateDate">
+                        <label for="updateSlots">Danh sách slot:</label>
+                        <div class="date-hidden">
+                            <div class="date">
+                                <c:forEach var="slot" items="${slotList}">
+                                    <button class="grid-date" name="slot" data-slot-id="${slot.slotId}" onclick="onSlotSelect(this)">${slot.startTime}</button>
+                                </c:forEach>
+                            </div>
+                        </div>
+                        <button onclick="updateDoctorSlot();">Lưu</button>
+                    </div>
+
+
+
+
+
+                </div>
+            </div>
+
+
         </div>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
