@@ -36,7 +36,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h2>${sessionScope.cusName}'s reservation list</h2>
-                    </div>
+                </div>
                 <c:choose>
                     <c:when test="${requestScope.endP == 0}">
                         <div class="none_reservation col-md-12">
@@ -102,7 +102,7 @@
                                         </td>
                                         <td class="table-reservation-column col-md-1">
                                             <button class="button-4" role="button"><a href="/information?get&id=${cr.bookingId}&doctorId=${cr.doctorId}" style="text-decoration: none;">Detail</a></button>
-                                            <button class="button-4" role="button" style="background-color: yellow"><a href="/feedback?get&id=${cr.medicalInfoId}" style="text-decoration: none;">Feedback</a></button>
+                                            <button class="button-4" role="button" style="background-color: yellow"><a href="feedback.jsp?id=${cr.medicalInfoId}" style="text-decoration: none;">Feedback</a></button>
                                         </td>
                                     </tr>
                                 </c:forEach>

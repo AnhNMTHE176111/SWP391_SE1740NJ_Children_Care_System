@@ -73,32 +73,32 @@
                 <div class="row">
                     <div class="col-md-6 col-lg-3 text-center team mb-5">
                         <div class="position-relative overflow-hidden mb-4" style="border-radius: 100%;">
-                             <a href="#"><img class="img-fluid w-100" src="https://hamshospital.com/wp-content/themes/hams_thm/inc/timthumb.php?src=https://hamshospital.com/wp-content/uploads/2022/09/Dr.-Arjun-Karki.jpg&w=500&h=500" alt="" > </a>
+                             <a href="/detailDoctor?doctorId=6"><img class="img-fluid w-100" src="https://cdn.benhvienthucuc.vn/wp-content/uploads/2020/12/Duong-Van-Tien-Truong-phong-kham-Tai-Mui-Hong1-300x300.jpg" alt="" > </a>
                         </div>
-                        <h4>Ngo Minh Tuan Anh</h4>
+                        <h4>Hà Gia Mạnh</h4>
                         <i>Professor</i>
                     </div>
                     <div class="col-md-6 col-lg-3 text-center team mb-5">
                         <div class="position-relative overflow-hidden mb-4" style="border-radius: 100%;">
-                             <a href="#"><img class="img-fluid w-100" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTj5xQhRjlqPhQzzFceJHqD9Ue_ErwX7z4riA&usqp=CAU" alt="" > </a>
+                             <a href="detailDoctor?doctorId=8"><img class="img-fluid w-100" src="https://cdn.benhvienthucuc.vn/wp-content/uploads/2020/10/BS-Nguyen-Xuan-Thanh-300x300.png" alt="" > </a>
                         </div>
-                        <h4>Jhon Doe</h4>
-                        <i>Professor</i>
+                        <h4>Phan Văn Hồng</h4>
+                        <i>Doctor</i>
                     </div>
                     
                     <div class="col-md-6 col-lg-3 text-center team mb-5">
                         <div class="position-relative overflow-hidden mb-4" style="border-radius: 100%;">
-                            <a href="#"><img class="img-fluid w-100" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6pzk-z0w128CGMXuoixmBWLIyzKg5xJ0jsw&usqp=CAU" alt="" ></a>
+                            <a href="/detailDoctor?doctorId=5"><img class="img-fluid w-100" src="https://cdn.benhvienthucuc.vn/wp-content/uploads/2020/06/BS-Nguyen-Thi-Kim-Loan-300x300.png" alt="" ></a>
                         </div>
-                        <h4>Mollie Ross</h4>
+                        <h4>Đỗ Cao Bảo</h4>
                         <i>Doctor</i>
                     </div>
                     <div class="col-md-6 col-lg-3 text-center team mb-5">
                         <div class="position-relative overflow-hidden mb-4" style="border-radius: 100%;">
-                            <a href="#"><img class="img-fluid w-100" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTclBNN9eDwLvwUXKKlVNRM17KlxH4cQALEw&usqp=CAU" alt="" ></a> 
+                            <a href="/detailDoctor?doctorId=11"><img class="img-fluid w-100" src="https://cdn.benhvienthucuc.vn/wp-content/uploads/2021/03/bac-ha1-300x300.jpg" alt="" ></a> 
                         </div>
-                        <h4>Donald John</h4>
-                        <i>Professor</i>
+                        <h4>Mã Văn Lộc</h4>
+                        <i>Doctor</i>
                     </div>
                 </div>
             </div>

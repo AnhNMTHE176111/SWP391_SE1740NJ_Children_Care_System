@@ -16,6 +16,7 @@ import DAO.DAOSlot;
 import DAO.DAODoctor;
 import DAO.DAOSlotDoctor;
 import DAO.DAOSpecialty;
+import configuration.configuration;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
@@ -23,7 +24,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import model.Doctor;
 import model.Slot;
 import model.SlotDoctor;
@@ -38,6 +41,7 @@ import model.User;
 public class bookingController extends HttpServlet {
 
     private List<String> getDateList() {
+        configuration config = new configuration();
         List<String> dateList = new ArrayList<>();
 
         Date currentDate = new Date();
@@ -46,7 +50,7 @@ public class bookingController extends HttpServlet {
         calendar.setTime(currentDate);
         dateList.add(new SimpleDateFormat("dd/MM").format(currentDate));
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < config.getNUMBER_OF_APPOINTMENT_DATE() - 1; i++) {
             calendar.add(Calendar.DATE, 1);
             Date nextDate = calendar.getTime();
             dateList.add(new SimpleDateFormat("dd/MM").format(nextDate));
@@ -107,6 +111,18 @@ public class bookingController extends HttpServlet {
         List<Doctor> doctorList = doctor.getListDoctorBySpecialty();
         List<Specialty> specialtyList = specialty.getListSpecialty();
         List<Slot> slotList = slot.getListSlot();
+
+        configuration config = new configuration();
+        HashMap<Integer, String> listDateOff = config.getDATE_OFF();
+        for (Map.Entry<Integer, String> entry : listDateOff.entrySet()) {
+            Object key = entry.getKey();
+            Object val = entry.getValue();
+            String value = val.toString().split("-")[2] + "/" + val.toString().split("-")[1];
+            String year = val.toString().split("-")[0];
+            if (dateList.contains(value) && year.equals("2023")) {
+                dateList.remove(value);
+            }
+        }
 
         request.setAttribute("currentUser", currentUser);
         request.setAttribute("availeSlot", availeSlot);
