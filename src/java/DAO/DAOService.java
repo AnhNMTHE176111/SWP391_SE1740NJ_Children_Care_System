@@ -123,6 +123,31 @@ public class DAOService extends DBContext {
         }
         return data;
     }
+    
+     public ArrayList<Service> getListServiceBySpecialtyForManage() {
+        String sql = "SELECT s.ServiceId,ServiceName,sp.SpecialtyId, sp.Description\n"
+                + "FROM Services s\n"
+                + "INNER JOIN DoctorServices ds ON s.ServiceId = ds.ServiceId\n"
+                + "INNER JOIN Doctors d ON ds.DoctorId = d.DoctorId\n"
+                + "INNER JOIN Specialty sp ON d.SpecialtyId = sp.SpecialtyId;";
+        ArrayList<Service> data = new ArrayList<>();
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int serid = rs.getInt(1);
+                String serviceName = rs.getString(2);
+                int specId = Integer.parseInt(rs.getString(3));
+                Service c = new Service(serid, serviceName, specId);
+                data.add(c);
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL <getListServiceBySpecialty>: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("<getListServiceBySpecialty>: " + e.getMessage());
+        }
+        return data;
+    }
 
     public ArrayList<Service> getListServiceBySpecialty() {
         String sql = "SELECT s.ServiceId,ServiceName,sp.SpecialtyId, sp.Description\n"

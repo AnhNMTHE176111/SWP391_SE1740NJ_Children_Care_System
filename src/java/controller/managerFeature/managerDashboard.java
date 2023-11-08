@@ -6,8 +6,11 @@ package controller.managerFeature;
 
 import DAO.DAOBooking;
 import DAO.DAODoctor;
+import DAO.DAOService;
 import DAO.DAOSlot;
 import DAO.DAOSlotDoctor;
+import DAO.DAOSpecialty;
+import DAO.DAOUser;
 import com.google.gson.*;
 
 import java.io.IOException;
@@ -32,8 +35,11 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import model.Booking;
 import model.Doctor;
+import model.Service;
 import model.Slot;
 import model.SlotDoctor;
+import model.Specialty;
+import model.User;
 
 /**
  *
@@ -109,7 +115,11 @@ public class managerDashboard extends HttpServlet {
         DAOSlotDoctor slotDoctor = new DAOSlotDoctor();
         DAOSlot slot = new DAOSlot();
         DAODoctor doctor = new DAODoctor();
+        DAOSpecialty specialty = new DAOSpecialty();
+        DAOService service = new DAOService();
 
+        List<Service> serviceList = service.getListServiceBySpecialty();
+        List<Specialty> specialtyList = specialty.getListSpecialty();
         List<Doctor> doctorList = doctor.getDoctorList();
         List<Slot> slotList = slot.getListSlot();
         List<Booking> reservationList = booking.getBookingList();
@@ -117,6 +127,8 @@ public class managerDashboard extends HttpServlet {
         List<SlotDoctor> availeSlot = slotDoctor.displayBookedSlotList();
         dateList = getDateList();
 
+         request.setAttribute("serviceList", serviceList);
+        request.setAttribute("specialtyList", specialtyList);
         request.setAttribute("doctorList", doctorList);
         request.setAttribute("dateList", dateList);
         request.setAttribute("slotList", slotList);
@@ -142,58 +154,52 @@ public class managerDashboard extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        boolean success = true;
         DAOBooking bookingDAO = new DAOBooking();
+        DAOUser userDao = new DAOUser();
 
         String jsonData = new BufferedReader(request.getReader()).lines().collect(Collectors.joining("\n"));
-
         Gson gson = new Gson();
-        JsonArray jsonArray;
+        JsonElement jsonElement = gson.fromJson(jsonData, JsonElement.class);
+
         try {
-            jsonArray = gson.fromJson(jsonData, JsonArray.class);
+            if (jsonElement.isJsonArray()) {
+                JsonArray jsonArray = jsonElement.getAsJsonArray();
+                boolean allOperationsSuccess = true;
+
+                for (JsonElement element : jsonArray) {
+                    JsonObject jsonObject = element.getAsJsonObject();
+                    String dataType = jsonObject.get("dataType").getAsString();
+
+                    switch (dataType) {
+                        case "bookingUpdate":
+                            if (!handleBookingUpdate(jsonObject, bookingDAO)) {
+                                allOperationsSuccess = false;
+
+                                break; // hoặc bỏ qua nếu muốn xử lý tất cả các yêu cầu mà không dừng lại
+                            }
+                            break;
+                        case "addNewDoctor":
+//                            if (!handleNewDoctor(jsonObject, bookingDAO)) {
+//                                allOperationsSuccess = false;
+//                                // Xử lý nếu thêm mới bác sĩ không thành công
+//                                break; // hoặc bỏ qua
+//                            }
+//                            break;
+                        default:
+                            allOperationsSuccess = false;
+                            Logger.getLogger(managerDashboard.class.getName()).log(Level.INFO, "Unknown dataType");
+                            break;
+                    }
+                }
+
+                sendResponse(response, allOperationsSuccess, allOperationsSuccess ? "All operations successful." : "One or more operations failed.");
+            } else {
+                sendResponse(response, false, "Expected a JSON array with operations.");
+            }
         } catch (JsonSyntaxException ex) {
             Logger.getLogger(managerDashboard.class.getName()).log(Level.SEVERE, "Failed to parse JSON", ex);
             sendResponse(response, false, "Invalid JSON format");
-            return;
         }
-
-        for (JsonElement element : jsonArray) {
-            try {
-                JsonObject jsonObject = element.getAsJsonObject();
-
-                int bookingId = jsonObject.get("bookingId").getAsInt();
-                int status = jsonObject.get("status").getAsInt();
-                int slotId = jsonObject.get("slotId").getAsInt();
-                int slotStatus = jsonObject.get("slotStatus").getAsInt();
-                String doctorName = jsonObject.get("doctorName").getAsString();
-                String customerName = jsonObject.get("customerName").getAsString();
-                String[] doctorNameParts = doctorName.split(" ");
-                String doctorLastName = doctorNameParts[doctorNameParts.length - 1];
-                String doctorFirstName = doctorName.substring(0, doctorName.lastIndexOf(doctorLastName)).trim();
-
-                String[] customerNameParts = customerName.split(" ");
-                String customerLastName = customerNameParts[customerNameParts.length - 1];
-                String customerFirstName = customerName.substring(0, customerName.lastIndexOf(customerLastName)).trim();
-
-                String day = jsonObject.get("day").getAsString();
-
-                if (bookingDAO.updateBookingByManager(bookingId, status, slotId, slotStatus, doctorFirstName, doctorLastName, customerFirstName, customerLastName, day)) {
-                    System.out.println(doctorName);
-                    System.out.println(customerName);
-                    System.out.println("hihi");
-                    System.out.println(bookingId);
-                    success = true;
-                    break;
-                }
-
-            } catch (Exception ex) {
-                Logger.getLogger(managerDashboard.class.getName()).log(Level.SEVERE, "Error processing JSON object", ex);
-                sendResponse(response, false, "Error processing data");
-                return;
-            }
-        }
-
-        sendResponse(response, success, success ? null : "Failed to update.");
     }
 
     private void sendResponse(HttpServletResponse response, boolean success, String message) throws IOException {
@@ -215,5 +221,67 @@ public class managerDashboard extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private boolean handleNewDoctor(JsonObject jsonObject, DAOUser userDao) {
+
+        String name = jsonObject.get("name").getAsString();
+        String gender = jsonObject.get("gender").getAsString();
+        String dob = jsonObject.get("dataOfBirth").getAsString();
+        String specialization = jsonObject.get("specialization").getAsString();
+        String phone = jsonObject.get("phoneNumber").getAsString();
+        String email = jsonObject.get("email").getAsString();
+        String password = jsonObject.get("password").getAsString();
+        String position = jsonObject.get("position").getAsString();
+        String address = jsonObject.get("address").getAsString();
+        String department = jsonObject.get("department").getAsString();
+        int yearsOfExperience = jsonObject.get("yearsOfExperience").getAsInt();
+
+        String[] customerNameParts = name.split(" ");
+        String customerLastName = customerNameParts[customerNameParts.length - 1];
+        String customerFirstName = name.substring(0, name.lastIndexOf(customerLastName)).trim();
+        
+     //   User user = new User(1, customerFirstName, customerLastName, email, password, address, phone, createdAt, avatar, gender);
+        String day = jsonObject.get("day").getAsString();
+//          if (true) {
+//                // Log và xử lý nếu cập nhật không thành công
+//                System.out.println("Update failed for booking ID: " + bookingId);
+//                return false;
+//            }
+        return true;
+    }
+
+    private boolean handleBookingUpdate(JsonObject jsonObject, DAOBooking bookingDAO) {
+        try {
+            int bookingId = jsonObject.get("bookingId").getAsInt();
+            int status = jsonObject.get("status").getAsInt();
+            int slotId = jsonObject.get("slotId").getAsInt();
+            int slotStatus = jsonObject.get("slotStatus").getAsInt();
+            String doctorName = jsonObject.get("doctorName").getAsString();
+            String customerName = jsonObject.get("customerName").getAsString();
+            String[] doctorNameParts = doctorName.split(" ");
+            String doctorLastName = doctorNameParts[doctorNameParts.length - 1];
+            String doctorFirstName = doctorName.substring(0, doctorName.lastIndexOf(doctorLastName)).trim();
+
+            String[] customerNameParts = customerName.split(" ");
+            String customerLastName = customerNameParts[customerNameParts.length - 1];
+            String customerFirstName = customerName.substring(0, customerName.lastIndexOf(customerLastName)).trim();
+
+            String day = jsonObject.get("day").getAsString();
+
+            if (!bookingDAO.updateBookingByManager(bookingId, status, slotId, slotStatus, doctorFirstName, doctorLastName, customerFirstName, customerLastName, day)) {
+                // Log và xử lý nếu cập nhật không thành công
+                System.out.println("Update failed for booking ID: " + bookingId);
+                return false;
+            }
+
+            // Log thông tin cập nhật thành công
+            System.out.println("Update successful for booking ID: " + bookingId);
+            return true;
+
+        } catch (Exception ex) {
+            Logger.getLogger(managerDashboard.class.getName()).log(Level.SEVERE, "Error processing JSON object for booking update", ex);
+            return false;
+        }
+    }
 
 }

@@ -11,6 +11,8 @@ package model;
 public class Service {
 
     private int serviceId;
+
+ 
     private String serviceName, description, doctorName;
     //thêm code để phù hợp với màn hình service của HongNT
     private int doctorId;
@@ -30,6 +32,10 @@ public class Service {
         this.description = description;
         this.price = price;
     }
+
+ 
+    
+    
 
     public float getPrice() {
         return price;

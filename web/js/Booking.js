@@ -479,12 +479,6 @@ function onDateSelect(dateValue) {
     document.getElementById('confirm-date').textContent = dateValue;
     document.getElementById('hidden-date').value = dateValue;
     var allSlotsDisable = document.querySelectorAll('.grid-date');
-    allSlotsDisable.forEach(function (slotElement) {
-        slotElement.style.backgroundColor = '';
-        slotElement.style.color = '';
-        slotElement.classList.remove('disabled-slot');
-        slotElement.disabled = false;
-    });
     var currentDate = new Date();
     var year = currentDate.getFullYear();
     var month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
@@ -521,27 +515,29 @@ function onDateSelect(dateValue) {
             slotElements.forEach(function (slotElement) {
                 console.log(slotElement)
                 if (slotTime < selectedSlotTime) {
-                    // Disable past time slots
-                    slotElement.style.color = 'red';
-                    slotElement.className = 'disabled-slot';
-       
-                } 
+                    slotElement.style.setProperty('color', 'red', 'important');
+                    slotElement.classList.add('no-click');
+                }
+
+
+
             });
         });
     } else {
-        console.log('get out');
-        
+        console.log('click');
+        var selectedSlotTime = parseInt(currentTime.replace(':', ''));
         slotList.forEach(function (slotContent) {
+            var slotTime = parseInt(slotContent.startTime.replace(':', ''));
             var slotId = slotContent.slotId;
-            var slotElements = document.querySelectorAll('.disabled-slot');
-            console.log(slotElements);
+            var slotElements = document.querySelectorAll('.grid-date.no-click');
             slotElements.forEach(function (slotElement) {
-                console.log(slotElement);
-                slotElement.style.color = '';
-                slotElement.classList.remove('disabled-slot');
+                console.log(slotElement)
+                slotElement.style.color = ''; // Reset custom styles
+                slotElement.classList.remove('no-click'); // Remove specific classes
             });
         });
     }
+
     updateSlotsBasedOnDoctorAndDate();
 }
 
