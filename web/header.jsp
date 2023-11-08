@@ -34,7 +34,9 @@
                             <a href="/manageService" class="nav-item nav-link " >Services</a>
 
                         </c:if>
-                        <a href="home" class="nav-item nav-link">Home</a>
+
+                        <a href="/home" class="nav-item nav-link">Home</a>
+
                         <a href="/blog" class="nav-item nav-link">Blogs</a>
 
                         <c:if test="${sessionScope.roleId ne 3}">
