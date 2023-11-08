@@ -139,7 +139,7 @@
     <servlet>
         <servlet-name>numberConfig</servlet-name>
         <servlet-class>controller.adminFeature.numberConfig</servlet-class>
-      </servlet>
+    </servlet>
     <servlet>
         <servlet-name>manageServiceController</servlet-name>
         <servlet-class>controller.managerFeature.manageServiceController</servlet-class>
@@ -151,6 +151,10 @@
     <servlet>
         <servlet-name>manageChangeServiceController</servlet-name>
         <servlet-class>controller.managerFeature.manageChangeServiceController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>manageFeedback</servlet-name>
+        <servlet-class>controller.managerFeature.manageFeedback</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>login</servlet-name>
@@ -287,7 +291,7 @@
     <servlet-mapping>
         <servlet-name>numberConfig</servlet-name>
         <url-pattern>/numberConfig</url-pattern>
-      </servlet-mapping>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>manageServiceController</servlet-name>
         <url-pattern>/manageService</url-pattern>
@@ -299,6 +303,10 @@
     <servlet-mapping>
         <servlet-name>manageChangeServiceController</servlet-name>
         <url-pattern>/manageChangeService</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>manageFeedback</servlet-name>
+        <url-pattern>/feedbackmanage</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

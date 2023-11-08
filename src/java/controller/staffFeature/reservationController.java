@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.Formatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Feedback;
 import model.MedicalInfo;
 import model.Slot;
 import model.SlotDoctor;
@@ -143,7 +144,8 @@ public class reservationController extends HttpServlet {
         User khachHang = d.getUserInfoBySlotDoctorId(slotDoctorId);
         Slot rightSlot = d.getSlotBySlotId(slotId, doctorId);
         MedicalInfo med = d.getMedInfo(slotDoctorId);
-
+        Feedback cusFeedback = d.getFeedbackBySlotDoctorId(slotDoctorId);
+        request.setAttribute("cusFeedback", cusFeedback);
         request.setAttribute("med", med);
         request.setAttribute("slotId", slotId);
         request.setAttribute("doctorId", doctorId);

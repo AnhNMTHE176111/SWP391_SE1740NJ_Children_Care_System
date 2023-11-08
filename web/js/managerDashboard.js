@@ -320,6 +320,14 @@ document.getElementById('reservationManager').addEventListener('click', function
     chartContainer.style.display = "none";
 });
 
+document.getElementById('feedbackManager').addEventListener('click', function() {
+    const feedbackContainer = document.getElementById('feedbackContainer');
+    const chartContainer = document.getElementById('container');
+
+    feedbackContainer.style.display = "block";
+    chartContainer.style.display = "none";
+});
+
 document.getElementById('analyticsMenu').addEventListener('click', function() {
     const reservationsContainer = document.getElementById('reservationsContainer');
     const chartContainer = document.getElementById('container');

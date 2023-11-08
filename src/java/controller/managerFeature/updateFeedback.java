@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+
 package controller.managerFeature;
 
-import DAO.DAOBooking;
 import DAO.DAOFeedback;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,49 +13,43 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
-import model.Booking;
 import model.Feedback;
 
 /**
  *
- * @author dmx
+ * @author ASUS
  */
-@WebServlet(name = "managerDashboardController", urlPatterns = {"/managerDashboard"})
-public class managerDashboard extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
+@WebServlet(name="updateFeedback", urlPatterns={"/feedbackupdate"})
+public class updateFeedback extends HttpServlet {
+   
+    /** 
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet managerDashboard</title>");
+            out.println("<title>Servlet updateFeedback</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet managerDashboard at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet updateFeedback at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    }
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /** 
      * Handles the HTTP <code>GET</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -63,32 +57,17 @@ public class managerDashboard extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        //  HttpSession session = request.getSession();
-//        if (String.valueOf(session.getAttribute("roleId")).equals("null")) {
-//            response.sendRedirect("403.jsp");
-//        } else {
-//            int roleId = Integer.parseInt(String.valueOf(session.getAttribute("roleId")));
-//            if (roleId == 3) {
-        DAOBooking booking = new DAOBooking();
-        DAOFeedback feedbackDao = new DAOFeedback();//AnhLT do
-        List<Booking> reservationList = booking.getBookingList();
-        List<Booking> reservationListForManage = booking.getBookingListForManage();
-        List<Feedback> listManageFeedback = feedbackDao.getListManageFeedback();//AnhLT do
-        request.setAttribute("listManageFeedback", listManageFeedback);//AnhLT do
-        request.setAttribute("reservationListForManage", reservationListForManage);
-        request.setAttribute("reservationList", reservationList);
-        request.getRequestDispatcher("managerDashboard.jsp").forward(request, response);
+    throws ServletException, IOException {
+        String ratingId = request.getParameter("id");
+        int rateId = Integer.parseInt(ratingId);
+        DAOFeedback feedbackDao = new DAOFeedback();
+        Feedback ManageFeedback = feedbackDao.getListManageFeedbackByRateId(rateId);
+        request.setAttribute("feedbackUpdate", ManageFeedback);
+        request.getRequestDispatcher("updateFeedback.jsp").forward(request, response);
+    } 
 
-//            } else {
-//                response.sendRedirect("403.jsp");
-//            }
-//        }
-    }
-
-    /**
+    /** 
      * Handles the HTTP <code>POST</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -96,13 +75,21 @@ public class managerDashboard extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    throws ServletException, IOException {
+        String rateValue = request.getParameter("rate");
+        String ratingId = request.getParameter("ratingId");
+        int rateId = Integer.parseInt(ratingId);
+        DAOFeedback feedbackDao = new DAOFeedback();
+        int updateFeedback = feedbackDao.updateFeedbackByRateId(rateValue, rateId);
+        Feedback ManageFeedback = feedbackDao.getListManageFeedbackByRateId(rateId);
+        String mess = "Updated feedback successfully!";
+        request.setAttribute("feedbackUpdate", ManageFeedback);
+        request.setAttribute("mess", mess);
+        request.getRequestDispatcher("updateFeedback.jsp").forward(request, response);
     }
 
-    /**
+    /** 
      * Returns a short description of the servlet.
-     *
      * @return a String containing servlet description
      */
     @Override
