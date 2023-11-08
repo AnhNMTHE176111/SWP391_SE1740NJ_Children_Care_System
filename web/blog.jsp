@@ -12,10 +12,14 @@
         <title>JSP Page</title>
         <link href="css/home.css" rel="stylesheet"/>
     </head>
-    <body>
+    <body>      
         <jsp:include page="header.jsp"></jsp:include>
+        
+        <jsp:include page="bannerHome.jsp"></jsp:include>
 
-        <form action="searchPost" method="post" class="form-inline" style="margin-left: 145px">
+
+
+        <form action="searchPost" method="post" class="form-inline" style="margin-left: 1000px">
                 <div class="input-group">
                     <input name="txt" type="text" class="form-control" placeholder="Search...">
                     <div class="input-group-append">
@@ -35,7 +39,7 @@
                 <div class="row">
                 <c:forEach items="${listP}" var="o" varStatus="status">
                     <div class="col-lg-4 col-md-6 col-sm-12"> 
-                        <div class="card border-0 shadow-sm mb-2">
+                        <div class="card border-0 shadow-sm mb-2" style="height:580px">
                             <a href="postDetail?postId=${o.postId}"> <img class="card-img-top mb-2" src="${o.getAvatar()}" alt=""> </a>
                             <div class="card-body bg-light text-center p-4">
                                 <p style="font-size: 20px; font-weight: 600; color: #222;">${o.title}</p>

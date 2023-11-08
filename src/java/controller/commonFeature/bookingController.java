@@ -16,6 +16,7 @@ import DAO.DAOSlot;
 import DAO.DAODoctor;
 import DAO.DAOSlotDoctor;
 import DAO.DAOSpecialty;
+import configuration.configuration;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
@@ -23,7 +24,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import model.Doctor;
 import model.Slot;
 import model.SlotDoctor;
@@ -38,6 +41,7 @@ import model.User;
 public class bookingController extends HttpServlet {
 
     private List<String> getDateList() {
+        configuration config = new configuration();
         List<String> dateList = new ArrayList<>();
 
         Date currentDate = new Date();
@@ -46,7 +50,7 @@ public class bookingController extends HttpServlet {
         calendar.setTime(currentDate);
         dateList.add(new SimpleDateFormat("dd/MM").format(currentDate));
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < config.getNUMBER_OF_APPOINTMENT_DATE() - 1; i++) {
             calendar.add(Calendar.DATE, 1);
             Date nextDate = calendar.getTime();
             dateList.add(new SimpleDateFormat("dd/MM").format(nextDate));
@@ -58,7 +62,7 @@ public class bookingController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -100,6 +104,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
     List<Specialty> specialtyList = null;
     List<Slot> slotList = null;
 
+<<<<<<< HEAD
     if (userId != null && !userId.isEmpty()) {
         DAOUser userDao = new DAOUser();
         currentUser = userDao.getUserById(userId);
@@ -109,6 +114,40 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
         doctorList = doctor.getListDoctorBySpecialty();
         specialtyList = specialty.getListSpecialty();
         slotList = slot.getListSlot();
+=======
+//Information from db
+        DAOSlot slot = new DAOSlot();
+        DAOSpecialty specialty = new DAOSpecialty();
+        DAODoctor doctor = new DAODoctor();
+        DAOSlotDoctor slotDoctor = new DAOSlotDoctor();
+
+        List<SlotDoctor> availeSlot = slotDoctor.displayBookedSlotList();
+        List<String> dateList = getDateList();
+        List<Doctor> doctorList = doctor.getListDoctorBySpecialty();
+        List<Specialty> specialtyList = specialty.getListSpecialty();
+        List<Slot> slotList = slot.getListSlot();
+
+        configuration config = new configuration();
+        HashMap<Integer, String> listDateOff = config.getDATE_OFF();
+        for (Map.Entry<Integer, String> entry : listDateOff.entrySet()) {
+            Object key = entry.getKey();
+            Object val = entry.getValue();
+            String value = val.toString().split("-")[2] + "/" + val.toString().split("-")[1];
+            String year = val.toString().split("-")[0];
+            if (dateList.contains(value) && year.equals("2023")) {
+                dateList.remove(value);
+            }
+        }
+
+        request.setAttribute("currentUser", currentUser);
+        request.setAttribute("availeSlot", availeSlot);
+        request.setAttribute("slotList", slotList);
+        request.setAttribute("specialtyList", specialtyList);
+        request.setAttribute("doctorList", doctorList);
+        request.setAttribute("dateList", dateList);
+
+        request.getRequestDispatcher("Booking.jsp").forward(request, response);
+>>>>>>> 728f1ab178807fe610c17ff401c387d8948b92fc
     }
 
     request.setAttribute("currentUser", currentUser);
@@ -169,11 +208,10 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
 
         } catch (ParseException e) {
             e.printStackTrace();
-         
+
         }
         int slotDoctorId = slotDoctor.addSlotDoctor(doctorIdInt, slotIdInt, 1, formattedDate);
-        
-        
+
 //About Customer Backend
         String name = request.getParameter("name");
         String gender = request.getParameter("gender");
@@ -191,13 +229,13 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
         }
         lastName = lastName.trim();
 
-        int roleId = 1;
+        int roleId = 0;
         int addedUserId = user.addGuess(firstName, lastName, gender, email, phone, dob, roleId);
         int customerId = customer.addCustomer(addedUserId);
 
 //Booking infomation      
         int bookingId = booking.addBooking(1, customerId, slotDoctorId);
-
+        response.sendRedirect("/home");
     }
 
     @Override

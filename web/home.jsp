@@ -73,32 +73,32 @@
                 <div class="row">
                     <div class="col-md-6 col-lg-3 text-center team mb-5">
                         <div class="position-relative overflow-hidden mb-4" style="border-radius: 100%;">
-                             <a href="#"><img class="img-fluid w-100" src="https://hamshospital.com/wp-content/themes/hams_thm/inc/timthumb.php?src=https://hamshospital.com/wp-content/uploads/2022/09/Dr.-Arjun-Karki.jpg&w=500&h=500" alt="" > </a>
+                             <a href="/detailDoctor?doctorId=6"><img class="img-fluid w-100" src="https://cdn.benhvienthucuc.vn/wp-content/uploads/2020/12/Duong-Van-Tien-Truong-phong-kham-Tai-Mui-Hong1-300x300.jpg" alt="" > </a>
                         </div>
-                        <h4>Ngo Minh Tuan Anh</h4>
+                        <h4>Hà Gia Mạnh</h4>
                         <i>Professor</i>
                     </div>
                     <div class="col-md-6 col-lg-3 text-center team mb-5">
                         <div class="position-relative overflow-hidden mb-4" style="border-radius: 100%;">
-                             <a href="#"><img class="img-fluid w-100" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTj5xQhRjlqPhQzzFceJHqD9Ue_ErwX7z4riA&usqp=CAU" alt="" > </a>
+                             <a href="detailDoctor?doctorId=8"><img class="img-fluid w-100" src="https://cdn.benhvienthucuc.vn/wp-content/uploads/2020/10/BS-Nguyen-Xuan-Thanh-300x300.png" alt="" > </a>
                         </div>
-                        <h4>Jhon Doe</h4>
-                        <i>Professor</i>
+                        <h4>Phan Văn Hồng</h4>
+                        <i>Doctor</i>
                     </div>
                     
                     <div class="col-md-6 col-lg-3 text-center team mb-5">
                         <div class="position-relative overflow-hidden mb-4" style="border-radius: 100%;">
-                            <a href="#"><img class="img-fluid w-100" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6pzk-z0w128CGMXuoixmBWLIyzKg5xJ0jsw&usqp=CAU" alt="" ></a>
+                            <a href="/detailDoctor?doctorId=5"><img class="img-fluid w-100" src="https://cdn.benhvienthucuc.vn/wp-content/uploads/2020/06/BS-Nguyen-Thi-Kim-Loan-300x300.png" alt="" ></a>
                         </div>
-                        <h4>Mollie Ross</h4>
+                        <h4>Đỗ Cao Bảo</h4>
                         <i>Doctor</i>
                     </div>
                     <div class="col-md-6 col-lg-3 text-center team mb-5">
                         <div class="position-relative overflow-hidden mb-4" style="border-radius: 100%;">
-                            <a href="#"><img class="img-fluid w-100" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTclBNN9eDwLvwUXKKlVNRM17KlxH4cQALEw&usqp=CAU" alt="" ></a> 
+                            <a href="/detailDoctor?doctorId=11"><img class="img-fluid w-100" src="https://cdn.benhvienthucuc.vn/wp-content/uploads/2021/03/bac-ha1-300x300.jpg" alt="" ></a> 
                         </div>
-                        <h4>Donald John</h4>
-                        <i>Professor</i>
+                        <h4>Mã Văn Lộc</h4>
+                        <i>Doctor</i>
                     </div>
                 </div>
             </div>
@@ -115,7 +115,7 @@
                 <div class="row pb-3">
                     <div class="col-lg-4 mb-4">
                         <div class="card border-0 shadow-sm mb-2">
-                            <img class="card-img-top mb-2" src="https://vinmec-prod.s3.amazonaws.com/images/20191130_030902_740495_20190226_042612_26719.max-800x800.png" alt="">
+                            <a href="postDetail?postId=2"><img class="card-img-top mb-2" src="https://vinmec-prod.s3.amazonaws.com/images/20191130_030902_740495_20190226_042612_26719.max-800x800.png" alt=""></a>
                             <div class="card-body bg-light text-center p-4">
                                 <h4 class="">Những lưu ý quan trọng trước khi khám sức khỏe tổng quát</h4>
                                 <!--            <div class="d-flex justify-content-center mb-3">
@@ -124,13 +124,13 @@
                                               <small class="mr-3"><i class="fa fa-comments text-primary"></i> 15</small>
                                 </div>-->
                                 <p>Theo khuyến cáo từ Hiệp hội Tim mạch Mỹ, bạn cần tiến hành kiểm tra huyết áp hàng năm ở độ tuổi từ 18 trở lên để tầm soát nguy cơ tăng huyết áp.</p>
-                                <a href="" class="btn btn-primary px-4 mx-auto my-2">Read More</a>
+                                <a href="postDetail?postId=2" class="btn btn-primary px-4 mx-auto my-2">Read More</a>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4 mb-4">
                         <div class="card border-0 shadow-sm mb-2">
-                            <img class="card-img-top mb-2" src="https://vinmec-prod.s3.amazonaws.com/images/20191120_084425_617598_tiem-phong-vacxin.max-800x800.png" alt="">
+                            <a href="postDetail?postId=1"><img class="card-img-top mb-2" src="https://vinmec-prod.s3.amazonaws.com/images/20191120_084425_617598_tiem-phong-vacxin.max-800x800.png" alt=""></a>
                             <div class="card-body bg-light text-center p-4">
                                 <h4 class="">Có nên trì hoãn việc tiêm chủng trong đợt dịch Covid-19?</h4>
                                 <!--                            <div class="d-flex justify-content-center mb-3">
@@ -139,13 +139,13 @@
                                                                 <small class="mr-3"><i class="fa fa-comments text-primary"></i> 15</small>
                                                             </div>-->
                                 <p>Theo khuyến cáo của các chuyên gia y tế, ngay cả trong thời điểm có dịch bệnh, phụ huynh vẫn nên đưa con đi tiêm vắc xin đúng lịch. </p>
-                                <a href="" class="btn btn-primary px-4 mx-auto my-2">Read More</a>
+                                <a href="postDetail?postId=1" class="btn btn-primary px-4 mx-auto my-2">Read More</a>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4 mb-4">
                         <div class="card border-0 shadow-sm mb-2">
-                            <img class="card-img-top mb-2" src="https://vinmec-prod.s3.amazonaws.com/images/20190909_040421_333458_giao-duc-gioi-tinh.max-800x800.jpg" alt="">
+                            <a href="postDetail?postId=5"><img class="card-img-top mb-2" src="https://vinmec-prod.s3.amazonaws.com/images/20190909_040421_333458_giao-duc-gioi-tinh.max-800x800.jpg" alt=""></a>
                             <div class="card-body bg-light text-center p-4">
                                 <h4 class="">Giáo dục giới tính cho trẻ nhỏ</h4>
                                 <!--                            <div class="d-flex justify-content-center mb-3">
@@ -155,7 +155,7 @@
                                                             </div>-->
                                 <p>Giáo dục giới tính ở trẻ em luôn là khía cạnh nhận được nhiều sự quan tâm từ phía xã hội. Trách nhiệm của cả gia đình và nhà trường </p>
 </p>
-                                <a href="" class="btn btn-primary px-4 mx-auto my-2">Read More</a>
+                                <a href="postDetail?postId=5" class="btn btn-primary px-4 mx-auto my-2">Read More</a>
                             </div>
                         </div>
                     </div>

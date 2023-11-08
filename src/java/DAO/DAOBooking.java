@@ -20,10 +20,12 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import java.util.List;
 import model.Booking;
+import model.Customer;
 
 public class DAOBooking extends DBContext {
 
@@ -41,17 +43,32 @@ public class DAOBooking extends DBContext {
 
     public int addBooking(int status, int customerId, int slotDoctorId) {
         int generatedId = -1;
+        int medicalInforId = 0;
+
+        String sql = "select MAX(MedicalInfoId) from MedicalInfo";
+        try ( PreparedStatement pstm = cnn.prepareStatement(sql);  ResultSet rs = pstm.executeQuery()) {
+            while (rs.next()) {
+                medicalInforId = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println("MedicalInfo" + e.getMessage());
+        }
         try {
-            String strSQL = "insert into Booking(BookingStatus, CustomerID, slotDoctorId) values(?,?,?); SELECT SCOPE_IDENTITY();";
+            String strSQL = "insert into Booking(BookingStatus, CustomerID, slotDoctorId,medicalInfoId) values(?,?,?,?); "
+                    + "SELECT SCOPE_IDENTITY();"
+                    + "SET IDENTITY_INSERT medicalInfo ON;\n"
+                    + "insert into MedicalInfo(MedicalInfoId) values(?);";
 
             pstm = cnn.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
 
             pstm.setInt(1, status);
             pstm.setInt(2, customerId);
             pstm.setInt(3, slotDoctorId);
+            pstm.setInt(4, medicalInforId + 1);
+            pstm.setInt(5, medicalInforId + 1);
 
             if (pstm.executeUpdate() > 0) {
-                try (ResultSet generatedKeys = pstm.getGeneratedKeys()) {
+                try ( ResultSet generatedKeys = pstm.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         generatedId = generatedKeys.getInt(1);
                     }
@@ -69,7 +86,7 @@ public class DAOBooking extends DBContext {
                 + "join SlotDoctor on SlotDoctor.slotDoctorId = Booking.slotDoctorId\n"
                 + "where day is not null";
 
-        try (PreparedStatement pstm = cnn.prepareStatement(strSQL); ResultSet rs = pstm.executeQuery()) {
+        try ( PreparedStatement pstm = cnn.prepareStatement(strSQL);  ResultSet rs = pstm.executeQuery()) {
             while (rs.next()) {
                 int bookingId = rs.getInt("BookingId");
                 int status = rs.getInt("BookingStatus");
@@ -116,7 +133,7 @@ public class DAOBooking extends DBContext {
                 + "WHERE \n"
                 + "    day IS NOT NULL;";
 
-        try (PreparedStatement pstm = cnn.prepareStatement(strSQL); ResultSet rs = pstm.executeQuery()) {
+        try ( PreparedStatement pstm = cnn.prepareStatement(strSQL);  ResultSet rs = pstm.executeQuery()) {
             while (rs.next()) {
                 int bookingId = rs.getInt("BookingId");
                 int bookingStatus = rs.getInt("BookingStatus");
@@ -146,13 +163,21 @@ public class DAOBooking extends DBContext {
         ArrayList<Booking> listCustReservation = new ArrayList<Booking>();
         try {
             String strSQL = "SELECT\n"
-                    + "b.*,\n"
-                    + "m.Diagnosis,\n"
-                    + "CONCAT(u.firstName, ' ', u.lastName) AS fullName\n"
+                    + "  b.*,\n"
+                    + "  m.Diagnosis,\n"
+                    + "  CONCAT(u.firstName, ' ', u.lastName) AS fullName,\n"
+                    + "  s.StartTime,\n"
+                    + "  s.EndTime,\n"
+                    + "  se.ServiceName,\n"
+                    + "  d.DoctorId,\n"
+                    + "  sd.day\n"
                     + "FROM Booking b\n"
                     + "JOIN MedicalInfo m ON b.MedicalInfoId = m.MedicalInfoId\n"
                     + "JOIN Doctors d ON b.slotDoctorId = d.DoctorId\n"
+                    + "JOIN SlotDoctor sd ON b.slotDoctorId = sd.slotDoctorId\n"
+                    + "JOIN Slots s ON sd.SlotId = s.SlotId\n"
                     + "JOIN Users u ON d.userId = u.userId\n"
+                    + "JOIN Services se ON b.ServiceId = se.ServiceId\n"
                     + "WHERE b.CustomerId = '" + cusId + "'\n"
                     + "ORDER BY b.CustomerId\n"
                     + "OFFSET ? ROWS FETCH NEXT 2 ROWS ONLY";
@@ -162,14 +187,17 @@ public class DAOBooking extends DBContext {
             while (rs.next()) {
                 int BookingId = rs.getInt(1);
                 int BookingStatus = rs.getInt(2);
-                int CustomerID = rs.getInt(3);
-                String Symptomps = rs.getString(8);
-                String BookingDate = String.valueOf(rs.getDate(5));
-                String BookingTime = String.valueOf(rs.getTime(5));
+                int CustomerID = rs.getInt(4);
+                int MedicalInfoId = rs.getInt(5);
+                String Diagnosis = rs.getString(8);
+                String BookingDate = String.valueOf(rs.getDate(14));
+                String BookingTime = String.valueOf("From " + rs.getTime(10) + " to " + rs.getTime(11));
                 String DoctorName = rs.getString(9);
                 String CreateDate = String.valueOf(rs.getDate(7));
                 String CreateTime = String.valueOf(rs.getTime(7));
-                Booking cusBooking = new Booking(BookingId, BookingStatus, CustomerID, Symptomps, BookingDate, BookingTime, DoctorName, CreateDate, CreateTime);
+                String ServiceName = rs.getString(12);
+                int DoctorId = rs.getInt(13);
+                Booking cusBooking = new Booking(BookingId, BookingStatus, CustomerID, MedicalInfoId, Diagnosis, BookingDate, BookingTime, DoctorName, ServiceName, CreateDate, CreateTime, DoctorId);
                 listCustReservation.add(cusBooking);
             }
         } catch (Exception e) {
@@ -184,6 +212,8 @@ public class DAOBooking extends DBContext {
                     + "FROM Booking b\n"
                     + "JOIN MedicalInfo m ON b.MedicalInfoId = m.MedicalInfoId\n"
                     + "JOIN Doctors d ON b.slotDoctorId = d.DoctorId\n"
+                    + "JOIN SlotDoctor sd ON b.slotDoctorId = sd.slotDoctorId\n"
+                    + "JOIN Slots s ON sd.SlotId = s.SlotId\n"
                     + "JOIN Users u ON d.userId = u.userId\n"
                     + "WHERE b.CustomerId = '" + cusId + "'";
             pstm = cnn.prepareStatement(strSQL);
@@ -201,9 +231,56 @@ public class DAOBooking extends DBContext {
         return 0;
     }
 
+    public String getTotalNumberOfBooking() {
+        try {
+            String strSQL = "select count(BookingId) as total from Booking";
+            pstm = cnn.prepareStatement(strSQL);
+            rs = pstm.executeQuery();
+            if (rs.next()) {
+                int total = rs.getInt(1);
+                DecimalFormat decimalFormat = new DecimalFormat("#,###");
+                String formattedNumber = decimalFormat.format(total);
+                return formattedNumber;
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL getTotalNumberOfBooking: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("getTotalNumberOfBooking: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public String getTotalMoney() {
+        try {
+            String strSQL = "select sum(abc.Price) as total from Booking b\n"
+                    + "join SlotDoctor sd \n"
+                    + "on b.slotDoctorId = sd.slotDoctorId\n"
+                    + "join (\n"
+                    + "	select ds.DoctorId, s.ServiceId, s.Price\n"
+                    + "	from DoctorServices ds\n"
+                    + "	join Doctors d on ds.DoctorId = d.DoctorId\n"
+                    + "	join Services s on ds.ServiceId = s.ServiceId \n"
+                    + ") abc on abc.DoctorId = sd.DoctorId\n"
+                    + "where b.BookingStatus = 1";
+            pstm = cnn.prepareStatement(strSQL);
+            rs = pstm.executeQuery();
+            if (rs.next()) {
+                int total = rs.getInt(1);
+                DecimalFormat decimalFormat = new DecimalFormat("#,###");
+                String formattedNumber = decimalFormat.format(total);
+                return formattedNumber;
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL getTotalMoney: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("getTotalMoney: " + e.getMessage());
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         DAOBooking bookDao = new DAOBooking();
-        int count = bookDao.getTotalCusReservation(1);
+        int count = bookDao.getTotalCusReservation(0);
         System.out.println(count);
     }
 
@@ -274,6 +351,22 @@ public class DAOBooking extends DBContext {
         }
 
         return false;  // Trả về false nếu có lỗi
+    }
+    public String cancelCusBookingByBookId(String cancelBookId) {
+        try {
+            String strSQL = "update Booking\n"
+                    + "set BookingStatus = '2'\n"
+                    + "where BookingId = ?";
+            pstm = cnn.prepareStatement(strSQL);
+            pstm.setString(1, cancelBookId);
+            rs = pstm.executeQuery();
+
+        } catch (SQLException e) {
+            System.out.println("SQL cancelCusBookingByBookId: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("cancelCusBookingByBookId: " + e.getMessage());
+        }
+        return cancelBookId;
     }
 
 }

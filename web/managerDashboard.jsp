@@ -35,12 +35,19 @@
             <div class="side-navbar-container">
                 <h3>Manager Dashboard</h3>
                 <ul>
+<<<<<<< HEAD
                     <li id="analyticsMenu">
                         <i class="fa-solid fa-chart-simple"></i>Analytics
                     </li>
                     <li id="reservationManager">
                         <i class="fa-solid fa-users"></i>Reservation Manager
                     </li>
+=======
+                    <li id="analyticsMenu"><i class="fa-solid fa-chart-simple"></i>Analytics</li>
+                    <li id="reservationManager"><i class="fa-solid fa-users"></i>Reservation Manager</li>
+                    <li id="manageCustomer"><i class="far fa-angry"></i><a href="manageCustomer" style="text-decoration: none;color: white;">Customer Manager</a></li>
+                    <li id="manageService"><i class="far fa-server"></i><a href="manageService" style="text-decoration: none;color: white;" >Service Manager</a></li>
+>>>>>>> 728f1ab178807fe610c17ff401c387d8948b92fc
                     <li><i class="fa-solid fa-gear"></i>Setting</li>
                  <li>
     <a href="/managePost">

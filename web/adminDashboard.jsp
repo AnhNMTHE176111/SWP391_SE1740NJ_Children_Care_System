@@ -34,29 +34,29 @@
                     <li onclick="changeLocation('/admin-manage-setting')"> <i class="fa-solid fa-gear"></i> Setting</a></li>
                 </ul>
             </div> 
-
+            
             <div class="analytic-container" style="width: 80%; margin-left: 20%;">
                 <h1>Dashboard</h1>
                 <div class="number-total-container">
-                    <div class="number-total-item" style="display: flex;">
+                    <div class="number-total-item reservation" style="display: flex;">
                         <div class="number-total-item-detail">
                             <h3 class="number-total-item-title">Reservation</h3>
-                            <h4 class="number-total-item-number">1780</h4>
+                            <h4 class="number-total-item-number">${totalNumberOfBooking}</h4>
                         </div>
                         <div class="total-item-logo">
                             <i class="fa-solid fa-list-check"></i>
                         </div>
                     </div>
-                    <div class="number-total-item" style="display: flex;">
+                    <div class="number-total-item earning" style="display: flex;">
                         <div class="number-total-item-detail">
                             <h3 class="number-total-item-title">Earning</h3>
-                            <h4 class="number-total-item-number">$ 120.00</h4>
+                            <h4 class="number-total-item-number">${totalMoney} đ</h4>
                         </div>
                         <div class="total-item-logo">
                             <i class="fa-solid fa-money-bill"></i>
                         </div>
                     </div>
-                    <div class="number-total-item" style="display: flex;">
+                    <div class="number-total-item feedback" style="display: flex;">
                         <div class="number-total-item-detail">
                             <h3 class="number-total-item-title">Feedback</h3>
                             <h4 class="number-total-item-number">84%</h4>
@@ -65,9 +65,9 @@
                             <i class="fa-solid fa-comments"></i>
                         </div>
                     </div>
-                    <div class="number-total-item" style="display: flex;">
+                    <div class="number-total-item user" style="display: flex;">
                         <div class="number-total-item-detail">
-                            <h3 class="number-total-item-title">User</h3>
+                            <h3 class="number-total-item-title">Users</h3>
                             <h4 class="number-total-item-number">${totalUser}</h4>
                         </div>
                         <div class="total-item-logo">
@@ -81,8 +81,8 @@
                         <div class="chart-item" >
                             <div class="chart-item-detail">
                                 Number of User Created
-                                <label for="week-dropdown">Chọn Tuần:</label>
-                                <input type="week" id="week-dropdown"/>
+                                <label for="week-dropdown"></label>
+                                <input type="week" id="week-dropdown" placeholder="Choose week"/>
                             </div>
                             <div style="width: 100%; height: 90%; padding: 10px;">
                                 <canvas id="user-line-chart" width="10" height=""></canvas>

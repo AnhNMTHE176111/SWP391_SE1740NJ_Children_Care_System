@@ -20,7 +20,7 @@
                             <h2 class="display-3 font-weight-bold text-white">Dedication to children's health care</h2>
                             <p class="text-white mb-4">Support and advice on health, emotions, and life – designed for
                                 kids and approved by doctors.</p>
-                            <a href="" class="btn btn-secondary mt-1 py-3 px-5">Learn More</a>
+                            <a href="/blog" class="btn btn-secondary mt-1 py-3 px-5">Learn More</a>
                         </div>
                         <div class="col-lg-7 text-center text-lg-right">
                             <img
