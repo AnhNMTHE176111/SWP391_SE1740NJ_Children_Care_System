@@ -16,7 +16,7 @@ public class CreateByReplacingPlaceholderText {
 
     public static void main(String[] args) {
     }
-    
+
     public void createPrecription(String docx, String doctorName, String doctorNumber, String doctorEmail, String medication, String patientName, String symptoms, String diagnosis, String treatmentPlan, String fileName) {
         //Load the template document  
         Document document = new Document(docx);
@@ -24,13 +24,13 @@ public class CreateByReplacingPlaceholderText {
         Section section = document.getSections().get(0);
         //Get the first table in the section  
         Table table = section.getTables().get(0);
-        
+
         // Lấy thời gian hiện tại
         Date currentDate = new Date();
-        
+
         // Tạo đối tượng SimpleDateFormat với định dạng mong muốn
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm dd/MM/yyyy");
-        
+
         // Sử dụng SimpleDateFormat để định dạng ngày giờ
         String formattedDate = sdf.format(currentDate);
 
@@ -45,7 +45,7 @@ public class CreateByReplacingPlaceholderText {
         map.put("diagnosis", diagnosis);
         map.put("treatmentPlan", treatmentPlan);
         map.put("currentDate", formattedDate);
-        
+
         //Call the replaceTextinTable method to replace text in table  
         replaceTextinTable(map, table);
 
