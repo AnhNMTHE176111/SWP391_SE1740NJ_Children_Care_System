@@ -71,6 +71,12 @@ public class informationReservation extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("user");
+        String fileName = "Prescription_" + u.getFirstName() + "_" + u.getLastName() + ".docx";
+        fileName = fileName.replaceAll("\\s+", "_");
+        request.setAttribute("fileName", fileName);
+        request.setAttribute("filePath", ".\\prescription\\" + fileName);
+
         DAOUser userDao = new DAOUser();
         DAOCustomer cusDao = new DAOCustomer();
         DAOService serDao = new DAOService();
@@ -102,7 +108,7 @@ public class informationReservation extends HttpServlet {
                     mp.setFrequency(line.split("-")[2]);
                     medicalPrescription.add(mp);
                 }
-                
+
                 request.setAttribute("medicalPrescription", medicalPrescription);
             }
             request.setAttribute("treatmentPlan", treatmentPlan);
@@ -127,6 +133,12 @@ public class informationReservation extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("user");
+        String fileName = "Prescription_" + u.getFirstName() + "_" + u.getLastName() + ".docx";
+        fileName = fileName.replaceAll("\\s+", "_");
+        request.setAttribute("fileName", fileName);
+        request.setAttribute("filePath", ".\\prescription\\" + fileName);
+
         String cancelBookingId = request.getParameter("bookingId");
         DAOBooking bookDao = new DAOBooking();
         DAOCustomer cusDao = new DAOCustomer();

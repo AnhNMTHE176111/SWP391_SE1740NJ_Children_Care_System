@@ -4,6 +4,7 @@
  */
 package controller.staffFeature;
 
+import model.CreateByReplacingPlaceholderText;
 import DAO.DAODoctor;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -11,6 +12,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -26,6 +28,7 @@ import model.MedicalPrescription;
 import model.Slot;
 import model.SlotDoctor;
 import model.User;
+import model.*;
 
 /**
  *
@@ -149,8 +152,8 @@ public class reservationController extends HttpServlet {
         if (treatment != null) {
             String[] array = treatment.split("\\|");
             String treatmentPlan = array[0];
+            ArrayList<MedicalPrescription> medicalPrescription = new ArrayList<>();
             if (array.length > 1) {
-                ArrayList<MedicalPrescription> medicalPrescription = new ArrayList<>();
                 for (int i = 1; i < array.length; i++) {
                     String line = array[i];
                     MedicalPrescription mp = new MedicalPrescription();
@@ -162,6 +165,22 @@ public class reservationController extends HttpServlet {
                 request.setAttribute("medicalPrescription", medicalPrescription);
             }
             request.setAttribute("treatmentPlan", treatmentPlan);
+
+            // create prescription docx
+            String medication = "";
+            for (int i = 0; i < medicalPrescription.size(); i++) {
+                MedicalPrescription mp = medicalPrescription.get(i);
+                medication += mp.getMedication() + ", " + mp.getStrength() + ", " + mp.getFrequency() + "\n";
+            }
+            String fileName = "Prescription_" + khachHang.getFirstName() + "_" + khachHang.getLastName() + ".docx";
+            fileName = fileName.replaceAll("\\s+", "_");
+            String filepath = getServletContext().getRealPath("").split("build")[0];
+            String docx = "Blank Prescription Template.docx";
+            Doctor doctor = d.getDoctorbyIDbyTuanAnh(doctorId);
+            CreateByReplacingPlaceholderText fuck = new CreateByReplacingPlaceholderText();
+            fuck.createPrecription(filepath + "\\" + docx,doctor.getName(), doctor.getPhone(), doctor.getEmail(), medication, khachHang.getFirstName() + " " + khachHang.getLastName(), med.getSymptons(), med.getDiagnosis(), treatmentPlan, filepath + "\\web\\prescription\\" + fileName);
+            request.setAttribute("fileName", fileName);
+            request.setAttribute("filePath", ".\\prescription\\" + fileName);
         }
         request.setAttribute("slotId", slotId);
         request.setAttribute("doctorId", doctorId);

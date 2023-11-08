@@ -181,7 +181,7 @@
                                         <td><button class="btn btn-outline-danger remove-row" type="button">X</button></td>
                                     </tr>
                                 </c:forEach>
-                                
+
                             </tbody>
                         </table>
                     </div>
@@ -193,8 +193,16 @@
                             <div class="alert-success col-10 d-flex justify-content-center py-2">Update Success</div>
                         </div>
                     </c:if>
-                    <button style="margin-top: 20px; border-radius: 5px;" class="btn-success" type="submit" name="medId" value="${med.getMedicalInfoId()}">Update Information</button>
-                    <a style=" border-radius: 5px;" class="btn btn-secondary py-2 px-4" href="/reservation"">Back</a>
+                    <div class="col-12 justify-content-start d-flex">
+                        <div class="col-12">
+                            <button style="margin-top: 20px; border-radius: 5px;" class="btn-success" type="submit" name="medId" value="${med.getMedicalInfoId()}">Update Information</button>
+                            <a style=" border-radius: 5px;" class="btn btn-secondary py-2 px-4" href="/reservation"">Back</a>
+                            <a class="btn btn-outline-warning mx-2" 
+                               download="${fileName}" href=${filePath} >
+                                Export Medical Prescription
+                            </a>
+                        </div>
+                    </div>
                 </form>
             </div>
 

@@ -147,6 +147,13 @@
                 <div class="col-5 mx-2">
                     <label for="treatmentPlan"><h3>Treatment Plan:</h3></label>
                     <textarea id="treatmentPlan" class="form-control" rows="3" name="treatmentPlan">${treatmentPlan}</textarea>
+                    <div class="col-12 d-flex justify-content-end">
+                        <a class="btn btn-outline-warning my-2" 
+                           download="${fileName}" href=${filePath} >
+                            Export Medical Prescription
+                        </a>
+                    </div>
+
                 </div>
                 <table class="table table-bordered col-5">
                     <caption>Medical Prescription</caption>
@@ -165,7 +172,7 @@
                                 <td><input type="text" class="form-control" id="rx" name="frequency" value="${item.getFrequency()}"></td>
                             </tr>
                         </c:forEach>
-                        <c:if test="${!medicalPrescription.size()}">
+                        <c:if test="${medicalPrescription.size() == 0}">
                             <tr>
                                 <td colspan="3">
                                     <div class="col-12 alert-secondary text-center py-2">
