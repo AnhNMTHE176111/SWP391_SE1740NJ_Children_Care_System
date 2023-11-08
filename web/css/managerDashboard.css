@@ -357,6 +357,7 @@ td {
     align-items: center;
     align-content: center;
     padding: 10px 20px;
+
 }
 
 .number-total-item.reservation{
@@ -448,6 +449,7 @@ th {
 
     padding-left: 50px;
 }
+
 
 #updateForm {
     position: fixed;
@@ -577,13 +579,5 @@ label {
   align-items: center;
   z-index: 10;
 }
-
-
-
-
-
-
-
-
 
 

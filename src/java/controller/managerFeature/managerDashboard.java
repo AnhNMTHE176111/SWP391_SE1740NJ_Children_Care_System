@@ -11,6 +11,8 @@ import DAO.DAOSlot;
 import DAO.DAOSlotDoctor;
 import DAO.DAOSpecialty;
 import DAO.DAOUser;
+
+import DAO.DAOFeedback;
 import com.google.gson.*;
 
 import java.io.IOException;
@@ -28,6 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.logging.Level;
@@ -40,6 +43,7 @@ import model.Slot;
 import model.SlotDoctor;
 import model.Specialty;
 import model.User;
+import model.Feedback;
 
 /**
  *
@@ -60,7 +64,7 @@ public class managerDashboard extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");

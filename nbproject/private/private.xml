@@ -1,25 +1,31 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/web/managerDashboard.jsp</file>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/controller/adminFeature/addNewUser.java</file>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAOBooking.java</file>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/model/Slot.java</file>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/model/Booking.java</file>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/model/User.java</file>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/web/js/managerDashboard.js</file>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAOService.java</file>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/web/js/admin_dashboard_chart.js</file>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/dal/DBContext.java</file>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/controller/commonFeature/bookingController.java</file>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAOUser.java</file>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/model/Service.java</file>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAODoctor.java</file>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/model/GoogleUtils.java</file>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/web/js/Booking.js</file>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/controller/commonFeature/changePassword.java</file>
+            <file>file:/E:/SWR302_Document/SWP391_SE1740NJ_Children_Care_System/src/java/controller/staffFeature/reservationController.java</file>
+            <file>file:/E:/SWR302_Document/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAOBooking.java</file>
+            <file>file:/E:/SWR302_Document/SWP391_SE1740NJ_Children_Care_System/src/java/controller/managerFeature/managerDashboard.java</file>
+            <file>file:/E:/SWR302_Document/SWP391_SE1740NJ_Children_Care_System/src/java/model/Feedback.java</file>
+            <file>file:/E:/SWR302_Document/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAODoctor.java</file>
+            <file>file:/E:/SWR302_Document/SWP391_SE1740NJ_Children_Care_System/web/js/managerDashboard.js</file>
+            <file>file:/E:/SWR302_Document/SWP391_SE1740NJ_Children_Care_System/src/java/controller/commonFeature/login.java</file>
+            <file>file:/E:/SWR302_Document/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAOFeedback.java</file>
+            <file>file:/E:/SWR302_Document/SWP391_SE1740NJ_Children_Care_System/web/WEB-INF/web.xml</file>
+            <file>file:/E:/SWR302_Document/SWP391_SE1740NJ_Children_Care_System/src/java/controller/staffFeature/staffController.java</file>
+            <file>file:/E:/SWR302_Document/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAOMedicalInfo.java</file>
+            <file>file:/E:/SWR302_Document/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAOUser.java</file>
+            <file>file:/E:/SWR302_Document/SWP391_SE1740NJ_Children_Care_System/src/java/controller/managerFeature/updateFeedback.java</file>
+            <file>file:/E:/SWR302_Document/SWP391_SE1740NJ_Children_Care_System/src/java/controller/commonFeature/informationReservation.java</file>
+            <file>file:/E:/SWR302_Document/SWP391_SE1740NJ_Children_Care_System/web/reservationDetail.jsp</file>
+            <file>file:/E:/SWR302_Document/SWP391_SE1740NJ_Children_Care_System/web/managerDashboard.jsp</file>
+            <file>file:/E:/SWR302_Document/SWP391_SE1740NJ_Children_Care_System/src/java/controller/managerFeature/manageFeedback.java</file>
+            <file>file:/E:/SWR302_Document/SWP391_SE1740NJ_Children_Care_System/web/updateFeedback.jsp</file>
+            <file>file:/E:/SWR302_Document/SWP391_SE1740NJ_Children_Care_System/src/java/controller/commonFeature/bookingController.java</file>
+            <file>file:/E:/SWR302_Document/SWP391_SE1740NJ_Children_Care_System/web/myReservation.jsp</file>
+            <file>file:/E:/SWR302_Document/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAOPost.java</file>
         </group>
     </open-files>
 </project-private>
+
