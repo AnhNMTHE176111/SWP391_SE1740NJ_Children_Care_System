@@ -200,9 +200,23 @@ document.getElementById('reservationManager').addEventListener('click', function
     }
 });
 
+
+document.getElementById('feedbackManager').addEventListener('click', function() {
+    const feedbackContainer = document.getElementById('feedbackContainer');
+    const chartContainer = document.getElementById('container');
+
+    feedbackContainer.style.display = "block";
+    chartContainer.style.display = "none";
+});
+
+document.getElementById('analyticsMenu').addEventListener('click', function() {
+    const reservationsContainer = document.getElementById('reservationsContainer');
+    const chartContainer = document.getElementById('container');
+
 document.getElementById('analyticsMenu').addEventListener('click', function () {
     const analyticContainer = document.querySelector('.analytic-container');
     const reservationManagerContainer = document.querySelector('.reservation-manager-container');
+
 
     if (analyticContainer) {
         analyticContainer.style.display = "block";
@@ -307,6 +321,7 @@ function saveAllChangesToDatabase(data) {
                 alert('Update failed');
             });
 }
+
 
 
 

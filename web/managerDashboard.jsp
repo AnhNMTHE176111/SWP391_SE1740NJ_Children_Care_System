@@ -35,25 +35,23 @@
             <div class="side-navbar-container">
                 <h3>Manager Dashboard</h3>
                 <ul>
-<<<<<<< HEAD
                     <li id="analyticsMenu">
                         <i class="fa-solid fa-chart-simple"></i>Analytics
                     </li>
                     <li id="reservationManager">
                         <i class="fa-solid fa-users"></i>Reservation Manager
                     </li>
-=======
                     <li id="analyticsMenu"><i class="fa-solid fa-chart-simple"></i>Analytics</li>
                     <li id="reservationManager"><i class="fa-solid fa-users"></i>Reservation Manager</li>
+                    <li id="feedbackManager"><i class="fa-solid fa-comments"></i>Feedback Manager</li>
                     <li id="manageCustomer"><i class="far fa-angry"></i><a href="manageCustomer" style="text-decoration: none;color: white;">Customer Manager</a></li>
                     <li id="manageService"><i class="far fa-server"></i><a href="manageService" style="text-decoration: none;color: white;" >Service Manager</a></li>
->>>>>>> 728f1ab178807fe610c17ff401c387d8948b92fc
                     <li><i class="fa-solid fa-gear"></i>Setting</li>
-                 <li>
-    <a href="/managePost">
-        <i class="fa-solid fa-gear"></i> Manage Post
-    </a>
-</li>
+                    <li>
+                        <a href="/managePost">
+                            <i class="fa-solid fa-gear"></i> Manage Post
+                        </a>
+                    </li>
 
                 </ul>
             </div>
@@ -187,16 +185,69 @@
                                         <button onclick="deleteBooking(${rs.bookingId});"><i class="fa-solid fa-user-pen"></i>Delete</button>
                                     </td>
                                 </tr>
-                            </c:forEach>
 
-                        </tbody>
-                    </table>
-                </div>
+                                </thead>
+                            <tbody>
+                                <c:forEach var="rs" items="${reservationListForManage}">
+                                    <tr>
+                                        <td><span class="editable">${rs.bookingId}</span><input type="hidden" class="hidden-input" value="${rs.bookingId}" /></td>
+                                        <td><span class="editable">${rs.status}</span><input type="hidden" class="hidden-input" value="${rs.status}" /></td>
+                                        <td><span class="editable">${rs.getStartTime()}</span><input type="hidden" class="hidden-input" value="${rs.getStartTime()}" /></td>
+                                        <td><span class="editable">${rs.status}</span><input type="hidden" class="hidden-input" value="${rs.status}" /></td>
+                                        <td><span class="editable">${rs.doctorName}</span><input type="hidden" class="hidden-input" value="${rs.doctorName}" /></td>
+                                        <td><span class="editable">${rs.customerName}</span><input type="hidden" class="hidden-input" value="${rs.customerName}" /></td>
+                                        <td><span class="editable">${rs.day}</span><input type="hidden" class="hidden-input" value="${rs.day}" /></td>
+                                        <td>
+                                            <button onclick="makeEditable(this);">Update</button>
+                                            <button onclick="deleteBooking(${rs.bookingId});">Delete</button>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div id="feedbackContainer" style="display: none;">
+                        <table border="1">
+                            <thead>
+                                <tr>
+                                    <th>Booking Id</th>
+                                    <th>Rating</th>
+                                    <th>Comment</th>
+                                    <th>Customer Name</th>
+                                    <th>Doctor Name</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="mf" items="${listManageFeedback}">
+                                    <tr>
+                                        <td><span class="editable">${mf.bookingId}</span><input type="hidden" class="hidden-input" value="${mf.bookingId}" /></td>
+                                        <td><span class="editable">${mf.ratingValue}</span><input type="hidden" class="hidden-input" value="${mf.ratingValue}" /></td>
+                                        <td><span class="editable">${mf.comment}</span><input type="hidden" class="hidden-input" value="${mf.comment}" /></td>
+                                        <td><span class="editable">${mf.userFirstName} ${mf.userLastName}</span><input type="hidden" class="hidden-input" value="${mf.userFirstName} ${mf.userLastName}" /></td>
+                                        <td><span class="editable">${mf.doctorFirstName} ${mf.doctorLastName}</span><input type="hidden" class="hidden-input" value="${mf.doctorFirstName} ${mf.doctorLastName}" /></td>
+                                        <td>
+                                            <button type="submit"><a href="/feedbackupdate?get&id=${mf.ratingId}" style="text-decoration: none;">Detail</a></button>
+                                            <button type="submit">Delete</button>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </c:forEach>
+
+                </tbody>
+                </table>
             </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-        <script src="js/managerDashboard.js"></script>
-    </body>
+    <script src="js/managerDashboard.js"></script>
+</body>
 
 </html>

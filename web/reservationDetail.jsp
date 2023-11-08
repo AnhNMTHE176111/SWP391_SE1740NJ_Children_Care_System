@@ -154,6 +154,11 @@
                     <label for="treatmentPlan">Treatment Plan:</label>
                     <textarea id="treatmentPlan" name="treatmentPlan">${treatmentPlan}</textarea><br><br>
 
+                    <label for="treatmentPlan">Customer Feedback:</label>
+                    <textarea id="customerfeedback" name="customerfeedback">${cusFeedback.getComment()}</textarea><br><br>
+                    
+                    <button style="margin-top: 20px; border-radius: 5px;" class="btn-success" type="submit" name="medId" value="${med.getMedicalInfoId()}">Update Information</button>
+                    <a style=" border-radius: 5px;" class="btn btn-secondary" href="/reservation"">Back</a>
                     <div class="col-12 d-flex justify-content-center" id="rx-container">
                         <table class="table table-bordered col-8">
                             <caption>Medical Prescription</caption>

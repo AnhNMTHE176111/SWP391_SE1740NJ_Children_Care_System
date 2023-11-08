@@ -104,7 +104,6 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
     List<Specialty> specialtyList = null;
     List<Slot> slotList = null;
 
-<<<<<<< HEAD
     if (userId != null && !userId.isEmpty()) {
         DAOUser userDao = new DAOUser();
         currentUser = userDao.getUserById(userId);
@@ -114,18 +113,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
         doctorList = doctor.getListDoctorBySpecialty();
         specialtyList = specialty.getListSpecialty();
         slotList = slot.getListSlot();
-=======
-//Information from db
-        DAOSlot slot = new DAOSlot();
-        DAOSpecialty specialty = new DAOSpecialty();
-        DAODoctor doctor = new DAODoctor();
-        DAOSlotDoctor slotDoctor = new DAOSlotDoctor();
 
-        List<SlotDoctor> availeSlot = slotDoctor.displayBookedSlotList();
-        List<String> dateList = getDateList();
-        List<Doctor> doctorList = doctor.getListDoctorBySpecialty();
-        List<Specialty> specialtyList = specialty.getListSpecialty();
-        List<Slot> slotList = slot.getListSlot();
 
         configuration config = new configuration();
         HashMap<Integer, String> listDateOff = config.getDATE_OFF();
@@ -147,7 +135,6 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
         request.setAttribute("dateList", dateList);
 
         request.getRequestDispatcher("Booking.jsp").forward(request, response);
->>>>>>> 728f1ab178807fe610c17ff401c387d8948b92fc
     }
 
     request.setAttribute("currentUser", currentUser);

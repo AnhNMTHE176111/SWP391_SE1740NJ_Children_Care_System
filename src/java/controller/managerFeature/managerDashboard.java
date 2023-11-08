@@ -5,6 +5,7 @@
 package controller.managerFeature;
 
 import DAO.DAOBooking;
+import DAO.DAOFeedback;
 import com.google.gson.*;
 
 import java.io.IOException;
@@ -25,6 +26,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import model.Booking;
+import model.Feedback;
 
 /**
  *
@@ -45,7 +47,7 @@ public class managerDashboard extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -71,15 +73,22 @@ public class managerDashboard extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //  HttpSession session = request.getSession();
+//        if (String.valueOf(session.getAttribute("roleId")).equals("null")) {
+//            response.sendRedirect("403.jsp");
+//        } else {
+//            int roleId = Integer.parseInt(String.valueOf(session.getAttribute("roleId")));
+//            if (roleId == 3) {
+        DAOBooking booking = new DAOBooking();
+        DAOFeedback feedbackDao = new DAOFeedback();//AnhLT do
+        List<Booking> reservationList = booking.getBookingList();
+        List<Booking> reservationListForManage = booking.getBookingListForManage();
+        List<Feedback> listManageFeedback = feedbackDao.getListManageFeedback();//AnhLT do
+        request.setAttribute("listManageFeedback", listManageFeedback);//AnhLT do
         HttpSession session = request.getSession();
         if (String.valueOf(session.getAttribute("roleId")).equals("null") || Integer.parseInt(String.valueOf(session.getAttribute("roleId"))) != 3) {
             response.sendRedirect("403.jsp");
         }
-
-        DAOBooking booking = new DAOBooking();
-        List<Booking> reservationList = booking.getBookingList();
-        List<Booking> reservationListForManage = booking.getBookingListForManage();
-
         request.setAttribute("reservationListForManage", reservationListForManage);
         request.setAttribute("reservationList", reservationList);
         request.getRequestDispatcher("managerDashboard.jsp").forward(request, response);

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import model.Doctor;
+import model.Feedback;
 import model.MedicalInfo;
 import model.Post;
 import model.Service;
@@ -396,6 +397,27 @@ public class DAODoctor extends DBContext {
         } catch (Exception e) {
             System.out.println("<changeStatusBySlotIdandDocId>: " + e.getMessage());
         }
+    }
+
+    public Feedback getFeedbackBySlotDoctorId(int slotDoctorId) {
+        String sql = "select f.* from Feedback f\n"
+                + "join Booking b ON f.MedicalInfoID = b.MedicalInfoId\n"
+                + "join SlotDoctor sd ON b.slotDoctorId = sd.slotDoctorId\n"
+                + "where sd.slotDoctorId = ?";
+        Feedback feedback = new Feedback();
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, slotDoctorId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                feedback.setComment(rs.getString(4));
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL <getFeedbackBySlotDoctorId>: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("<getFeedbackBySlotDoctorId>: " + e.getMessage());
+        }
+        return feedback;
     }
 
 }
