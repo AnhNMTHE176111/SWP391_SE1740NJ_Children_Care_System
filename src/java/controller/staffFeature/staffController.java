@@ -5,6 +5,7 @@
 package controller.staffFeature;
 
 import DAO.DAODoctor;
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -88,10 +89,25 @@ public class staffController extends HttpServlet {
         String diagnosis = request.getParameter("diagnosis");
         String treatmentPlan = request.getParameter("treatmentPlan");
         String status = request.getParameter("status");
-                
-        d.updateMedicalInfoByMedId(medId,revisit,symtoms,diagnosis,treatmentPlan);
-        
-        response.sendRedirect("reservation");
+
+        String[] a = request.getParameterValues("medication");
+        String[] b = request.getParameterValues("strength");
+        String[] c = request.getParameterValues("frequency");
+        if (a != null) {
+            String str = "|";
+            for (int i = 0; i < a.length; i++) {
+                str += a[i] + "-" + b[i] + "-" + c[i] + "|";
+            }
+            treatmentPlan += str;
+        }
+
+        d.updateMedicalInfoByMedId(medId, revisit, symtoms, diagnosis, treatmentPlan);
+        request.setAttribute("updateSuccess", true);
+
+        int slotId = Integer.parseInt(request.getParameter("slotId"));
+        int doctorId = Integer.parseInt(request.getParameter("doctorId"));
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/reservation?doctorId=" + doctorId + "&slotId=" + slotId);
+        dispatcher.forward(request, response);
     }
 
     /**
