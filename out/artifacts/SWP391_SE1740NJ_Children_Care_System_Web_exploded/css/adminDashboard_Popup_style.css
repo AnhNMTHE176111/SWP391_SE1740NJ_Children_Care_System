@@ -1,0 +1,321 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.dashboard-container {
+    display: flex;
+    height: 100vh;
+}
+
+.side-navbar-container {
+    position: fixed;
+    box-sizing: border-box;
+    padding: 30px 20px;
+    height: 100%;
+    overflow-y: auto;
+    background-color: #12101d;
+    color: #fff;
+    
+    width: 20%;
+    max-width: 300px;
+    min-width: 200px;
+}
+
+.side-navbar-container h3 {
+    font-size: 25px;
+}
+
+.side-navbar-container ul {
+    list-style: none;
+    margin-top: 20px;
+}
+
+.side-navbar-container ul li {
+    margin-top: 10px;
+    padding: 15px 40px;
+    background-color: #342e55;
+    border-radius: 10px;
+    display: flex;
+    justify-content: left;
+    align-content: center;
+    gap: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.side-navbar-container ul li:hover {
+    background-color: #4633ad;
+}
+
+.side-navbar-container ul li:active {
+    background-color: #fff;
+    color: #12101d;    
+}
+
+.side-navbar-container ul li a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.user-list-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.user-list-container table {
+    width: 90%;
+    min-width: fit-content;
+    font-size: 18px;
+    box-shadow: 0px 0px 15px 0px #c7c7c7;
+    border-radius: 10px;
+    padding: 10px;
+    border: none;
+}
+
+.user-list-container table thead {
+    
+}
+
+.user-list-container table thead tr {
+    
+}
+
+.user-list-container table thead tr td {
+    padding-bottom: 10px;
+    font-weight: bolder;
+}
+.user-list-container table tbody {
+
+}
+
+.user-list-container table tbody tr {
+
+}
+
+.user-list-container table tbody tr td {
+    padding: 5px 10px;
+}
+
+.user-list-container table tbody tr:nth-child(2n+1) {
+    background-color: #e2e2e2;
+}
+.user-list-container table tbody tr td:last-child  {
+    box-sizing: border-box;
+    width: 200px;
+    margin: 0;
+}
+.user-list-container table tbody tr td:last-child button{
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: 0px;
+    cursor: pointer;
+    transition: 0.2s ease;
+
+}
+
+#editUser {
+    background-color: rgb(59, 151, 255);
+    color: #fff; 
+}
+#editUser:hover {
+    background-color: rgb(0, 43, 235);
+}
+#deleteUser {
+    background-color: red;
+    color: #fff;
+}
+#deleteUser:hover {
+    background-color: rgb(131, 42, 42);
+}
+.name p {
+    font-style: italic;
+}
+
+td {
+    border: none;
+}
+
+.top-option {
+    width: 78%;
+    display: flex;
+    margin-bottom: 20px;
+    justify-content: space-between;
+}
+
+#addNewUser {
+    font-size: 16px;
+    padding: 10px 20px;
+}
+
+.search-name-form input{
+    font-size: 16px;
+    padding: 10px 20px 10px 10px;
+}
+.search-name-form button {
+    font-size: 16px;
+    padding: 10px 20px;
+}
+
+/* ============================================= */
+.popup {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    height: 90vh;
+    position: fixed;
+    z-index: 999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+}
+
+.filter-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.filter-container form {
+    width: fit-content;
+    background-color: #fff;
+    max-width: 50%;
+    min-width: 800px;
+    max-height: fit-content;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    font-size: 16px;
+    padding-bottom: 20px;
+    border-radius: 5px;
+}
+
+.filter-container form table tbody tr td {
+    padding: 10px 20px;
+    font-size: 20px;
+    font-weight: bolder;
+}
+
+.filter-container form table tbody tr td input {
+    padding: 10px 115px 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid;
+}
+
+.filter-container form table tbody tr td input[type="date"] {
+    padding: 10px 10px;
+}
+
+.filter-container form table tbody tr:last-child td {
+    font-size: 20px;
+}
+
+.filter-container form table tbody tr:last-child td  select {
+    padding: 5px 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.filter-btn {
+    margin-top: 10px;
+    width: 80%;
+    display: flex;
+    justify-content: right;
+    gap: 15px;
+}
+
+.filter-btn button {
+    padding: 10px 40px;
+    border-radius: 10px;
+    font-size: 16px;
+    border: 1px solid #fff;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.add-user-btn-container {
+    margin-top: 10px;
+    width: 80%;
+    display: flex;
+    justify-content: space-around;
+    gap: 15px;
+}
+
+.add-user-btn-container div button {
+    padding: 10px 40px;
+    border-radius: 10px;
+    font-size: 16px;
+    border: 1px solid #fff;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+#add-user-btn {
+    color: white;
+    background-color: #342e55;
+}
+
+#add-user-btn:hover {
+    background-color: #4633ad;
+}
+
+#cancel-filter-btn ,#cancel-btn {
+    background-color: #fff;
+    border: 1px solid #acabab;
+}
+
+#cancel-filter-btn:hover, #cancel-btn:hover {
+    background-color: #acabab;
+}
+
+#filter-btn {
+    background-color: #17a2b8;
+    border: 1px solid #17a2b8;
+    color: #fff;
+    font-weight: bolder;
+    
+}
+
+#filter-btn:hover {
+    background-color: #34cce4;
+    color: #5f5d68;
+}
+
+.filter-title {
+    width: 90%;
+    margin: 10px;
+    display: flex;
+    justify-content: left;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #c7c7c7;
+}
+
+.user-container-table {
+    width: 80%;
+    margin: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #c7c7c7;
+}
+

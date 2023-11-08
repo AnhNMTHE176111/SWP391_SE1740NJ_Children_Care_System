@@ -117,11 +117,11 @@
                     <div class="patient-info">
                         <h2>Patient Name:</h2>
                         <p>${khachHang.getFirstName()} ${khachHang.getLastName()}</p>
-                        <h2>Contact Information:</h2>
-                        <p>Address: ${khachHang.getAddress()}</p>
-                        <p>Phone: ${khachHang.getPhone()}</p>
-                        <p>Date of Birth: ${khachHang.getDob()}</p>
-                    </div>
+                    <h2>Contact Information:</h2>
+                    <p>Address: ${khachHang.getAddress()}</p>
+                    <p>Phone: ${khachHang.getPhone()}</p>
+                    <p>Date of Birth: ${khachHang.getDob()}</p>
+                </div>
                 <div class="patient-image">
                     <h2>Avatar:</h2>
                     <img src="image/profile_user/${khachHang.getAvatar()}" alt="userImg" width="300" height="200">
@@ -149,21 +149,90 @@
                     <textarea id="symptoms" name="symtoms">${med.getSymptons()}</textarea><br><br>
 
                     <label for="diagnosis">Diagnosis:</label>
-                    <input type="text" id="diagnosis" name="diagnosis" value="${med.getDiagnosis()}"><br><br>
+                    <input type="text" id="diagnosis" name="diagnosis" value="${med.getDiagnosis()}" required><br><br>
 
                     <label for="treatmentPlan">Treatment Plan:</label>
-                    <textarea id="treatmentPlan" name="treatmentPlan">${med.getTreatmentPlan()}</textarea><br><br>
+                    <textarea id="treatmentPlan" name="treatmentPlan">${treatmentPlan}</textarea><br><br>
 
                     <label for="treatmentPlan">Customer Feedback:</label>
                     <textarea id="customerfeedback" name="customerfeedback">${cusFeedback.getComment()}</textarea><br><br>
                     
                     <button style="margin-top: 20px; border-radius: 5px;" class="btn-success" type="submit" name="medId" value="${med.getMedicalInfoId()}">Update Information</button>
                     <a style=" border-radius: 5px;" class="btn btn-secondary" href="/reservation"">Back</a>
+                    <div class="col-12 d-flex justify-content-center" id="rx-container">
+                        <table class="table table-bordered col-8">
+                            <caption>Medical Prescription</caption>
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Medication</th>
+                                    <th>Strength</th>
+                                    <th>Frequency</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="3">
+                                        <button type="button" class="btn btn-outline-success col-12 add-more">
+                                            Add More
+                                        </button>
+                                    </td>
+                                </tr>
+                                <c:forEach items="${medicalPrescription}" var="item">
+                                    <tr>
+                                        <td><input type="text" class="form-control" id="rx" name="medication" value="${item.getMedication()}"></td>
+                                        <td><input type="text" class="form-control" id="rx" name="strength" value="${item.getStrength()}"></td>
+                                        <td><input type="text" class="form-control" id="rx" name="frequency" value="${item.getFrequency()}"></td>
+                                        <td><button class="btn btn-outline-danger remove-row" type="button">X</button></td>
+                                    </tr>
+                                </c:forEach>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <input type="hidden" name="slotId" value="${slotId}">
+                    <input type="hidden" name="doctorId" value="${doctorId}">
+                    <c:if test="${updateSuccess}">
+                        <div class="d-flex justify-content-center col-12">
+                            <div class="alert-success col-10 d-flex justify-content-center py-2">Update Success</div>
+                        </div>
+                    </c:if>
+                    <div class="col-12 justify-content-start d-flex">
+                        <div class="col-12">
+                            <button style="margin-top: 20px; border-radius: 5px;" class="btn-success" type="submit" name="medId" value="${med.getMedicalInfoId()}">Update Information</button>
+                            <a style=" border-radius: 5px;" class="btn btn-secondary py-2 px-4" href="/reservation"">Back</a>
+                            <a class="btn btn-outline-warning mx-2" 
+                               download="${fileName}" href=${filePath} >
+                                Export Medical Prescription
+                            </a>
+                        </div>
+                    </div>
                 </form>
             </div>
 
 
         </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                // Xử lý khi nút "Add More" được nhấp
+                $("button.add-more").click(function () {
+                    var newRow = '<tr>' +
+                            '<td><input type="text" class="form-control" id="rx" name="medication" required></td>' +
+                            '<td><input type="text" class="form-control" id="rx" name="strength" required></td>' +
+                            '<td><input type="text" class="form-control" id="rx" name="frequency" required></td>' +
+                            '<td><button class="btn btn-outline-danger remove-row">X</button></td>' +
+                            '</tr>';
+                    $("tbody").append(newRow);
+                });
+
+                // Xử lý khi nút "X" được nhấp
+                $("tbody").on("click", "button.remove-row", function () {
+                    $(this).closest("tr").remove();
+                });
+            });
+        </script>
 
         <jsp:include page="footer.jsp"></jsp:include>
     </body>

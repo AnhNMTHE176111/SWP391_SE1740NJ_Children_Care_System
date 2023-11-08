@@ -155,6 +155,8 @@
     <servlet>
         <servlet-name>manageFeedback</servlet-name>
         <servlet-class>controller.managerFeature.manageFeedback</servlet-class>
+        <servlet-name>test</servlet-name>
+        <servlet-class>controller.adminFeature.test</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>login</servlet-name>
@@ -307,6 +309,8 @@
     <servlet-mapping>
         <servlet-name>manageFeedback</servlet-name>
         <url-pattern>/feedbackmanage</url-pattern>
+        <servlet-name>test</servlet-name>
+        <url-pattern>/test</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

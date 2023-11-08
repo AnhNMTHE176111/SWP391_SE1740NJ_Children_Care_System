@@ -130,7 +130,7 @@ public class login extends HttpServlet {
                 response.sendRedirect("staff");
             }
             if (user.getRoleId() == 3) {
-                response.sendRedirect("manage");
+                response.sendRedirect("manageDashboard");
             }
             if (user.getRoleId() == 4) {
                 response.sendRedirect("admin");
