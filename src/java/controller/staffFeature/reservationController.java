@@ -22,6 +22,7 @@ import java.util.Formatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.MedicalInfo;
+import model.MedicalPrescription;
 import model.Slot;
 import model.SlotDoctor;
 import model.User;
@@ -103,8 +104,7 @@ public class reservationController extends HttpServlet {
                     }
                     break;
                 }
-            }
-            else {
+            } else {
                 dateFilter = null;
             }
 
@@ -144,6 +144,28 @@ public class reservationController extends HttpServlet {
         Slot rightSlot = d.getSlotBySlotId(slotId, doctorId);
         MedicalInfo med = d.getMedInfo(slotDoctorId);
 
+        // get medical prescription
+        String treatment = med.getTreatmentPlan();
+        if (treatment != null) {
+            String[] array = treatment.split("\\|");
+            String treatmentPlan = array[0];
+            if (array.length > 1) {
+                ArrayList<MedicalPrescription> medicalPrescription = new ArrayList<>();
+                for (int i = 1; i < array.length; i++) {
+                    String line = array[i];
+                    MedicalPrescription mp = new MedicalPrescription();
+                    mp.setMedication(line.split("-")[0]);
+                    mp.setStrength(line.split("-")[1]);
+                    mp.setFrequency(line.split("-")[2]);
+                    medicalPrescription.add(mp);
+                }
+                request.setAttribute("medicalPrescription", medicalPrescription);
+            }
+            request.setAttribute("treatmentPlan", treatmentPlan);
+        }
+        request.setAttribute("slotId", slotId);
+        request.setAttribute("doctorId", doctorId);
+
         request.setAttribute("med", med);
         request.setAttribute("slotId", slotId);
         request.setAttribute("doctorId", doctorId);
@@ -162,17 +184,23 @@ public class reservationController extends HttpServlet {
     public static void main(String[] args) {
         // a before b -> a<b
         // a after b -> a>=b
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date a = new Date(); // 2023-11-01
-        Date b = null;
-        try {
-            b = formatter.parse("2023-11-01");
-        } catch (ParseException ex) {
-            Logger.getLogger(reservationController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        System.out.println("a: " + a);
-        System.out.println("b: " + b);
-        System.out.println("compare: " + b.after(a));
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//        Date a = new Date(); // 2023-11-01
+//        Date b = null;
+//        try {
+//            b = formatter.parse("2023-11-01");
+//        } catch (ParseException ex) {
+//            Logger.getLogger(reservationController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        System.out.println("a: " + a);
+//        System.out.println("b: " + b);
+//        System.out.println("compare: " + b.after(a));
+
+        String a = "1234";
+        String b = "1-2-3";
+        String[] k = a.split("\\|");
+        String[] h = b.split("-");
+        System.out.println(k.length);
     }
 
 }

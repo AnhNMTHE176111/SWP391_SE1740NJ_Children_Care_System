@@ -84,7 +84,7 @@
             <table id="sortableTable" class="col-8 table table-hover">
                 <thead class="thead-dark">
                     <tr>
-                        <th>Name of specialty</th>
+                        <th>Name of specialty </th>
                         <th onclick="sortTable(2)">Status</th>
                         <th onclick="sortTable(3)">Start time</th>
                         <th onclick="sortTable(4)">End time</th>
@@ -134,6 +134,15 @@
                     </form>
                     </tr>
                 </c:forEach>
+                <c:if test="${slotDoc.size() == 0}">
+                    <tr>
+                        <td colspan="8">
+                            <div class="col-12 alert-secondary text-center py-2">
+                                None Booking
+                            </div>
+                        </td>
+                    </tr>
+                </c:if>
                 </tbody>
             </table>
         </div>

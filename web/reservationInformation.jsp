@@ -143,6 +143,40 @@
 
                 </div>
             </form>
+            <div class="col-12 d-flex justify-content-center" id="rx-container">
+                <div class="col-5 mx-2">
+                    <label for="treatmentPlan"><h3>Treatment Plan:</h3></label>
+                    <textarea id="treatmentPlan" class="form-control" rows="3" name="treatmentPlan">${treatmentPlan}</textarea>
+                </div>
+                <table class="table table-bordered col-5">
+                    <caption>Medical Prescription</caption>
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Medication</th>
+                            <th>Strength</th>
+                            <th>Frequency</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${medicalPrescription}" var="item">
+                            <tr>
+                                <td><input type="text" class="form-control" id="rx" name="medication" value="${item.getMedication()}"></td>
+                                <td><input type="text" class="form-control" id="rx" name="strength" value="${item.getStrength()}"></td>
+                                <td><input type="text" class="form-control" id="rx" name="frequency" value="${item.getFrequency()}"></td>
+                            </tr>
+                        </c:forEach>
+                        <c:if test="${!medicalPrescription.size()}">
+                            <tr>
+                                <td colspan="3">
+                                    <div class="col-12 alert-secondary text-center py-2">
+                                        None Medication
+                                    </div>
+                                </td>
+                            </tr>
+                        </c:if>
+                    </tbody>
+                </table>
+            </div>               
             <div class="container-fluid pt-5">
                 <div class="container">
                     <div class="text-center pb-2">

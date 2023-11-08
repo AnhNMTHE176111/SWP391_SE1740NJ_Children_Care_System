@@ -2,23 +2,22 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.staffFeature;
+package controller.adminFeature;
 
-import DAO.DAODoctor;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 /**
  *
  * @author dmx
  */
-public class staffController extends HttpServlet {
+public class test extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,10 +36,10 @@ public class staffController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet staffDashboard</title>");
+            out.println("<title>Servlet test</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet staffDashboard at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet test at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,17 +57,7 @@ public class staffController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        if (String.valueOf(session.getAttribute("roleId")).equals("null")) {
-            response.sendRedirect("403.jsp");
-        } else {
-            int roleId = Integer.parseInt(String.valueOf(session.getAttribute("roleId")));
-            if (roleId == 2) {
-                response.sendRedirect("reservation");
-            } else {
-                response.sendRedirect("403.jsp");
-            }
-        }
+        response.sendRedirect("servlet2?username=" + "tuananh");
     }
 
     /**
@@ -82,32 +71,7 @@ public class staffController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAODoctor d = new DAODoctor();
-        int medId = Integer.parseInt(request.getParameter("medId"));
-        String revisit = request.getParameter("dateOfRevisit");
-        String symtoms = request.getParameter("symtoms");
-        String diagnosis = request.getParameter("diagnosis");
-        String treatmentPlan = request.getParameter("treatmentPlan");
-        String status = request.getParameter("status");
-
-        String[] a = request.getParameterValues("medication");
-        String[] b = request.getParameterValues("strength");
-        String[] c = request.getParameterValues("frequency");
-        if (a != null) {
-            String str = "|";
-            for (int i = 0; i < a.length; i++) {
-                str += a[i] + "-" + b[i] + "-" + c[i] + "|";
-            }
-            treatmentPlan += str;
-        }
-
-        d.updateMedicalInfoByMedId(medId, revisit, symtoms, diagnosis, treatmentPlan);
-        request.setAttribute("updateSuccess", true);
-
-        int slotId = Integer.parseInt(request.getParameter("slotId"));
-        int doctorId = Integer.parseInt(request.getParameter("doctorId"));
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/reservation?doctorId=" + doctorId + "&slotId=" + slotId);
-        dispatcher.forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -120,4 +84,22 @@ public class staffController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+}
+
+// Servlet 2
+@WebServlet("/servlet2")
+class Servlet2 extends HttpServlet {
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.sendRedirect("home");
+        // Thực hiện xử lý ở servlet 2
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        response.sendRedirect("home");
+        // Thực hiện xử lý ở servlet 2
+    }
 }

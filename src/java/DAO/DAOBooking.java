@@ -40,6 +40,28 @@ public class DAOBooking extends DBContext {
     public void connect() {
         cnn = super.connection;
     }
+    
+    public Booking getBookingById(int bid) {
+        System.out.println("bid: " + bid);
+        try {
+            String strSQL = "select * from Booking where BookingId = " + bid;
+            pstm = cnn.prepareStatement(strSQL);
+            rs = pstm.executeQuery();
+            Booking b = new Booking();
+            while (rs.next()) {
+                b.setBookingId(Integer.parseInt(rs.getString(1)));
+                b.setBookingStatus(Integer.parseInt(rs.getString(2)));
+                b.setSlotDoctorId(Integer.parseInt(rs.getString(6)));
+                // some code to finish
+            }
+            return b;
+        } catch (SQLException e) {
+            System.out.println("SQL getBookingById: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("getBookingById: " + e.getMessage());
+        }
+        return null;
+    }
 
     public int addBooking(int status, int customerId, int slotDoctorId) {
         int generatedId = -1;
