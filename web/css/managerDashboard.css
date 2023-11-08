@@ -357,6 +357,7 @@ td {
     align-items: center;
     align-content: center;
     padding: 10px 20px;
+
 }
 
 .number-total-item.reservation{
@@ -448,3 +449,135 @@ th {
 
     padding-left: 50px;
 }
+
+
+#updateForm {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+}
+
+#updateForm label {
+    margin-bottom: 10px;
+}
+
+#updateForm input,
+#updateForm select {
+    margin-bottom: 15px;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#updateForm button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#updateForm button:hover {
+    background-color: #45a049;
+}
+
+
+
+
+.selected {
+  background-color: #fff; /* Màu nền của ô đã chọn */
+}
+.user-container-table {
+    width: 80%;
+    margin: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #c7c7c7;
+}
+
+/* Đặt nền mờ cho khi modal hiển thị */
+.dimmed-background {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10; /* Đảm bảo rằng lớp nền nằm trên các nội dung khác */
+}
+
+/* Style chung cho modal */
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 40px; /* Tăng đệm để tạo ra không gian nội dung bên trong */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+    width: 90%; /* Tăng chiều rộng của modal */
+    max-width: 800px; /* Đặt giới hạn chiều rộng tối đa để tránh quá rộng trên màn hình lớn */
+}
+
+.modal-content {
+    width: 100%; /* Điều chỉnh chiều rộng của nội dung modal */
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Đặt lại style cho input và select để phù hợp với grid mới */
+input[type="text"],
+input[type="date"],
+input[type="tel"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+select {
+  width: 100%; /* Chiều rộng tối đa cho mỗi input */
+  padding: 8px; /* Đệm bên trong */
+  margin-top: 5px; /* Khoảng cách phía trên input */
+  margin-bottom: 15px; /* Khoảng cách phía dưới input */
+}
+
+label {
+  margin: 0;
+  font-weight: bold; /* Làm đậm chữ cho label */
+}
+
+.overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+

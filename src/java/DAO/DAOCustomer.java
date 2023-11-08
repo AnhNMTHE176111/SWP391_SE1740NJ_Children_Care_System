@@ -63,6 +63,29 @@ public class DAOCustomer extends DBContext {
             return null;
         }
     }
+      public int getCusIdByUserIdReturn(int userId) {
+    int customerId = 0;
+    try {
+        String strSQL = "SELECT Id FROM Customers WHERE UserId = ?";
+        pstm = cnn.prepareStatement(strSQL);
+        pstm.setInt(1, userId);
+        rs = pstm.executeQuery();
+
+        if (rs.next()) {
+            customerId = rs.getInt("Id");
+        }
+    } catch (SQLException e) {
+        System.out.println("SQL getCusIdByUserId: " + e.getMessage());
+        // Xử lý ngoại lệ nếu cần thiết
+    } catch (Exception e) {
+        System.out.println("getCusIdByUserId: " + e.getMessage());
+        // Xử lý ngoại lệ nếu cần thiết
+    } finally {
+        // Đóng các tài nguyên (PreparedStatement, ResultSet) ở đây nếu cần thiết
+    }
+    return customerId;
+}
+
 
     public int addCustomer(int userId) {
         int generatedId = -1;

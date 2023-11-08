@@ -191,61 +191,60 @@ let chart = new Chart(ctx2, {
 document.getElementById('reservationManager').addEventListener('click', function () {
     const analyticContainer = document.querySelector('.analytic-container');
     const reservationManagerContainer = document.querySelector('.reservation-manager-container');
-
+    const doctorManageContainer = document.querySelector('.doctor-manager-container');
     if (analyticContainer) {
         analyticContainer.style.display = "none";
+
+    }
+    if (doctorManageContainer) {
+        doctorManageContainer.style.display = "none";
     }
     if (reservationManagerContainer) {
         reservationManagerContainer.style.display = "block";
     }
 });
 
-
-document.getElementById('feedbackManager').addEventListener('click', function() {
-    const feedbackContainer = document.getElementById('feedbackContainer');
-    const chartContainer = document.getElementById('container');
-
-    feedbackContainer.style.display = "block";
-    chartContainer.style.display = "none";
-});
-
-document.getElementById('analyticsMenu').addEventListener('click', function() {
-    const reservationsContainer = document.getElementById('reservationsContainer');
-    const chartContainer = document.getElementById('container');
-
 document.getElementById('analyticsMenu').addEventListener('click', function () {
     const analyticContainer = document.querySelector('.analytic-container');
     const reservationManagerContainer = document.querySelector('.reservation-manager-container');
+    const doctorManageContainer = document.querySelector('.doctor-manager-container');
 
-
-    if (analyticContainer) {
-        analyticContainer.style.display = "block";
-    }
     if (reservationManagerContainer) {
         reservationManagerContainer.style.display = "none";
     }
+    if (doctorManageContainer) {
+        doctorManageContainer.style.display = "none";
+    }
+    if (analyticContainer) {
+        analyticContainer.style.display = "block";
+
+
+
+    }
+
+});
+
+document.getElementById('doctorManager').addEventListener('click', function () {
+    const analyticContainer = document.querySelector('.analytic-container');
+    const reservationManagerContainer = document.querySelector('.reservation-manager-container');
+    const doctorManageContainer = document.querySelector('.doctor-manager-container');
+
+    if (reservationManagerContainer) {
+        reservationManagerContainer.style.display = "none";
+    }
+
+    if (analyticContainer) {
+        analyticContainer.style.display = "none";
+
+    }
+    if (doctorManageContainer) {
+        doctorManageContainer.style.display = "block";
+    }
+
+
 });
 
 
-
-function makeEditable(btn) {
-    var row = btn.parentNode.parentNode;
-    row.style.backgroundColor = "#FFD700";
-    row.classList.add("edited");
-
-    var editables = row.querySelectorAll('.editable');
-    var hiddenInputs = row.querySelectorAll('.hidden-input');
-
-    editables.forEach(function (editable, index) {
-        editable.onclick = function () {
-            var newValue = prompt("Edit value:", hiddenInputs[index].value);
-            if (newValue !== null) {
-                hiddenInputs[index].value = newValue;
-                editable.textContent = newValue;
-            }
-        }
-    });
-}
 
 //function makeEditable(btn) {
 //    var row = btn.parentNode.parentNode;
@@ -273,26 +272,231 @@ function makeEditable(btn) {
 //    });
 //}
 
-document.getElementById("submitAllChanges").addEventListener("click", function () {
-    var editedRows = document.querySelectorAll(".edited");
-    var dataToSend = [];
 
-    editedRows.forEach(function (row) {
-        var data = {
-            bookingId: row.querySelector('[name="bookingId"]').value,
-            status: row.querySelector('[name="status"]').value,
-            startTime: row.querySelector('[name="startTime"]').value,
-            slotStatus: row.querySelector('[name="slotStatus"]').value,
-            doctorName: row.querySelector('[name="doctorName"]').value,
-            customerName: row.querySelector('[name="customerName"]').value,
-            day: row.querySelector('[name="day"]').value,
+//function makeEditable(btn) {
+//    var row = btn.closest('tr');
+//    row.style.backgroundColor = "#FFD700";
+//    row.classList.add("edited");
+//
+//    var editables = row.querySelectorAll('.editable');
+//    var hiddenInputs = row.querySelectorAll('.hidden-input');
+//
+//    editables.forEach(function (editable, index) {
+//        editable.onclick = function () {
+//            var newValue = prompt("Edit value:", hiddenInputs[index].value);
+//            if (newValue !== null) {
+//                hiddenInputs[index].value = newValue;
+//                editable.textContent = newValue;
+//            }
+//        }
+//    });
+//}
+
+const bookedSlotsElement = document.getElementById('bookedSlotsData');
+const bookedSlotsData = JSON.parse(bookedSlotsElement.getAttribute('data-booked-slots'));
+
+const slotIdList = document.getElementById('slotList');
+const slotList = JSON.parse(slotIdList.getAttribute('data-slotList'));
+
+
+console.log(bookedSlotsData)
+function getSlotIdFromStartTime(startTimeValue) {
+    for (let slot of slotList) {
+        if (slot.StartTime === startTimeValue) {
+            return slot.SlotId;
+        }
+    }
+    console.log("Không tìm thấy ID tương ứng với startTime:", startTimeValue);
+    return null;
+}
+
+function isSlotBooked(doctorId, slotId, day) {
+    return bookedSlotsData.some((slot, index) => {
+        const slotDoctorId = String(slot.DoctorId).trim();
+        const slotSlotId = String(slot.SlotId).trim();
+        const slotDay = new Date(slot.Day.trim()).toDateString();
+
+        const inputDoctorId = String(doctorId).trim();
+        const inputSlotId = String(slotId).trim();
+        const inputDay = new Date(day.trim()).toDateString();
+
+        if (slotDoctorId === inputDoctorId && slotSlotId === inputSlotId && slotDay === inputDay) {
+            console.log(`Exact match found at index: ${index}`);
+            console.log(`Slot details - DoctorId: ${slotDoctorId}, SlotId: ${slotSlotId}, Day: ${slotDay}`);
+            console.log(`Input details - DoctorId: ${inputDoctorId}, SlotId: ${inputSlotId}, Day: ${inputDay}`);
+            return true;
+        }
+        return false;
+    });
+}
+
+
+
+
+
+
+
+//function isSlotBooked(doctorId, slotId, day) {
+//    return bookedSlotsData.some(slot => {
+//        // Ghi log ra một cách rõ ràng hơn
+//        console.log(`Checking for DoctorId: ${slot.DoctorId}, SlotId: ${slot.SlotId}, Day: ${slot.Day}`);
+//       if ${slot.DoctorId} === doctorId &&
+//                ${slot.SlotId} === slotId &&
+//               ${slot.Day} === day;
+//       return true
+//    });
+//}
+
+//function makeEditable(btn) {
+//    const row = btn.closest('tr');
+//    row.style.backgroundColor = "#FFD700";
+//    row.classList.add("edited");
+//
+//    const editables = row.querySelectorAll('.editable');
+//    const hiddenInputs = row.querySelectorAll('.hidden-input');
+//
+//    editables.forEach(function (editable, index) {
+//        editable.onclick = function () {
+//            let newValue = prompt("Edit value:", hiddenInputs[index].value);
+//            if (newValue !== null) {
+//                if (editable.getAttribute('name') === 'startTime') {
+//                    // Ensure the time is in hh:00 format and between 08:00 and 16:00
+//                    const timeRegex = /^([0-1][0-9]|2[0-3]):00$/;
+//                    const hour = newValue.substring(0, 2);
+//                    if (timeRegex.test(newValue) && hour >= '08' && hour <= '16') {
+//                        const doctorId = row.querySelector('input[name="doctorId"]').value;
+//                        const day = row.querySelector('input[name="day"]').value;
+//                        const correspondingSlotId = getSlotIdFromStartTime(newValue);
+//
+//                        if (isSlotBooked(doctorId, correspondingSlotId, day)) {
+//                            alert('This slot has already been booked by another doctor! Please select another one.');
+//                        } else {
+//                            hiddenInputs[index].value = newValue;
+//                            editable.textContent = newValue;
+//                            row.querySelector('input[name="slotid"]').value = correspondingSlotId;
+//                        }
+//                    } else {
+//                        alert("Time must be in hh:00 format and between 08:00 and 16:00.");
+//                    }
+//                } else if (editable.getAttribute('name') === 'day') {
+//                    // Ensure the date is in dd/mm/yyyy format
+//                   const dateRegex = /^([0-9]{2})-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/;
+//
+//                    if (dateRegex.test(newValue)) {
+//                        hiddenInputs[index].value = newValue;
+//                        editable.textContent = newValue;
+//                    } else {
+//                        alert("Date must be in dd/mm/yyyy format.");
+//                    }
+//                } else {
+//                    hiddenInputs[index].value = newValue;
+//                    editable.textContent = newValue;
+//                }
+//            }
+//        }
+//    });
+    
+    function makeEditable(btn) {
+    const row = btn.closest('tr');
+    row.style.backgroundColor = "#FFD700";
+    row.classList.add("edited");
+
+    const editables = row.querySelectorAll('.editable');
+    const hiddenInputs = row.querySelectorAll('.hidden-input');
+
+    editables.forEach(function (editable, index) {
+        // Check if the editable onclick event has already been attached
+        if (editable.getAttribute('data-editable-event-attached') === 'true') {
+            return; // Skip this iteration since the event is already attached
+        }
+
+        const oldValue = hiddenInputs[index].value; // Store the old value
+
+        editable.onclick = function () {
+            let newValue = prompt("Edit value:", oldValue); // Use oldValue here
+            if (newValue !== null) {
+                if (editable.getAttribute('name') === 'startTime') {
+                    const timeRegex = /^([0-1][0-9]|2[0-3]):00$/;
+                    const hour = newValue.substring(0, 2);
+                    if (timeRegex.test(newValue) && hour >= '08' && hour <= '16') {
+                            const doctorId = row.querySelector('input[name="doctorId"]').value;
+                        const day = row.querySelector('input[name="day"]').value;
+                        const correspondingSlotId = getSlotIdFromStartTime(newValue);
+                    } else {
+                        alert("Time must be in hh:00 format and between 08:00 and 16:00.");
+                        revertInput(hiddenInputs[index], editable, oldValue); // Revert if invalid
+                    }
+                } else if (editable.getAttribute('name') === 'day') {
+                    const dateRegex = /^([0-9]{2})-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/;
+                    if (dateRegex.test(newValue)) {
+                          hiddenInputs[index].value = newValue;
+                        editable.textContent = newValue;
+                    } else {
+                        alert("Date must be in yy-mm-dd format.");
+                        revertInput(hiddenInputs[index], editable, oldValue); // Revert if invalid
+                    }
+                } else {
+                       hiddenInputs[index].value = newValue;
+                    editable.textContent = newValue;
+                }
+            } else {
+             
+                revertInput(hiddenInputs[index], editable, oldValue);
+            }
+        }
+
+
+        editable.setAttribute('data-editable-event-attached', 'true');
+    });
+}
+
+function revertInput(hiddenInput, editable, oldValue) {
+    // Function to revert the input to its original value
+    hiddenInput.value = oldValue;
+    editable.textContent = oldValue;
+}
+
+
+
+document.getElementById("submitAllChanges").addEventListener("click", function () {
+    const tableRows = document.querySelectorAll(".edited");
+    const dataToSend = [];
+
+    let hasInvalidData = false;
+
+    tableRows.forEach(function (row) {
+        const doctorId = row.querySelector('input[name="doctorId"]').value;
+        const day = row.querySelector('input[name="day"]').value;
+        const startTimeValue = row.querySelector('input[name="startTime"]').value;
+
+        const correspondingSlotId = getSlotIdFromStartTime(startTimeValue);
+        console.log(doctorId)
+        console.log(correspondingSlotId)
+        console.log(day)
+
+        if (isSlotBooked(doctorId, correspondingSlotId, day)) {
+            alert('This slot has already been booked by another doctor for the entry with startTime: ' + startTimeValue + '. Please select another one.');
+            hasInvalidData = true;
+            return;
+        }
+
+        const data = {
+               dataType: 'bookingUpdate',
+            bookingId: row.querySelector('input[name="bookingId"]').value,
+            status: row.querySelector('input[name="status"]').value,
+            slotId: correspondingSlotId,
+            slotStatus: row.querySelector('input[name="slotStatus"]').value,
+            doctorName: row.querySelector('input[name="doctorName"]').value,
+            customerName: row.querySelector('input[name="customerName"]').value,
+            day: day,
         };
         dataToSend.push(data);
     });
 
-    saveAllChangesToDatabase(dataToSend);
+    if (!hasInvalidData) {
+        saveAllChangesToDatabase(dataToSend);
+    }
 });
-
 
 function saveAllChangesToDatabase(data) {
     fetch('/manageDashboard', {
@@ -304,13 +508,11 @@ function saveAllChangesToDatabase(data) {
     })
             .then(response => response.json())
             .then(result => {
-                console.log(result)
                 if (result.success) {
                     alert('Update successful');
-                    var editedRows = document.querySelectorAll(".edited");
-                    editedRows.forEach(function (row) {
+                    document.querySelectorAll(".edited").forEach(row => {
                         row.classList.remove("edited");
-                        console.log("hihi");
+
                     });
                 } else {
                     alert('Update failed: ' + result.message);
@@ -321,6 +523,219 @@ function saveAllChangesToDatabase(data) {
                 alert('Update failed');
             });
 }
+
+function searchByUserName() {
+    let input = document.getElementById('searchInputUser');
+    let filter = input.value.toUpperCase();
+    let table = document.querySelector('.user-list-container table');
+    let tr = table.getElementsByTagName('tr');
+
+    for (let i = 1; i < tr.length; i++) {
+        let td = tr[i].getElementsByTagName('td')[6]; // 5 là cột "Customer Name"
+        if (td) {
+            let txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+}
+
+function searchByDoctorName() {
+    let input = document.getElementById('searchInputDoctor');
+    let filter = input.value.toUpperCase();
+    let table = document.querySelector('.user-list-container table');
+    let tr = table.getElementsByTagName('tr');
+
+    for (let i = 1; i < tr.length; i++) {
+        let td = tr[i].getElementsByTagName('td')[5]; // 5 là cột "Customer Name"
+        if (td) {
+            let txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+}
+
+
+selectedDoctorId = null;
+
+function changeSlot(doctorId) {
+    console.log("123");
+    selectedDoctorId = doctorId;
+    var updateForm = document.getElementById("updateForm");
+    updateForm.style.display = "block";
+    console.log("456");
+}
+
+//let slotSelected = false;
+//let selectedSlot = null;
+//let selectedDateSlot = null;
+//
+//const slotList2 = document.querySelectorAll(".grid-date[name='slot']");
+//const dateSelect = document.querySelector(".date-hidden");
+//
+//slotList2.forEach(function (slot) {
+//    slot.addEventListener("click", function () {
+//        if (slotSelected) {
+//            slot.classList.remove("selected");
+//            slotSelected = false;
+//
+//            if (selectedDateSlot) {
+//                selectedDateSlot.classList.remove("selected");
+//            }
+//            daysList.forEach(date => date.classList.remove('no-click'));
+//
+//            selectedSlot = null;
+//            selectedDateSlot = null;
+//            selectedSlotValue = null;
+//
+//            return;
+//        }
+//
+//        slotList.forEach(function (otherSlot) {
+//            otherSlot.classList.remove("selected");
+//        });
+//
+//        slot.classList.add("selected");
+//        selectedSlot = slot;
+//        const selectedDate = slot.getAttribute("data-date");
+//        selectedDateSlot = document.querySelector(`.date-slot[name='date'][data-date='${selectedDate}']`);
+//
+//        daysList.forEach(function (date) {
+//            date.classList.remove("selected");
+//        });
+//
+//        if (selectedDateSlot) {
+//            selectedDateSlot.classList.add("selected");
+//        }
+//
+//        slotSelected = true;
+//        daysList.forEach(date => date.classList.add('no-click'));
+//    });
+//});
+
+function onSlotSelect(button) {
+    const slotId = button.getAttribute("data-slot-id");
+    const startTime = button.textContent;
+    const updateForm = button.closest('#updateForm'); // Get the nearest parent form
+    const selectedDate = updateForm.querySelector("#updateDate").value; // Use querySelector to find the date input within the form
+
+    const slotIndex = selectedSlots.findIndex(slot => slot.slotId === slotId);
+    if (slotIndex !== -1) {
+        button.classList.remove("selected");
+        selectedSlots.splice(slotIndex, 1); // Remove the slot from the array if it's already selected
+    } else {
+        button.classList.add("selected");
+        selectedSlots.push({ slotId, startTime, selectedDate }); // Push new slot object to the array
+    }
+}
+
+let selectedSlots = [];
+
+function updateDoctorSlot() {
+    const updateForm = document.getElementById("updateForm");
+    updateForm.style.display = "none"; // Hide the form
+
+    if (selectedSlots.length > 0) {
+        const dataToSend = selectedSlots.map(slot => ({ // Map over selectedSlots to create the data structure
+            doctorId: selectedDoctorId,
+            slotId: slot.slotId,
+            slotStatus: 1,
+            selectedDate: slot.selectedDate
+        }));
+
+        console.log("Data to send:", dataToSend);
+        saveAllChangesToDatabase(dataToSend); // You need to define this function to handle the data sending
+    } else {
+        console.log("No slots selected.");
+    }
+}
+
+
+document.getElementById('addDoctor').addEventListener('click', function () {
+    var overlay = document.createElement('div');
+   // overlay.className = 'overlay';
+   // document.body.appendChild(overlay);
+    document.getElementById('newDoctorModal').style.display = 'block';
+});
+
+document.getElementById('closeModal').addEventListener('click', function () {
+    document.getElementById('newDoctorModal').style.display = 'none';
+//    var overlay = document.querySelector('.overlay');
+//    if (overlay) {
+//        document.body.removeChild(overlay);
+//    }
+});
+
+
+
+document.getElementById('addDoctorForm').onsubmit = function (event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    const form = event.target;
+    const newDoctorData = {
+        dataType: 'newDoctor',
+        name: form.doctorName.value.trim(),
+        gender: form.doctorGender.value,
+        dateOfBirth: form.doctorDob.value,
+        specializationId: form.doctorSpecialization.value, // Assumes this is the correct SpecialtyId
+        serviceId: form.doctorService.value, // Assumes this is the correct ServiceId
+        phoneNumber: form.doctorPhone.value.trim(),
+        email: form.doctorEmail.value.trim(),
+        password: form.doctorPassword.value, // Make sure to hash or encrypt as needed
+        position: form.doctorPosition.value.trim(),
+        address: form.doctorAddress.value.trim(),
+        department: form.doctorDepartment.value, // Assumes this value is an ID and not just text
+        yearsOfExperience: parseInt(form.doctorExperience.value, 10) // Parse as integer
+    };
+
+    // Ensure that both a specialization and service have been selected
+    if (!newDoctorData.specializationId || !newDoctorData.serviceId) {
+        alert('Please select both a specialization and a service.');
+        return;
+    }
+
+    saveAllChangesToDatabase([newDoctorData]);
+};
+
+function updateServicesDropdown(specialtyId) {
+    const serviceListElement = document.getElementById('serviceList');
+    const serviceListJSON = serviceListElement.getAttribute('data-serviceList');
+    const services = JSON.parse(serviceListJSON);
+    const serviceSelect = document.getElementById('doctorService');
+    console.log(services);
+    serviceSelect.length = 0;
+
+    services.forEach(function(service) {
+        if(service.SpecialtyId === specialtyId) {
+            const option = document.createElement('option');
+            option.value = service.ServiceId;
+            option.textContent = service.ServiceName;
+            serviceSelect.appendChild(option);
+        }
+    });
+
+    var event = new Event('change');
+    serviceSelect.dispatchEvent(event);
+}
+
+document.getElementById('doctorSpecialization').addEventListener('change', function() {
+    console.log("let select service")
+    updateServicesDropdown(this.value);
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    var specialtySelect = document.getElementById('doctorSpecialization');
+    if (specialtySelect.selectedIndex !== -1) { // Check if there are any options
+        updateServicesDropdown(specialtySelect.value);
+    }
+});
 
 
 

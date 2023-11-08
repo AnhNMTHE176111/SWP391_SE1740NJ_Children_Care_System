@@ -1,9 +1,18 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
 <%@page import= "DAO.DAOBooking" %>
 <%@page import= "java.util.ArrayList" %>
 <%@page import= "model.Booking" %>
+<%@page import= "model.Slot" %>
+<%@page import= "model.Doctor" %>
+<%@page import= "model.Specialty" %>
+<%@page import= "model.Service" %>
+<%@page import= "model.SlotDoctor" %>
+<%@page import= "DAO.DAOSlotDoctor" %>
+<%@page import= "DAO.DAOSlot" %>
+<%@page import= "DAO.DAODoctor" %>
+<%@page import= "DAO.DAOSpecialty" %>
+<%@page import= "DAO.DAOService" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -21,10 +30,46 @@
     </head>
 
     <body>
+
+
+        <div id="serviceList" style="display: none;"
+             data-serviceList='[
+             <c:forEach var="rs" items="${serviceList}" varStatus="loop">
+                 {"SpecialtyId": "${rs.getDoctorId()}", "ServiceId": "${rs.getServiceId()}", "ServiceName": "${rs.getServiceName()}"}<c:if test="${not loop.last}">,</c:if>
+             </c:forEach>
+             ]'>
+        </div>
+
+
+        <div id="specialtyList" style="display: none;"
+             data-specialtyList='[
+             <c:forEach var="rs" items="${specialtyList}" varStatus="loop">
+                 {"SpecialtyId": "${rs.getSpecialtyId()}", "SpecialtyName": "${rs.getSpecialtyName()}"}<c:if test="${not loop.last}">,</c:if>
+             </c:forEach>
+             ]'>
+        </div>
+
+        <div id="slotList" style="display: none;"
+             data-slotList='[
+             <c:forEach var="rs" items="${slotList}" varStatus="loop">
+                 {"SlotId": "${rs.slotId}", "StartTime": "${rs.startTime}"}<c:if test="${not loop.last}">,</c:if>
+             </c:forEach>
+             ]'>
+        </div>
+
         <div id="bookingList" style="display: none;"
              data-bookingList='[
              <c:forEach var="rs" items="${reservationList}" varStatus="loop">
                  {"BookingId": ${rs.getBookingId()}, "BookingStatus": ${rs.getStatus()}, "Day": "${rs.getDay()}"}
+                 <c:if test="${not loop.last}">,</c:if>
+             </c:forEach>
+             ]'>
+        </div>
+
+        <div id="bookedSlotsData" style="display: none;"
+             data-booked-slots='[
+             <c:forEach var="slot" items="${availeSlot}" varStatus="loop">
+                 {"DoctorId": ${slot.getDoctorId()}, "SlotId": ${slot.getSlotId()}, "Day": "${slot.getDay()}"}
                  <c:if test="${not loop.last}">,</c:if>
              </c:forEach>
              ]'>
@@ -41,18 +86,20 @@
                     <li id="reservationManager">
                         <i class="fa-solid fa-users"></i>Reservation Manager
                     </li>
-                    <li id="analyticsMenu"><i class="fa-solid fa-chart-simple"></i>Analytics</li>
-                    <li id="reservationManager"><i class="fa-solid fa-users"></i>Reservation Manager</li>
-                    <li id="feedbackManager"><i class="fa-solid fa-comments"></i>Feedback Manager</li>
+
+                    <li id="doctorManager"><i class="fa-solid fa-gear"></i>Doctors Manage</li>
+
+              <li id="feedbackManager"><i class="fa-solid fa-comments"></i>Feedback Manager</li>
                     <li id="manageCustomer"><i class="far fa-angry"></i><a href="manageCustomer" style="text-decoration: none;color: white;">Customer Manager</a></li>
                     <li id="manageService"><i class="far fa-server"></i><a href="manageService" style="text-decoration: none;color: white;" >Service Manager</a></li>
-                    <li><i class="fa-solid fa-gear"></i>Setting</li>
                     <li>
                         <a href="/managePost">
                             <i class="fa-solid fa-gear"></i> Manage Post
                         </a>
                     </li>
 
+                    <li id="manageCustomer"><i class="far fa-angry"></i><a href="manageCustomer" style="text-decoration: none;color: white;">Customer Manager</a></li>
+                    <li id="manageService"><i class="far fa-server"></i><a href="manageService" style="text-decoration: none;color: white;" >Service Manager</a></li>
                 </ul>
             </div>
 
@@ -101,7 +148,7 @@
                     <div class="user-chart-container">
                         <div class="chart-item" >
                             <div class="chart-item-detail">
-                                Number of User Created
+                                Number of Booking Created
                                 <select id="week-dropdown"></select>
 
                             </div>
@@ -111,7 +158,7 @@
                         </div>
                         <div class="chart-item">
                             <div class="chart-item-detail">
-                                Users Overview
+                                Booking Overview
                             </div>
                             <div style="width: 100%; height: 90%;">
                                 <canvas id="user-pie-chart"></canvas>
@@ -125,12 +172,16 @@
             </div>
 
 
+
+
             <div class="reservation-manager-container" style="width: 100%; margin-left: 15%; display: none;">
                 <div class="user-list-container">
+                    <h1 class="user-container-table"> Reservation Manage</h1>
                     <div class="top-option">
                         <form action="admin-manage-user" class="search-name-form" method="post">
-                            <input type="text" name="username" placeholder="Enter name of User...">
-                            <button type="submit"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+
+                            <input type="text" id="searchInputUser" placeholder="Enter name of User..." onkeyup="searchByUserName()">
+                            <input type="text" id="searchInputDoctor" placeholder="Enter name of Doctor..." onkeyup="searchByDoctorName()">
                             <button id="btn-show-filter"><i class="fa-solid fa-filter"></i> Filter</button>
                         </form>
                         <button id="submitAllChanges"><i class="fa-solid fa-user-plus"></i> Submit all Change</button>
@@ -156,14 +207,20 @@
                                         <span class="editable">${rs.bookingId}</span>
                                         <input type="hidden" name="bookingId" class="hidden-input" value="${rs.bookingId}" />
                                     </td>
+                                    <td style="display: none;">
+                                        <span class="editable">${rs.doctorId}</span>
+                                        <input type="hidden" name="doctorId" class="hidden-input" value="${rs.doctorId}" />
+                                    </td>
+
                                     <td>
-                                        <span class="editable">${rs.status}</span>
-                                        <input type="hidden" name="status" class="hidden-input" value="${rs.status}" />
+                                        <span class="editable">${rs.bookingStatus}</span>
+                                        <input type="hidden" name="status" class="hidden-input" value="${rs.bookingStatus}" />
                                     </td>
                                     <td>
                                         <span class="editable">${rs.getStartTime()}</span>
-                                        <input type="hidden" name="startTime" class="hidden-input" value="${rs.getStartTime()}" />
+                                        <input type="hidden" name="startTime" class="hidden-input" value="${rs.getStartTime()}" onchange="dropdowId(this)" />
                                     </td>
+
                                     <td>
                                         <span class="editable">${rs.status}</span>
                                         <input type="hidden" name="slotStatus" class="hidden-input" value="${rs.status}" />
@@ -185,26 +242,63 @@
                                         <button onclick="deleteBooking(${rs.bookingId});"><i class="fa-solid fa-user-pen"></i>Delete</button>
                                     </td>
                                 </tr>
+                            </c:forEach>
 
-                                </thead>
-                            <tbody>
-                                <c:forEach var="rs" items="${reservationListForManage}">
-                                    <tr>
-                                        <td><span class="editable">${rs.bookingId}</span><input type="hidden" class="hidden-input" value="${rs.bookingId}" /></td>
-                                        <td><span class="editable">${rs.status}</span><input type="hidden" class="hidden-input" value="${rs.status}" /></td>
-                                        <td><span class="editable">${rs.getStartTime()}</span><input type="hidden" class="hidden-input" value="${rs.getStartTime()}" /></td>
-                                        <td><span class="editable">${rs.status}</span><input type="hidden" class="hidden-input" value="${rs.status}" /></td>
-                                        <td><span class="editable">${rs.doctorName}</span><input type="hidden" class="hidden-input" value="${rs.doctorName}" /></td>
-                                        <td><span class="editable">${rs.customerName}</span><input type="hidden" class="hidden-input" value="${rs.customerName}" /></td>
-                                        <td><span class="editable">${rs.day}</span><input type="hidden" class="hidden-input" value="${rs.day}" /></td>
-                                        <td>
-                                            <button onclick="makeEditable(this);">Update</button>
-                                            <button onclick="deleteBooking(${rs.bookingId});">Delete</button>
-                                        </td>
-                                    </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="doctor-manager-container" style="width: 100%; margin-left: 15%; display: none;">
+
+
+                <div class="user-list-container">
+                    <h1 class="user-container-table"> Doctor Manage</h1>
+                    <div class="top-option">
+                        <form action="admin-manage-user" class="search-name-form" method="post">
+
+                            <input type="text" id="searchInputUser" placeholder="Enter name of User..." onkeyup="searchByUserName()">
+                            <input type="text" id="searchInputDoctor" placeholder="Enter name of Doctor..." onkeyup="searchByDoctorName()">
+                            <button id="btn-show-filter"><i class="fa-solid fa-filter"></i> Filter</button>
+                        </form>
+                        <button id="addDoctor"><i class="fa-solid fa-user-plus"></i> Add new Doctor</button>
+
+
+                    </div>
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Doctor</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach var="rs" items="${doctorList}">
+                                <tr>
+                                    <td>${rs.getDoctorId()}</td>
+                                    <td>${rs.getName()}</td>
+                                    <td>
+                                        <button class="update-button" onclick="changeSlot(${rs.doctorId});"><i class="fa-solid fa-user-pen"></i>Select to disable</button>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+
+                    <div id="updateForm" style="display: none;">
+                          <h2>Bảng Đăng Ký Slot</h2>
+                        <label for="updateDate">Ngày:</label>
+                        <input type="date" id="updateDate" name="updateDate">
+                        <label for="updateSlots">Danh sách slot:</label>
+                        <div class="date-hidden">
+                            <div class="date">
+                                <c:forEach var="slot" items="${slotList}">
+                                    <button class="grid-date" name="slot" data-slot-id="${slot.slotId}" onclick="onSlotSelect(this)">${slot.startTime}</button>
                                 </c:forEach>
-                            </tbody>
-                        </table>
+                            </div>
+                        </div>
+                        <button onclick="updateDoctorSlot();">Lưu</button>
                     </div>
 
                     <div id="feedbackContainer" style="display: none;">
@@ -237,17 +331,72 @@
                         </table>
                     </div>
 
+                    <div id="newDoctorModal" class="modal" style="display:none;">
+                        <form id="addDoctorForm">
+                            <h2>Bảng Đăng Ký Bác Sĩ</h2>
+                            <label for="doctorName">Name:</label>
+                            <input type="text" id="doctorName" name="doctorName" required><br>
 
-                </c:forEach>
+                            <label for="doctorGender">Gender:</label>
+                            <select id="doctorGender" name="doctorGender" required>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select><br>
 
-                </tbody>
-                </table>
+                            <label for="doctorDob">Date of Birth:</label>
+                            <input type="date" id="doctorDob" name="doctorDob" required><br>
+
+                            <label for="doctorSpecialization">Specialization:</label>
+                            <select id="doctorSpecialization" name="doctorSpecialization" required>
+                                <c:forEach var="rs" items="${specialtyList}" varStatus="loop">
+                                    <option value="${rs.getSpecialtyId()}">${rs.getSpecialtyName()}</option>
+                                </c:forEach>
+                            </select><br>
+
+                            <label for="doctorService">Service:</label>
+                            <select id="doctorService" name="doctorService" required>
+
+                            </select><br>
+
+                            <label for="doctorPhone">Phone Number:</label>
+                            <input type="tel" id="doctorPhone" name="doctorPhone" required><br>
+
+                            <label for="doctorEmail">Email:</label>
+                            <input type="email" id="doctorEmail" name="doctorEmail" required><br>
+
+                            <label for="doctorPassword">Password:</label>
+                            <input type="password" id="doctorPassword" name="doctorPassword" required><br>
+
+                            <label for="doctorPosition">Position:</label>
+                            <input type="text" id="doctorPosition" name="doctorPosition" required><br>
+
+                            <label for="doctorAddress">Address:</label>
+                            <input type="text" id="doctorAddress" name="doctorAddress"><br>
+
+                            <label for="doctorDepartment">Department:</label>
+                            <select id="doctorDepartment" name="doctorDepartment">
+                                <option value="cardiology">Cardiology</option>
+                                <!-- Thêm các lựa chọn khác ở đây -->
+                            </select><br>
+
+                            <label for="doctorExperience">Years of Experience:</label>
+                            <input type="number" id="doctorExperience" name="doctorExperience" min="0" step="1"><br>
+
+                            <input type="submit" value="Submit">
+                            <button type="button" id="closeModal">Close</button>
+                        </form>
+
+                    </div>
+
+
+                </div>
+
+
             </div>
-        </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <script src="js/managerDashboard.js"></script>
-</body>
+            <script src="js/managerDashboard.js"></script>
+    </body>
 
 </html>

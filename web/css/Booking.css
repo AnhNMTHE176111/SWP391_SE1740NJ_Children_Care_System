@@ -364,8 +364,10 @@ label-box {
     position: relative;
 }*/
 
-.no-click {
+ .no-click {
     pointer-events: none;
+     color: red !important; 
+      cursor: not-allowed !important; 
 }
 
 
@@ -509,8 +511,8 @@ label-box {
     cursor: not-allowed;
 }
 
-.disabled-slot:hover {
-    background-color: darkgrey !important; 
+.no-click :hover {
+    background-color: red !important; 
     cursor: not-allowed !important; 
 }
 
