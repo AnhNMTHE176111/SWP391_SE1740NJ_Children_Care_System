@@ -189,6 +189,7 @@ let chart = new Chart(ctx2, {
 //});
 
 document.getElementById('reservationManager').addEventListener('click', function () {
+    const feedbackManagerContainer = document.querySelector('.feedback-manager-container');
     const analyticContainer = document.querySelector('.analytic-container');
     const reservationManagerContainer = document.querySelector('.reservation-manager-container');
     const doctorManageContainer = document.querySelector('.doctor-manager-container');
@@ -202,9 +203,34 @@ document.getElementById('reservationManager').addEventListener('click', function
     if (reservationManagerContainer) {
         reservationManagerContainer.style.display = "block";
     }
+    if (feedbackManagerContainer) {
+        feedbackManagerContainer.style.display = "none";
+    }
+});
+
+document.getElementById('feedbackManager').addEventListener('click', function () {
+    const feedbackManagerContainer = document.querySelector('.feedback-manager-container');
+    const analyticContainer = document.querySelector('.analytic-container');
+    const reservationManagerContainer = document.querySelector('.reservation-manager-container');
+    const doctorManageContainer = document.querySelector('.doctor-manager-container');
+    if (analyticContainer) {
+        analyticContainer.style.display = "none";
+
+    }
+    if (doctorManageContainer) {
+        doctorManageContainer.style.display = "none";
+    }
+    if (reservationManagerContainer) {
+        reservationManagerContainer.style.display = "none";
+    }
+    if (feedbackManagerContainer) {
+        feedbackManagerContainer.style.display = "block";
+    }
+    
 });
 
 document.getElementById('analyticsMenu').addEventListener('click', function () {
+    const feedbackManagerContainer = document.querySelector('.feedback-manager-container');
     const analyticContainer = document.querySelector('.analytic-container');
     const reservationManagerContainer = document.querySelector('.reservation-manager-container');
     const doctorManageContainer = document.querySelector('.doctor-manager-container');
@@ -217,14 +243,14 @@ document.getElementById('analyticsMenu').addEventListener('click', function () {
     }
     if (analyticContainer) {
         analyticContainer.style.display = "block";
-
-
-
     }
-
+    if (feedbackManagerContainer) {
+        feedbackManagerContainer.style.display = "none";
+    }
 });
 
 document.getElementById('doctorManager').addEventListener('click', function () {
+    const feedbackManagerContainer = document.querySelector('.feedback-manager-container');
     const analyticContainer = document.querySelector('.analytic-container');
     const reservationManagerContainer = document.querySelector('.reservation-manager-container');
     const doctorManageContainer = document.querySelector('.doctor-manager-container');
@@ -240,7 +266,9 @@ document.getElementById('doctorManager').addEventListener('click', function () {
     if (doctorManageContainer) {
         doctorManageContainer.style.display = "block";
     }
-
+    if (feedbackManagerContainer) {
+        feedbackManagerContainer.style.display = "none";
+    }
 
 });
 
