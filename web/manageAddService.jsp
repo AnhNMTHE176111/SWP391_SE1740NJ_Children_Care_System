@@ -45,9 +45,6 @@
                                         </c:forEach>
                                     </select>
                                 </td>
-                                <td>
-                                    <button id="add-user-btn" type="reset" onclick="changeLocation('/xyz')" style="">Add new doctor</button>
-                                </td>
                             </tr>
                             <tr>
                                 <td><label for="email">Service Name</label></td>

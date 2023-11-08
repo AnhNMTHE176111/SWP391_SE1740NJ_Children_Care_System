@@ -43,7 +43,9 @@ public class DAOBooking extends DBContext {
 
     public int addBooking(int status, int customerId, int slotDoctorId, int serviceId) {
         int generatedId = -1;
+
         try {
+
             String strSQL = "insert into Booking(BookingStatus, CustomerID, slotDoctorId, ServiceId) values(?,?,?,?); SELECT SCOPE_IDENTITY();";
 
             pstm = cnn.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
@@ -51,7 +53,9 @@ public class DAOBooking extends DBContext {
             pstm.setInt(1, status);
             pstm.setInt(2, customerId);
             pstm.setInt(3, slotDoctorId);
+
             pstm.setInt(4, serviceId);
+
             if (pstm.executeUpdate() > 0) {
                 try (ResultSet generatedKeys = pstm.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
@@ -158,7 +162,8 @@ public class DAOBooking extends DBContext {
                     + "  s.StartTime,\n"
                     + "  s.EndTime,\n"
                     + "  se.ServiceName,\n"
-                    + "  d.DoctorId\n"
+                    + "  d.DoctorId,\n"
+                    + "  sd.day\n"
                     + "FROM Booking b\n"
                     + "JOIN MedicalInfo m ON b.MedicalInfoId = m.MedicalInfoId\n"
                     + "JOIN Doctors d ON b.slotDoctorId = d.DoctorId\n"
@@ -178,7 +183,7 @@ public class DAOBooking extends DBContext {
                 int CustomerID = rs.getInt(4);
                 int MedicalInfoId = rs.getInt(5);
                 String Diagnosis = rs.getString(8);
-                String BookingDate = String.valueOf(rs.getDate(10));
+                String BookingDate = String.valueOf(rs.getDate(14));
                 String BookingTime = String.valueOf("From " + rs.getTime(10) + " to " + rs.getTime(11));
                 String DoctorName = rs.getString(9);
                 String CreateDate = String.valueOf(rs.getDate(7));

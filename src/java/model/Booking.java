@@ -13,9 +13,10 @@ import java.util.Date;
 public class Booking {
 
     private int bookingId, bookingStatus, customerId, medicalInfoId, slotDoctorId, slotId, doctorId, status;
-    private String description, doctorName, customerName, startTime, diagnosis, bookingDate, bookingTime, bookingCreateDate, bookingCreateTime, serviceName;
+    private String description, doctorName, customerName, startTime,endTime, diagnosis, bookingDate, bookingTime, bookingCreateDate, bookingCreateTime, serviceName;
   
     private Date day;
+    private String  date;
     public Booking() {
     }
 
@@ -66,6 +67,35 @@ public class Booking {
         this.doctorId = doctorId;
     }
 
+    public Booking(int bookingId, int bookingStatus, String doctorName,String serviceName, String startTime, String endTime, String date) {
+        this.bookingId = bookingId;
+        this.bookingStatus = bookingStatus;
+        this.doctorName = doctorName;
+        this.serviceName = serviceName;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.date = date;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    
+    
     public String getDoctorName() {
         return doctorName;
     }
@@ -234,6 +264,11 @@ public class Booking {
 
     public void setSlotDoctorId(int slotDoctorId) {
         this.slotDoctorId = slotDoctorId;
+    }
+
+    @Override
+    public String toString() {
+        return "Booking{" + "bookingId=" + bookingId + ", bookingStatus=" + bookingStatus + ", doctorName=" + doctorName + ", startTime=" + startTime + ", endTime=" + endTime + ", serviceName=" + serviceName + ", date=" + date + '}';
     }
 
 }

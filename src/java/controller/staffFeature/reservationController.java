@@ -123,7 +123,7 @@ public class reservationController extends HttpServlet {
                     }
                 }
             }
-
+            
             request.setAttribute("date", date);
             request.setAttribute("module", module);
             request.setAttribute("currentUser", currentUser);

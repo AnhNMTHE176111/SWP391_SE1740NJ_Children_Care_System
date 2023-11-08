@@ -4,19 +4,30 @@
  */
 package controller.staffFeature;
 
+import DAO.DAOBooking;
+import DAO.DAOCustomer;
 import DAO.DAODoctor;
+import DAO.DAOFeedback;
+import DAO.DAOUser;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
+import model.Doctor;
+import model.Feedback;
+import model.User;
 
 /**
  *
- * @author Admin
+ * @author ASUS
  */
-public class changeStatus extends HttpServlet {
+@WebServlet(name = "staffFeedback", urlPatterns = {"/feedbackstaff"})
+public class staffFeedback extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,10 +46,10 @@ public class changeStatus extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet changeStatus</title>");
+            out.println("<title>Servlet staffFeedback</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet changeStatus at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet staffFeedback at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -56,7 +67,24 @@ public class changeStatus extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        DAOUser userDao = new DAOUser();
+        DAOBooking bookingDao = new DAOBooking();
+        DAOCustomer cusDao = new DAOCustomer();
+        DAODoctor docDao = new DAODoctor();
+        User user = (User) session.getAttribute("user");
+        Doctor doctor = docDao.getDoctorbyID(user.getUserId());
+        DAOFeedback feedbackDao = new DAOFeedback();
+        String rate = request.getParameter("rate");
+        ArrayList<Feedback> listFeedback;
+        if (rate != null && !rate.isEmpty()) {
+            listFeedback = feedbackDao.getListFeedbackByRate(doctor.getDoctorId(), rate);
+        } else {
+            listFeedback = feedbackDao.getListFeedback(doctor.getDoctorId());
+        }
+        session.setAttribute("roleId", user.getRoleId());
+        request.setAttribute("listFeedback", listFeedback);
+        request.getRequestDispatcher("staff_feedback_list.jsp").forward(request, response);
     }
 
     /**
@@ -70,27 +98,7 @@ public class changeStatus extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAODoctor d = new DAODoctor();
-        String date = request.getParameter("date");
-        String module = request.getParameter("module");
-        int slotId = Integer.parseInt(request.getParameter("slotId"));
-        int doctorId = Integer.parseInt(request.getParameter("doctorId"));
-        int status = Integer.parseInt(request.getParameter("status"));
-        d.changeStatusBySlotIdandDocId(slotId, doctorId, status);
-        if ("".equals(date) || date == null) {
-            if (module.equals("") || module == null) {
-                response.sendRedirect("/reservation");
-            } else {
-                response.sendRedirect("/reservation?module=" + module);
-            }
-        } else {
-            if (module.equals("") || module == null) {
-                response.sendRedirect("/reservation?date="+date);
-            } else {
-                response.sendRedirect("/reservation?module=" + module + "&date=" + date);
-            }
-            
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -102,5 +110,12 @@ public class changeStatus extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    public static void main(String[] args) {
+
+        DAOFeedback feedbackDao = new DAOFeedback();
+        ArrayList<Feedback> listFeedback = feedbackDao.getListFeedback(1);
+        System.out.println(listFeedback.toString());
+    }
 
 }

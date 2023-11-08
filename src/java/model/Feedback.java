@@ -9,12 +9,25 @@ package model;
  * @author dmx
  */
 public class Feedback {
-    private int ratingId, medicalInfoId;
+    private int ratingId, medicalInfoId, bookingId;
     private String ratingValue;
     private String comment;
+    private String userFirstName, userLastName;
 
     public Feedback() {
     }
+
+    public Feedback(int ratingId, int medicalInfoId, int bookingId, String ratingValue, String comment, String userFirstName, String userLastName) {
+        this.ratingId = ratingId;
+        this.medicalInfoId = medicalInfoId;
+        this.bookingId = bookingId;
+        this.ratingValue = ratingValue;
+        this.comment = comment;
+        this.userFirstName = userFirstName;
+        this.userLastName = userLastName;
+    }
+    
+    
 
     public Feedback(int ratingId, int medicalInfoId, String ratingValue, String comment) {
         this.ratingId = ratingId;
@@ -23,6 +36,33 @@ public class Feedback {
         this.comment = comment;
     }
 
+    public int getBookingId() {
+        return bookingId;
+    }
+
+    public void setBookingId(int bookingId) {
+        this.bookingId = bookingId;
+    }
+
+    public String getUserFirstName() {
+        return userFirstName;
+    }
+
+    public void setUserFirstName(String userFirstName) {
+        this.userFirstName = userFirstName;
+    }
+
+    public String getUserLastName() {
+        return userLastName;
+    }
+
+    public void setUserLastName(String userLastName) {
+        this.userLastName = userLastName;
+    }
+    
+    
+    
+    
     public int getRatingId() {
         return ratingId;
     }
