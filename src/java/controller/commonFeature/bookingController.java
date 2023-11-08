@@ -165,15 +165,6 @@ public class bookingController extends HttpServlet {
 
     }
 
-    request.setAttribute("currentUser", currentUser);
-    request.setAttribute("availeSlot", availeSlot);
-    request.setAttribute("slotList", slotList);
-    request.setAttribute("specialtyList", specialtyList);
-    request.setAttribute("doctorList", doctorList);
-    request.setAttribute("dateList", dateList);
-
-    request.getRequestDispatcher("Booking.jsp").forward(request, response);
-}
 
     /**
      * Handles the HTTP <code>POST</code> method.
