@@ -1,0 +1,241 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Oct 14, 2023, 11:46:40 PM
+    Author     : ASUS
+*/
+
+.table-reservation {
+    background-color: #17a2b8;
+    border-radius: 10px;
+    margin: 20px 0;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+
+
+.fa-table-columns {
+    border-radius: 10px;
+}
+
+.fa-table-list ul, li{
+    list-style-type: none;
+}
+
+.btn-1 {
+    border: none;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    background-color: #17a2b8;
+    color: #fff;
+    text-align: center;
+    margin: 10px 3px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+
+.btn-1:active {
+    background-color: #10707f; /* Màu nền khi ấn */
+    transform: scale(0.95); /* Thay đổi kích thước khi ấn */
+    color: #fff; /* Màu văn bản khi ấn */
+}
+
+.paging {
+    display: flex;
+    justify-content: right;
+}
+
+.post-search {
+    display: flex;
+    justify-content: right;
+}
+
+.table-reservation-column p {
+    font-size: large;
+    font-weight: bold;
+    margin: 0;
+}
+
+.item, .table-reservation-header {
+    color: white;
+    font-family: "Handlee", cursive;
+}
+
+.table-reservation-header, .table-reservation-column {
+    text-align: center;
+}
+
+.table-reservation-list {
+    padding-left: 0px;
+}
+
+
+.row {
+    margin: 20px 0;
+}
+
+.row h2{
+    font-family: "Handlee", cursive;
+    color: #00394F;
+}
+
+.post-search-input {
+    border-radius:15px;
+    width: 20%;
+    border: 1px solid gray;
+    margin-right: 5px;
+
+}
+
+.btn-search {
+    border-radius: 15px;
+    background-color: #17a2b8;
+}
+
+.btn-search i {
+    color: white;
+}
+
+.card {
+    border: none;
+}
+
+.card-img-top {
+    border-radius: 10px;
+}
+
+.none_reservation{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.list-services{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
+    transition: transform 0.2s ease-in-out;
+}
+
+
+
+.reservation-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color:#17a2b8;
+    height: 250px;
+    border-radius: 20px;
+    margin-bottom: 50px;
+}
+
+.reservation-info-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.reservation-info-content input {
+    background-color: rgb(218, 218, 218);
+    border-radius: 5px;
+    border: 1px solid black;
+    line-height: 30px;
+    width: 250px;
+}
+
+.reservation-info-content label {
+    margin: 0 0;
+    color: white;
+    font-family: "Handlee", cursive;
+    font-weight: 700;
+}
+
+.reserved-services {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border: none;
+    width: 70%;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    background-color: #f8f9fa;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    transition: box-shadow 0.3s;
+}
+
+.reserved-services:hover {
+    box-shadow: rgba(0, 0, 0, 0.7) 0px 10px 20px;
+}
+
+.reserved-services-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
+}
+
+.reserved-services-details p{
+    color: #666666;
+}
+
+.reserved-services-details h2, h4{
+    color: #00394f;
+    font-family: "Nunito", sans-serif;
+    font-weight: 600;
+}
+
+.btn-3{
+    border-radius: 30px;
+    border: none;
+    font-weight: 400;
+    line-height: 40px;
+    color: white;
+    font-family: "Nunito", sans-serif;
+    width: 200px;
+    margin: 0 10px;
+}
+
+.reservation-button {
+    display: flex;
+    align-items: center;
+    justify-content: center ;
+}
+
+.btn-reserve {
+    border-radius: 30px;
+    border: none;
+    font-weight: 400;
+    line-height: 30px;
+    color: white;
+    background-color: #17a2b8;
+    font-family: "Nunito", sans-serif;
+    width: 100px;
+    margin: 3px 0;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.btn-reserve:hover {
+    background-color: #0f6674; /* Màu nền khi hover */
+}
+
+
+.btn-feedback {
+    border-radius: 30px;
+    border: none;
+    font-weight: 400;
+    line-height: 30px;
+    color: white;
+    background-color: #FA8B02;
+    font-family: "Nunito", sans-serif;
+    width: 100px;
+    margin: 3px 0;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.btn-feedback:hover {
+    background-color:#9c5600
+}

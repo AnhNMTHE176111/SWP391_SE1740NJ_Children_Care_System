@@ -265,10 +265,10 @@
                                             <td class="candidate-list-favourite-time text-center">
                                                 <c:choose>
                                                     <c:when test="${customerList.getStatus() eq '1'}">
-                                                        <a>Active</a>
+                                                        <a style="color: green; font-weight: bold;">Active</a>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <a>Inactive</a>
+                                                        <a style="color: red; font-weight: bold;">Inactive</a>
                                                     </c:otherwise>    
                                                 </c:choose>
                                             </td>
@@ -307,9 +307,9 @@
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
         <script >
-            function showUpdateAlert() {
-                alert("Add service successfully!");
-            }
+                                                        function showUpdateAlert() {
+                                                            alert("Add service successfully!");
+                                                        }
         </script>
     </body>
     <jsp:include page="footer.jsp"></jsp:include>

@@ -13,8 +13,11 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import model.Booking;
 import model.Customer;
 import model.User;
 
@@ -97,7 +100,8 @@ public class DAOCustomer extends DBContext {
                     + "	s.StartTime,\n"
                     + "	s.EndTime,\n"
                     + "	m.Diagnosis,\n"
-                    + "	b.BookingStatus\n"
+                    + "	b.BookingStatus,\n"
+                    + "	sd.day\n"
                     + "FROM Customers c\n"
                     + "JOIN Users u ON c.UserId = u.userId\n"
                     + "JOIN Booking b ON c.Id = b.CustomerID\n"
@@ -117,9 +121,10 @@ public class DAOCustomer extends DBContext {
                 String email = rs.getString(5);
                 String diagnosis = rs.getString(9);
                 String reservationDate = String.valueOf(rs.getDate(6) + " " + rs.getTime(6));
-                String timeCheckUp = String.valueOf(rs.getDate(7) + " " + rs.getTime(7));
+                String timeCheckUp = String.valueOf(rs.getTime(7));
                 String status = rs.getString(10);
-                customer = new Customer(firstName, lastName, gender, phone, email, reservationDate, timeCheckUp, diagnosis, status);
+                String dateCheckUp = String.valueOf(rs.getDate(11));
+                customer = new Customer(firstName, lastName, gender, phone, email, reservationDate, timeCheckUp, dateCheckUp, diagnosis, status);
             }
         } catch (SQLException e) {
             System.out.println("SQL getCusBookingInforByBookId: " + e.getMessage());
@@ -147,7 +152,7 @@ public class DAOCustomer extends DBContext {
                 String lname = rs.getString(4);
                 boolean gender = rs.getBoolean(5);
                 String sex = rs.getString(5);
-              
+
                 String email = rs.getString(6);
                 String phone = rs.getString(9);
                 String address = rs.getString(8);
@@ -239,6 +244,59 @@ public class DAOCustomer extends DBContext {
             System.out.println("<getTotalItemCount>: " + e.getMessage());
         }
         return total;
+    }
+
+    public ArrayList<Booking> getListReservationByUserId(String UserId) {
+        String sql = "SELECT *\n"
+                + "FROM (\n"
+                + "   select BookingId, BookingStatus\n"
+                + "	from Users \n"
+                + "	join Customers on Users.userId = Customers.UserId\n"
+                + "	join Booking on Customers.Id = Booking.CustomerID\n"
+                + "	where Users.userId = ?\n"
+                + "\n"
+                + ") AS result1\n"
+                + "JOIN (\n"
+                + "    select CONCAT(lastName, ' ', firstName) AS doctorName, ServiceName, BookingId, day, StartTime, EndTime\n"
+                + "	from Users \n"
+                + "	join Doctors on Doctors.userId = Users.userId\n"
+                + "	join SlotDoctor on Doctors.DoctorId = SlotDoctor.DoctorId\n"
+                + "	join Booking on booking.slotDoctorId = slotDoctor.slotDoctorId\n"
+                + "	join Services on Services.ServiceId = Booking.ServiceId\n"
+                + "	join Slots on slots.SlotId = SlotDoctor.SlotId\n"
+                + "	\n"
+                + ") AS result2\n"
+                + "ON result1.BookingId = result2.BookingId;";
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("HH:mm:ss");
+        ArrayList<Booking> data = new ArrayList<>();
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, Integer.parseInt(UserId));
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String bookingId = rs.getString(1);
+                String bookingStatus = rs.getString(2);
+                String doctorName = rs.getString(3);
+                String serviceName = rs.getString(4);
+                String date = rs.getString(6);
+
+                String startTime = rs.getString(7);
+                Date start = inputFormat.parse(startTime);
+                String sTime = outputFormat.format(start);
+                String endTime = rs.getString(8);
+                Date end = inputFormat.parse(endTime);
+                String eTime = outputFormat.format(end);
+
+                Booking c = new Booking(Integer.parseInt(bookingId), Integer.parseInt(bookingStatus), doctorName, serviceName, sTime, eTime, date);
+                data.add(c);
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL <getListReservationByUserId>: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("<getListReservationByUserId>: " + e.getMessage());
+        }
+        return data;
     }
 
 }

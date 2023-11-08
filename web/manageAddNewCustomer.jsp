@@ -21,6 +21,8 @@
         <title>JSP Page</title>
     </head>
     <body>
+         <jsp:include page="header.jsp"></jsp:include>
+   
         <c:if test="${sessionScope.roleId ne '3'}">
             <jsp:forward page="403.jsp"/>
         </c:if>

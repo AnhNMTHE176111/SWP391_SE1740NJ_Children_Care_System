@@ -65,7 +65,19 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
+<<<<<<< HEAD
+                    <file>${file.reference.json-simple-1.1.1.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.gson-2.8.6.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.org.json.jar}</file>
+=======
                     <file>${file.reference.sqljdbc42.jar-1}</file>
+>>>>>>> 728f1ab178807fe610c17ff401c387d8948b92fc
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">

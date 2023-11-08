@@ -10,14 +10,14 @@ package model;
  */
 public class Customer{
     private int id, userId;
-    private String firstName, lastName, gender, phone, email, reservationDate, timeCheckUp, diagnosis, status;
+    private String firstName, lastName, gender, phone, email, reservationDate, timeCheckUp, dateCheckUp, diagnosis, status;
 
     public Customer(int id, int userId) {
         this.id = id;
         this.userId = userId;
     }
 
-    public Customer(String firstName, String lastName, String gender, String phone, String email, String reservationDate, String timeCheckUp, String diagnosis, String status) {
+    public Customer(String firstName, String lastName, String gender, String phone, String email, String reservationDate, String timeCheckUp, String dateCheckUp, String diagnosis, String status) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
@@ -27,6 +27,7 @@ public class Customer{
         this.timeCheckUp = timeCheckUp;
         this.diagnosis = diagnosis;
         this.status = status;
+        this.dateCheckUp = dateCheckUp;
     }
     
     
@@ -90,6 +91,14 @@ public class Customer{
         this.email = email;
     }
 
+    public String getDateCheckUp() {
+        return dateCheckUp;
+    }
+
+    public void setDateCheckUp(String dateCheckUp) {
+        this.dateCheckUp = dateCheckUp;
+    }
+    
     public String getReservationDate() {
         return reservationDate;
     }

@@ -69,7 +69,7 @@ public class DAODoctor extends DBContext {
     }
 
     public ArrayList<SlotDoctor> getReservationByDocId(int doctorId) {
-        String sql = "SELECT sl.SlotId, sl.startTime, sl.endTime, DoctorId, status, sd.Description, sd.day, s.ServiceName\n"
+        String sql = "SELECT sl.SlotId, sl.startTime, sl.endTime, DoctorId, BookingStatus, sd.Description, sd.day, s.ServiceName\n"
                 + "FROM slots sl\n"
                 + "INNER JOIN SlotDoctor sd ON sl.slotid = sd.slotid \n"
                 + "join Booking b on b.slotDoctorId = sd.slotDoctorId\n"

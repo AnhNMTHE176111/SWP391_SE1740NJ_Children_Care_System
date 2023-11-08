@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="SWP391_SE1740NJ_Children_Care_System:Web">
+    <output-path>$PROJECT_DIR$/out/artifacts/SWP391_SE1740NJ_Children_Care_System_Web</output-path>
+    <root id="archive" name="SWP391_SE1740NJ_Children_Care_System_Web.war">
+      <element id="artifact" artifact-name="SWP391_SE1740NJ_Children_Care_System:Web exploded" />
+    </root>
+  </artifact>
+</component>
