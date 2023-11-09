@@ -89,7 +89,7 @@
 
                     <li id="doctorManager"><i class="fa-solid fa-gear"></i>Doctors Manage</li>
 
-              <li id="feedbackManager"><i class="fa-solid fa-comments"></i>Feedback Manager</li>
+                    <li id="feedbackManager"><i class="fa-solid fa-comments"></i>Feedback Manager</li>
                     <li id="manageCustomer"><i class="far fa-angry"></i><a href="manageCustomer" style="text-decoration: none;color: white;">Customer Manager</a></li>
                     <li id="manageService"><i class="far fa-server"></i><a href="manageService" style="text-decoration: none;color: white;" >Service Manager</a></li>
                     <li>
@@ -287,7 +287,7 @@
                     </table>
 
                     <div id="updateForm" style="display: none;">
-                          <h2>Bảng Đăng Ký Slot</h2>
+                        <h2>Bảng Đăng Ký Slot</h2>
                         <label for="updateDate">Ngày:</label>
                         <input type="date" id="updateDate" name="updateDate">
                         <label for="updateSlots">Danh sách slot:</label>
@@ -299,36 +299,6 @@
                             </div>
                         </div>
                         <button onclick="updateDoctorSlot();">Lưu</button>
-                    </div>
-
-                    <div id="feedbackContainer" style="display: none;">
-                        <table border="1">
-                            <thead>
-                                <tr>
-                                    <th>Booking Id</th>
-                                    <th>Rating</th>
-                                    <th>Comment</th>
-                                    <th>Customer Name</th>
-                                    <th>Doctor Name</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach var="mf" items="${listManageFeedback}">
-                                    <tr>
-                                        <td><span class="editable">${mf.bookingId}</span><input type="hidden" class="hidden-input" value="${mf.bookingId}" /></td>
-                                        <td><span class="editable">${mf.ratingValue}</span><input type="hidden" class="hidden-input" value="${mf.ratingValue}" /></td>
-                                        <td><span class="editable">${mf.comment}</span><input type="hidden" class="hidden-input" value="${mf.comment}" /></td>
-                                        <td><span class="editable">${mf.userFirstName} ${mf.userLastName}</span><input type="hidden" class="hidden-input" value="${mf.userFirstName} ${mf.userLastName}" /></td>
-                                        <td><span class="editable">${mf.doctorFirstName} ${mf.doctorLastName}</span><input type="hidden" class="hidden-input" value="${mf.doctorFirstName} ${mf.doctorLastName}" /></td>
-                                        <td>
-                                            <button type="submit"><a href="/feedbackupdate?get&id=${mf.ratingId}" style="text-decoration: none;">Detail</a></button>
-                                            <button type="submit">Delete</button>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-                            </tbody>
-                        </table>
                     </div>
 
                     <div id="newDoctorModal" class="modal" style="display:none;">
@@ -386,13 +356,49 @@
                             <input type="submit" value="Submit">
                             <button type="button" id="closeModal">Close</button>
                         </form>
-
                     </div>
-
-
                 </div>
+            </div>
+            <div class="feedback-manager-container" style="width: 100%; margin-left: 15%; display: none;">
+                <div class="feedback-list-container">
+                    <h1 class="feedback-container-table"> Feedback Manage</h1>
+<!--                    <div class="top-option">
+                        <form action="admin-manage-user" class="search-name-form" method="post">
 
+                            <input type="text" id="searchInputUser" placeholder="Enter name of User..." onkeyup="searchByUserName()">
+                            <input type="text" id="searchInputDoctor" placeholder="Enter name of Doctor..." onkeyup="searchByDoctorName()">
+                            <button id="btn-show-filter"><i class="fa-solid fa-filter"></i> Filter</button>
+                        </form>
+                        <button id="submitAllChanges"><i class="fa-solid fa-user-plus"></i> Submit all Change</button>
 
+                    </div>-->
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th>Booking Id</th>
+                                <th>Rating</th>
+                                <th>Comment</th>
+                                <th>Customer Name</th>
+                                <th>Doctor Name</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach var="mf" items="${listManageFeedback}">
+                                <tr>
+                                    <td><span class="editable">${mf.bookingId}</span><input type="hidden" class="hidden-input" value="${mf.bookingId}" /></td>
+                                    <td><span class="editable">${mf.ratingValue}</span><input type="hidden" class="hidden-input" value="${mf.ratingValue}" /></td>
+                                    <td><span class="editable">${mf.comment}</span><input type="hidden" class="hidden-input" value="${mf.comment}" /></td>
+                                    <td><span class="editable">${mf.userFirstName} ${mf.userLastName}</span><input type="hidden" class="hidden-input" value="${mf.userFirstName} ${mf.userLastName}" /></td>
+                                    <td><span class="editable">${mf.doctorFirstName} ${mf.doctorLastName}</span><input type="hidden" class="hidden-input" value="${mf.doctorFirstName} ${mf.doctorLastName}" /></td>
+                                    <td>
+                                        <button type="submit"><a href="/feedbackupdate?get&id=${mf.ratingId}" style="text-decoration: none;">Detail</a></button>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
