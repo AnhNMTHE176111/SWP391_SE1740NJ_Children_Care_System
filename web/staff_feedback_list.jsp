@@ -84,7 +84,7 @@
                     <select id="rate" class="feedbackrate" name="rate">
                         <option value= "">All</option>
                         <option value="Excellent">Excellent</option>
-                        <option value="Medium">Medium</option>
+                        <option value="Average">Average</option>
                         <option value="Good">Good</option>
                         <option value="Poor">Poor</option>
                     </select>

@@ -4,6 +4,7 @@
  */
 package controller.commonFeature;
 
+import DAO.DAOCustomer;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -90,6 +91,7 @@ public class register extends HttpServlet {
         String dob = request.getParameter("dob");
         String hashedPassword;
         DAOUser userDao = new DAOUser();
+        DAOCustomer cusDao = new DAOCustomer();
         User u = userDao.checkEmailExist(email);
         boolean valid = true;
 
@@ -150,6 +152,8 @@ public class register extends HttpServlet {
 
         if (valid) {
             userDao.addNewAccountByEmail(user);
+            int userId = userDao.getLastUserId();
+            cusDao.addCustomerByUserId(userId);
             String mess = "Your account has been created!";
             request.setAttribute("mess1", mess);
             request.getRequestDispatcher("login.jsp").forward(request, response);
@@ -165,5 +169,11 @@ public class register extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+    
+    public static void main(String[] args) {
+        DAOUser userDao = new DAOUser();
+        int userId = userDao.getLastUserId();
+        System.out.println(userId);
+    }
 
 }

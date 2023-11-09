@@ -518,5 +518,23 @@ public class DAOUser extends DBContext {
         return avatar;
     }
 
+    public int getLastUserId() {
+        String sql = "SELECT TOP 1 u.userId\n"
+                + "FROM Users u ORDER BY u.userId DESC";
+        int userId = 0;
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                userId = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL <getLastUserId>: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("<getLastUserId>: " + e.getMessage());
+        }
+        return userId;
+    }
+
 }
 //include jsp//
