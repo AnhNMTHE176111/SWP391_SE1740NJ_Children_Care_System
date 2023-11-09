@@ -224,12 +224,14 @@ public class DAOFeedback extends DBContext {
         }
     }
 
-    public int updateFeedbackByRateId(String rateValue, int rateId) {
+    public int updateFeedbackByRateId(String rateValue, int rateId, String comment) {
         try {
-            String strSQL = "update Feedback set RatingValue = ? where RatingID = ?";
+            String strSQL = "update Feedback set RatingValue = ?, Comment = ?\n"
+                    + "where RatingID = ?";
             pstm = cnn.prepareStatement(strSQL);
             pstm.setString(1, rateValue);
-            pstm.setInt(2, rateId);
+            pstm.setString(2, comment);
+            pstm.setInt(3, rateId);
             rs = pstm.executeQuery();
 
         } catch (SQLException e) {
@@ -238,6 +240,19 @@ public class DAOFeedback extends DBContext {
             System.out.println("updateFeedbackByRateId: " + e.getMessage());
         }
         return rateId;
+    }
+
+    public void deleteFeedbackByRateId(int rateId) {
+        try {
+            String strSQL = "DELETE FROM Feedback WHERE RatingID = ?";
+            pstm = cnn.prepareStatement(strSQL);
+            pstm.setInt(1, rateId);
+            pstm.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("SQL deleteFeedbackByRateId: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("deleteFeedbackByRateId: " + e.getMessage());
+        }
     }
 
 }

@@ -322,4 +322,18 @@ public class DAOCustomer extends DBContext {
         return data;
     }
 
+    public void addCustomerByUserId(int userId) {
+        try {
+            String strSQL = "insert into Customers (UserId) values (?)";
+            pstm = cnn.prepareStatement(strSQL);
+            pstm.setInt(1, userId);
+            pstm.execute();
+
+        } catch (SQLException e) {
+            System.out.println("SQL addCustomerByUserId: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("addCustomerByUserId: " + e.getMessage());
+        }
+    }
+
 }
