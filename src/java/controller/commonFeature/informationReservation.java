@@ -95,11 +95,12 @@ public class informationReservation extends HttpServlet {
         MedicalInfo med = d.getMedInfo(slotDoctorId);
         String treatment = med.getTreatmentPlan();
         System.out.println(treatment);
+        ArrayList<MedicalPrescription> medicalPrescription = new ArrayList<>();
         if (treatment != null) {
             String[] array = treatment.split("\\|");
             String treatmentPlan = array[0];
             if (array.length > 1) {
-                ArrayList<MedicalPrescription> medicalPrescription = new ArrayList<>();
+
                 for (int i = 1; i < array.length; i++) {
                     String line = array[i];
                     MedicalPrescription mp = new MedicalPrescription();
@@ -108,10 +109,9 @@ public class informationReservation extends HttpServlet {
                     mp.setFrequency(line.split("-")[2]);
                     medicalPrescription.add(mp);
                 }
-
-                request.setAttribute("medicalPrescription", medicalPrescription);
             }
             request.setAttribute("treatmentPlan", treatmentPlan);
+            request.setAttribute("medicalPrescription", medicalPrescription);
         }
 
         session.setAttribute("doctorAvatar", doctorAvatar);

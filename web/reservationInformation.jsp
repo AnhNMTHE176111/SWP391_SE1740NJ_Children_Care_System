@@ -172,15 +172,18 @@
                                 <td><input type="text" class="form-control" id="rx" name="frequency" value="${item.getFrequency()}"></td>
                             </tr>
                         </c:forEach>
-                        <c:if test="${medicalPrescription.size() == 0}">
-                            <tr>
-                                <td colspan="3">
-                                    <div class="col-12 alert-secondary text-center py-2">
-                                        None Medication
-                                    </div>
-                                </td>
-                            </tr>
-                        </c:if>
+                        <c:choose>
+                            <c:when test="${medicalPrescription.size() == 0}">
+                                <tr>
+                                    <td colspan="3">
+                                        <div class="col-12 alert-secondary text-center py-2">
+                                            None Medication
+                                        </div>
+                                    </td>
+                                </tr>
+                            </c:when>
+                        </c:choose>
+
                     </tbody>
                 </table>
             </div>               
@@ -268,10 +271,10 @@
                     var cancelButton = document.getElementById("cancelButton");
 
                     // Kiểm tra nếu thời gian đã qua
-                    if (currentHours > hoursToCheckUp 
-                        || (currentHours === hoursToCheckUp && currentMinutes >= minutesToCheckUp) 
-                        || currentMonth > monthToCheckUp 
-                        || (currentMonth === monthToCheckUp && currentDay >= dayToCheckUp)) {
+                    if (currentHours > hoursToCheckUp
+                            || (currentHours === hoursToCheckUp && currentMinutes >= minutesToCheckUp)
+                            || currentMonth > monthToCheckUp
+                            || (currentMonth === monthToCheckUp && currentDay >= dayToCheckUp)) {
                         // Ẩn nút "Cancel"
                         console.log("true");
                         cancelButton.style.display = "none";
