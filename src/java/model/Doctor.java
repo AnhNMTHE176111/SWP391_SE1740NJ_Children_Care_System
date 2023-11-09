@@ -41,7 +41,11 @@ public class Doctor {
 
 //code riêng dùng trong màn hình services của HongNT
     private String lastname, firstname;
-
+    
+    public Doctor(int doctorId, String name){
+          this.doctorId = doctorId;
+          this.name = name;
+    }
     public Doctor(int doctorId, String lastname, String firstname) {
         this.doctorId = doctorId;
         this.lastname = lastname;

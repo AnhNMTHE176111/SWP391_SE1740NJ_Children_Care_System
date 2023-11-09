@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.Formatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Feedback;
 import model.MedicalInfo;
 import model.MedicalPrescription;
 import model.Slot;
@@ -146,6 +147,8 @@ public class reservationController extends HttpServlet {
         User khachHang = d.getUserInfoBySlotDoctorId(slotDoctorId);
         Slot rightSlot = d.getSlotBySlotId(slotId, doctorId);
         MedicalInfo med = d.getMedInfo(slotDoctorId);
+        Feedback cusFeedback = d.getFeedbackBySlotDoctorId(slotDoctorId);
+        request.setAttribute("cusFeedback", cusFeedback);
 
         // get medical prescription
         String treatment = med.getTreatmentPlan();
@@ -182,9 +185,6 @@ public class reservationController extends HttpServlet {
             request.setAttribute("fileName", fileName);
             request.setAttribute("filePath", ".\\prescription\\" + fileName);
         }
-        request.setAttribute("slotId", slotId);
-        request.setAttribute("doctorId", doctorId);
-
         request.setAttribute("med", med);
         request.setAttribute("slotId", slotId);
         request.setAttribute("doctorId", doctorId);

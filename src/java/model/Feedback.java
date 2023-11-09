@@ -12,7 +12,7 @@ public class Feedback {
     private int ratingId, medicalInfoId, bookingId;
     private String ratingValue;
     private String comment;
-    private String userFirstName, userLastName;
+    private String userFirstName, userLastName, doctorFirstName, doctorLastName;
 
     public Feedback() {
     }
@@ -25,6 +25,18 @@ public class Feedback {
         this.comment = comment;
         this.userFirstName = userFirstName;
         this.userLastName = userLastName;
+    }
+
+    public Feedback(int ratingId, int medicalInfoId, int bookingId, String ratingValue, String comment, String userFirstName, String userLastName, String doctorFirstName, String doctorLastName) {
+        this.ratingId = ratingId;
+        this.medicalInfoId = medicalInfoId;
+        this.bookingId = bookingId;
+        this.ratingValue = ratingValue;
+        this.comment = comment;
+        this.userFirstName = userFirstName;
+        this.userLastName = userLastName;
+        this.doctorFirstName = doctorFirstName;
+        this.doctorLastName = doctorLastName;
     }
     
     
@@ -58,6 +70,22 @@ public class Feedback {
 
     public void setUserLastName(String userLastName) {
         this.userLastName = userLastName;
+    }
+
+    public String getDoctorFirstName() {
+        return doctorFirstName;
+    }
+
+    public void setDoctorFirstName(String doctorFirstName) {
+        this.doctorFirstName = doctorFirstName;
+    }
+
+    public String getDoctorLastName() {
+        return doctorLastName;
+    }
+
+    public void setDoctorLastName(String doctorLastName) {
+        this.doctorLastName = doctorLastName;
     }
     
     

@@ -63,34 +63,23 @@ public class DAOBooking extends DBContext {
         return null;
     }
 
-    public int addBooking(int status, int customerId, int slotDoctorId) {
+    public int addBooking(int status, int customerId, int slotDoctorId, int serviceId) {
         int generatedId = -1;
-        int medicalInforId = 0;
 
-        String sql = "select MAX(MedicalInfoId) from MedicalInfo";
-        try ( PreparedStatement pstm = cnn.prepareStatement(sql);  ResultSet rs = pstm.executeQuery()) {
-            while (rs.next()) {
-                medicalInforId = rs.getInt(1);
-            }
-        } catch (Exception e) {
-            System.out.println("MedicalInfo" + e.getMessage());
-        }
         try {
-            String strSQL = "insert into Booking(BookingStatus, CustomerID, slotDoctorId,medicalInfoId) values(?,?,?,?); "
-                    + "SELECT SCOPE_IDENTITY();"
-                    + "SET IDENTITY_INSERT medicalInfo ON;\n"
-                    + "insert into MedicalInfo(MedicalInfoId) values(?);";
+
+            String strSQL = "insert into Booking(BookingStatus, CustomerID, slotDoctorId, ServiceId) values(?,?,?,?); SELECT SCOPE_IDENTITY();";
 
             pstm = cnn.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
 
             pstm.setInt(1, status);
             pstm.setInt(2, customerId);
             pstm.setInt(3, slotDoctorId);
-            pstm.setInt(4, medicalInforId + 1);
-            pstm.setInt(5, medicalInforId + 1);
+
+            pstm.setInt(4, serviceId);
 
             if (pstm.executeUpdate() > 0) {
-                try ( ResultSet generatedKeys = pstm.getGeneratedKeys()) {
+                try (ResultSet generatedKeys = pstm.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         generatedId = generatedKeys.getInt(1);
                     }
@@ -108,7 +97,7 @@ public class DAOBooking extends DBContext {
                 + "join SlotDoctor on SlotDoctor.slotDoctorId = Booking.slotDoctorId\n"
                 + "where day is not null";
 
-        try ( PreparedStatement pstm = cnn.prepareStatement(strSQL);  ResultSet rs = pstm.executeQuery()) {
+        try (PreparedStatement pstm = cnn.prepareStatement(strSQL); ResultSet rs = pstm.executeQuery()) {
             while (rs.next()) {
                 int bookingId = rs.getInt("BookingId");
                 int status = rs.getInt("BookingStatus");
@@ -130,14 +119,16 @@ public class DAOBooking extends DBContext {
 
     public List<Booking> getBookingListForManage() {
         List<Booking> bookings = new ArrayList<>();
-        String strSQL = "SELECT \n"
+        String strSQL = "					SELECT \n"
                 + "    Booking.BookingId, \n"
+                + "    Doctors.DoctorId AS DoctorId,\n"
+                + "    SlotDoctor.SlotId AS SlotId,\n"
                 + "    Booking.BookingStatus,\n"
-                + "	Slots.StartTime,\n"
-                + "	SlotDoctor.Status,\n"
+                + "    Slots.StartTime,\n"
+                + "    SlotDoctor.Status,\n"
                 + "    DoctorUsers.firstName + ' ' + DoctorUsers.lastName AS DoctorName, \n"
                 + "    CustomerUsers.firstName + ' ' + CustomerUsers.lastName AS CustomerName,\n"
-                + " day\n"
+                + "    day\n"
                 + "FROM \n"
                 + "    Booking\n"
                 + "JOIN \n"
@@ -147,17 +138,19 @@ public class DAOBooking extends DBContext {
                 + "JOIN \n"
                 + "    Users AS DoctorUsers ON DoctorUsers.userId = Doctors.userId\n"
                 + "JOIN \n"
-                + "    Customers ON Customers.Id = Booking.CustomerId -- Giả định Booking có một trường CustomerId\n"
+                + "    Customers ON Customers.Id = Booking.CustomerId\n"
                 + "JOIN \n"
                 + "    Users AS CustomerUsers ON CustomerUsers.userId = Customers.userId\n"
-                + "	join \n"
-                + "	Slots on Slots.SlotId = SlotDoctor.SlotId\n"
+                + "JOIN \n"
+                + "    Slots on Slots.SlotId = SlotDoctor.SlotId\n"
                 + "WHERE \n"
                 + "    day IS NOT NULL;";
 
-        try ( PreparedStatement pstm = cnn.prepareStatement(strSQL);  ResultSet rs = pstm.executeQuery()) {
+        try (PreparedStatement pstm = cnn.prepareStatement(strSQL); ResultSet rs = pstm.executeQuery()) {
             while (rs.next()) {
                 int bookingId = rs.getInt("BookingId");
+                int doctorId = rs.getInt("DoctorId");
+                int slotId = rs.getInt("SlotId");
                 int bookingStatus = rs.getInt("BookingStatus");
                 String startTimeString = rs.getString("StartTime");
 
@@ -172,7 +165,7 @@ public class DAOBooking extends DBContext {
                 String doctorName = rs.getString("DoctorName");
                 String customerName = rs.getString("CustomerName");
                 Date dayResult = rs.getDate("day");
-                bookings.add(new Booking(bookingId, bookingStatus, formattedTime, status, doctorName, customerName, dayResult));
+                bookings.add(new Booking(bookingId, doctorId, slotId, bookingStatus, formattedTime, status, doctorName, customerName, dayResult));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -306,10 +299,10 @@ public class DAOBooking extends DBContext {
         System.out.println(count);
     }
 
-    public boolean updateBookingByManager(int bookingId, int status, String startTime, int slotStatus, String doctorName, String customerName, String date) {
+
+    public boolean updateBookingByManager(int bookingId, int status, int slotId, int slotStatus, String doctorFirstName, String doctorLastName, String customerFirstName, String customerLastName, String date) {
 
         try {
-
             String updateBookingSQL = "UPDATE Booking "
                     + "SET BookingStatus = ? "
                     + "WHERE BookingId = ?";
@@ -318,46 +311,52 @@ public class DAOBooking extends DBContext {
             pstm.setInt(2, bookingId);
             pstm.execute();
 
-            String updateStartTimeSQL = "UPDATE Slots "
-                    + "SET StartTime = ? "
-                    + "WHERE SlotId IN (SELECT SlotId FROM SlotDoctor WHERE slotDoctorId IN (SELECT slotDoctorId FROM Booking WHERE BookingId = ?))";
-            pstm = cnn.prepareStatement(updateStartTimeSQL);
-            pstm.setString(1, startTime);
-            pstm.setInt(2, bookingId);
-            pstm.execute();
 
-            String updateSlotStatusSQL = "  UPDATE SlotDoctor \n" +
-"                   SET Status = ?\n" +
-"                  WHERE slotDoctorId IN (SELECT slotDoctorId FROM Booking WHERE BookingId = ?);";
+            String updateSlotStatusSQL = "UPDATE SlotDoctor "
+                    + "SET Status = ?, SlotId = ?, day = ? "
+                    + "WHERE slotDoctorId IN (SELECT slotDoctorId FROM Booking WHERE BookingId = ?)";
             pstm = cnn.prepareStatement(updateSlotStatusSQL);
             pstm.setInt(1, slotStatus);
-            pstm.setInt(2, bookingId);
+            pstm.setInt(2, slotId);
+            pstm.setString(3, date);
+            pstm.setInt(4, bookingId);
+
             pstm.execute();
 
             String updateDoctorNameSQL = "UPDATE Users "
                     + "SET firstName = ?, lastName = ? "
                     + "WHERE UserId IN (SELECT DoctorId FROM Doctors WHERE DoctorId IN (SELECT DoctorId FROM SlotDoctor WHERE slotDoctorId IN (SELECT slotDoctorId FROM Booking WHERE BookingId = ?)))";
             pstm = cnn.prepareStatement(updateDoctorNameSQL);
-            String[] doctorNames = doctorName.split(" ");
-            pstm.setString(1, doctorNames[0]);
-            pstm.setString(2, doctorNames[1]);
+
+            pstm.setString(1, doctorFirstName);
+            pstm.setString(2, doctorLastName);
             pstm.setInt(3, bookingId);
             pstm.execute();
 
-            String updateCustomerNameSQL = "UPDATE Users "
-                    + "SET firstName = ?, lastName = ? "
-                    + "WHERE UserId IN (SELECT Id FROM Customers WHERE Id IN (SELECT CustomerId FROM Booking WHERE BookingId = ?))";
+            String updateCustomerNameSQL = "				   UPDATE Users\n"
+                    + "SET firstName = ?, lastName = ?\n"
+                    + "WHERE Users.userId IN (\n"
+                    + "    SELECT CustomerUsers.userId \n"
+                    + "    FROM Booking\n"
+                    + "    JOIN Customers ON Customers.Id = Booking.CustomerId\n"
+                    + "    JOIN Users AS CustomerUsers ON CustomerUsers.userId = Customers.userId\n"
+                    + "    WHERE Booking.BookingId = ?\n"
+                    + ")";
             pstm = cnn.prepareStatement(updateCustomerNameSQL);
-            String[] customerNames = customerName.split(" ");
-            pstm.setString(1, customerNames[0]);
-            pstm.setString(2, customerNames[1]);
+            pstm.setString(1, customerFirstName);
+            pstm.setString(2, customerLastName);
+
             pstm.setInt(3, bookingId);
             pstm.execute();
 
         } catch (SQLException e) {
             System.out.println("SQL updateBookingByManager: " + e.getMessage());
+
+            return false;
         } catch (Exception e) {
             System.out.println("updateBookingByManager: " + e.getMessage());
+            return false;
+
         } finally {
             // Đóng PreparedStatement và Connection (nếu bạn quản lý chúng ở đây)
             try {
@@ -369,11 +368,14 @@ public class DAOBooking extends DBContext {
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
+
+                return false;
             }
         }
 
-        return false;  // Trả về false nếu có lỗi
+        return true;  // Trả về true nếu tất cả đều thành công, false nếu có lỗi
     }
+
     public String cancelCusBookingByBookId(String cancelBookId) {
         try {
             String strSQL = "update Booking\n"
@@ -389,6 +391,7 @@ public class DAOBooking extends DBContext {
             System.out.println("cancelCusBookingByBookId: " + e.getMessage());
         }
         return cancelBookId;
+
     }
 
 }

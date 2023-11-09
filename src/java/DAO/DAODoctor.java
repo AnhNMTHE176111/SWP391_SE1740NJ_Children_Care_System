@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import model.Doctor;
+import model.Feedback;
 import model.MedicalInfo;
 import model.Post;
 import model.Service;
@@ -59,7 +60,6 @@ public class DAODoctor extends DBContext {
                 int doctorId = rs.getInt(3);
                 doctor = new Doctor(name, id, doctorId);
 
-                doctor = new Doctor(name, id, doctorId);
                 data.add(doctor);
             }
         } catch (Exception e) {
@@ -150,23 +150,44 @@ public class DAODoctor extends DBContext {
         return data;
     }
 
-    public int getSlotDoctorId(int slotId, int doctorId) {
-        String sql = "select * from SlotDoctor\n"
-                + "where DoctorId = ? and SlotId = ?";
-        int data = 0;
-        try {
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1, doctorId);
-            ps.setInt(2, slotId);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                data = rs.getInt("slotDoctorId");
+//    public String getspecialtyNameByDocId(int doctorId) {
+//
+//        String sql = "select SpecialtyName from Specialty\n"
+//                + "join Doctors on Doctors.SpecialtyId = Specialty.SpecialtyId\n"
+//                + "where DoctorId = ?";
+//        String data = null;
+//        try {
+//            PreparedStatement ps = connection.prepareStatement(sql);
+//            ps.setInt(1, doctorId);
+//            ResultSet rs = ps.executeQuery();
+//            if (rs.next()) {
+//                data = rs.getString(1);
+//            }
+//        } catch (SQLException e) {
+//            System.out.println("SQL <getspecialtyNameByDocId>: " + e.getMessage());
+//        } catch (Exception e) {
+//            System.out.println("<getspecialtyNameByDocId>: " + e.getMessage());
+//        }
+//        return data;
+//    }
+
+    public ArrayList<Doctor> getDoctorList() {
+        ArrayList<Doctor> data = new ArrayList<Doctor>();
+        String strSQL = "SELECT DoctorId, CONCAT(Users.firstName, ' ', Users.lastName) AS DoctorName\n"
+                + "FROM Doctors\n"
+                + "JOIN Users ON Users.userId = Doctors.userId;";
+
+        try (PreparedStatement pstm = cnn.prepareStatement(strSQL); ResultSet rs = pstm.executeQuery()) {
+            while (rs.next()) {
+                int doctorId = rs.getInt("DoctorId");
+                String doctorName = rs.getString("DoctorName");
+
+                data.add(new Doctor(doctorId, doctorName));
             }
-        } catch (SQLException e) {
-            System.out.println("SQL <getSlotDoctorId>: " + e.getMessage());
         } catch (Exception e) {
-            System.out.println("<getSlotDoctorId>: " + e.getMessage());
+            e.printStackTrace();
         }
+
         return data;
     }
 
@@ -196,6 +217,27 @@ public class DAODoctor extends DBContext {
         }
         return data;
     }
+    
+      public int getSlotDoctorId(int slotId, int doctorId) {
+        String sql = "select * from SlotDoctor\n"
+                + "where DoctorId = ? and SlotId = ?";
+        int data = 0;
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, doctorId);
+            ps.setInt(2, slotId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                data = rs.getInt("slotDoctorId");
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL <getSlotDoctorId>: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("<getSlotDoctorId>: " + e.getMessage());
+        }
+        return data;
+    }
+
 
     public Slot getSlotBySlotId(int slotId, int docId) {
         String sql = "select * from Slots inner join SlotDoctor ON slots.slotid = SlotDoctor.slotid "
@@ -396,6 +438,27 @@ public class DAODoctor extends DBContext {
         } catch (Exception e) {
             System.out.println("<changeStatusBySlotIdandDocId>: " + e.getMessage());
         }
+    }
+
+    public Feedback getFeedbackBySlotDoctorId(int slotDoctorId) {
+        String sql = "select f.* from Feedback f\n"
+                + "join Booking b ON f.MedicalInfoID = b.MedicalInfoId\n"
+                + "join SlotDoctor sd ON b.slotDoctorId = sd.slotDoctorId\n"
+                + "where sd.slotDoctorId = ?";
+        Feedback feedback = new Feedback();
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, slotDoctorId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                feedback.setComment(rs.getString(4));
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL <getFeedbackBySlotDoctorId>: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("<getFeedbackBySlotDoctorId>: " + e.getMessage());
+        }
+        return feedback;
     }
 
 }

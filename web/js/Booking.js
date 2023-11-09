@@ -28,6 +28,7 @@ function showStep(step) {
         step2.style.display = "block";
     } else if (step === 3) {
         step3.style.display = "block";
+        console.log("hihi");
     }
     currentStep = step;
 }
@@ -70,6 +71,11 @@ slots.forEach(function (slot) {
     });
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+    // Gọi hàm checkEmptyInputs tại đây
+    checkEmptyInputs();
+});
+
 function checkEmptyInputs() {
     let specialty = document.getElementById("selectedSpecialty").value;
     let doctor = document.getElementById("selectedDoctor").value;
@@ -77,22 +83,24 @@ function checkEmptyInputs() {
 
     // Kiểm tra chuyên khoa
     if (specialty === "0") {
-        document.getElementById("specialtyError").textContent = 'Vui lòng chọn chuyên khoa';
-        document.getElementById("specialtyError").style.display = "block";
+//        document.getElementById("specialtyError").textContent = 'Vui lòng chọn chuyên khoa';
+//        document.getElementById("specialtyError").style.display = "block";
         isError = true;
     } else {
-        document.getElementById("specialtyError").style.display = "none";
+//        document.getElementById("specialtyError").style.display = "none";
     }
 
     // Kiểm tra bác sĩ
     if (doctor === "0") {
-        document.getElementById("doctorError").textContent = 'Vui lòng chọn bác sĩ';
-        document.getElementById("doctorError").style.display = "block";
+//        document.getElementById("doctorError").textContent = 'Vui lòng chọn bác sĩ';
+//        document.getElementById("doctorError").style.display = "block";
         console.log("jiji");
         isError = true;
     } else {
-        document.getElementById("doctorError").style.display = "none";
+//        document.getElementById("doctorError").style.display = "none";
     }
+
+
     if (!selectedDateValue) {
         isError = true;
     }
@@ -264,8 +272,6 @@ function onSpecialtyChange(selectedValue) {
     resetDateAndSlot();
 }
 
-
-
 daysList.forEach(function (daysList, index) {
     daysList.addEventListener("click", function () {
         if (slotSelected)
@@ -303,26 +309,15 @@ function displayConfirmation() {
 }
 
 
-//function onDoctorChange(dropdown) {
-//    var selectedOption = dropdown.options[dropdown.selectedIndex];
-//    var doctorName = selectedOption.text;
-//    var doctorId = selectedOption.value;
-//
-//    document.getElementById('confirm-doctor').textContent = doctorName;
-//    document.getElementById('hidden-doctorId').value = doctorId;
-//}
 
-
-
-//function onDateSelect(dateValue) {
-//    document.getElementById('confirm-date').textContent = dateValue;
-//    document.getElementById('hidden-date').value = dateValue;
-//}
 
 function onSlotSelect(slotValue, slotId) {
     document.getElementById('selectedSlotId').value = slotId;
     document.getElementById('confirm-slot').textContent = slotValue;
     document.getElementById('hidden-slot').value = slotValue;
+
+
+
 }
 //////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////
@@ -369,6 +364,8 @@ function convertToDateDBFormat(dateStr) {
 //    });
 //}
 
+
+
 function updateSlotsBasedOnDoctorAndDate() {
     var selectedDoctorId = document.getElementById('selectedDoctor').value;
     var selectedDate = document.getElementById('hidden-date').value;
@@ -383,14 +380,14 @@ function updateSlotsBasedOnDoctorAndDate() {
         bookedSlotsMap[key] = true;
     });
 
-    allSlots.forEach(function(slotElement) {
+    allSlots.forEach(function (slotElement) {
         slotElement.style.backgroundColor = '';
         slotElement.style.color = '';
         slotElement.classList.remove('disabled-slot');
         slotElement.disabled = false;
     });
 
-    allSlots.forEach(function(slotElement) {
+    allSlots.forEach(function (slotElement) {
         var key = selectedDoctorId + "_" + formattedDate + "_" + slotElement.value;
 
         if (bookedSlotsMap[key]) {
@@ -404,19 +401,143 @@ function updateSlotsBasedOnDoctorAndDate() {
 
 
 
+
+
+
+
+
+
+
+
 function onDoctorChange(dropdown) {
     var selectedOption = dropdown.options[dropdown.selectedIndex];
-    var doctorName = selectedOption.text;
     var doctorId = selectedOption.value;
+    var doctorName = selectedOption.text;
+
+    // Hiển thị tên bác sĩ trong phần confirm
     document.getElementById('confirm-doctor').textContent = doctorName;
+
+    // Cập nhật giá trị doctorId vào input hidden
     document.getElementById('hidden-doctorId').value = doctorId;
+
+    if (doctorId !== "0") {
+        // Lấy danh sách dịch vụ cho bác sĩ tương ứng từ serviceListData
+        var serviceListData = JSON.parse(document.getElementById('serviceListData').getAttribute('data-service-list'));
+        var servicesForDoctor = serviceListData.filter(function (service) {
+            return service.DoctorId === doctorId;
+        });
+
+        // Cập nhật dropdown dịch vụ với các dịch vụ cho bác sĩ đó
+        var serviceDropdown = document.getElementById('serviceDropdown');
+        serviceDropdown.innerHTML = '';
+
+        servicesForDoctor.forEach(function (service) {
+            var option = document.createElement('option');
+            option.value = service.ServiceId;
+            option.text = service.ServiceName;
+            serviceDropdown.appendChild(option);
+        });
+
+        // Gọi hàm để cập nhật giá trị hidden service (tương tự như với doctorId)
+        updateHiddenService();
+
+    } else {
+        // Nếu bác sĩ không được chọn, xóa nội dung của dropdown dịch vụ
+        var serviceDropdown = document.getElementById('serviceDropdown');
+        serviceDropdown.innerHTML = '';
+
+        // Đặt thông tin bác sĩ trong phần confirm về rỗng
+        document.getElementById('confirm-doctor').textContent = '';
+
+        // Đặt giá trị hidden input về rỗng
+        document.getElementById('hidden-doctor').value = '';
+        document.getElementById('hidden-service').value = '';
+        document.getElementById('confirm-service').textContent = '';
+        document.getElementById('hidden-service').value = '';
+    }
+
+    // Gọi các hàm cần thiết khác
     resetDateAndSlot();
     updateSlotsBasedOnDoctorAndDate();
+}
+
+function updateHiddenService() {
+    // Lấy selected option từ dropdown dịch vụ
+    var serviceDropdown = document.getElementById('serviceDropdown');
+    var selectedServiceOption = serviceDropdown.options[serviceDropdown.selectedIndex];
+    var selectedServiceId = selectedServiceOption.value;
+
+    // Cập nhật giá trị hidden service
+    document.getElementById('hidden-service').value = selectedServiceId;
+
+    // Hiển thị tên dịch vụ trong phần confirm
+    var selectedServiceName = selectedServiceOption.text;
+    document.getElementById('confirm-service').textContent = selectedServiceName;
 }
 
 function onDateSelect(dateValue) {
     document.getElementById('confirm-date').textContent = dateValue;
     document.getElementById('hidden-date').value = dateValue;
+    var allSlotsDisable = document.querySelectorAll('.grid-date');
+    var currentDate = new Date();
+    var year = currentDate.getFullYear();
+    var month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    var day = currentDate.getDate().toString().padStart(2, '0');
+    var currentHour = currentDate.getHours().toString().padStart(2, '0');
+    var currentMinute = currentDate.getMinutes().toString().padStart(2, '0');
+    var selectedDate = document.getElementById('hidden-date').value.trim();
+    var currentTime = currentHour + ":" + currentMinute
+
+    var allSlotsElements = document.querySelectorAll('.grid-date');
+    var slotList = [];
+    allSlotsElements.forEach(function (slotElement) {
+        var slotId = slotElement.getAttribute('value');
+        var startTime = slotElement.textContent.trim();
+        slotList.push({
+            slotId: slotId,
+            startTime: startTime
+        });
+    });
+    var selectedDateParts = selectedDate.split('/');
+    var selectedMonth = selectedDateParts[1].padStart(2, '0');
+    var selectedDay = selectedDateParts[0].padStart(2, '0');
+    var selectedDateWithoutSpaces = day + '/' + month;
+    console.log(slotList);
+    console.log(selectedDateWithoutSpaces);
+    console.log(selectedDate);
+    if (selectedDateWithoutSpaces === selectedDate) {
+        console.log('let disabled');
+        var selectedSlotTime = parseInt(currentTime.replace(':', ''));
+        slotList.forEach(function (slotContent) {
+            var slotTime = parseInt(slotContent.startTime.replace(':', ''));
+            var slotId = slotContent.slotId;
+            var slotElements = document.querySelectorAll('.grid-date[value="' + slotId + '"]');
+            slotElements.forEach(function (slotElement) {
+                console.log(slotElement)
+                if (slotTime < selectedSlotTime) {
+                    slotElement.style.setProperty('color', 'red', 'important');
+                    slotElement.classList.add('no-click');
+                }
+
+
+
+            });
+        });
+    } else {
+        console.log('click');
+        var selectedSlotTime = parseInt(currentTime.replace(':', ''));
+        slotList.forEach(function (slotContent) {
+            var slotTime = parseInt(slotContent.startTime.replace(':', ''));
+            var slotId = slotContent.slotId;
+            var slotElements = document.querySelectorAll('.grid-date.no-click');
+            slotElements.forEach(function (slotElement) {
+                console.log(slotElement)
+                slotElement.style.color = ''; // Reset custom styles
+                slotElement.classList.remove('no-click'); // Remove specific classes
+            });
+        });
+    }
 
     updateSlotsBasedOnDoctorAndDate();
 }
+

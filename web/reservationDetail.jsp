@@ -154,7 +154,10 @@
                     <label for="treatmentPlan">Treatment Plan:</label>
                     <textarea id="treatmentPlan" name="treatmentPlan">${treatmentPlan}</textarea><br><br>
 
-                    <div class="col-12 d-flex justify-content-center" id="rx-container">
+                    <label for="treatmentPlan">Customer Feedback:</label>
+                    <textarea id="customerfeedback" name="customerfeedback">${cusFeedback.getComment()}</textarea><br><br>
+                    
+                   <div class="col-12 d-flex justify-content-center" id="rx-container">
                         <table class="table table-bordered col-8">
                             <caption>Medical Prescription</caption>
                             <thead class="thead-dark">

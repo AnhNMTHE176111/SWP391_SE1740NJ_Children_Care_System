@@ -153,6 +153,8 @@
         <servlet-class>controller.managerFeature.manageChangeServiceController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>manageFeedback</servlet-name>
+        <servlet-class>controller.managerFeature.manageFeedback</servlet-class>
         <servlet-name>test</servlet-name>
         <servlet-class>controller.adminFeature.test</servlet-class>
     </servlet>
@@ -305,6 +307,8 @@
         <url-pattern>/manageChangeService</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>manageFeedback</servlet-name>
+        <url-pattern>/feedbackmanage</url-pattern>
         <servlet-name>test</servlet-name>
         <url-pattern>/test</url-pattern>
     </servlet-mapping>
