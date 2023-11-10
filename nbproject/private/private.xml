@@ -11,11 +11,13 @@
             <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/model/User.java</file>
             <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/web/js/managerDashboard.js</file>
             <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAOService.java</file>
+            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/controller/managerFeature/manageServiceController.java</file>
+            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/controller/commonFeature/changeProfile.java</file>
             <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/web/js/admin_dashboard_chart.js</file>
             <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/dal/DBContext.java</file>
             <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/controller/commonFeature/bookingController.java</file>
-            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAOUser.java</file>
             <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/model/Service.java</file>
+            <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAOCustomer.java</file>
             <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/DAO/DAODoctor.java</file>
             <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/src/java/model/GoogleUtils.java</file>
             <file>file:/D:/SWP391/SWP391_SE1740NJ_Children_Care_System/web/js/Booking.js</file>

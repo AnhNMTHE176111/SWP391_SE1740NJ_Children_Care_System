@@ -26,6 +26,22 @@ public class User {
 
     public User() {
     }
+    
+     public User(String status, String firstName, String lastName, String gender, String email, String password, String address, String phone, String dob, String avatar, String createdAt, int roleId) {
+        this.status = status;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.email = email;
+        this.password = password;
+        this.address = address;
+        this.phone = phone;
+        this.dob = dob;
+        this.avatar = avatar;
+ 
+        this.createdAt = createdAt;
+        this.roleId = roleId;
+    }
 
 
     public User(String status, String firstName, String lastName, String gender, String email, String password, String address, String phone, String dob, String avatar, String createdAt, int userId, int roleId) {
