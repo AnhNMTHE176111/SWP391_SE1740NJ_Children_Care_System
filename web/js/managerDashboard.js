@@ -590,6 +590,47 @@ function searchByDoctorName() {
     }
 }
 
+function searchFeedbackByUserName() {
+    let input = document.getElementById('searchInputUserFeedback');
+    let filter = input.value.toLowerCase(); // Convert to lowercase
+    let table = document.querySelector('.feedback-list-container table');
+    let tr = table.getElementsByTagName('tr');
+
+    for (let i = 1; i < tr.length; i++) {
+        let td = tr[i].getElementsByTagName('td')[3]; // 3 is the index for "Customer Name"
+        if (td) {
+            let txtValue = td.textContent || td.innerText;
+            txtValue = txtValue.toLowerCase(); // Convert to lowercase
+            if (txtValue.indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+}
+
+function searchFeedbackByDoctorName() {
+    let input = document.getElementById('searchInputDoctorFeedback');
+    let filter = input.value.toLowerCase(); // Convert to lowercase
+    let table = document.querySelector('.feedback-list-container table');
+    let tr = table.getElementsByTagName('tr');
+
+    for (let i = 1; i < tr.length; i++) {
+        let td = tr[i].getElementsByTagName('td')[4]; // 4 is the index for "Doctor Name"
+        if (td) {
+            let txtValue = td.textContent || td.innerText;
+            txtValue = txtValue.toLowerCase(); // Convert to lowercase
+            if (txtValue.indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+}
+
+
 
 selectedDoctorId = null;
 

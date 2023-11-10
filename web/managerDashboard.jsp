@@ -361,17 +361,23 @@
             </div>
             <div class="feedback-manager-container" style="width: 100%; margin-left: 15%; display: none;">
                 <div class="feedback-list-container">
-                    <h1 class="feedback-container-table"> Feedback Manage</h1>
-<!--                    <div class="top-option">
-                        <form action="admin-manage-user" class="search-name-form" method="post">
-
-                            <input type="text" id="searchInputUser" placeholder="Enter name of User..." onkeyup="searchByUserName()">
-                            <input type="text" id="searchInputDoctor" placeholder="Enter name of Doctor..." onkeyup="searchByDoctorName()">
-                            <button id="btn-show-filter"><i class="fa-solid fa-filter"></i> Filter</button>
+                    <h1 class="feedback-container-table" style="margin-left: 200px"> Feedback Manage</h1>
+                    <div class="top-option">
+                        <div class="searchFeedback" style="margin-left: 15px">
+                            <input type="text" id="searchInputUserFeedback" placeholder="Enter name of User..." onkeyup="searchFeedbackByUserName()">
+                            <input type="text" id="searchInputDoctorFeedback" placeholder="Enter name of Doctor..." onkeyup="searchFeedbackByDoctorName()">
+                        </div>
+                        <form class="feedbackcontainer" action="manageDashboard" method="GET">
+                            <select id="rate" class="feedbackrate" name="rate" style="width: 100px; height: 32px; border-radius: 6px;">
+                                <option value= "">All</option>
+                                <option value="Excellent">Excellent</option>
+                                <option value="Average">Average</option>
+                                <option value="Good">Good</option>
+                                <option value="Poor">Poor</option>
+                            </select>
+                            <button type="submit" class="button-4" role="button" style="margin-right: -40px">Filter</button>
                         </form>
-                        <button id="submitAllChanges"><i class="fa-solid fa-user-plus"></i> Submit all Change</button>
-
-                    </div>-->
+                    </div>
                     <table border="1">
                         <thead>
                             <tr>
