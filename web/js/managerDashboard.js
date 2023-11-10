@@ -598,15 +598,19 @@ function searchByDoctorName() {
 }
 
 function searchByDoctorNameForDoctorManage() {
-    let input = document.getElementById('searchInputDoctor');
+
+    console.log("let find the doctor")
+    let input = document.getElementById('searchInputDoctorForManage');
+    console.log(input);
     let filter = input.value.toUpperCase();
     let table = document.querySelector('.user-list-container table');
     let tr = table.getElementsByTagName('tr');
-
+    
     for (let i = 1; i < tr.length; i++) {
-        let td = tr[i].getElementsByTagName('td')[2]; 
-        if (td) {
-            let txtValue = td.textContent || td.innerText;
+        let doctorNameSpan = tr[i].querySelector('.doctor-name'); 
+        if (doctorNameSpan) {
+            let txtValue = doctorNameSpan.textContent || doctorNameSpan.innerText;
+
             if (txtValue.toUpperCase().indexOf(filter) > -1) {
                 tr[i].style.display = "";
             } else {
@@ -615,6 +619,7 @@ function searchByDoctorNameForDoctorManage() {
         }
     }
 }
+
 
 function searchFeedbackByUserName() {
     let input = document.getElementById('searchInputUserFeedback');

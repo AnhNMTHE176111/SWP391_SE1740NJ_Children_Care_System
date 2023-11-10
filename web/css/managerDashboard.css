@@ -668,19 +668,7 @@ th {
     flex-direction: column;
 }
 
-/* Đặt lại style cho input và select để phù hợp với grid mới */
-input[type="text"],
-input[type="date"],
-input[type="tel"],
-input[type="email"],
-input[type="password"],
-input[type="number"],
-select {
-    width: 100%; /* Chiều rộng tối đa cho mỗi input */
-    padding: 8px; /* Đệm bên trong */
-    margin-top: 5px; /* Khoảng cách phía trên input */
-    margin-bottom: 15px; /* Khoảng cách phía dưới input */
-}
+
 
 label {
     margin: 0;
