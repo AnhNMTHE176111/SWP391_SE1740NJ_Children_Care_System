@@ -141,6 +141,7 @@ public class managerDashboard extends HttpServlet {
 
         request.setAttribute("serviceList", serviceList);
         request.setAttribute("listManageFeedback", listManageFeedback);//AnhLT do
+
         request.setAttribute("specialtyList", specialtyList);
         request.setAttribute("doctorList", doctorList);
         request.setAttribute("dateList", dateList);
@@ -150,10 +151,6 @@ public class managerDashboard extends HttpServlet {
         request.setAttribute("reservationList", reservationList);
         request.getRequestDispatcher("managerDashboard.jsp").forward(request, response);
 
-//            } else {
-//                response.sendRedirect("403.jsp");
-//            }
-//        }
     }
 
     /**
@@ -169,6 +166,7 @@ public class managerDashboard extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         DAOBooking bookingDAO = new DAOBooking();
         DAOUser userDao = new DAOUser();
+        DAOSlotDoctor slotDoctorDao = new DAOSlotDoctor();
 
         String jsonData = new BufferedReader(request.getReader()).lines().collect(Collectors.joining("\n"));
         Gson gson = new Gson();
@@ -182,23 +180,42 @@ public class managerDashboard extends HttpServlet {
                 for (JsonElement element : jsonArray) {
                     JsonObject jsonObject = element.getAsJsonObject();
                     String dataType = jsonObject.get("dataType").getAsString();
-
+                    System.out.println(dataType);
+                    System.out.println("hello");
                     switch (dataType) {
                         case "bookingUpdate":
+
                             if (!handleBookingUpdate(jsonObject, bookingDAO)) {
+
                                 allOperationsSuccess = false;
 
-                                break; // hoặc bỏ qua nếu muốn xử lý tất cả các yêu cầu mà không dừng lại
+                                break;
                             }
                             break;
                         case "addNewDoctor":
-//                            if (!handleNewDoctor(jsonObject, bookingDAO)) {
-//                                allOperationsSuccess = false;
-//                                // Xử lý nếu thêm mới bác sĩ không thành công
-//                                break; // hoặc bỏ qua
-//                            }
-//                            break;
+
+                            if (!handleNewDoctor(jsonObject, userDao)) {
+
+                                allOperationsSuccess = false;
+
+                                break; // hoặc bỏ qua
+                            } else {
+
+                            }
+                            break;
+                        case "selectOffSlot":
+
+                            if (!handleSelectOffSlot(jsonObject, slotDoctorDao)) {
+                                
+                                allOperationsSuccess = false;
+
+                                break; // hoặc bỏ qua
+                            } else {
+
+                            }
+                            break;
                         default:
+                            System.out.println("khong o addDoc");
                             allOperationsSuccess = false;
                             Logger.getLogger(managerDashboard.class.getName()).log(Level.INFO, "Unknown dataType");
                             break;
@@ -236,35 +253,50 @@ public class managerDashboard extends HttpServlet {
     }// </editor-fold>
 
     private boolean handleNewDoctor(JsonObject jsonObject, DAOUser userDao) {
-
+        DAODoctor doctor = new DAODoctor();
+        String avatarBase64 = jsonObject.get("avatar").getAsString();
         String name = jsonObject.get("name").getAsString();
         String gender = jsonObject.get("gender").getAsString();
-        String dob = jsonObject.get("dataOfBirth").getAsString();
-        String specialization = jsonObject.get("specialization").getAsString();
+        String dob = jsonObject.get("dateOfBirth").getAsString();
+        int specializationId = jsonObject.get("specializationId").getAsInt();
+        int serviceId = jsonObject.get("serviceId").getAsInt();
+
         String phone = jsonObject.get("phoneNumber").getAsString();
         String email = jsonObject.get("email").getAsString();
         String password = jsonObject.get("password").getAsString();
         String position = jsonObject.get("position").getAsString();
         String address = jsonObject.get("address").getAsString();
-        String department = jsonObject.get("department").getAsString();
+        String description = jsonObject.get("description").getAsString();
         int yearsOfExperience = jsonObject.get("yearsOfExperience").getAsInt();
-
+        System.out.println(name);
+        System.out.println(gender);
+        System.out.println(dob);
         String[] customerNameParts = name.split(" ");
         String customerLastName = customerNameParts[customerNameParts.length - 1];
         String customerFirstName = name.substring(0, name.lastIndexOf(customerLastName)).trim();
-        
-     //   User user = new User(1, customerFirstName, customerLastName, email, password, address, phone, createdAt, avatar, gender);
-        String day = jsonObject.get("day").getAsString();
-//          if (true) {
-//                // Log và xử lý nếu cập nhật không thành công
-//                System.out.println("Update failed for booking ID: " + bookingId);
-//                return false;
-//            }
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date currentDate = new Date();
+        String createdAt = dateFormat.format(currentDate);
+        int roleId = 2;
+        String status = "1";
+        User user = new User(status, customerFirstName, customerLastName, gender, email, password, address, phone, dob, avatarBase64, createdAt, roleId);
+        int userId = userDao.addNewAccountAsDoctor(user);
+        System.out.println(userId);
+        if (userId == -1) {
+            System.out.println("Failed to add new doctor");
+            return false;
+        } else {
+            doctor.addDoctor(userId, serviceId, specializationId, description, position);
+        }
+
+        System.out.println("New doctor added successfully with user ID: " + userId);
         return true;
     }
 
     private boolean handleBookingUpdate(JsonObject jsonObject, DAOBooking bookingDAO) {
         try {
+
             int bookingId = jsonObject.get("bookingId").getAsInt();
             int status = jsonObject.get("status").getAsInt();
             int slotId = jsonObject.get("slotId").getAsInt();
@@ -292,9 +324,30 @@ public class managerDashboard extends HttpServlet {
             return true;
 
         } catch (Exception ex) {
-            Logger.getLogger(managerDashboard.class.getName()).log(Level.SEVERE, "Error processing JSON object for booking update", ex);
+            Logger.getLogger(managerDashboard.class
+                    .getName()).log(Level.SEVERE, "Error processing JSON object for booking update", ex);
             return false;
         }
+    }
+
+    private boolean handleSelectOffSlot(JsonObject jsonObject, DAOSlotDoctor slotDoctorDao) {
+        int doctorId = jsonObject.get("doctorId").getAsInt();
+        int slotId = jsonObject.get("slotId").getAsInt();
+        int slotStatus = jsonObject.get("slotStatus").getAsInt();
+        String date = jsonObject.get("selectedDate").getAsString();
+        String description = jsonObject.get("description").getAsString(); // Sửa từ "desciprtion" thành "description"
+        System.out.println(doctorId);
+        System.out.println(slotId);
+        System.out.println(slotStatus);
+        System.out.println(date);
+        System.out.println(description);
+
+        if (slotDoctorDao.addSlotDoctor(doctorId, slotId, slotStatus, description, date) == -1) {
+            System.out.println("Failed to add new doctor");
+            return false;
+        }
+
+        return true;
     }
 
 }

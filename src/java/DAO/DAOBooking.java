@@ -63,12 +63,12 @@ public class DAOBooking extends DBContext {
         return null;
     }
 
-    public int addBooking(int status, int customerId, int slotDoctorId, int serviceId) {
+    public int addBooking(int status, int customerId, int slotDoctorId, int serviceId, int medicalInfoId) {
         int generatedId = -1;
 
         try {
 
-            String strSQL = "insert into Booking(BookingStatus, CustomerID, slotDoctorId, ServiceId) values(?,?,?,?); SELECT SCOPE_IDENTITY();";
+            String strSQL = "insert into Booking(BookingStatus, CustomerID, slotDoctorId, ServiceId, MedicalInfoId) values(?,?,?,?,?); SELECT SCOPE_IDENTITY();";
 
             pstm = cnn.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
 
@@ -77,7 +77,7 @@ public class DAOBooking extends DBContext {
             pstm.setInt(3, slotDoctorId);
 
             pstm.setInt(4, serviceId);
-
+            pstm.setInt(5, medicalInfoId);
             if (pstm.executeUpdate() > 0) {
                 try (ResultSet generatedKeys = pstm.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
@@ -393,5 +393,27 @@ public class DAOBooking extends DBContext {
         return cancelBookId;
 
     }
+    
+  public int addMedicalInfo() {
+    int generatedId = -1;
+    try {
+        // Câu truy vấn SQL để thêm bản ghi mới mà không cần cung cấp bất kỳ thông tin chi tiết nào
+        String strSQL = "INSERT INTO MedicalInfo DEFAULT VALUES;"; // Chỉ áp dụng nếu tất cả các trường khác có giá trị mặc định
+
+        pstm = cnn.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
+
+        if (pstm.executeUpdate() > 0) {
+            try (ResultSet generatedKeys = pstm.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    generatedId = generatedKeys.getInt(1); // Lấy ID mới được tạo
+                }
+            }
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return generatedId;
+}
+
 
 }

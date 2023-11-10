@@ -4,7 +4,6 @@
  */
 package DAO;
 
-import com.oracle.wls.shaded.org.apache.bcel.generic.AALOAD;
 import dal.DBContext;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

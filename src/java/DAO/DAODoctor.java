@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -170,7 +171,6 @@ public class DAODoctor extends DBContext {
 //        }
 //        return data;
 //    }
-
     public ArrayList<Doctor> getDoctorList() {
         ArrayList<Doctor> data = new ArrayList<Doctor>();
         String strSQL = "SELECT DoctorId, CONCAT(Users.firstName, ' ', Users.lastName) AS DoctorName\n"
@@ -217,8 +217,8 @@ public class DAODoctor extends DBContext {
         }
         return data;
     }
-    
-      public int getSlotDoctorId(int slotId, int doctorId) {
+
+    public int getSlotDoctorId(int slotId, int doctorId) {
         String sql = "select * from SlotDoctor\n"
                 + "where DoctorId = ? and SlotId = ?";
         int data = 0;
@@ -237,7 +237,6 @@ public class DAODoctor extends DBContext {
         }
         return data;
     }
-
 
     public Slot getSlotBySlotId(int slotId, int docId) {
         String sql = "select * from Slots inner join SlotDoctor ON slots.slotid = SlotDoctor.slotid "
@@ -376,7 +375,9 @@ public class DAODoctor extends DBContext {
     public Doctor getDoctorbyID(int id) {
         List<Doctor> list = new ArrayList<>();
         String query = "select DoctorId, lastName, firstName, Description, avatar from Doctors d, Users u\n"
-                + "where u.userId = d.userId and DoctorId = ? ";
+                + " where u.userId = d.userId and DoctorId = ? "
+        +"where u.userId = d.userId and DoctorId = ? ";
+
         try {
             PreparedStatement pstm = cnn.prepareStatement(query);
             pstm.setInt(1, id);
@@ -395,6 +396,7 @@ public class DAODoctor extends DBContext {
         }
         return null;
     }
+
 
     public Doctor getDoctorbyIDbyTuanAnh(int id) {
         try {
@@ -421,6 +423,7 @@ public class DAODoctor extends DBContext {
         return null;
     }
 
+
     public void changeStatusBySlotIdandDocId(int slotId, int doctorId, int status) {
         String sql = "update Booking set BookingStatus = ? where slotDoctorId in (select slotDoctorId from SlotDoctor where DoctorId = ? and SlotId = ?)";
         try {
@@ -438,6 +441,35 @@ public class DAODoctor extends DBContext {
         } catch (Exception e) {
             System.out.println("<changeStatusBySlotIdandDocId>: " + e.getMessage());
         }
+    }
+
+
+    public int addDoctor(int userId, int experienceYears, int specialtyId, String description, String position) {
+        int generatedId = -1;
+
+        try {
+
+            String strSQL = "insert into Doctors(ExperienceYears, SpecialtyId, Description, Position, userId) values(?,?,?,?,?); SELECT SCOPE_IDENTITY();";
+
+            pstm = cnn.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
+
+            pstm.setInt(1, experienceYears);
+            pstm.setInt(2, specialtyId);
+            pstm.setString(3, description);
+
+            pstm.setString(4, position);
+            pstm.setInt(5, userId);
+            if (pstm.executeUpdate() > 0) {
+                try (ResultSet generatedKeys = pstm.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        generatedId = generatedKeys.getInt(1);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return generatedId;
     }
 
     public Feedback getFeedbackBySlotDoctorId(int slotDoctorId) {
@@ -459,6 +491,7 @@ public class DAODoctor extends DBContext {
             System.out.println("<getFeedbackBySlotDoctorId>: " + e.getMessage());
         }
         return feedback;
+        
     }
 
 }

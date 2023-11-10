@@ -541,13 +541,13 @@ th {
 }
 
 #updateForm button {
-    background-color: #4caf50;
+
     color: white;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+/*    transition: background-color 0.3s ease;*/
 }
 
 #updateForm button:hover {
@@ -581,28 +581,88 @@ th {
     z-index: 10; /* Đảm bảo rằng lớp nền nằm trên các nội dung khác */
 }
 
-/* Style chung cho modal */
-.modal {
+/*.modal {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: white;
-    padding: 40px; /* Tăng đệm để tạo ra không gian nội dung bên trong */
+    padding: 40px;  
     border: 1px solid #ccc;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
     align-items: center;
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
-    width: 90%; /* Tăng chiều rộng của modal */
-    max-width: 800px; /* Đặt giới hạn chiều rộng tối đa để tránh quá rộng trên màn hình lớn */
+    width: 90%;  
+    max-width: 800px;  
+}*/
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f8f8f8; /* Màu nền nhẹ */
+    padding: 40px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    width: 90%;
+    max-width: 800px;
+    z-index: 10; /* Đảm bảo modal nằm trên các phần tử khác */
+    overflow-y: auto; /* Cho phép cuộn nếu nội dung quá dài */
+      flex-direction: row; /* Sắp xếp các phần tử theo chiều ngang */
+    align-items: flex-start; /* Căn các phần tử từ đầu trang */
+    flex-wrap: wrap; /* Cho phép các phần tử chuyển xuống hàng nếu không đủ chỗ */
+}
+.form-left-column, .form-right-column {
+    flex-basis: 48%; /* Đặt cơ sở chiều rộng cho cả hai cột */
+    max-width: 48%; /* Đặt chiều rộng tối đa cho cả hai cột */
 }
 
-.modal-content {
-    width: 100%; /* Điều chỉnh chiều rộng của nội dung modal */
+.rightSide { /* Lớp này sẽ được áp dụng cho form-right-column */
+    /* Các thuộc tính CSS khác như margin-left có thể không cần thiết */
 }
 
+/* Điều chỉnh lại cho các nút nếu cần */
+#addDoctorForm > input[type="submit"],
+#addDoctorForm > button {
+    width: auto; /* Đặt chiều rộng tự động cho các nút */
+    margin-top: 20px; /* Khoảng cách từ top */
+}
+
+/* Cải thiện nhãn và trường nhập liệu */
+.modal label {
+    display: block;
+    margin-top: 10px;
+    color: #333;
+    font-weight: bold;
+}
+@media (max-width: 768px) {
+    .form-left-column, .form-right-column {
+        flex-basis: 100%; /* Mỗi cột chiếm toàn bộ chiều rộng */
+        max-width: 100%; /* Điều chỉnh lại chiều rộng tối đa */
+        margin-bottom: 20px; /* Thêm khoảng cách dưới cùng cho di động */
+    }
+}
+
+
+/* Các nút */
+.modal input[type="submit"],
+.modal button {
+    padding: 10px 20px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #5c6bc0;
+    color: white;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
 .form-group {
     display: flex;
     flex-direction: column;
@@ -625,10 +685,29 @@ select {
 label {
     margin: 0;
     font-weight: bold; /* Làm đậm chữ cho label */
+
 }
 
+.modal input[type="submit"]:hover,
+.modal button:hover {
+    background-color: #3f51b5;
+}
+
+.modal h2 {
+    color: #5c6bc0;
+}
+
+/* Nếu bạn muốn thêm một overlay làm mờ nền */
 .overlay {
     position: fixed;
+
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Màu nền làm mờ */
+    z-index: 5; /* Đảm bảo overlay nằm dưới modal và trên nội dung khác */
+
     width: 100%;
     height: 100%;
     top: 0;
@@ -638,6 +717,7 @@ label {
     justify-content: center;
     align-items: center;
     z-index: 10;
+
 }
 
 .button-4 {
@@ -665,6 +745,69 @@ label {
     white-space: nowrap;
     word-wrap: break-word;
 }
+
+
+
+.blur-background {
+    opacity: 0.3/* Làm mờ nội dung */
+
+}
+
+
+
+
+
+#updateForm button.save {
+    background-color: #007bff; /* Màu xanh dương */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#updateForm button.save:hover {
+    background-color: #0056b3; /* Màu xanh dương khi hover */
+}
+
+#updateForm button.close {
+    background-color: #5c6bc0; /* Màu xanh dương nhạt */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#updateForm button.close:hover {
+    background-color: #3f51b5; /* Màu xanh dương nhạt khi hover */
+}
+
+#updateForm button.grid-date {
+    background-color: #e0e0e0; /* Màu xám cho các nút khác */
+    color: #000;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+
+
+
+#updateForm button.grid-date:hover {
+    background-color: #d5d5d5; /* Màu xám khi hover */
+}
+
+.selected-slot {
+    background-color: red !important;
+    color: white; /* Màu chữ cho slot được chọn */
+    /* Thêm các thuộc tính khác nếu muốn, như border hoặc box-shadow */
+}
+
 
 .button-4:hover {
     background-color: #F3F4F6;
@@ -696,3 +839,4 @@ label {
 .button-4:-webkit-details-marker {
     display: none;
 }
+

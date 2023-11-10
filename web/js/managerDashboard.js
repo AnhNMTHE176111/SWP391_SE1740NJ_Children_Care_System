@@ -423,8 +423,8 @@ function isSlotBooked(doctorId, slotId, day) {
 //            }
 //        }
 //    });
-    
-    function makeEditable(btn) {
+
+function makeEditable(btn) {
     const row = btn.closest('tr');
     row.style.backgroundColor = "#FFD700";
     row.classList.add("edited");
@@ -447,7 +447,7 @@ function isSlotBooked(doctorId, slotId, day) {
                     const timeRegex = /^([0-1][0-9]|2[0-3]):00$/;
                     const hour = newValue.substring(0, 2);
                     if (timeRegex.test(newValue) && hour >= '08' && hour <= '16') {
-                            const doctorId = row.querySelector('input[name="doctorId"]').value;
+                        const doctorId = row.querySelector('input[name="doctorId"]').value;
                         const day = row.querySelector('input[name="day"]').value;
                         const correspondingSlotId = getSlotIdFromStartTime(newValue);
                     } else {
@@ -457,18 +457,18 @@ function isSlotBooked(doctorId, slotId, day) {
                 } else if (editable.getAttribute('name') === 'day') {
                     const dateRegex = /^([0-9]{2})-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/;
                     if (dateRegex.test(newValue)) {
-                          hiddenInputs[index].value = newValue;
+                        hiddenInputs[index].value = newValue;
                         editable.textContent = newValue;
                     } else {
                         alert("Date must be in yy-mm-dd format.");
                         revertInput(hiddenInputs[index], editable, oldValue); // Revert if invalid
                     }
                 } else {
-                       hiddenInputs[index].value = newValue;
+                    hiddenInputs[index].value = newValue;
                     editable.textContent = newValue;
                 }
             } else {
-             
+
                 revertInput(hiddenInputs[index], editable, oldValue);
             }
         }
@@ -509,7 +509,7 @@ document.getElementById("submitAllChanges").addEventListener("click", function (
         }
 
         const data = {
-               dataType: 'bookingUpdate',
+            dataType: 'bookingUpdate',
             bookingId: row.querySelector('input[name="bookingId"]').value,
             status: row.querySelector('input[name="status"]').value,
             slotId: correspondingSlotId,
@@ -537,11 +537,18 @@ function saveAllChangesToDatabase(data) {
             .then(response => response.json())
             .then(result => {
                 if (result.success) {
+
                     alert('Update successful');
                     document.querySelectorAll(".edited").forEach(row => {
                         row.classList.remove("edited");
 
+                        ;
+
+
+
                     });
+                                            document.querySelector('.doctor-manager-container').classList.remove('blur-background');
+
                 } else {
                     alert('Update failed: ' + result.message);
                 }
@@ -635,75 +642,35 @@ function searchFeedbackByDoctorName() {
 selectedDoctorId = null;
 
 function changeSlot(doctorId) {
+
     console.log("123");
     selectedDoctorId = doctorId;
     var updateForm = document.getElementById("updateForm");
     updateForm.style.display = "block";
     console.log("456");
+    document.querySelector('.doctor-manager-container').classList.add('blur-background');
+
 }
 
-//let slotSelected = false;
-//let selectedSlot = null;
-//let selectedDateSlot = null;
-//
-//const slotList2 = document.querySelectorAll(".grid-date[name='slot']");
-//const dateSelect = document.querySelector(".date-hidden");
-//
-//slotList2.forEach(function (slot) {
-//    slot.addEventListener("click", function () {
-//        if (slotSelected) {
-//            slot.classList.remove("selected");
-//            slotSelected = false;
-//
-//            if (selectedDateSlot) {
-//                selectedDateSlot.classList.remove("selected");
-//            }
-//            daysList.forEach(date => date.classList.remove('no-click'));
-//
-//            selectedSlot = null;
-//            selectedDateSlot = null;
-//            selectedSlotValue = null;
-//
-//            return;
-//        }
-//
-//        slotList.forEach(function (otherSlot) {
-//            otherSlot.classList.remove("selected");
-//        });
-//
-//        slot.classList.add("selected");
-//        selectedSlot = slot;
-//        const selectedDate = slot.getAttribute("data-date");
-//        selectedDateSlot = document.querySelector(`.date-slot[name='date'][data-date='${selectedDate}']`);
-//
-//        daysList.forEach(function (date) {
-//            date.classList.remove("selected");
-//        });
-//
-//        if (selectedDateSlot) {
-//            selectedDateSlot.classList.add("selected");
-//        }
-//
-//        slotSelected = true;
-//        daysList.forEach(date => date.classList.add('no-click'));
-//    });
-//});
+
 
 function onSlotSelect(button) {
     const slotId = button.getAttribute("data-slot-id");
     const startTime = button.textContent;
-    const updateForm = button.closest('#updateForm'); // Get the nearest parent form
-    const selectedDate = updateForm.querySelector("#updateDate").value; // Use querySelector to find the date input within the form
+    const updateForm = button.closest('#updateForm'); // Lấy form gần nhất chứa nút được nhấn
+    const selectedDate = updateForm.querySelector("#updateDate").value; // Truy xuất giá trị ngày đã chọn
+    const description = updateForm.querySelector("#updateDescription").value; // Truy xuất giá trị mô tả
 
     const slotIndex = selectedSlots.findIndex(slot => slot.slotId === slotId);
     if (slotIndex !== -1) {
-        button.classList.remove("selected");
-        selectedSlots.splice(slotIndex, 1); // Remove the slot from the array if it's already selected
+        button.classList.remove("selected-slot"); // Loại bỏ lớp khi bỏ chọn
+        selectedSlots.splice(slotIndex, 1);
     } else {
-        button.classList.add("selected");
-        selectedSlots.push({ slotId, startTime, selectedDate }); // Push new slot object to the array
+        button.classList.add("selected-slot"); // Thêm lớp khi chọn
+        selectedSlots.push({slotId, startTime, selectedDate, description});
     }
 }
+
 
 let selectedSlots = [];
 
@@ -712,15 +679,17 @@ function updateDoctorSlot() {
     updateForm.style.display = "none"; // Hide the form
 
     if (selectedSlots.length > 0) {
-        const dataToSend = selectedSlots.map(slot => ({ // Map over selectedSlots to create the data structure
-            doctorId: selectedDoctorId,
-            slotId: slot.slotId,
-            slotStatus: 1,
-            selectedDate: slot.selectedDate
-        }));
+        const dataToSend = selectedSlots.map(slot => ({// Map over selectedSlots to create the data structure
+                dataType: 'selectOffSlot',
+                doctorId: selectedDoctorId,
+                slotId: slot.slotId,
+                slotStatus: 1,
+                selectedDate: slot.selectedDate,
+                description: slot.description
+            }));
 
         console.log("Data to send:", dataToSend);
-        saveAllChangesToDatabase(dataToSend); // You need to define this function to handle the data sending
+        saveAllChangesToDatabase(dataToSend);
     } else {
         console.log("No slots selected.");
     }
@@ -729,48 +698,67 @@ function updateDoctorSlot() {
 
 document.getElementById('addDoctor').addEventListener('click', function () {
     var overlay = document.createElement('div');
-   // overlay.className = 'overlay';
-   // document.body.appendChild(overlay);
+
+    document.querySelector('.doctor-manager-container').classList.add('blur-background');
     document.getElementById('newDoctorModal').style.display = 'block';
 });
 
 document.getElementById('closeModal').addEventListener('click', function () {
     document.getElementById('newDoctorModal').style.display = 'none';
-//    var overlay = document.querySelector('.overlay');
-//    if (overlay) {
-//        document.body.removeChild(overlay);
-//    }
+    document.querySelector('.doctor-manager-container').classList.remove('blur-background');
+    ;
+
+});
+
+document.getElementById('closeSlotSelect').addEventListener('click', function () {
+    document.getElementById('updateForm').style.display = 'none';
+    document.querySelector('.doctor-manager-container').classList.remove('blur-background');
+    ;
+
 });
 
 
 
 document.getElementById('addDoctorForm').onsubmit = function (event) {
-    event.preventDefault(); // Prevent the default form submission
+    event.preventDefault(); // Ngăn chặn hành vi mặc định của form submission
 
     const form = event.target;
-    const newDoctorData = {
-        dataType: 'newDoctor',
-        name: form.doctorName.value.trim(),
-        gender: form.doctorGender.value,
-        dateOfBirth: form.doctorDob.value,
-        specializationId: form.doctorSpecialization.value, // Assumes this is the correct SpecialtyId
-        serviceId: form.doctorService.value, // Assumes this is the correct ServiceId
-        phoneNumber: form.doctorPhone.value.trim(),
-        email: form.doctorEmail.value.trim(),
-        password: form.doctorPassword.value, // Make sure to hash or encrypt as needed
-        position: form.doctorPosition.value.trim(),
-        address: form.doctorAddress.value.trim(),
-        department: form.doctorDepartment.value, // Assumes this value is an ID and not just text
-        yearsOfExperience: parseInt(form.doctorExperience.value, 10) // Parse as integer
+    const fileInput = form.doctorAvatar.files[0];
+
+    const reader = new FileReader();
+    reader.onloadend = function () {
+        const newDoctorData = {
+            dataType: 'addNewDoctor',
+            name: form.doctorName.value.trim(),
+            gender: form.doctorGender.value,
+            dateOfBirth: form.doctorDob.value,
+            specializationId: parseInt(form.doctorSpecialization.value, 10),
+            serviceId: parseInt(form.doctorService.value, 10),
+            phoneNumber: form.doctorPhone.value.trim(),
+            email: form.doctorEmail.value.trim(),
+            password: form.doctorPassword.value,
+            position: form.doctorPosition.value.trim(),
+            address: form.doctorAddress.value.trim(),
+            description: form.doctorDescription.value,
+            yearsOfExperience: parseInt(form.doctorExperience.value, 10),
+            avatar: reader.result
+        };
+
+        if (!newDoctorData.specializationId || !newDoctorData.serviceId) {
+            alert('Please select both a specialization and a service.');
+            return;
+        }
+
+        console.log(newDoctorData);
+
+        saveAllChangesToDatabase([newDoctorData]);
     };
 
-    // Ensure that both a specialization and service have been selected
-    if (!newDoctorData.specializationId || !newDoctorData.serviceId) {
-        alert('Please select both a specialization and a service.');
-        return;
+    if (fileInput) {
+        reader.readAsDataURL(fileInput);
+    } else {
+        alert('Please select an avatar image.');
     }
-
-    saveAllChangesToDatabase([newDoctorData]);
 };
 
 function updateServicesDropdown(specialtyId) {
@@ -781,8 +769,8 @@ function updateServicesDropdown(specialtyId) {
     console.log(services);
     serviceSelect.length = 0;
 
-    services.forEach(function(service) {
-        if(service.SpecialtyId === specialtyId) {
+    services.forEach(function (service) {
+        if (service.SpecialtyId === specialtyId) {
             const option = document.createElement('option');
             option.value = service.ServiceId;
             option.textContent = service.ServiceName;
@@ -794,12 +782,12 @@ function updateServicesDropdown(specialtyId) {
     serviceSelect.dispatchEvent(event);
 }
 
-document.getElementById('doctorSpecialization').addEventListener('change', function() {
+document.getElementById('doctorSpecialization').addEventListener('change', function () {
     console.log("let select service")
     updateServicesDropdown(this.value);
 });
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     var specialtySelect = document.getElementById('doctorSpecialization');
     if (specialtySelect.selectedIndex !== -1) { // Check if there are any options
         updateServicesDropdown(specialtySelect.value);
