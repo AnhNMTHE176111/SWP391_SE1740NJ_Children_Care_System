@@ -62,7 +62,7 @@ public class manageFeedback extends HttpServlet {
         DAOFeedback feedbackDao = new DAOFeedback();
         List <Feedback> listManageFeedback = feedbackDao.getListManageFeedback();
         request.setAttribute("listManageFeedback", listManageFeedback);
-                request.getRequestDispatcher("managerDashboard.jsp").forward(request, response);
+        request.getRequestDispatcher("managerDashboard.jsp").forward(request, response);
     } 
 
     /** 

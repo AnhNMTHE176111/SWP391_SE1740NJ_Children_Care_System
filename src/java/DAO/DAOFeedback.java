@@ -224,12 +224,14 @@ public class DAOFeedback extends DBContext {
         }
     }
 
-    public int updateFeedbackByRateId(String rateValue, int rateId) {
+    public int updateFeedbackByRateId(String rateValue, int rateId, String comment) {
         try {
-            String strSQL = "update Feedback set RatingValue = ? where RatingID = ?";
+            String strSQL = "update Feedback set RatingValue = ?, Comment = ?\n"
+                    + "where RatingID = ?";
             pstm = cnn.prepareStatement(strSQL);
             pstm.setString(1, rateValue);
-            pstm.setInt(2, rateId);
+            pstm.setString(2, comment);
+            pstm.setInt(3, rateId);
             rs = pstm.executeQuery();
 
         } catch (SQLException e) {
@@ -238,6 +240,80 @@ public class DAOFeedback extends DBContext {
             System.out.println("updateFeedbackByRateId: " + e.getMessage());
         }
         return rateId;
+    }
+
+    public void deleteFeedbackByRateId(int rateId) {
+        try {
+            String strSQL = "DELETE FROM Feedback WHERE RatingID = ?";
+            pstm = cnn.prepareStatement(strSQL);
+            pstm.setInt(1, rateId);
+            pstm.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("SQL deleteFeedbackByRateId: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("deleteFeedbackByRateId: " + e.getMessage());
+        }
+    }
+
+    public List<Feedback> getListManageFeedbackByRate(String rate) {
+        ArrayList<Feedback> listManageFeedback = new ArrayList<>();
+        try {
+            String strSQL = "SELECT\n"
+                    + "    f.*,\n"
+                    + "    u.firstName,\n"
+                    + "    u.lastName,\n"
+                    + "    b.BookingId,\n"
+                    + "    k.doctorFirstName,\n"
+                    + "    k.doctorLastName\n"
+                    + "FROM\n"
+                    + "    Feedback f\n"
+                    + "JOIN\n"
+                    + "    Booking b ON f.MedicalInfoID = b.MedicalInfoId\n"
+                    + "JOIN\n"
+                    + "    Customers c ON b.CustomerID = c.Id\n"
+                    + "JOIN\n"
+                    + "    Users u ON c.UserId = u.userId\n"
+                    + "JOIN\n"
+                    + "    SlotDoctor sd ON b.slotDoctorId = sd.slotDoctorId\n"
+                    + "JOIN\n"
+                    + "    (\n"
+                    + "        SELECT\n"
+                    + "            u.firstName AS doctorFirstName,\n"
+                    + "            u.lastName AS doctorLastName,\n"
+                    + "            d.DoctorId\n"
+                    + "        FROM\n"
+                    + "            Users u\n"
+                    + "        JOIN\n"
+                    + "            Doctors d ON d.userId = u.userId\n"
+                    + "    ) k ON k.DoctorId = sd.DoctorId\n"
+                    + "WHERE f.RatingValue = ?";
+
+            pstm = cnn.prepareStatement(strSQL);
+            pstm.setString(1, rate);
+            rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                Feedback feedback = new Feedback();
+                feedback.setRatingId(Integer.parseInt(rs.getString(1)));
+                feedback.setMedicalInfoId(Integer.parseInt(rs.getString(2)));
+                feedback.setRatingValue(rs.getString(3));
+                feedback.setComment(rs.getString(4));
+                feedback.setUserFirstName(rs.getString(5));
+                feedback.setUserLastName(rs.getString(6));
+                feedback.setBookingId(Integer.parseInt(rs.getString(7)));
+                feedback.setDoctorFirstName(rs.getString(8));
+                feedback.setDoctorLastName(rs.getString(9));
+                listManageFeedback.add(feedback);
+            }
+
+            return listManageFeedback;
+        } catch (SQLException e) {
+            System.out.println("SQL getListManageFeedback: " + e.getMessage());
+            return null;
+        } catch (Exception e) {
+            System.out.println("getListManageFeedback: " + e.getMessage());
+            return null;
+        }
     }
 
 }

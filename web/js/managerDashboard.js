@@ -189,6 +189,7 @@ let chart = new Chart(ctx2, {
 //});
 
 document.getElementById('reservationManager').addEventListener('click', function () {
+    const feedbackManagerContainer = document.querySelector('.feedback-manager-container');
     const analyticContainer = document.querySelector('.analytic-container');
     const reservationManagerContainer = document.querySelector('.reservation-manager-container');
     const doctorManageContainer = document.querySelector('.doctor-manager-container');
@@ -202,9 +203,34 @@ document.getElementById('reservationManager').addEventListener('click', function
     if (reservationManagerContainer) {
         reservationManagerContainer.style.display = "block";
     }
+    if (feedbackManagerContainer) {
+        feedbackManagerContainer.style.display = "none";
+    }
+});
+
+document.getElementById('feedbackManager').addEventListener('click', function () {
+    const feedbackManagerContainer = document.querySelector('.feedback-manager-container');
+    const analyticContainer = document.querySelector('.analytic-container');
+    const reservationManagerContainer = document.querySelector('.reservation-manager-container');
+    const doctorManageContainer = document.querySelector('.doctor-manager-container');
+    if (analyticContainer) {
+        analyticContainer.style.display = "none";
+
+    }
+    if (doctorManageContainer) {
+        doctorManageContainer.style.display = "none";
+    }
+    if (reservationManagerContainer) {
+        reservationManagerContainer.style.display = "none";
+    }
+    if (feedbackManagerContainer) {
+        feedbackManagerContainer.style.display = "block";
+    }
+    
 });
 
 document.getElementById('analyticsMenu').addEventListener('click', function () {
+    const feedbackManagerContainer = document.querySelector('.feedback-manager-container');
     const analyticContainer = document.querySelector('.analytic-container');
     const reservationManagerContainer = document.querySelector('.reservation-manager-container');
     const doctorManageContainer = document.querySelector('.doctor-manager-container');
@@ -217,14 +243,14 @@ document.getElementById('analyticsMenu').addEventListener('click', function () {
     }
     if (analyticContainer) {
         analyticContainer.style.display = "block";
-
-
-
     }
-
+    if (feedbackManagerContainer) {
+        feedbackManagerContainer.style.display = "none";
+    }
 });
 
 document.getElementById('doctorManager').addEventListener('click', function () {
+    const feedbackManagerContainer = document.querySelector('.feedback-manager-container');
     const analyticContainer = document.querySelector('.analytic-container');
     const reservationManagerContainer = document.querySelector('.reservation-manager-container');
     const doctorManageContainer = document.querySelector('.doctor-manager-container');
@@ -240,7 +266,9 @@ document.getElementById('doctorManager').addEventListener('click', function () {
     if (doctorManageContainer) {
         doctorManageContainer.style.display = "block";
     }
-
+    if (feedbackManagerContainer) {
+        feedbackManagerContainer.style.display = "none";
+    }
 
 });
 
@@ -568,6 +596,47 @@ function searchByDoctorName() {
         }
     }
 }
+
+function searchFeedbackByUserName() {
+    let input = document.getElementById('searchInputUserFeedback');
+    let filter = input.value.toLowerCase(); // Convert to lowercase
+    let table = document.querySelector('.feedback-list-container table');
+    let tr = table.getElementsByTagName('tr');
+
+    for (let i = 1; i < tr.length; i++) {
+        let td = tr[i].getElementsByTagName('td')[3]; // 3 is the index for "Customer Name"
+        if (td) {
+            let txtValue = td.textContent || td.innerText;
+            txtValue = txtValue.toLowerCase(); // Convert to lowercase
+            if (txtValue.indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+}
+
+function searchFeedbackByDoctorName() {
+    let input = document.getElementById('searchInputDoctorFeedback');
+    let filter = input.value.toLowerCase(); // Convert to lowercase
+    let table = document.querySelector('.feedback-list-container table');
+    let tr = table.getElementsByTagName('tr');
+
+    for (let i = 1; i < tr.length; i++) {
+        let td = tr[i].getElementsByTagName('td')[4]; // 4 is the index for "Doctor Name"
+        if (td) {
+            let txtValue = td.textContent || td.innerText;
+            txtValue = txtValue.toLowerCase(); // Convert to lowercase
+            if (txtValue.indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+}
+
 
 
 selectedDoctorId = null;

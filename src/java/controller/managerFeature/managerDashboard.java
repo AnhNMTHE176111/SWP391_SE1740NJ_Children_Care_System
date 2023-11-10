@@ -121,6 +121,8 @@ public class managerDashboard extends HttpServlet {
         DAODoctor doctor = new DAODoctor();
         DAOSpecialty specialty = new DAOSpecialty();
         DAOService service = new DAOService();
+        DAOFeedback feedbackDao = new DAOFeedback();//AnhLT do
+        String rate = request.getParameter("rate");//AnhLT do
 
         List<Service> serviceList = service.getListServiceBySpecialty();
         List<Specialty> specialtyList = specialty.getListSpecialty();
@@ -129,9 +131,17 @@ public class managerDashboard extends HttpServlet {
         List<Booking> reservationList = booking.getBookingList();
         List<Booking> reservationListForManage = booking.getBookingListForManage();
         List<SlotDoctor> availeSlot = slotDoctor.displayBookedSlotList();
+        List<Feedback> listManageFeedback;//AnhLT do
+        if (rate != null && !rate.isEmpty()) {
+            listManageFeedback = feedbackDao.getListManageFeedbackByRate(rate);//AnhLT do
+        } else {
+            listManageFeedback = feedbackDao.getListManageFeedback();//AnhLT do
+        }
         dateList = getDateList();
 
         request.setAttribute("serviceList", serviceList);
+        request.setAttribute("listManageFeedback", listManageFeedback);//AnhLT do
+
         request.setAttribute("specialtyList", specialtyList);
         request.setAttribute("doctorList", doctorList);
         request.setAttribute("dateList", dateList);

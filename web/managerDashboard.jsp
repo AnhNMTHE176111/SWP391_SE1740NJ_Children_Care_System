@@ -87,6 +87,13 @@
                         <i class="fa-solid fa-users"></i>Reservation Manager
                     </li>
                     <li id="doctorManager"><i class="fa-solid fa-gear"></i>Doctors Manage</li>
+<<<<<<< HEAD
+=======
+
+                    <li id="feedbackManager"><i class="fa-solid fa-comments"></i>Feedback Manager</li>
+                    <li id="manageCustomer"><i class="far fa-angry"></i><a href="manageCustomer" style="text-decoration: none;color: white;">Customer Manager</a></li>
+                    <li id="manageService"><i class="far fa-server"></i><a href="manageService" style="text-decoration: none;color: white;" >Service Manager</a></li>
+>>>>>>> main
                     <li>
                         <a href="/managePost">
                             <i class="fa-solid fa-gear"></i> Manage Post
@@ -280,15 +287,129 @@
                         </tbody>
                     </table>
 
+<<<<<<< HEAD
 
 
+=======
+                    <div id="updateForm" style="display: none;">
+                        <h2>Bảng Đăng Ký Slot</h2>
+                        <label for="updateDate">Ngày:</label>
+                        <input type="date" id="updateDate" name="updateDate">
+                        <label for="updateSlots">Danh sách slot:</label>
+                        <div class="date-hidden">
+                            <div class="date">
+                                <c:forEach var="slot" items="${slotList}">
+                                    <button class="grid-date" name="slot" data-slot-id="${slot.slotId}" onclick="onSlotSelect(this)">${slot.startTime}</button>
+                                </c:forEach>
+                            </div>
+                        </div>
+                        <button onclick="updateDoctorSlot();">Lưu</button>
+                    </div>
+
+                    <div id="newDoctorModal" class="modal" style="display:none;">
+                        <form id="addDoctorForm">
+                            <h2>Bảng Đăng Ký Bác Sĩ</h2>
+                            <label for="doctorName">Name:</label>
+                            <input type="text" id="doctorName" name="doctorName" required><br>
+>>>>>>> main
 
 
+<<<<<<< HEAD
 
 
+=======
+                            <label for="doctorDob">Date of Birth:</label>
+                            <input type="date" id="doctorDob" name="doctorDob" required><br>
+
+                            <label for="doctorSpecialization">Specialization:</label>
+                            <select id="doctorSpecialization" name="doctorSpecialization" required>
+                                <c:forEach var="rs" items="${specialtyList}" varStatus="loop">
+                                    <option value="${rs.getSpecialtyId()}">${rs.getSpecialtyName()}</option>
+                                </c:forEach>
+                            </select><br>
+
+                            <label for="doctorService">Service:</label>
+                            <select id="doctorService" name="doctorService" required>
+
+                            </select><br>
+
+                            <label for="doctorPhone">Phone Number:</label>
+                            <input type="tel" id="doctorPhone" name="doctorPhone" required><br>
+
+                            <label for="doctorEmail">Email:</label>
+                            <input type="email" id="doctorEmail" name="doctorEmail" required><br>
+
+                            <label for="doctorPassword">Password:</label>
+                            <input type="password" id="doctorPassword" name="doctorPassword" required><br>
+
+                            <label for="doctorPosition">Position:</label>
+                            <input type="text" id="doctorPosition" name="doctorPosition" required><br>
+
+                            <label for="doctorAddress">Address:</label>
+                            <input type="text" id="doctorAddress" name="doctorAddress"><br>
+
+                            <label for="doctorDepartment">Department:</label>
+                            <select id="doctorDepartment" name="doctorDepartment">
+                                <option value="cardiology">Cardiology</option>
+                                <!-- Thêm các lựa chọn khác ở đây -->
+                            </select><br>
+
+                            <label for="doctorExperience">Years of Experience:</label>
+                            <input type="number" id="doctorExperience" name="doctorExperience" min="0" step="1"><br>
+
+                            <input type="submit" value="Submit">
+                            <button type="button" id="closeModal">Close</button>
+                        </form>
+                    </div>
+>>>>>>> main
                 </div>
-
-
+            </div>
+            <div class="feedback-manager-container" style="width: 100%; margin-left: 15%; display: none;">
+                <div class="feedback-list-container">
+                    <h1 class="feedback-container-table" style="margin-left: 200px"> Feedback Manage</h1>
+                    <div class="top-option">
+                        <div class="searchFeedback" style="margin-left: 15px">
+                            <input type="text" id="searchInputUserFeedback" placeholder="Enter name of User..." onkeyup="searchFeedbackByUserName()">
+                            <input type="text" id="searchInputDoctorFeedback" placeholder="Enter name of Doctor..." onkeyup="searchFeedbackByDoctorName()">
+                        </div>
+                        <form class="feedbackcontainer" action="manageDashboard" method="GET">
+                            <select id="rate" class="feedbackrate" name="rate" style="width: 100px; height: 32px; border-radius: 6px;">
+                                <option value= "">All</option>
+                                <option value="Excellent">Excellent</option>
+                                <option value="Average">Average</option>
+                                <option value="Good">Good</option>
+                                <option value="Poor">Poor</option>
+                            </select>
+                            <button type="submit" class="button-4" role="button" style="margin-right: -40px">Filter</button>
+                        </form>
+                    </div>
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th>Booking Id</th>
+                                <th>Rating</th>
+                                <th>Comment</th>
+                                <th>Customer Name</th>
+                                <th>Doctor Name</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach var="mf" items="${listManageFeedback}">
+                                <tr>
+                                    <td><span class="editable">${mf.bookingId}</span><input type="hidden" class="hidden-input" value="${mf.bookingId}" /></td>
+                                    <td><span class="editable">${mf.ratingValue}</span><input type="hidden" class="hidden-input" value="${mf.ratingValue}" /></td>
+                                    <td><span class="editable">${mf.comment}</span><input type="hidden" class="hidden-input" value="${mf.comment}" /></td>
+                                    <td><span class="editable">${mf.userFirstName} ${mf.userLastName}</span><input type="hidden" class="hidden-input" value="${mf.userFirstName} ${mf.userLastName}" /></td>
+                                    <td><span class="editable">${mf.doctorFirstName} ${mf.doctorLastName}</span><input type="hidden" class="hidden-input" value="${mf.doctorFirstName} ${mf.doctorLastName}" /></td>
+                                    <td>
+                                        <button type="submit"><a href="/feedbackupdate?get&id=${mf.ratingId}" style="text-decoration: none;">Detail</a></button>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div id="newDoctorModal" class="modal" style="display:none;">

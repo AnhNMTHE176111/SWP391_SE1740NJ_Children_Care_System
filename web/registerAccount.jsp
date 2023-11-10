@@ -56,10 +56,10 @@
                     </div>
                     <div class="register_form_div">
                         <label>
-                            <input type="radio" name="gender" value="male"/> Male
+                            <input type="radio" name="gender" value="Male"/> Male
                         </label>
                         <label>
-                            <input type="radio" name="gender" value="female"/> Female
+                            <input type="radio" name="gender" value="Female"/> Female
                         </label>
                     </div>
                     <div class="register_form_div">

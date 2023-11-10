@@ -162,8 +162,6 @@ public class bookingController extends HttpServlet {
     }
 
 
-
-
     /**
      * Handles the HTTP <code>POST</code> method.
      *
