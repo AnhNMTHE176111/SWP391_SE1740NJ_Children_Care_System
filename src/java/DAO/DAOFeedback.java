@@ -89,7 +89,7 @@ public class DAOFeedback extends DBContext {
             return null;
         }
     }
- 
+
     public ArrayList<Feedback> getListFeedbackByRate(int doctorId, String rate) {
         ArrayList<Feedback> listFeedback = new ArrayList<>();
         try {
@@ -130,5 +130,114 @@ public class DAOFeedback extends DBContext {
         }
     }
 
+    public List<Feedback> getListManageFeedback() {
+        ArrayList<Feedback> listManageFeedback = new ArrayList<>();
+        try {
+            String strSQL = "	SELECT f.*,\n"
+                    + "		u.firstName,\n"
+                    + "		u.lastName,\n"
+                    + "		b.BookingId,\n"
+                    + "		k.doctorFirstName,\n"
+                    + "		k.doctorLastName\n"
+                    + "	FROM Feedback f\n"
+                    + "	JOIN Booking b ON f.MedicalInfoID = b.MedicalInfoId\n"
+                    + "	JOIN Customers c ON b.CustomerID = c.Id\n"
+                    + "	JOIN Users u ON c.UserId = u.userId\n"
+                    + "	JOIN SlotDoctor sd ON b.slotDoctorId = sd.slotDoctorId\n"
+                    + "	JOIN (\n"
+                    + "		select u.firstName as doctorFirstName,\n"
+                    + "		u.lastName as doctorLastName, d.DoctorId\n"
+                    + "		from Users u\n"
+                    + "		join Doctors d ON d.userId = u.userId\n"
+                    + "	) k ON k.DoctorId = sd.DoctorId";
+
+            pstm = cnn.prepareStatement(strSQL);
+            rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                Feedback feedback = new Feedback();
+                feedback.setRatingId(Integer.parseInt(rs.getString(1)));
+                feedback.setMedicalInfoId(Integer.parseInt(rs.getString(2)));
+                feedback.setRatingValue(rs.getString(3));
+                feedback.setComment(rs.getString(4));
+                feedback.setUserFirstName(rs.getString(5));
+                feedback.setUserLastName(rs.getString(6));
+                feedback.setBookingId(Integer.parseInt(rs.getString(7)));
+                feedback.setDoctorFirstName(rs.getString(8));
+                feedback.setDoctorLastName(rs.getString(9));
+                listManageFeedback.add(feedback);
+            }
+
+            return listManageFeedback;
+        } catch (SQLException e) {
+            System.out.println("SQL getListManageFeedback: " + e.getMessage());
+            return null;
+        } catch (Exception e) {
+            System.out.println("getListManageFeedback: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public Feedback getListManageFeedbackByRateId(int rateId) {
+        try {
+            String strSQL = "SELECT f.*,\n"
+                    + "		u.firstName,\n"
+                    + "		u.lastName,\n"
+                    + "		b.BookingId,\n"
+                    + "		k.doctorFirstName,\n"
+                    + "		k.doctorLastName\n"
+                    + "	FROM Feedback f\n"
+                    + "	JOIN Booking b ON f.MedicalInfoID = b.MedicalInfoId\n"
+                    + "	JOIN Customers c ON b.CustomerID = c.Id\n"
+                    + "	JOIN Users u ON c.UserId = u.userId\n"
+                    + "	JOIN SlotDoctor sd ON b.slotDoctorId = sd.slotDoctorId\n"
+                    + "	JOIN (\n"
+                    + "		select u.firstName as doctorFirstName,\n"
+                    + "		u.lastName as doctorLastName, d.DoctorId\n"
+                    + "		from Users u\n"
+                    + "		join Doctors d ON d.userId = u.userId\n"
+                    + "	) k ON k.DoctorId = sd.DoctorId\n"
+                    + "	WHERE f.RatingID = ?";
+            pstm = cnn.prepareStatement(strSQL);
+            pstm.setInt(1, rateId);
+            rs = pstm.executeQuery();
+
+            Feedback feedback = new Feedback();
+            while (rs.next()) {
+                feedback.setRatingId(Integer.parseInt(rs.getString(1)));
+                feedback.setMedicalInfoId(Integer.parseInt(rs.getString(2)));
+                feedback.setRatingValue(rs.getString(3));
+                feedback.setComment(rs.getString(4));
+                feedback.setUserFirstName(rs.getString(5));
+                feedback.setUserLastName(rs.getString(6));
+                feedback.setBookingId(Integer.parseInt(rs.getString(7)));
+                feedback.setDoctorFirstName(rs.getString(8));
+                feedback.setDoctorLastName(rs.getString(9));
+            }
+            return feedback;
+        } catch (SQLException e) {
+            System.out.println("SQL getListManageFeedbackByRateId: " + e.getMessage());
+            return null;
+        } catch (Exception e) {
+            System.out.println("getListManageFeedbackByRateId: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public int updateFeedbackByRateId(String rateValue, int rateId) {
+        try {
+            String strSQL = "update Feedback set RatingValue = ? where RatingID = ?";
+            pstm = cnn.prepareStatement(strSQL);
+            pstm.setString(1, rateValue);
+            pstm.setInt(2, rateId);
+            rs = pstm.executeQuery();
+
+        } catch (SQLException e) {
+            System.out.println("SQL updateFeedbackByRateId: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("updateFeedbackByRateId: " + e.getMessage());
+        }
+        return rateId;
+    }
 
 }

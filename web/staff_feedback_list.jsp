@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <%-- 
     Document   : staff_feedback_list
     Created on : Nov 7, 2023, 4:13:00 PM
@@ -100,6 +99,7 @@
                             <th>Rate</th>
                             <th>Comment</th>
                             <th>Customer Name</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>

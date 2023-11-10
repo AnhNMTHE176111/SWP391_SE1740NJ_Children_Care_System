@@ -40,6 +40,28 @@ public class DAOBooking extends DBContext {
     public void connect() {
         cnn = super.connection;
     }
+    
+    public Booking getBookingById(int bid) {
+        System.out.println("bid: " + bid);
+        try {
+            String strSQL = "select * from Booking where BookingId = " + bid;
+            pstm = cnn.prepareStatement(strSQL);
+            rs = pstm.executeQuery();
+            Booking b = new Booking();
+            while (rs.next()) {
+                b.setBookingId(Integer.parseInt(rs.getString(1)));
+                b.setBookingStatus(Integer.parseInt(rs.getString(2)));
+                b.setSlotDoctorId(Integer.parseInt(rs.getString(6)));
+                // some code to finish
+            }
+            return b;
+        } catch (SQLException e) {
+            System.out.println("SQL getBookingById: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("getBookingById: " + e.getMessage());
+        }
+        return null;
+    }
 
     public int addBooking(int status, int customerId, int slotDoctorId, int serviceId, int medicalInfoId) {
         int generatedId = -1;
@@ -277,6 +299,7 @@ public class DAOBooking extends DBContext {
         System.out.println(count);
     }
 
+
     public boolean updateBookingByManager(int bookingId, int status, int slotId, int slotStatus, String doctorFirstName, String doctorLastName, String customerFirstName, String customerLastName, String date) {
 
         try {
@@ -288,6 +311,7 @@ public class DAOBooking extends DBContext {
             pstm.setInt(2, bookingId);
             pstm.execute();
 
+
             String updateSlotStatusSQL = "UPDATE SlotDoctor "
                     + "SET Status = ?, SlotId = ?, day = ? "
                     + "WHERE slotDoctorId IN (SELECT slotDoctorId FROM Booking WHERE BookingId = ?)";
@@ -296,12 +320,14 @@ public class DAOBooking extends DBContext {
             pstm.setInt(2, slotId);
             pstm.setString(3, date);
             pstm.setInt(4, bookingId);
+
             pstm.execute();
 
             String updateDoctorNameSQL = "UPDATE Users "
                     + "SET firstName = ?, lastName = ? "
                     + "WHERE UserId IN (SELECT DoctorId FROM Doctors WHERE DoctorId IN (SELECT DoctorId FROM SlotDoctor WHERE slotDoctorId IN (SELECT slotDoctorId FROM Booking WHERE BookingId = ?)))";
             pstm = cnn.prepareStatement(updateDoctorNameSQL);
+
             pstm.setString(1, doctorFirstName);
             pstm.setString(2, doctorLastName);
             pstm.setInt(3, bookingId);
@@ -319,15 +345,18 @@ public class DAOBooking extends DBContext {
             pstm = cnn.prepareStatement(updateCustomerNameSQL);
             pstm.setString(1, customerFirstName);
             pstm.setString(2, customerLastName);
+
             pstm.setInt(3, bookingId);
             pstm.execute();
 
         } catch (SQLException e) {
             System.out.println("SQL updateBookingByManager: " + e.getMessage());
+
             return false;
         } catch (Exception e) {
             System.out.println("updateBookingByManager: " + e.getMessage());
             return false;
+
         } finally {
             // Đóng PreparedStatement và Connection (nếu bạn quản lý chúng ở đây)
             try {
@@ -339,6 +368,7 @@ public class DAOBooking extends DBContext {
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
+
                 return false;
             }
         }

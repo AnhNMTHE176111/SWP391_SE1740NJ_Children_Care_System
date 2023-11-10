@@ -357,6 +357,7 @@ td {
     align-items: center;
     align-content: center;
     padding: 10px 20px;
+
 }
 
 .number-total-item.reservation{
@@ -448,6 +449,7 @@ th {
 
     padding-left: 50px;
 }
+
 
 #updateForm {
     position: fixed;
@@ -683,11 +685,4 @@ th {
     color: white; /* Màu chữ cho slot được chọn */
     /* Thêm các thuộc tính khác nếu muốn, như border hoặc box-shadow */
 }
-
-
-
-
-
-
-
 

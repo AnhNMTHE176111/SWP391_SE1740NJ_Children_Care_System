@@ -370,9 +370,9 @@
                     </div>
                 </div>
                 <!-- Nút Save -->
-<button class="save" onclick="updateDoctorSlot();">Save</button>
-<!-- Nút Close -->
-<button type="button" class="close" id="closeSlotSelect">Close</button>
+                <button class="save" onclick="updateDoctorSlot();">Save</button>
+                <!-- Nút Close -->
+                <button type="button" class="close" id="closeSlotSelect">Close</button>
 
             </div>
 

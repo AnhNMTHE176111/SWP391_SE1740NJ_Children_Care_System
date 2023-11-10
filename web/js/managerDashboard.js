@@ -222,7 +222,6 @@ document.getElementById('analyticsMenu').addEventListener('click', function () {
 
     }
 
-
 });
 
 document.getElementById('doctorManager').addEventListener('click', function () {
@@ -244,6 +243,7 @@ document.getElementById('doctorManager').addEventListener('click', function () {
 
 
 });
+
 
 
 //function makeEditable(btn) {
@@ -271,6 +271,7 @@ document.getElementById('doctorManager').addEventListener('click', function () {
 //        inputBox.style.display = 'inline-block';
 //    });
 //}
+
 
 //function makeEditable(btn) {
 //    var row = btn.closest('tr');
@@ -497,8 +498,6 @@ document.getElementById("submitAllChanges").addEventListener("click", function (
     }
 });
 
-
-
 function saveAllChangesToDatabase(data) {
     fetch('/manageDashboard', {
         method: 'POST',
@@ -514,7 +513,10 @@ function saveAllChangesToDatabase(data) {
                     alert('Update successful');
                     document.querySelectorAll(".edited").forEach(row => {
                         row.classList.remove("edited");
+
                         ;
+
+
 
                     });
                                             document.querySelector('.doctor-manager-container').classList.remove('blur-background');
@@ -528,9 +530,6 @@ function saveAllChangesToDatabase(data) {
                 alert('Update failed');
             });
 }
-
-
-
 
 function searchByUserName() {
     let input = document.getElementById('searchInputUser');
@@ -725,21 +724,6 @@ document.addEventListener('DOMContentLoaded', function () {
         updateServicesDropdown(specialtySelect.value);
     }
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

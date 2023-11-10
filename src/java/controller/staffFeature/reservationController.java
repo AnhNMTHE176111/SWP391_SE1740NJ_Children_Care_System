@@ -4,6 +4,7 @@
  */
 package controller.staffFeature;
 
+import model.CreateByReplacingPlaceholderText;
 import DAO.DAODoctor;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -11,6 +12,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -21,10 +23,13 @@ import java.util.Date;
 import java.util.Formatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Feedback;
 import model.MedicalInfo;
+import model.MedicalPrescription;
 import model.Slot;
 import model.SlotDoctor;
 import model.User;
+import model.*;
 
 /**
  *
@@ -103,8 +108,7 @@ public class reservationController extends HttpServlet {
                     }
                     break;
                 }
-            }
-            else {
+            } else {
                 dateFilter = null;
             }
 
@@ -143,7 +147,44 @@ public class reservationController extends HttpServlet {
         User khachHang = d.getUserInfoBySlotDoctorId(slotDoctorId);
         Slot rightSlot = d.getSlotBySlotId(slotId, doctorId);
         MedicalInfo med = d.getMedInfo(slotDoctorId);
+        Feedback cusFeedback = d.getFeedbackBySlotDoctorId(slotDoctorId);
+        request.setAttribute("cusFeedback", cusFeedback);
 
+        // get medical prescription
+        String treatment = med.getTreatmentPlan();
+        if (treatment != null) {
+            String[] array = treatment.split("\\|");
+            String treatmentPlan = array[0];
+            ArrayList<MedicalPrescription> medicalPrescription = new ArrayList<>();
+            if (array.length > 1) {
+                for (int i = 1; i < array.length; i++) {
+                    String line = array[i];
+                    MedicalPrescription mp = new MedicalPrescription();
+                    mp.setMedication(line.split("-")[0]);
+                    mp.setStrength(line.split("-")[1]);
+                    mp.setFrequency(line.split("-")[2]);
+                    medicalPrescription.add(mp);
+                }
+                request.setAttribute("medicalPrescription", medicalPrescription);
+            }
+            request.setAttribute("treatmentPlan", treatmentPlan);
+
+            // create prescription docx
+            String medication = "";
+            for (int i = 0; i < medicalPrescription.size(); i++) {
+                MedicalPrescription mp = medicalPrescription.get(i);
+                medication += mp.getMedication() + ", " + mp.getStrength() + ", " + mp.getFrequency() + "\n";
+            }
+            String fileName = "Prescription_" + khachHang.getFirstName() + "_" + khachHang.getLastName() + ".docx";
+            fileName = fileName.replaceAll("\\s+", "_");
+            String filepath = getServletContext().getRealPath("").split("build")[0];
+            String docx = "Blank Prescription Template.docx";
+            Doctor doctor = d.getDoctorbyIDbyTuanAnh(doctorId);
+            CreateByReplacingPlaceholderText fuck = new CreateByReplacingPlaceholderText();
+            fuck.createPrecription(filepath + "\\" + docx,doctor.getName(), doctor.getPhone(), doctor.getEmail(), medication, khachHang.getFirstName() + " " + khachHang.getLastName(), med.getSymptons(), med.getDiagnosis(), treatmentPlan, filepath + "\\web\\prescription\\" + fileName);
+            request.setAttribute("fileName", fileName);
+            request.setAttribute("filePath", ".\\prescription\\" + fileName);
+        }
         request.setAttribute("med", med);
         request.setAttribute("slotId", slotId);
         request.setAttribute("doctorId", doctorId);
@@ -162,17 +203,23 @@ public class reservationController extends HttpServlet {
     public static void main(String[] args) {
         // a before b -> a<b
         // a after b -> a>=b
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date a = new Date(); // 2023-11-01
-        Date b = null;
-        try {
-            b = formatter.parse("2023-11-01");
-        } catch (ParseException ex) {
-            Logger.getLogger(reservationController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        System.out.println("a: " + a);
-        System.out.println("b: " + b);
-        System.out.println("compare: " + b.after(a));
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//        Date a = new Date(); // 2023-11-01
+//        Date b = null;
+//        try {
+//            b = formatter.parse("2023-11-01");
+//        } catch (ParseException ex) {
+//            Logger.getLogger(reservationController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        System.out.println("a: " + a);
+//        System.out.println("b: " + b);
+//        System.out.println("compare: " + b.after(a));
+
+        String a = "1234";
+        String b = "1-2-3";
+        String[] k = a.split("\\|");
+        String[] h = b.split("-");
+        System.out.println(k.length);
     }
 
 }
