@@ -40,7 +40,7 @@ public class DAOBooking extends DBContext {
     public void connect() {
         cnn = super.connection;
     }
-    
+
     public Booking getBookingById(int bid) {
         System.out.println("bid: " + bid);
         try {
@@ -65,21 +65,16 @@ public class DAOBooking extends DBContext {
 
     public int addBooking(int status, int customerId, int slotDoctorId, int serviceId) {
         int generatedId = -1;
-
         try {
-
             String strSQL = "insert into Booking(BookingStatus, CustomerID, slotDoctorId, ServiceId) values(?,?,?,?); SELECT SCOPE_IDENTITY();";
-
             pstm = cnn.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
-
             pstm.setInt(1, status);
             pstm.setInt(2, customerId);
             pstm.setInt(3, slotDoctorId);
-
             pstm.setInt(4, serviceId);
 
             if (pstm.executeUpdate() > 0) {
-                try (ResultSet generatedKeys = pstm.getGeneratedKeys()) {
+                try ( ResultSet generatedKeys = pstm.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         generatedId = generatedKeys.getInt(1);
                     }
@@ -97,7 +92,7 @@ public class DAOBooking extends DBContext {
                 + "join SlotDoctor on SlotDoctor.slotDoctorId = Booking.slotDoctorId\n"
                 + "where day is not null";
 
-        try (PreparedStatement pstm = cnn.prepareStatement(strSQL); ResultSet rs = pstm.executeQuery()) {
+        try ( PreparedStatement pstm = cnn.prepareStatement(strSQL);  ResultSet rs = pstm.executeQuery()) {
             while (rs.next()) {
                 int bookingId = rs.getInt("BookingId");
                 int status = rs.getInt("BookingStatus");
@@ -146,7 +141,7 @@ public class DAOBooking extends DBContext {
                 + "WHERE \n"
                 + "    day IS NOT NULL;";
 
-        try (PreparedStatement pstm = cnn.prepareStatement(strSQL); ResultSet rs = pstm.executeQuery()) {
+        try ( PreparedStatement pstm = cnn.prepareStatement(strSQL);  ResultSet rs = pstm.executeQuery()) {
             while (rs.next()) {
                 int bookingId = rs.getInt("BookingId");
                 int doctorId = rs.getInt("DoctorId");
@@ -299,7 +294,6 @@ public class DAOBooking extends DBContext {
         System.out.println(count);
     }
 
-
     public boolean updateBookingByManager(int bookingId, int status, int slotId, int slotStatus, String doctorFirstName, String doctorLastName, String customerFirstName, String customerLastName, String date) {
 
         try {
@@ -310,7 +304,6 @@ public class DAOBooking extends DBContext {
             pstm.setInt(1, status);
             pstm.setInt(2, bookingId);
             pstm.execute();
-
 
             String updateSlotStatusSQL = "UPDATE SlotDoctor "
                     + "SET Status = ?, SlotId = ?, day = ? "

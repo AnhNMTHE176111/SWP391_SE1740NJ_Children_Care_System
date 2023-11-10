@@ -88,7 +88,6 @@ public class bookingController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -127,7 +126,7 @@ public class bookingController extends HttpServlet {
             doctorList = doctor.getListDoctorBySpecialty();
             specialtyList = specialty.getListSpecialty();
             slotList = slot.getListSlot();
-              request.setAttribute("currentUser", currentUser);
+            request.setAttribute("currentUser", currentUser);
         } else {
             System.out.println("nono");
             serviceList = service.getListServiceByDoctor();
@@ -230,7 +229,6 @@ public class bookingController extends HttpServlet {
         slotDoctorId = slotDoctor.addSlotDoctor(doctorIdInt, slotIdInt, 1, symptoms, formattedDate);
         if (currentUser == null) {
 
-
 //About Customer Backend
             String name = request.getParameter("name");
             String gender = request.getParameter("gender");
@@ -254,7 +252,6 @@ public class bookingController extends HttpServlet {
             bookingId = booking.addBooking(1, customerId, slotDoctorId, serviceId);
             response.sendRedirect("/home");
         } else {
-
             customerId = customer.getCusIdByUserIdReturn(currentUser.getUserId());
             bookingId = booking.addBooking(1, customerId, slotDoctorId, serviceId);
             response.sendRedirect("/home");
