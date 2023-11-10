@@ -40,7 +40,7 @@ public class DAOBooking extends DBContext {
     public void connect() {
         cnn = super.connection;
     }
-    
+
     public Booking getBookingById(int bid) {
         System.out.println("bid: " + bid);
         try {
@@ -65,21 +65,16 @@ public class DAOBooking extends DBContext {
 
     public int addBooking(int status, int customerId, int slotDoctorId, int serviceId, int medicalInfoId) {
         int generatedId = -1;
-
         try {
-
             String strSQL = "insert into Booking(BookingStatus, CustomerID, slotDoctorId, ServiceId, MedicalInfoId) values(?,?,?,?,?); SELECT SCOPE_IDENTITY();";
-
             pstm = cnn.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
-
             pstm.setInt(1, status);
             pstm.setInt(2, customerId);
             pstm.setInt(3, slotDoctorId);
-
             pstm.setInt(4, serviceId);
             pstm.setInt(5, medicalInfoId);
             if (pstm.executeUpdate() > 0) {
-                try (ResultSet generatedKeys = pstm.getGeneratedKeys()) {
+                try ( ResultSet generatedKeys = pstm.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         generatedId = generatedKeys.getInt(1);
                     }
@@ -97,7 +92,7 @@ public class DAOBooking extends DBContext {
                 + "join SlotDoctor on SlotDoctor.slotDoctorId = Booking.slotDoctorId\n"
                 + "where day is not null";
 
-        try (PreparedStatement pstm = cnn.prepareStatement(strSQL); ResultSet rs = pstm.executeQuery()) {
+        try ( PreparedStatement pstm = cnn.prepareStatement(strSQL);  ResultSet rs = pstm.executeQuery()) {
             while (rs.next()) {
                 int bookingId = rs.getInt("BookingId");
                 int status = rs.getInt("BookingStatus");
@@ -146,7 +141,7 @@ public class DAOBooking extends DBContext {
                 + "WHERE \n"
                 + "    day IS NOT NULL;";
 
-        try (PreparedStatement pstm = cnn.prepareStatement(strSQL); ResultSet rs = pstm.executeQuery()) {
+        try ( PreparedStatement pstm = cnn.prepareStatement(strSQL);  ResultSet rs = pstm.executeQuery()) {
             while (rs.next()) {
                 int bookingId = rs.getInt("BookingId");
                 int doctorId = rs.getInt("DoctorId");
@@ -175,7 +170,8 @@ public class DAOBooking extends DBContext {
     }
 
     public List<Booking> getListCusReservation(int cusId, int pageIndex) {
-        ArrayList<Booking> listCustReservation = new ArrayList<Booking>();
+        System.out.println("cusId: " + cusId);
+        ArrayList<Booking> listCustReservation = new ArrayList<>();
         try {
             String strSQL = "SELECT\n"
                     + "  b.*,\n"
@@ -188,8 +184,8 @@ public class DAOBooking extends DBContext {
                     + "  sd.day\n"
                     + "FROM Booking b\n"
                     + "JOIN MedicalInfo m ON b.MedicalInfoId = m.MedicalInfoId\n"
-                    + "JOIN Doctors d ON b.slotDoctorId = d.DoctorId\n"
                     + "JOIN SlotDoctor sd ON b.slotDoctorId = sd.slotDoctorId\n"
+                    + "JOIN Doctors d ON sd.DoctorId = d.DoctorId\n"
                     + "JOIN Slots s ON sd.SlotId = s.SlotId\n"
                     + "JOIN Users u ON d.userId = u.userId\n"
                     + "JOIN Services se ON b.ServiceId = se.ServiceId\n"
@@ -226,8 +222,8 @@ public class DAOBooking extends DBContext {
             String strSQL = "SELECT COUNT(*) AS total_rows\n"
                     + "FROM Booking b\n"
                     + "JOIN MedicalInfo m ON b.MedicalInfoId = m.MedicalInfoId\n"
-                    + "JOIN Doctors d ON b.slotDoctorId = d.DoctorId\n"
                     + "JOIN SlotDoctor sd ON b.slotDoctorId = sd.slotDoctorId\n"
+                    + "JOIN Doctors d ON sd.DoctorId = d.DoctorId\n"
                     + "JOIN Slots s ON sd.SlotId = s.SlotId\n"
                     + "JOIN Users u ON d.userId = u.userId\n"
                     + "WHERE b.CustomerId = '" + cusId + "'";
@@ -299,7 +295,6 @@ public class DAOBooking extends DBContext {
         System.out.println(count);
     }
 
-
     public boolean updateBookingByManager(int bookingId, int status, int slotId, int slotStatus, String doctorFirstName, String doctorLastName, String customerFirstName, String customerLastName, String date) {
 
         try {
@@ -310,7 +305,6 @@ public class DAOBooking extends DBContext {
             pstm.setInt(1, status);
             pstm.setInt(2, bookingId);
             pstm.execute();
-
 
             String updateSlotStatusSQL = "UPDATE SlotDoctor "
                     + "SET Status = ?, SlotId = ?, day = ? "
@@ -393,27 +387,26 @@ public class DAOBooking extends DBContext {
         return cancelBookId;
 
     }
-    
-  public int addMedicalInfo() {
-    int generatedId = -1;
-    try {
-        // Câu truy vấn SQL để thêm bản ghi mới mà không cần cung cấp bất kỳ thông tin chi tiết nào
-        String strSQL = "INSERT INTO MedicalInfo DEFAULT VALUES;"; // Chỉ áp dụng nếu tất cả các trường khác có giá trị mặc định
 
-        pstm = cnn.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
+    public int addMedicalInfo() {
+        int generatedId = -1;
+        try {
+            // Câu truy vấn SQL để thêm bản ghi mới mà không cần cung cấp bất kỳ thông tin chi tiết nào
+            String strSQL = "INSERT INTO MedicalInfo DEFAULT VALUES;"; // Chỉ áp dụng nếu tất cả các trường khác có giá trị mặc định
 
-        if (pstm.executeUpdate() > 0) {
-            try (ResultSet generatedKeys = pstm.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    generatedId = generatedKeys.getInt(1); // Lấy ID mới được tạo
+            pstm = cnn.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
+
+            if (pstm.executeUpdate() > 0) {
+                try ( ResultSet generatedKeys = pstm.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        generatedId = generatedKeys.getInt(1); // Lấy ID mới được tạo
+                    }
                 }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    } catch (Exception e) {
-        e.printStackTrace();
+        return generatedId;
     }
-    return generatedId;
-}
-
 
 }

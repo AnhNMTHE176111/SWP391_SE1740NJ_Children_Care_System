@@ -147,6 +147,7 @@
                             <td>${item.getDescription()} </td>
                     <form action="reservation" method="POST">
                         <input type="hidden" name="slotId" value="${item.getSlotId()}">
+                        <input type="hidden" name="slotDoctorId" value="${item.getSlotDoctorId()}">
                         <input type="hidden" name="doctorId" value="${item.getDoctorId()}">
                         <td><button type="submit" class="btn btn-warning">Read More</button></td>
                     </form>

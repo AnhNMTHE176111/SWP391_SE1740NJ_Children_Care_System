@@ -70,7 +70,7 @@ public class DAODoctor extends DBContext {
     }
 
     public ArrayList<SlotDoctor> getReservationByDocId(int doctorId) {
-        String sql = "SELECT sl.SlotId, sl.startTime, sl.endTime, DoctorId, BookingStatus, sd.Description, sd.day, s.ServiceName\n"
+        String sql = "SELECT sl.SlotId, sl.startTime, sl.endTime, DoctorId, BookingStatus, sd.Description, sd.day, s.ServiceName, sd.slotDoctorId\n"
                 + "FROM slots sl\n"
                 + "INNER JOIN SlotDoctor sd ON sl.slotid = sd.slotid \n"
                 + "join Booking b on b.slotDoctorId = sd.slotDoctorId\n"
@@ -101,6 +101,7 @@ public class DAODoctor extends DBContext {
                 Date day = rs.getDate(7);
                 String serviceName = rs.getString(8);
                 SlotDoctor c = new SlotDoctor(slotId, sTime, eTime, docId, status, Description, day, serviceName);
+                c.setSlotDoctorId(rs.getInt(9));
                 data.add(c);
             }
         } catch (SQLException e) {
