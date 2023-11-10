@@ -87,21 +87,18 @@
                         <i class="fa-solid fa-users"></i>Reservation Manager
                     </li>
                     <li id="doctorManager"><i class="fa-solid fa-gear"></i>Doctors Manage</li>
-<<<<<<< HEAD
-=======
 
                     <li id="feedbackManager"><i class="fa-solid fa-comments"></i>Feedback Manager</li>
                     <li id="manageCustomer"><i class="far fa-angry"></i><a href="manageCustomer" style="text-decoration: none;color: white;">Customer Manager</a></li>
                     <li id="manageService"><i class="far fa-server"></i><a href="manageService" style="text-decoration: none;color: white;" >Service Manager</a></li>
->>>>>>> main
+
                     <li>
                         <a href="/managePost">
                             <i class="fa-solid fa-gear"></i> Manage Post
                         </a>
                     </li>
 
-                    <li id="manageCustomer"><i class="far fa-angry"></i><a href="manageCustomer" style="text-decoration: none;color: white;">Customer Manager</a></li>
-                    <li id="manageService"><i class="far fa-server"></i><a href="manageService" style="text-decoration: none;color: white;" >Service Manager</a></li>
+                
                 </ul>
             </div>
 
@@ -258,9 +255,7 @@
                     <h1 class="user-container-table"> Doctor Manage</h1>
                     <div class="top-option">
                         <form action="admin-manage-user" class="search-name-form" method="post">
-
-                            <input type="text" id="searchInputUser" placeholder="Enter name of User..." onkeyup="searchByUserName()">
-                            <input type="text" id="searchInputDoctor" placeholder="Enter name of Doctor..." onkeyup="searchByDoctorName()">
+                            <input type="text" id="searchInputDoctor" placeholder="Enter name of Doctor..." onkeyup="searchByDoctorNameForDoctorManage()">
                             <button id="btn-show-filter"><i class="fa-solid fa-filter"></i> Filter</button>
                         </form>
                         <button id="addDoctor"><i class="fa-solid fa-user-plus"></i> Add new Doctor</button>
@@ -286,38 +281,14 @@
                             </c:forEach>
                         </tbody>
                     </table>
-
-<<<<<<< HEAD
-
-
-=======
-                    <div id="updateForm" style="display: none;">
-                        <h2>Bảng Đăng Ký Slot</h2>
-                        <label for="updateDate">Ngày:</label>
-                        <input type="date" id="updateDate" name="updateDate">
-                        <label for="updateSlots">Danh sách slot:</label>
-                        <div class="date-hidden">
-                            <div class="date">
-                                <c:forEach var="slot" items="${slotList}">
-                                    <button class="grid-date" name="slot" data-slot-id="${slot.slotId}" onclick="onSlotSelect(this)">${slot.startTime}</button>
-                                </c:forEach>
-                            </div>
-                        </div>
-                        <button onclick="updateDoctorSlot();">Lưu</button>
-                    </div>
-
-                    <div id="newDoctorModal" class="modal" style="display:none;">
+                </div>
+                   </div>
+                   <div id="newDoctorModal" class="modal" style="display:none;">
                         <form id="addDoctorForm">
                             <h2>Bảng Đăng Ký Bác Sĩ</h2>
                             <label for="doctorName">Name:</label>
                             <input type="text" id="doctorName" name="doctorName" required><br>
->>>>>>> main
 
-
-<<<<<<< HEAD
-
-
-=======
                             <label for="doctorDob">Date of Birth:</label>
                             <input type="date" id="doctorDob" name="doctorDob" required><br>
 
@@ -361,9 +332,25 @@
                             <button type="button" id="closeModal">Close</button>
                         </form>
                     </div>
->>>>>>> main
-                </div>
-            </div>
+
+                    <div id="updateForm" style="display: none;">
+                        <h2>Bảng Đăng Ký Slot</h2>
+                        <label for="updateDate">Ngày:</label>
+                        <input type="date" id="updateDate" name="updateDate">
+                        <label for="updateSlots">Danh sách slot:</label>
+                        <div class="date-hidden">
+                            <div class="date">
+                                <c:forEach var="slot" items="${slotList}">
+                                    <button class="grid-date" name="slot" data-slot-id="${slot.slotId}" onclick="onSlotSelect(this)">${slot.startTime}</button>
+                                </c:forEach>
+                            </div>
+                        </div>
+                        <button onclick="updateDoctorSlot();">Lưu</button>
+                    </div>
+
+                 
+
+             
             <div class="feedback-manager-container" style="width: 100%; margin-left: 15%; display: none;">
                 <div class="feedback-list-container">
                     <h1 class="feedback-container-table" style="margin-left: 200px"> Feedback Manage</h1>

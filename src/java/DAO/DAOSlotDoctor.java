@@ -36,7 +36,7 @@ public class DAOSlotDoctor extends DBContext {
     public int addSlotDoctor(int doctorId, int slotId, int status, String description, String day) {
         int generatedId = -1;
         try {
-            String strSQL = "insert into SlotDoctor(DoctorId, SlotId, Status, Description, day) values(?,?,?,?,?); SELECT SCOPE_IDENTITY();";
+            String strSQL = " ";
 
             pstm = cnn.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
             pstm.setInt(1, doctorId);
