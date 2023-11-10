@@ -87,21 +87,19 @@
                         <i class="fa-solid fa-users"></i>Reservation Manager
                     </li>
                     <li id="doctorManager"><i class="fa-solid fa-gear"></i>Doctors Manage</li>
-<<<<<<< HEAD
-=======
+
 
                     <li id="feedbackManager"><i class="fa-solid fa-comments"></i>Feedback Manager</li>
                     <li id="manageCustomer"><i class="far fa-angry"></i><a href="manageCustomer" style="text-decoration: none;color: white;">Customer Manager</a></li>
                     <li id="manageService"><i class="far fa-server"></i><a href="manageService" style="text-decoration: none;color: white;" >Service Manager</a></li>
->>>>>>> main
+
                     <li>
                         <a href="/managePost">
                             <i class="fa-solid fa-gear"></i> Manage Post
                         </a>
                     </li>
 
-                    <li id="manageCustomer"><i class="far fa-angry"></i><a href="manageCustomer" style="text-decoration: none;color: white;">Customer Manager</a></li>
-                    <li id="manageService"><i class="far fa-server"></i><a href="manageService" style="text-decoration: none;color: white;" >Service Manager</a></li>
+
                 </ul>
             </div>
 
@@ -184,7 +182,7 @@
 
                             <input type="text" id="searchInputUser" placeholder="Enter name of User..." onkeyup="searchByUserName()">
                             <input type="text" id="searchInputDoctor" placeholder="Enter name of Doctor..." onkeyup="searchByDoctorName()">
-                            <button id="btn-show-filter"><i class="fa-solid fa-filter"></i> Filter</button>
+                            
                         </form>
                         <button id="submitAllChanges"><i class="fa-solid fa-user-plus"></i> Submit all Change</button>
 
@@ -259,9 +257,9 @@
                     <div class="top-option">
                         <form action="admin-manage-user" class="search-name-form" method="post">
 
-                            <input type="text" id="searchInputUser" placeholder="Enter name of User..." onkeyup="searchByUserName()">
-                            <input type="text" id="searchInputDoctor" placeholder="Enter name of Doctor..." onkeyup="searchByDoctorName()">
-                            <button id="btn-show-filter"><i class="fa-solid fa-filter"></i> Filter</button>
+
+                            <input type="text" id="searchInputDoctorForManage" placeholder="Enter name of Doctor..." onkeyup="searchByDoctorNameForDoctorManage()">
+
                         </form>
                         <button id="addDoctor"><i class="fa-solid fa-user-plus"></i> Add new Doctor</button>
 
@@ -278,90 +276,18 @@
                             <c:forEach var="rs" items="${doctorList}">
                                 <tr>
                                     <td>${rs.getDoctorId()}</td>
-                                    <td>${rs.getName()}</td>
+                                    <td><span class="doctor-name">${rs.getName()}</span></td>
                                     <td>
-                                        <button class="update-button" onclick="changeSlot(${rs.doctorId});"><i class="fa-solid fa-user-pen"></i>Select to disable</button>
+                                        <button class="update-button" onclick="changeSlot(${rs.doctorId});">
+                                            <i class="fa-solid fa-user-pen"></i>Select to disable
+                                        </button>
                                     </td>
                                 </tr>
                             </c:forEach>
                         </tbody>
                     </table>
 
-<<<<<<< HEAD
 
-
-=======
-                    <div id="updateForm" style="display: none;">
-                        <h2>Bảng Đăng Ký Slot</h2>
-                        <label for="updateDate">Ngày:</label>
-                        <input type="date" id="updateDate" name="updateDate">
-                        <label for="updateSlots">Danh sách slot:</label>
-                        <div class="date-hidden">
-                            <div class="date">
-                                <c:forEach var="slot" items="${slotList}">
-                                    <button class="grid-date" name="slot" data-slot-id="${slot.slotId}" onclick="onSlotSelect(this)">${slot.startTime}</button>
-                                </c:forEach>
-                            </div>
-                        </div>
-                        <button onclick="updateDoctorSlot();">Lưu</button>
-                    </div>
-
-                    <div id="newDoctorModal" class="modal" style="display:none;">
-                        <form id="addDoctorForm">
-                            <h2>Bảng Đăng Ký Bác Sĩ</h2>
-                            <label for="doctorName">Name:</label>
-                            <input type="text" id="doctorName" name="doctorName" required><br>
->>>>>>> main
-
-
-<<<<<<< HEAD
-
-
-=======
-                            <label for="doctorDob">Date of Birth:</label>
-                            <input type="date" id="doctorDob" name="doctorDob" required><br>
-
-                            <label for="doctorSpecialization">Specialization:</label>
-                            <select id="doctorSpecialization" name="doctorSpecialization" required>
-                                <c:forEach var="rs" items="${specialtyList}" varStatus="loop">
-                                    <option value="${rs.getSpecialtyId()}">${rs.getSpecialtyName()}</option>
-                                </c:forEach>
-                            </select><br>
-
-                            <label for="doctorService">Service:</label>
-                            <select id="doctorService" name="doctorService" required>
-
-                            </select><br>
-
-                            <label for="doctorPhone">Phone Number:</label>
-                            <input type="tel" id="doctorPhone" name="doctorPhone" required><br>
-
-                            <label for="doctorEmail">Email:</label>
-                            <input type="email" id="doctorEmail" name="doctorEmail" required><br>
-
-                            <label for="doctorPassword">Password:</label>
-                            <input type="password" id="doctorPassword" name="doctorPassword" required><br>
-
-                            <label for="doctorPosition">Position:</label>
-                            <input type="text" id="doctorPosition" name="doctorPosition" required><br>
-
-                            <label for="doctorAddress">Address:</label>
-                            <input type="text" id="doctorAddress" name="doctorAddress"><br>
-
-                            <label for="doctorDepartment">Department:</label>
-                            <select id="doctorDepartment" name="doctorDepartment">
-                                <option value="cardiology">Cardiology</option>
-                                <!-- Thêm các lựa chọn khác ở đây -->
-                            </select><br>
-
-                            <label for="doctorExperience">Years of Experience:</label>
-                            <input type="number" id="doctorExperience" name="doctorExperience" min="0" step="1"><br>
-
-                            <input type="submit" value="Submit">
-                            <button type="button" id="closeModal">Close</button>
-                        </form>
-                    </div>
->>>>>>> main
                 </div>
             </div>
             <div class="feedback-manager-container" style="width: 100%; margin-left: 15%; display: none;">
