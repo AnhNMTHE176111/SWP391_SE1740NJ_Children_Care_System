@@ -59,18 +59,75 @@
                 width: 150px;
             }
 
-            /* Style the select options */
+
             #status option {
                 padding: 10px;
             }
 
-            /* Hover effect for options */
+
             #status option:hover {
                 background-color: #f0f0f0;
             }
 
             .feedbackcontainer{
                 margin-right: 320px;
+            }
+
+            .button-4 {
+                appearance: none;
+                background-color: #FAFBFC;
+                border: 1px solid rgba(27, 31, 35, 0.15);
+                border-radius: 6px;
+                box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+                box-sizing: border-box;
+                color: #24292E;
+                cursor: pointer;
+                display: inline-block;
+                font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+                font-size: 14px;
+                font-weight: 500;
+                line-height: 20px;
+                list-style: none;
+                padding: 6px 16px;
+                position: relative;
+                transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+                user-select: none;
+                -webkit-user-select: none;
+                touch-action: manipulation;
+                vertical-align: middle;
+                white-space: nowrap;
+                word-wrap: break-word;
+            }
+
+            .button-4:hover {
+                background-color: #F3F4F6;
+                text-decoration: none;
+                transition-duration: 0.1s;
+            }
+
+            .button-4:disabled {
+                background-color: #FAFBFC;
+                border-color: rgba(27, 31, 35, 0.15);
+                color: #959DA5;
+                cursor: default;
+            }
+
+            .button-4:active {
+                background-color: #EDEFF2;
+                box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
+                transition: none 0s;
+            }
+
+            .button-4:focus {
+                outline: 1px transparent;
+            }
+
+            .button-4:before {
+                display: none;
+            }
+
+            .button-4:-webkit-details-marker {
+                display: none;
             }
         </style>
     </head>
@@ -79,16 +136,16 @@
         <body>
 
             <h1 style="margin-left: 100px;padding: 40px;">List Reservation </h1>
-            <div class="col-12 d-flex justify-content-end feedbackcontainer">
+            <div class="col-12 d-flex justify-content-end feedbackcontainer" style="margin-bottom: 10px">
                 <form class="feedbackcontainer" action="feedbackstaff" method="GET">
-                    <select id="rate" class="feedbackrate" name="rate">
+                    <select id="rate" class="feedbackrate" name="rate" style="width: 100px; height: 32px; border-radius: 6px;">
                         <option value= "">All</option>
                         <option value="Excellent">Excellent</option>
-                        <option value="Medium">Medium</option>
+                        <option value="Average">Average</option>
                         <option value="Good">Good</option>
                         <option value="Poor">Poor</option>
                     </select>
-                    <button type="submit">Filter</button>
+                    <button type="submit" class="button-4" role="button" style="margin-right: -40px">Filter</button>
                 </form>
             </div>
             <div class="col-12 d-flex justify-content-center">
@@ -99,17 +156,52 @@
                             <th>Rate</th>
                             <th>Comment</th>
                             <th>Customer Name</th>
-                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                     <c:forEach var="f" items="${listFeedback}">
-                        <tr>
-                            <td>${f.getBookingId()}</td>
-                            <td>${f.getRatingValue()}</td>
-                            <td>${f.getComment()}</td>
-                            <td>${f.getUserFirstName()} ${f.getUserLastName()}</td>
-                        </tr>
+                        <c:choose>
+                            <c:when test="${f.getRatingValue() eq 'Excellent'}">
+                                <tr>
+                                    <td>${f.getBookingId()}</td>
+                                    <td style="color: green;">${f.getRatingValue()}</td>
+                                    <td>${f.getComment()}</td>
+                                    <td>${f.getUserFirstName()} ${f.getUserLastName()}</td>
+                                </tr>
+                            </c:when>
+                            <c:when test="${f.getRatingValue() eq 'Good'}">
+                                <tr>
+                                    <td>${f.getBookingId()}</td>
+                                    <td style="color: gold;">${f.getRatingValue()}</td>
+                                    <td>${f.getComment()}</td>
+                                    <td>${f.getUserFirstName()} ${f.getUserLastName()}</td>
+                                </tr>
+                            </c:when>
+                            <c:when test="${f.getRatingValue() eq 'Average'}">
+                                <tr>
+                                    <td>${f.getBookingId()}</td>
+                                    <td style="color: orange;">${f.getRatingValue()}</td>
+                                    <td>${f.getComment()}</td>
+                                    <td>${f.getUserFirstName()} ${f.getUserLastName()}</td>
+                                </tr>
+                            </c:when>
+                            <c:when test="${f.getRatingValue() eq 'Poor'}">
+                                <tr>
+                                    <td>${f.getBookingId()}</td>
+                                    <td style="color: red;">${f.getRatingValue()}</td>
+                                    <td>${f.getComment()}</td>
+                                    <td>${f.getUserFirstName()} ${f.getUserLastName()}</td>
+                                </tr>
+                            </c:when>
+                            <c:otherwise>
+                                <tr>
+                                    <td>N/A</td>
+                                    <td>N/A</td>
+                                    <td>N/A</td>
+                                    <td>N/A</td>
+                                </tr>
+                            </c:otherwise>
+                        </c:choose>
                     </c:forEach>
                 </tbody>
             </table>

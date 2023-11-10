@@ -173,6 +173,38 @@ public class DAOUser extends DBContext {
         }
     }
 
+public int addNewAccountAsDoctor(User user) {
+    int generatedId = -1;
+    try {
+        String strSQL = "insert into Users (status, firstName, lastName, gender, email, password, address, phone, dob, createdAt, RoleId) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        
+        pstm = cnn.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
+        pstm.setString(1, user.getStatus());
+        pstm.setString(2, user.getFirstName());
+        pstm.setString(3, user.getLastName());
+        pstm.setString(4, user.getGender());
+        pstm.setString(5, user.getEmail());
+        pstm.setString(6, user.getPassword());
+        pstm.setString(7, user.getAddress());
+        pstm.setString(8, user.getPhone());
+        pstm.setString(9, user.getDob());
+     //   pstm.setString(10, user.getAvatar());
+        pstm.setString(10, user.getCreatedAt());
+        pstm.setInt(11, user.getRoleId());
+
+        if (pstm.executeUpdate() > 0) {
+            try (ResultSet generatedKeys = pstm.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    generatedId = generatedKeys.getInt(1);
+                }
+            }
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return generatedId;
+}
+
     public void addNewAccountByEmail(User user) {
         try {
             String strSQL = "insert into Users (firstName, lastName, gender, email, password, address, phone, dob, status, avatar, RoleId, createdAt)"
@@ -214,7 +246,6 @@ public class DAOUser extends DBContext {
         }
     }
 
-
     public int addGuess(String firstName, String lastName, String gender, String email, String phone, String dob, int roleId) {
         int generatedId = -1;
         try {
@@ -243,7 +274,6 @@ public class DAOUser extends DBContext {
         return generatedId;
     }
 
-
     public void updateProfile(String fName, String lName, String phone, String address, String dob, String avatar, String email) {
         try {
             String strSQL = "update Users\n"
@@ -267,7 +297,6 @@ public class DAOUser extends DBContext {
             System.out.println("updateProfile: " + e.getMessage());
         }
     }
-
 
     public void addNewAccountByGoogle(User user) {
         try {
@@ -499,7 +528,6 @@ public class DAOUser extends DBContext {
         }
     }
 
-
     public String getAvatarById(int doctorId) {
         String sql = "select avatar from Users where userId = ?";
         String avatar = null;
@@ -516,6 +544,24 @@ public class DAOUser extends DBContext {
             System.out.println("<getspecialtyNameByDocId>: " + e.getMessage());
         }
         return avatar;
+    }
+
+    public int getLastUserId() {
+        String sql = "SELECT TOP 1 u.userId\n"
+                + "FROM Users u ORDER BY u.userId DESC";
+        int userId = 0;
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                userId = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL <getLastUserId>: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("<getLastUserId>: " + e.getMessage());
+        }
+        return userId;
     }
 
 }

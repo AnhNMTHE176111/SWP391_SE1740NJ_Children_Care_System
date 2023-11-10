@@ -63,16 +63,16 @@ public class DAOBooking extends DBContext {
         return null;
     }
 
-    public int addBooking(int status, int customerId, int slotDoctorId, int serviceId) {
+    public int addBooking(int status, int customerId, int slotDoctorId, int serviceId, int medicalInfoId) {
         int generatedId = -1;
         try {
-            String strSQL = "insert into Booking(BookingStatus, CustomerID, slotDoctorId, ServiceId) values(?,?,?,?); SELECT SCOPE_IDENTITY();";
+            String strSQL = "insert into Booking(BookingStatus, CustomerID, slotDoctorId, ServiceId, MedicalInfoId) values(?,?,?,?,?); SELECT SCOPE_IDENTITY();";
             pstm = cnn.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
             pstm.setInt(1, status);
             pstm.setInt(2, customerId);
             pstm.setInt(3, slotDoctorId);
             pstm.setInt(4, serviceId);
-
+            pstm.setInt(5, medicalInfoId);
             if (pstm.executeUpdate() > 0) {
                 try ( ResultSet generatedKeys = pstm.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
@@ -170,7 +170,8 @@ public class DAOBooking extends DBContext {
     }
 
     public List<Booking> getListCusReservation(int cusId, int pageIndex) {
-        ArrayList<Booking> listCustReservation = new ArrayList<Booking>();
+        System.out.println("cusId: " + cusId);
+        ArrayList<Booking> listCustReservation = new ArrayList<>();
         try {
             String strSQL = "SELECT\n"
                     + "  b.*,\n"
@@ -183,8 +184,8 @@ public class DAOBooking extends DBContext {
                     + "  sd.day\n"
                     + "FROM Booking b\n"
                     + "JOIN MedicalInfo m ON b.MedicalInfoId = m.MedicalInfoId\n"
-                    + "JOIN Doctors d ON b.slotDoctorId = d.DoctorId\n"
                     + "JOIN SlotDoctor sd ON b.slotDoctorId = sd.slotDoctorId\n"
+                    + "JOIN Doctors d ON sd.DoctorId = d.DoctorId\n"
                     + "JOIN Slots s ON sd.SlotId = s.SlotId\n"
                     + "JOIN Users u ON d.userId = u.userId\n"
                     + "JOIN Services se ON b.ServiceId = se.ServiceId\n"
@@ -221,8 +222,8 @@ public class DAOBooking extends DBContext {
             String strSQL = "SELECT COUNT(*) AS total_rows\n"
                     + "FROM Booking b\n"
                     + "JOIN MedicalInfo m ON b.MedicalInfoId = m.MedicalInfoId\n"
-                    + "JOIN Doctors d ON b.slotDoctorId = d.DoctorId\n"
                     + "JOIN SlotDoctor sd ON b.slotDoctorId = sd.slotDoctorId\n"
+                    + "JOIN Doctors d ON sd.DoctorId = d.DoctorId\n"
                     + "JOIN Slots s ON sd.SlotId = s.SlotId\n"
                     + "JOIN Users u ON d.userId = u.userId\n"
                     + "WHERE b.CustomerId = '" + cusId + "'";
@@ -385,6 +386,27 @@ public class DAOBooking extends DBContext {
         }
         return cancelBookId;
 
+    }
+
+    public int addMedicalInfo() {
+        int generatedId = -1;
+        try {
+            // Câu truy vấn SQL để thêm bản ghi mới mà không cần cung cấp bất kỳ thông tin chi tiết nào
+            String strSQL = "INSERT INTO MedicalInfo DEFAULT VALUES;"; // Chỉ áp dụng nếu tất cả các trường khác có giá trị mặc định
+
+            pstm = cnn.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
+
+            if (pstm.executeUpdate() > 0) {
+                try ( ResultSet generatedKeys = pstm.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        generatedId = generatedKeys.getInt(1); // Lấy ID mới được tạo
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return generatedId;
     }
 
 }

@@ -14,6 +14,7 @@ import DAO.DAOBooking;
 import DAO.DAOCustomer;
 import DAO.DAOSlot;
 import DAO.DAODoctor;
+import DAO.DAOMedicalInfo;
 import DAO.DAOService;
 import DAO.DAOSlotDoctor;
 import DAO.DAOSpecialty;
@@ -35,6 +36,7 @@ import model.Slot;
 import model.SlotDoctor;
 import model.Specialty;
 import model.User;
+import model.MedicalInfo;
 
 /**
  *
@@ -65,7 +67,7 @@ public class bookingController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -112,13 +114,7 @@ public class bookingController extends HttpServlet {
         if (currentUser != null) {
             System.out.println("haha here the customer");
             int userId = currentUser.getUserId();
-            System.out.println("here the userid:" + currentUser.getUserId());
-            System.out.println("currentUser.firstName: " + currentUser.getFirstName());
-            System.out.println("currentUser.firstName: " + currentUser.getLastName());
-            System.out.println("gender:" + currentUser.getGender());
-            System.out.println("currentUser" + currentUser.getDob());
-            System.out.println("phoneL" + currentUser.getPhone());
-            System.out.println("email:" + currentUser.getEmail());
+       
 
             serviceList = service.getListServiceByDoctor();
             availeSlot = slotDoctor.displayBookedSlotList();
@@ -164,6 +160,7 @@ public class bookingController extends HttpServlet {
 
     }
 
+
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -184,6 +181,7 @@ public class bookingController extends HttpServlet {
         DAOUser user = new DAOUser();
         DAOSlotDoctor slotDoctor = new DAOSlotDoctor();
         DAOBooking booking = new DAOBooking();
+
 //Data from jsp
         String slotId = request.getParameter("selectedSlotId");
         String doctorId = request.getParameter("doctorId");
@@ -225,6 +223,7 @@ public class bookingController extends HttpServlet {
         int addedUserId = 0;
         int customerId = 0;
         int bookingId = 0;
+        int medicalInfoId = booking.addMedicalInfo();
         System.out.println(symptoms);
         slotDoctorId = slotDoctor.addSlotDoctor(doctorIdInt, slotIdInt, 1, symptoms, formattedDate);
         if (currentUser == null) {
@@ -249,13 +248,14 @@ public class bookingController extends HttpServlet {
             addedUserId = user.addGuess(firstName, lastName, gender, email, phone, dob, roleId);
             customerId = customer.addCustomer(addedUserId);
             System.out.println(customerId);
-            bookingId = booking.addBooking(1, customerId, slotDoctorId, serviceId);
+
             response.sendRedirect("/home");
         } else {
             customerId = customer.getCusIdByUserIdReturn(currentUser.getUserId());
-            bookingId = booking.addBooking(1, customerId, slotDoctorId, serviceId);
+
             response.sendRedirect("/home");
         }
+        bookingId = booking.addBooking(1, customerId, slotDoctorId, serviceId, medicalInfoId);
     }
 
     @Override

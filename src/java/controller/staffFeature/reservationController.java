@@ -143,10 +143,13 @@ public class reservationController extends HttpServlet {
         DAODoctor d = new DAODoctor();
         int slotId = Integer.parseInt(request.getParameter("slotId"));
         int doctorId = Integer.parseInt(request.getParameter("doctorId"));
-        int slotDoctorId = d.getSlotDoctorId(slotId, doctorId);
+//        int slotDoctorId = d.getSlotDoctorId(slotId, doctorId);
+        
+        int slotDoctorId = Integer.parseInt(request.getParameter("slotDoctorId"));
         User khachHang = d.getUserInfoBySlotDoctorId(slotDoctorId);
         Slot rightSlot = d.getSlotBySlotId(slotId, doctorId);
         MedicalInfo med = d.getMedInfo(slotDoctorId);
+        System.out.println("med: " + med.getMedicalInfoId());
         Feedback cusFeedback = d.getFeedbackBySlotDoctorId(slotDoctorId);
         request.setAttribute("cusFeedback", cusFeedback);
 
@@ -186,8 +189,7 @@ public class reservationController extends HttpServlet {
             request.setAttribute("filePath", ".\\prescription\\" + fileName);
         }
         request.setAttribute("med", med);
-        request.setAttribute("slotId", slotId);
-        request.setAttribute("doctorId", doctorId);
+        request.setAttribute("slotDoctorId", slotDoctorId);
         request.setAttribute("khachHang", khachHang);
         request.setAttribute("rightSlot", rightSlot);
         request.setAttribute("slotDoctorId", slotDoctorId);

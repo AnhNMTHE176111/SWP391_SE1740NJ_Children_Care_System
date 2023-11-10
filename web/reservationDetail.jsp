@@ -189,8 +189,7 @@
                         </table>
                     </div>
 
-                    <input type="hidden" name="slotId" value="${slotId}">
-                    <input type="hidden" name="doctorId" value="${doctorId}">
+                    <input type="hidden" name="slotDoctorId" value="${slotDoctorId}">
                     <c:if test="${updateSuccess}">
                         <div class="d-flex justify-content-center col-12">
                             <div class="alert-success col-10 d-flex justify-content-center py-2">Update Success</div>

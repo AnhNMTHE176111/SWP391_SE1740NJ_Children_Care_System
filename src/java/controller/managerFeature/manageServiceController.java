@@ -7,7 +7,6 @@ package controller.managerFeature;
 import DAO.DAODoctor;
 import DAO.DAOService;
 import DAO.DAOSpecialty;
-import com.oracle.wls.shaded.org.apache.bcel.generic.AALOAD;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
