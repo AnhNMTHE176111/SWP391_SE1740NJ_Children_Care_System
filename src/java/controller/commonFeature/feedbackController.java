@@ -12,6 +12,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.Feedback;
 
 /**
  *
@@ -71,13 +72,22 @@ public class feedbackController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String medicalInforId = request.getParameter("id");
+        String medicalInfoId = request.getParameter("medicalInfoId");
+        String doctorId = request.getParameter("doctorId");
+        String id = request.getParameter("id");
         String content = request.getParameter("vote");
         String comment = request.getParameter("comment");
 
         DAOFeedback dao = new DAOFeedback();
-        dao.addFeedback(medicalInforId, content, comment);
-        response.sendRedirect("my");
+        if (dao.checkFeedbackExist(medicalInfoId)) {
+            dao.updateFeedback(medicalInfoId, content, comment);
+        } else {
+            dao.addFeedback(medicalInfoId, content, comment);
+        }
+        Feedback feedback = dao.getFeedback(medicalInfoId);
+        System.out.println(feedback.toString());
+        request.setAttribute("feedback", feedback);
+        response.sendRedirect("information?get&id=" + id + "&doctorId=" + doctorId + "&feedbackId=" + medicalInfoId);
     }
 }
 
@@ -86,5 +96,3 @@ public class feedbackController extends HttpServlet {
  *
  * @return a String containing servlet description
  */
-
-

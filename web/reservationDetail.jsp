@@ -155,7 +155,7 @@
                     <textarea id="treatmentPlan" name="treatmentPlan">${treatmentPlan}</textarea><br><br>
 
                     <label for="treatmentPlan">Customer Feedback:</label>
-                    <textarea id="customerfeedback" name="customerfeedback">${cusFeedback.getComment()}</textarea><br><br>
+                    <textarea id="customerfeedback" name="customerfeedback" readonly="">${cusFeedback.getComment()}</textarea><br><br>
                     
                    <div class="col-12 d-flex justify-content-center" id="rx-container">
                         <table class="table table-bordered col-8">
@@ -190,6 +190,8 @@
                     </div>
 
                     <input type="hidden" name="slotDoctorId" value="${slotDoctorId}">
+                    <input type="hidden" name="slotId" value="${slotId}">
+                    <input type="hidden" name="doctorId" value="${doctorId}">
                     <c:if test="${updateSuccess}">
                         <div class="d-flex justify-content-center col-12">
                             <div class="alert-success col-10 d-flex justify-content-center py-2">Update Success</div>

@@ -190,7 +190,7 @@ public class DAOBooking extends DBContext {
                     + "JOIN Users u ON d.userId = u.userId\n"
                     + "JOIN Services se ON b.ServiceId = se.ServiceId\n"
                     + "WHERE b.CustomerId = '" + cusId + "'\n"
-                    + "ORDER BY b.CustomerId\n"
+                    + "ORDER BY b.CustomerId, b.BookingCreatedAt desc\n"
                     + "OFFSET ? ROWS FETCH NEXT 2 ROWS ONLY";
             pstm = cnn.prepareStatement(strSQL);
             pstm.setInt(1, (pageIndex - 1) * 2);

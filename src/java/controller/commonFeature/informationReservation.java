@@ -7,6 +7,7 @@ package controller.commonFeature;
 import DAO.DAOBooking;
 import DAO.DAOCustomer;
 import DAO.DAODoctor;
+import DAO.DAOFeedback;
 import DAO.DAOService;
 import DAO.DAOUser;
 import java.io.IOException;
@@ -20,6 +21,7 @@ import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import model.Booking;
 import model.Customer;
+import model.Feedback;
 import model.MedicalInfo;
 import model.MedicalPrescription;
 import model.Service;
@@ -93,8 +95,10 @@ public class informationReservation extends HttpServlet {
         // get medical prescription
         int slotDoctorId = daoBooking.getBookingById(Integer.parseInt(bookingId)).getSlotDoctorId();
         MedicalInfo med = d.getMedInfo(slotDoctorId);
+        DAOFeedback dao = new DAOFeedback();
+        Feedback feedback = dao.getFeedback(String.valueOf(med.getMedicalInfoId()));
+        request.setAttribute("feedback", feedback);
         String treatment = med.getTreatmentPlan();
-        System.out.println(treatment);
         ArrayList<MedicalPrescription> medicalPrescription = new ArrayList<>();
         if (treatment != null) {
             String[] array = treatment.split("\\|");

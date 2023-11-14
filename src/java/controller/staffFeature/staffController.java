@@ -105,8 +105,9 @@ public class staffController extends HttpServlet {
         request.setAttribute("updateSuccess", true);
 
         int slotId = Integer.parseInt(request.getParameter("slotId"));
+        int slotDoctorId = Integer.parseInt(request.getParameter("slotDoctorId"));
         int doctorId = Integer.parseInt(request.getParameter("doctorId"));
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/reservation?doctorId=" + doctorId + "&slotId=" + slotId);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/reservation?doctorId=" + doctorId + "&slotId=" + slotId + "&slotDoctorId=" + slotDoctorId);
         dispatcher.forward(request, response);
     }
 
