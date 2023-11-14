@@ -32,6 +32,60 @@ public class DAOFeedback extends DBContext {
         cnn = super.connection;
     }
 
+    public Feedback getFeedback(String medicalInforId) {
+        try {
+            String query = "select * from Feedback where MedicalInfoID = ?";
+            PreparedStatement pstm = cnn.prepareStatement(query);
+            pstm.setString(1, medicalInforId);
+            rs = pstm.executeQuery();
+            while (rs.next()) {
+                Feedback f = new Feedback();
+                f.setRatingId(rs.getInt(1));
+                f.setMedicalInfoId(Integer.parseInt(medicalInforId));
+                f.setRatingValue(rs.getString(3));
+                f.setComment(rs.getString(4));
+                return f;
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL <getFeedback>: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("<getFeedback>: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public boolean checkFeedbackExist(String medicalInforId) {
+        try {
+            String query = "select * from Feedback where MedicalInfoID = ?";
+            PreparedStatement pstm = cnn.prepareStatement(query);
+            pstm.setString(1, medicalInforId);
+            rs = pstm.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL <checkFeedbackExist>: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("<checkFeedbackExist>: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public void updateFeedback(String medicalInfoId, String ratingValue, String comment) {
+        try {
+            String query = "update Feedback set ratingValue = ? , Comment = ? where MedicalInfoID = ?";
+            PreparedStatement pstm = cnn.prepareStatement(query);
+            pstm.setString(1, ratingValue);
+            pstm.setString(2, comment);
+            pstm.setString(3, medicalInfoId);
+            pstm.execute();
+        } catch (SQLException e) {
+            System.out.println("SQL <updateFeedback>: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("<updateFeedback>: " + e.getMessage());
+        }
+    }
+
     public void addFeedback(String medicalInforId, String ratingValue, String comment) {
         String query = "INSERT [dbo].[Feedback] ([MedicalInfoID], [RatingValue], [Comment] ) VALUES (?,?,?)";
         try {

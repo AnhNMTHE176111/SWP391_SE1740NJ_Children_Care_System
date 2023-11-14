@@ -73,10 +73,11 @@ public class changeStatus extends HttpServlet {
         DAODoctor d = new DAODoctor();
         String date = request.getParameter("date");
         String module = request.getParameter("module");
+        int slotDoctorId = Integer.parseInt(request.getParameter("slotDoctorId"));
         int slotId = Integer.parseInt(request.getParameter("slotId"));
         int doctorId = Integer.parseInt(request.getParameter("doctorId"));
         int status = Integer.parseInt(request.getParameter("status"));
-        d.changeStatusBySlotIdandDocId(slotId, doctorId, status);
+        d.changeStatusBySlotIdandDocId(slotDoctorId, status);
         if ("".equals(date) || date == null) {
             if (module.equals("") || module == null) {
                 response.sendRedirect("/reservation");

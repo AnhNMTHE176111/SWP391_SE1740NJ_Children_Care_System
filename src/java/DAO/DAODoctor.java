@@ -76,7 +76,7 @@ public class DAODoctor extends DBContext {
                 + "join Booking b on b.slotDoctorId = sd.slotDoctorId\n"
                 + "join Services s on s.ServiceId = b.ServiceId\n"
                 + "where DoctorId = ? \n"
-                + "order by sd.day, sl.StartTime";
+                + "order by b.BookingCreatedAt desc,sd.day, sl.StartTime";
 
         SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         SimpleDateFormat outputFormat = new SimpleDateFormat("HH:mm:ss");
@@ -178,7 +178,7 @@ public class DAODoctor extends DBContext {
                 + "FROM Doctors\n"
                 + "JOIN Users ON Users.userId = Doctors.userId;";
 
-        try (PreparedStatement pstm = cnn.prepareStatement(strSQL); ResultSet rs = pstm.executeQuery()) {
+        try ( PreparedStatement pstm = cnn.prepareStatement(strSQL);  ResultSet rs = pstm.executeQuery()) {
             while (rs.next()) {
                 int doctorId = rs.getInt("DoctorId");
                 String doctorName = rs.getString("DoctorName");
@@ -376,9 +376,7 @@ public class DAODoctor extends DBContext {
     public Doctor getDoctorbyID(int id) {
         List<Doctor> list = new ArrayList<>();
         String query = "select DoctorId, lastName, firstName, Description, avatar from Doctors d, Users u\n"
-                + " where u.userId = d.userId and DoctorId = ? "
-        +"where u.userId = d.userId and DoctorId = ? ";
-
+                + " where u.userId = d.userId and DoctorId = ? ";
         try {
             PreparedStatement pstm = cnn.prepareStatement(query);
             pstm.setInt(1, id);
@@ -391,13 +389,12 @@ public class DAODoctor extends DBContext {
                         rs.getString(5));
             }
         } catch (SQLException e) {
-            System.out.println("SQL <getPostById>: " + e.getMessage());
+            System.out.println("SQL <getDoctorbyID>: " + e.getMessage());
         } catch (Exception e) {
-            System.out.println("<getPostById>: " + e.getMessage());
+            System.out.println("<getDoctorbyID>: " + e.getMessage());
         }
         return null;
     }
-
 
     public Doctor getDoctorbyIDbyTuanAnh(int id) {
         try {
@@ -424,9 +421,8 @@ public class DAODoctor extends DBContext {
         return null;
     }
 
-
-    public void changeStatusBySlotIdandDocId(int slotId, int doctorId, int status) {
-        String sql = "update Booking set BookingStatus = ? where slotDoctorId in (select slotDoctorId from SlotDoctor where DoctorId = ? and SlotId = ?)";
+    public void changeStatusBySlotIdandDocId(int slotDoctorId, int status) {
+        String sql = "update Booking set BookingStatus = ? where slotDoctorId = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             if (status == 2) {
@@ -434,8 +430,7 @@ public class DAODoctor extends DBContext {
             } else {
                 ps.setInt(1, 3);
             }
-            ps.setInt(3, slotId);
-            ps.setInt(2, doctorId);
+            ps.setInt(2, slotDoctorId);
             int update = ps.executeUpdate();
         } catch (SQLException e) {
             System.out.println("SQL <changeStatusBySlotIdandDocId>: " + e.getMessage());
@@ -443,7 +438,6 @@ public class DAODoctor extends DBContext {
             System.out.println("<changeStatusBySlotIdandDocId>: " + e.getMessage());
         }
     }
-
 
     public int addDoctor(int userId, int experienceYears, int specialtyId, String description, String position) {
         int generatedId = -1;
@@ -461,7 +455,7 @@ public class DAODoctor extends DBContext {
             pstm.setString(4, position);
             pstm.setInt(5, userId);
             if (pstm.executeUpdate() > 0) {
-                try (ResultSet generatedKeys = pstm.getGeneratedKeys()) {
+                try ( ResultSet generatedKeys = pstm.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         generatedId = generatedKeys.getInt(1);
                     }
@@ -492,7 +486,7 @@ public class DAODoctor extends DBContext {
             System.out.println("<getFeedbackBySlotDoctorId>: " + e.getMessage());
         }
         return feedback;
-        
+
     }
 
 }

@@ -60,6 +60,8 @@
             /* Add margin to the div containing the "Add new service" button */
             .add-button {
                 margin: 20px;
+                display: flex;
+                gap: 10px;
             }
 
         </style>
@@ -113,10 +115,14 @@
             </c:when>
 
             <c:when test="${sessionScope.roleId eq  3}">
+
                 <div class="add-button">
                     <form action="manageAddService">
                         <button>Add new service</button>  
                     </form>
+                    <button class="btn btn-outline-dark">
+                        <a href="\manage">Back</a>
+                    </button>
                 </div>
                 <table border="1"  >
                     <thead>

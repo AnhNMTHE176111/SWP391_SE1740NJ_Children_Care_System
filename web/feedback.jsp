@@ -14,31 +14,36 @@
     </head>
 
     <body>
-        <jsp:include page="header.jsp"></jsp:include>
-        <jsp:include page="bannerHome.jsp"></jsp:include>
-
-        <% 
-          String medicalInfoId = request.getParameter("id");
-          if (medicalInfoId != null && !medicalInfoId.isEmpty()) {
-        %>
-        
-        <h1 style="margin-left: 50px">Feedback Detail</h1>
-        <form action="feedback" method="post" style="margin-bottom: 100px; padding-left: 100px">
-            <input type="text" name="id" value="<%= medicalInfoId %>" hidden/>
-            <label for="vote">Vote:</label>
-            <select name="vote" id="vote">
-                <option value="Excellent">Excellent</option>
-                <option value="Good">Good</option>
-                <option value="Average">Average</option>
-                <option value="Poor">Poor</option>
-            </select>
-            <br>
-            <label for="comment">Comment:</label><br>
-            <textarea name="comment" id="comment" rows="4" cols="50" style="border-radius: 20px; padding: 7px"></textarea>
-            <br><br>
-            <input type="submit" value="Submit" style="background-color: greenyellow">
-        </form>
-        <% } %>
-        <jsp:include page="footer.jsp"></jsp:include>
+        <div class="col-12 d-flex justify-content-center">
+            <div class="col-10">
+                <% 
+                  String medicalInfoId = request.getParameter("feedbackId");
+                  String doctorId = request.getParameter("doctorId");
+                  String id = request.getParameter("id");
+                  if (medicalInfoId != null && !medicalInfoId.isEmpty()) {
+                %>
+                <h1>Feedback Detail</h1>
+                <form action="feedback" method="post">
+                    <input type="text" name="medicalInfoId" value="<%= medicalInfoId %>" hidden/>
+                    <input type="text" name="doctorId" value="<%= doctorId %>" hidden/>
+                    <input type="text" name="id" value="<%= id %>" hidden/>
+                    <label for="vote">Vote:</label>
+                    <select name="vote" id="vote" class="form-control col-3">
+                        <option value="Excellent" ${feedback.getRatingValue() eq 'Excellent' ? 'selected' : ''}>Excellent</option>
+                        <option value="Good" ${feedback.getRatingValue() eq 'Good' ? 'selected' : ''}>Good</option>
+                        <option value="Average" ${feedback.getRatingValue() eq 'Average' ? 'selected' : ''}>Average</option>
+                        <option value="Poor" ${feedback.getRatingValue() eq 'Poor' ? 'selected' : ''}>Poor</option>
+                    </select>
+                    <br>
+                    <label for="comment">Comment: </label><br>
+                    <input name="comment" id="comment" class="col-3 form-control p-3"
+                              value="${feedback.getComment()}"
+                              style="border-radius: 20px; padding: 7px" />
+                    <br><br>
+                    <input type="submit" class="btn btn-success" value="Submit" >
+                </form>
+                <% } %>
+            </div>
+        </div>
     </body>
 </html>

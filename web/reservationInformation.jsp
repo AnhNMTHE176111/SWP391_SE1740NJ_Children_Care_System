@@ -81,13 +81,13 @@
                             <div class="col-md-6 reservation-info-content">
                                 <label>Status</label>
                                 <c:choose>
-                                    <c:when test="${cusInfo.status == 1}">
+                                    <c:when test="${cusInfo.status == 3}">
                                         <input type="text" style="color: yellowgreen" value="Success" readonly />
                                     </c:when>
                                     <c:when test="${cusInfo.status == 2}">
                                         <input type="text" style="color: red" value="Cancelled" readonly />
                                     </c:when>
-                                    <c:when test="${cusInfo.status == 3}">
+                                    <c:when test="${cusInfo.status == 1}">
                                         <input type="text" style="color: #e0d31e" value="Submitted" readonly />
                                     </c:when>
                                     <c:otherwise>
@@ -186,54 +186,55 @@
 
                     </tbody>
                 </table>
-            </div>               
-            <div class="container-fluid pt-5">
-                <div class="container">
-                    <div class="text-center pb-2">
-                        <p class="section-title px-5"><span class="px-2">Our Blog</span></p>
-                        <h2 class="mb-4">Typical Blog</h2>
-                    </div>
-                    <div class="row pb-3">
-                        <div class="col-lg-4 mb-4">
-                            <div class="card border-0 shadow-sm mb-2">
-                                <img class="card-img-top mb-2"
-                                     src="https://vinmec-prod.s3.amazonaws.com/images/20191130_030902_740495_20190226_042612_26719.max-800x800.png"
-                                     alt="">
-                                <div class="card-body bg-light text-center p-4">
-                                    <h4 class="">Những lưu ý quan trọng trước khi khám sức khỏe tổng quát</h4>
-                                    <p>Theo khuyến cáo từ Hiệp hội Tim mạch Mỹ, bạn cần tiến hành kiểm tra huyết áp hàng năm ở độ tuổi từ 18 trở lên để tầm soát nguy cơ tăng huyết áp.</p>
-                                    <a href="" class="btn btn-primary px-4 mx-auto my-2">Read More</a>
+            </div>           
+            <jsp:include page="feedback.jsp"></jsp:include>
+                <div class="container-fluid pt-5">
+                    <div class="container">
+                        <div class="text-center pb-2">
+                            <p class="section-title px-5"><span class="px-2">Our Blog</span></p>
+                            <h2 class="mb-4">Typical Blog</h2>
+                        </div>
+                        <div class="row pb-3">
+                            <div class="col-lg-4 mb-4">
+                                <div class="card border-0 shadow-sm mb-2">
+                                    <img class="card-img-top mb-2"
+                                         src="https://vinmec-prod.s3.amazonaws.com/images/20191130_030902_740495_20190226_042612_26719.max-800x800.png"
+                                         alt="">
+                                    <div class="card-body bg-light text-center p-4">
+                                        <h4 class="">Những lưu ý quan trọng trước khi khám sức khỏe tổng quát</h4>
+                                        <p>Theo khuyến cáo từ Hiệp hội Tim mạch Mỹ, bạn cần tiến hành kiểm tra huyết áp hàng năm ở độ tuổi từ 18 trở lên để tầm soát nguy cơ tăng huyết áp.</p>
+                                        <a href="" class="btn btn-primary px-4 mx-auto my-2">Read More</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-4 mb-4">
-                            <div class="card border-0 shadow-sm mb-2">
-                                <img class="card-img-top mb-2"
-                                     src="https://vinmec-prod.s3.amazonaws.com/images/20191120_084425_617598_tiem-phong-vacxin.max-800x800.png"
-                                     alt="">
-                                <div class "card-body bg-light text-center p-4">
-                                    <h4 class="">Có nên trì hoãn việc tiêm chủng trong đợt dịch Covid-19?</h4>
-                                    <p>Theo khuyến cáo của các chuyên gia y tế, ngay cả trong thời điểm có dịch bệnh, phụ huynh vẫn nên đưa con đi tiêm vắc xin đúng lịch. </p>
-                                    <a href="" class="btn btn-primary px-4 mx-auto my-2">Read More</a>
+                            <div class="col-lg-4 mb-4">
+                                <div class="card border-0 shadow-sm mb-2">
+                                    <img class="card-img-top mb-2"
+                                         src="https://vinmec-prod.s3.amazonaws.com/images/20191120_084425_617598_tiem-phong-vacxin.max-800x800.png"
+                                         alt="">
+                                    <div class "card-body bg-light text-center p-4">
+                                        <h4 class="">Có nên trì hoãn việc tiêm chủng trong đợt dịch Covid-19?</h4>
+                                        <p>Theo khuyến cáo của các chuyên gia y tế, ngay cả trong thời điểm có dịch bệnh, phụ huynh vẫn nên đưa con đi tiêm vắc xin đúng lịch. </p>
+                                        <a href="" class="btn btn-primary px-4 mx-auto my-2">Read More</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-4 mb-4">
-                            <div class="card border-0 shadow-sm mb-2">
-                                <img class="card-img-top mb-2"
-                                     src="https://vinmec-prod.s3.amazonaws.com/images/20190909_040421_333458_giao-duc-gioi-tinh.max-800x800.jpg"
-                                     alt="">
-                                <div class="card-body bg-light text-center p-4">
-                                    <h4 class="">Giáo dục giới tính cho trẻ nhỏ</h4>
-                                    <p>Giáo dục giới tính ở trẻ em luôn là khía cạnh nhận được nhiều sự quan tâm từ phía xã hội. Trách nhiệm của cả gia đình và nhà trường </p>
-                                    <a href="" class="btn btn-primary px-4 mx-auto my-2">Read More</a>
+                            <div class="col-lg-4 mb-4">
+                                <div class="card border-0 shadow-sm mb-2">
+                                    <img class="card-img-top mb-2"
+                                         src="https://vinmec-prod.s3.amazonaws.com/images/20190909_040421_333458_giao-duc-gioi-tinh.max-800x800.jpg"
+                                         alt="">
+                                    <div class="card-body bg-light text-center p-4">
+                                        <h4 class="">Giáo dục giới tính cho trẻ nhỏ</h4>
+                                        <p>Giáo dục giới tính ở trẻ em luôn là khía cạnh nhận được nhiều sự quan tâm từ phía xã hội. Trách nhiệm của cả gia đình và nhà trường </p>
+                                        <a href="" class="btn btn-primary px-4 mx-auto my-2">Read More</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
         <jsp:include page="footer.jsp"></jsp:include>
             <script>
                 var price = ${cusService.price};

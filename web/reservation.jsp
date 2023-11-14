@@ -152,15 +152,16 @@
                         <td><button type="submit" class="btn btn-warning">Read More</button></td>
                     </form>
                     <form action="changeStatus" method="POST">
-
                         <td>
                             <select name="status" id="status">
-                                <option value="3">Success</option>
-                                <option value="2">Cancel</option>
+                                <option value="1" ${item.getStatus() == 1 ? 'selected' : ''}>Submited</option>
+                                <option value="3" ${item.getStatus() == 3 ? 'selected' : ''}>Success</option>
+                                <option value="2" ${item.getStatus() == 2 ? 'selected' : ''}>Cancel</option>
                             </select>                    
                         </td>
                         <input type="hidden" name="slotId" value="${item.getSlotId()}">
                         <input type="hidden" name="doctorId" value="${item.getDoctorId()}">
+                        <input type="hidden" name="slotDoctorId" value="${item.getSlotDoctorId()}">
                         <input type="hidden" name="date" value="${date}">
                         <input type="hidden" name="module" value="${module}">
                         <td><button type="submit" class="btn btn-primary">Change</button></td>

@@ -80,6 +80,7 @@
             <div class="side-navbar-container">
                 <h3>Manager Dashboard</h3>
                 <ul>
+                    <li> <i class="fa-solid fa-house"></i><a href="/home"> Home</a></li>
                     <li id="analyticsMenu">
                         <i class="fa-solid fa-chart-simple"></i>Analytics
                     </li>
@@ -87,13 +88,8 @@
                         <i class="fa-solid fa-users"></i>Reservation Manager
                     </li>
                     <li id="doctorManager"><i class="fa-solid fa-gear"></i>Doctors Manage</li>
-<<<<<<< HEAD
-=======
 
                     <li id="feedbackManager"><i class="fa-solid fa-comments"></i>Feedback Manager</li>
-                    <li id="manageCustomer"><i class="far fa-angry"></i><a href="manageCustomer" style="text-decoration: none;color: white;">Customer Manager</a></li>
-                    <li id="manageService"><i class="far fa-server"></i><a href="manageService" style="text-decoration: none;color: white;" >Service Manager</a></li>
->>>>>>> main
                     <li>
                         <a href="/managePost">
                             <i class="fa-solid fa-gear"></i> Manage Post
@@ -287,10 +283,6 @@
                         </tbody>
                     </table>
 
-<<<<<<< HEAD
-
-
-=======
                     <div id="updateForm" style="display: none;">
                         <h2>Bảng Đăng Ký Slot</h2>
                         <label for="updateDate">Ngày:</label>
@@ -311,13 +303,7 @@
                             <h2>Bảng Đăng Ký Bác Sĩ</h2>
                             <label for="doctorName">Name:</label>
                             <input type="text" id="doctorName" name="doctorName" required><br>
->>>>>>> main
 
-
-<<<<<<< HEAD
-
-
-=======
                             <label for="doctorDob">Date of Birth:</label>
                             <input type="date" id="doctorDob" name="doctorDob" required><br>
 
@@ -361,7 +347,6 @@
                             <button type="button" id="closeModal">Close</button>
                         </form>
                     </div>
->>>>>>> main
                 </div>
             </div>
             <div class="feedback-manager-container" style="width: 100%; margin-left: 15%; display: none;">

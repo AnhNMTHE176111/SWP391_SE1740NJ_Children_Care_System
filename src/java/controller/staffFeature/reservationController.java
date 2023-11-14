@@ -143,6 +143,8 @@ public class reservationController extends HttpServlet {
         DAODoctor d = new DAODoctor();
         int slotId = Integer.parseInt(request.getParameter("slotId"));
         int doctorId = Integer.parseInt(request.getParameter("doctorId"));
+        request.setAttribute("slotId", slotId);
+        request.setAttribute("doctorId", doctorId);
 //        int slotDoctorId = d.getSlotDoctorId(slotId, doctorId);
         
         int slotDoctorId = Integer.parseInt(request.getParameter("slotDoctorId"));
